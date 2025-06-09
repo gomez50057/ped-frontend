@@ -1,0 +1,90 @@
+.aboutContainer {
+  display: flex;
+  align-items: center;
+  width: 100vw;
+  height: auto;
+  padding: 50px 20px;
+  gap: 20px;
+}
+
+.logoAcuerdo,
+.aboutTxt {
+  width: 50vw;
+  height: auto;
+}
+
+/* 
+.aboutTxt {
+  width: 60vw;
+  height: auto;
+  padding-right: 2.5vw;
+} */
+
+.aboutContainer p {
+  text-align: justify;
+}
+
+.aboutContainer h3,
+.aboutContainer h2 {
+  margin: 5px 0;
+}
+
+.aboutContainer h3 {
+  color: var(--grisClr);
+}
+
+.tren {
+  width: 100vw;
+  height: 150px;
+  background: url('/img/vias.png') no-repeat bottom;
+  background-size: 100% auto;
+  position: relative;
+}
+
+/* Tamaño para 'lg' */
+@media (max-width: 768px) {
+  .aboutContainer {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .logoAcuerdo,
+  .aboutTxt {
+    width: 90vw;
+  }
+
+  .logoAcuerdo {
+    height: 100px;
+  }
+}
+
+/* Tamaño para 'md' */
+/* @media (min-width: 576px) {
+  .aboutContainer {
+    background-color: lightblue;
+    flex-direction: column;
+
+  }
+} */
+
+/* Tamaño para 'lg' */
+/* @media (min-width: 768px) {
+  .aboutContainer {
+    background-color: lightgreen;
+
+  }
+} */
+
+/* Tamaño para 'xl' */
+/* @media (min-width: 1024px) {
+  .dualContainer {
+    background-color: lightcoral;
+  }
+} */
+
+/* Tamaño para 'xxl' */
+@media (min-width: 1400px) {
+  /* .dualContainer {
+    background-color: lightgoldenrodyellow;
+  } */
+}

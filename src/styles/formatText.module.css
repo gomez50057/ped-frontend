@@ -1,0 +1,9 @@
+.goldItalic {
+  color: var(--doradoOsc);
+  font-style: italic;
+}
+
+.vinoItalic {
+  color: var(--vinoOsc);
+  font-style: italic;
+}
