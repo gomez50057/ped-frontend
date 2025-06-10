@@ -7,27 +7,27 @@ import styles from './ChoiceCard.module.css';
 const items = [
   {
     label: 'Plataforma Estratégica',
-    bg: '/img/dashboard/bg/plataforma.jpg',
+    bg: '/img/dashboard/bg/plataforma.webp',
     href: '/dashboard/plataforma-estrategica'
   },
   {
     label: 'Indicadores',
-    bg: '/img/dashboard/bg/indicadores.jpg',
+    bg: '/img/dashboard/bg/indicadores.webp',
     href: '/dashboard/indicadores'
   },
   {
     label: 'Otros apartados del PED',
-    bg: '/img/dashboard/bg/otros.jpg',
+    bg: '/img/dashboard/bg/otros.webp',
     href: '/dashboard/otros-apartados'
   },
   {
-    label: 'Consulta el Documento propuesto de Actualización del PED',
-    bg: '/img/dashboard/bg/consulta.jpg',
+    label: 'Consulta el Documento propuesto',
+    bg: '/img/dashboard/bg/consulta.webp',
     download: '/pdf/Actualizacion_PED.pdf'
   },
   {
     label: 'Editar',
-    bg: '/img/dashboard/bg/editar.jpg',
+    bg: '/img/dashboard/bg/editar.webp',
     href: '/dashboard/editar'
   }
 ];

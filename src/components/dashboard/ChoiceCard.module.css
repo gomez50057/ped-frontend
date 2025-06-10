@@ -8,8 +8,6 @@
   color: var(--vinoOsc);
   font-weight: 400;
   margin-bottom: 1rem;
-  text-decoration: none;
-
 }
 
 .titule .spanDoarado,
@@ -39,8 +37,8 @@
 }
 
 .cardItem {
-  position: relative;
   text-decoration: none;
+  position: relative;
   height: 100%;
   flex: 1;
   overflow: hidden;
@@ -55,6 +53,19 @@
   align-items: center;
 }
 
+/* Gradient overlay */
+.cardItem::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top,
+      rgba(0, 0, 0, 0.7) 0%,
+      rgba(0, 0, 0, 0.3) 50%,
+      transparent 100%);
+  border-radius: 2rem;
+  z-index: 0;
+}
+
 .cardItem:hover {
   flex: 4;
 }
@@ -62,14 +73,20 @@
 .cardText {
   min-width: 14em;
   padding: 0.5em;
+  margin: 0 1.5rem;
   text-align: center;
   transform: rotate(-90deg);
   transition: all 0.5s;
   text-transform: uppercase;
-  color: var(--doradoOsc);
+  color: var(--blanco);
   font-size: 1.1rem;
   letter-spacing: 0.15em;
   z-index: 1;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 1rem;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .cardItem:hover .cardText {
