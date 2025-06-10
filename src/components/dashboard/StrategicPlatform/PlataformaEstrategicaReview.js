@@ -25,10 +25,6 @@ export default function PlataformaEstrategicaReview() {
     { id: "ET03", data: dataObjetivoET03 }
   ];
 
-  const dataObjetivosEjes = allData
-    .filter((item) => selectedEjes.includes(item.id))
-    .flatMap((item) => item.data);
-
   const handleComentarioChange = (id, campo, valor) => {
     setComentarios((prev) => ({
       ...prev,
@@ -42,44 +38,38 @@ export default function PlataformaEstrategicaReview() {
   return (
     <div className={styles.container}>
       <h2>Revisión de la Plataforma Estratégica</h2>
-      <h3 className={styles.ejeActivo}>
-        Ejes seleccionados: {selectedEjes.join(", ")}
-      </h3>
 
-      {dataObjetivosEjes.length === 0 ? (
-        <p>No hay datos disponibles para este eje.</p>
+      {selectedEjes.length === 0 ? (
+        <p>No hay ejes seleccionados para revisión.</p>
       ) : (
-        dataObjetivosEjes.map((propuesta, index) => {
-          const propuestaId = `propuesta-${index}`;
+        selectedEjes.map((eje) => {
+          const ejeData = allData.find((item) => item.id === eje);
+          if (!ejeData || ejeData.data.length === 0) {
+            return (
+              <div key={eje} className={styles.propuesta}>
+                <h3 className={styles.ejeActivo}>
+                  Observación de eje a revisar: {eje}
+                </h3>
+                <p>No hay datos disponibles para este eje.</p>
+              </div>
+            );
+          }
           return (
-            <div key={propuestaId} className={styles.propuesta}>
-              <h3>{propuesta["Propuesta Objetivo"]}</h3>
-              <textarea
-                placeholder="Cómo debería decir..."
-                value={comentarios[propuestaId]?.comoDecir || ""}
-                onChange={(e) =>
-                  handleComentarioChange(propuestaId, "comoDecir", e.target.value)
-                }
-              />
-              <textarea
-                placeholder="Justificación..."
-                value={comentarios[propuestaId]?.justificacion || ""}
-                onChange={(e) =>
-                  handleComentarioChange(propuestaId, "justificacion", e.target.value)
-                }
-              />
-
-              {propuesta.Estrategias.map((estrategia, estrIndex) => {
-                const estrategiaId = `${propuestaId}-estrategia-${estrIndex}`;
+            <div key={eje} className={styles.propuesta}>
+              <h3 className={styles.ejeActivo}>
+                Observación de eje a revisar: {eje}
+              </h3>
+              {ejeData.data.map((propuesta, index) => {
+                const propuestaId = `${eje}-propuesta-${index}`;
                 return (
-                  <div key={estrategiaId} className={styles.estrategia}>
-                    <h4>{estrategia.Estrategia}</h4>
+                  <div key={propuestaId} className={styles.propuesta}>
+                    <h3>{propuesta["Propuesta Objetivo"]}</h3>
                     <textarea
                       placeholder="Cómo debería decir..."
-                      value={comentarios[estrategiaId]?.comoDecir || ""}
+                      value={comentarios[propuestaId]?.comoDecir || ""}
                       onChange={(e) =>
                         handleComentarioChange(
-                          estrategiaId,
+                          propuestaId,
                           "comoDecir",
                           e.target.value
                         )
@@ -87,48 +77,85 @@ export default function PlataformaEstrategicaReview() {
                     />
                     <textarea
                       placeholder="Justificación..."
-                      value={comentarios[estrategiaId]?.justificacion || ""}
+                      value={comentarios[propuestaId]?.justificacion || ""}
                       onChange={(e) =>
                         handleComentarioChange(
-                          estrategiaId,
+                          propuestaId,
                           "justificacion",
                           e.target.value
                         )
                       }
                     />
 
-                    <ul>
-                      {estrategia["Lineas de acción"].map((linea, lineaIndex) => {
-                        const lineaId = `${estrategiaId}-linea-${lineaIndex}`;
-                        return (
-                          <li key={lineaId} className={styles.lineaAccion}>
-                            <p>{linea}</p>
-                            <textarea
-                              placeholder="Cómo debería decir..."
-                              value={comentarios[lineaId]?.comoDecir || ""}
-                              onChange={(e) =>
-                                handleComentarioChange(
-                                  lineaId,
-                                  "comoDecir",
-                                  e.target.value
-                                )
+                    {propuesta.Estrategias.map((estrategia, estrIndex) => {
+                      const estrategiaId = `${propuestaId}-estrategia-${estrIndex}`;
+                      return (
+                        <div key={estrategiaId} className={styles.estrategia}>
+                          <h4>{estrategia.Estrategia}</h4>
+                          <textarea
+                            placeholder="Cómo debería decir..."
+                            value={comentarios[estrategiaId]?.comoDecir || ""}
+                            onChange={(e) =>
+                              handleComentarioChange(
+                                estrategiaId,
+                                "comoDecir",
+                                e.target.value
+                              )
+                            }
+                          />
+                          <textarea
+                            placeholder="Justificación..."
+                            value={comentarios[estrategiaId]?.justificacion || ""}
+                            onChange={(e) =>
+                              handleComentarioChange(
+                                estrategiaId,
+                                "justificacion",
+                                e.target.value
+                              )
+                            }
+                          />
+
+                          <ul>
+                            {estrategia["Lineas de acción"].map(
+                              (linea, lineaIndex) => {
+                                const lineaId = `${estrategiaId}-linea-${lineaIndex}`;
+                                return (
+                                  <li key={lineaId} className={styles.lineaAccion}>
+                                    <p>{linea}</p>
+                                    <textarea
+                                      placeholder="Cómo debería decir..."
+                                      value={
+                                        comentarios[lineaId]?.comoDecir || ""
+                                      }
+                                      onChange={(e) =>
+                                        handleComentarioChange(
+                                          lineaId,
+                                          "comoDecir",
+                                          e.target.value
+                                        )
+                                      }
+                                    />
+                                    <textarea
+                                      placeholder="Justificación..."
+                                      value={
+                                        comentarios[lineaId]?.justificacion || ""
+                                      }
+                                      onChange={(e) =>
+                                        handleComentarioChange(
+                                          lineaId,
+                                          "justificacion",
+                                          e.target.value
+                                        )
+                                      }
+                                    />
+                                  </li>
+                                );
                               }
-                            />
-                            <textarea
-                              placeholder="Justificación..."
-                              value={comentarios[lineaId]?.justificacion || ""}
-                              onChange={(e) =>
-                                handleComentarioChange(
-                                  lineaId,
-                                  "justificacion",
-                                  e.target.value
-                                )
-                              }
-                            />
-                          </li>
-                        );
-                      })}
-                    </ul>
+                            )}
+                          </ul>
+                        </div>
+                      );
+                    })}
                   </div>
                 );
               })}
