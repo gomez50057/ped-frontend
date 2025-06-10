@@ -8,13 +8,13 @@
   --grisOsc: #707271;
   --grisClr: #98989a;
   --blanco: #F5F3F5;
-  --size_Fonts_M: 0.8rem;
+  --vinoGradient: linear-gradient(-45deg, var(--vinoOsc), var(--vinoClr));
 }
 
 /* Root para swiper */
 :root {
   --swiper-navigation-color: white;
-  --swiper-navigation-size: 1.5rem; 
+  --swiper-navigation-size: 1.5rem;
 }
 
 * {
@@ -85,14 +85,17 @@ p {
   font-weight: 500;
 }
 
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
   box-sizing: border-box;
 }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -100,7 +103,7 @@ html, body {
 .swiper-cards .swiper-slide {
   transform-origin: center bottom;
   -webkit-backface-visibility: hidden;
-          backface-visibility: hidden;
+  backface-visibility: hidden;
   overflow: hidden;
   border-radius: 50px;
   border: 2px solid var(--vinoOsc);
@@ -109,5 +112,6 @@ html, body {
 
 .swiper-button-prev:hover,
 .swiper-button-next:hover {
-  color: #800020; /* Color vino al hacer hover */
+  color: #800020;
+  /* Color vino al hacer hover */
 }

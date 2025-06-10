@@ -1,55 +1,88 @@
-/* login.module.css */
-
 .login {
-  display: flex;
+  position: relative;
   width: 100vw;
   height: 100vh;
-}
-
-.containerInicioSeccion,
-.containerLoginImg {
+  overflow: hidden;
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: center;
 }
 
-.containerInicioSeccion {
-  flex: 0 0 45vw;
-  flex-direction: column;
-  margin-bottom: 2.5vh;
-}
-
-.containerLoginImg {
-  flex: 1;
-}
-
-.imgInicio {
-  width: 90%;
-  margin-bottom: 20px;
-}
-
-.imgLogin {
-  width: 80%;
-  z-index: 100;
-}
-
-.imgInicio img,
-.imgLogin img {
+/* Fondo de video */
+.bgVideo {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
 }
 
-.button {
-  box-sizing: border-box;
-  border-radius: 50px;
-  transition: 0.2s ease;
+/* Capa de degradado */
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.3));
+  z-index: 1;
+}
+
+/* Contenido principal */
+.content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  color: var(--blanco);
+  width: 90%;
+  gap: 50px;
+}
+
+.left {
+  flex: 1;
+  text-align: left;
+}
+
+.left h1 {
+  font-size: 5rem;
+  margin-bottom: 10px;
+}
+
+.left h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: var(--doradoClr);
+}
+
+.left p {
+  font-size: 1.5rem;
+  max-width: 650px;
+  line-height: 1.5;
+  color: var(--blanco);
+}
+
+/* Formulario */
+.form {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  padding: 80px 40px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 30px;
+  width: 40vw;
+  height: 50vh;
+  min-width: 300px;
 }
 
 .inputGroup {
   position: relative;
-  width: 100%;
-  max-width: 400px;
-  margin: 12px 0;
 }
 
 .input {
@@ -59,13 +92,13 @@
   border: 2px solid #bbb;
   border-radius: 50px;
   background: transparent;
+  color: #fff;
   outline: none;
-  box-sizing: border-box;
   transition: border-color 0.2s;
 }
 
 .input:focus {
-  border-color: #888;
+  border-color: #fff;
 }
 
 .inputGroup label {
@@ -78,35 +111,107 @@
     top 0.2s ease,
     font-size 0.2s ease,
     color 0.2s ease;
-  font-size: 1.2rem;
-  color: #999;
-  background: #f1f1f1;
+  font-size: 1.8rem;
+  color: #ddd;
   padding: 0 4px;
 }
 
 .input:focus+label,
 .input:not(:placeholder-shown)+label {
   top: 4px;
-  font-size: 1rem;
-  color: #666;
+  font-size: 1.25rem;
+  color: var(--doradoOsc);
+  background: rgba(255, 255, 255);
+  border-radius: 0.8rem;
+  padding: 0.15rem 1rem;
 }
-
 
 .error {
-  color: #d00;
+  color: #ff6666;
   font-size: 0.9rem;
-  margin: -0.5rem 0 0.75rem;
+  margin-top: -0.5rem;
 }
 
-.button {
-  padding: 10px 30px;
-  font-size: 1rem;
-  background-color: var(--vinoOsc);
-  color: var(--blanco);
-  border: none;
+.learnMore {
+  position: relative;
+  display: inline-block;
   cursor: pointer;
+  outline: none;
+  border: 0;
+  vertical-align: middle;
+  text-decoration: none;
+  background: transparent;
+  padding: 0;
+  font-size: 2rem;
 }
 
-.button:hover {
-  background-color: var(--vinoClr);
+.circle {
+  transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+  position: relative;
+  display: block;
+  margin: 0;
+  width: 4.5rem;
+  height: 4.5rem;
+  background: var(--vinoGradient);
+  border-radius: 2.625rem;
+}
+
+.icon {
+  transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  background: var(--blanco);
+}
+
+.arrow {
+  left: 0.625rem;
+  width: 1.125rem;
+  height: 0.125rem;
+  background: none;
+}
+
+.arrow::before {
+  position: absolute;
+  content: "";
+  top: -0.29rem;
+  right: 0.0625rem;
+  width: 0.625rem;
+  height: 0.625rem;
+  border-top: 0.125rem solid #fff;
+  border-right: 0.125rem solid #fff;
+  transform: rotate(45deg);
+}
+
+/* Text */
+.buttonText {
+  transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 0.75rem 0;
+  margin: 0 0 0 1.85rem;
+  color: var(--blanco);
+  font-weight: 700;
+  line-height: 1.6;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.5rem;
+}
+
+/* Hover effects */
+.learnMore:hover .circle {
+  width: 100%;
+}
+
+.learnMore:hover .arrow {
+  background: #fff;
+  transform: translate(1rem, 0);
+}
+
+.learnMore:hover .buttonText {
+  letter-spacing: 1rem;
 }
