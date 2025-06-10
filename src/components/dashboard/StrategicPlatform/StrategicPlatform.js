@@ -21,17 +21,38 @@ const ITEMS = [
 ];
 
 export default function StrategicPlatform() {
-  const { checkedItems, setCheckedItems } = usePlatform();
+  const { checkedItems, setCheckedItems, setSelectedEjes } = usePlatform();
 
   const handleToggle = (label) => {
     const updated = { ...checkedItems, [label]: !checkedItems[label] };
     setCheckedItems(updated);
   };
 
+  const mapLabelToId = (label) => {
+    const match = label.match(/(Eje (\d+)|ET(\d+))/i);
+    if (match) {
+      if (match[2]) {
+        return `EG0${match[2]}`;
+      } else if (match[3]) {
+        return `ET0${match[3]}`;
+      }
+    }
+    return null;
+  };
+
+  const handleVerMas = () => {
+    const selectedLabels = Object.keys(checkedItems).filter((label) => checkedItems[label]);
+    const ids = selectedLabels.map((label) => mapLabelToId(label)).filter(Boolean);
+    setSelectedEjes(ids);
+  };
+
   return (
     <section className={styles.containerStrategicPlatform}>
       <div className={styles.StrategicPlatform}>
-        <h2 className={styles.titule}><span className="spanDoarado">Plataforma </span><span className="spanVino">Estratégica</span> </h2>
+        <h2 className={styles.titule}>
+          <span className="spanDoarado">Plataforma </span>
+          <span className="spanVino">Estratégica</span>
+        </h2>
         <ul>
           {ITEMS.map((label) => (
             <li key={label} className={styles.item}>
@@ -68,8 +89,10 @@ export default function StrategicPlatform() {
           ))}
         </ul>
         <div className={styles.buttonWrapper}>
-          <Link href="/dashboard/plataforma-estrategica/revision" passHref>
-            <button className={styles.slideButton}>Ver más</button>
+          <Link href="/dashboard/plataforma-estrategica/" passHref>
+            <button className={styles.slideButton} onClick={handleVerMas}>
+              Ver más
+            </button>
           </Link>
         </div>
       </div>

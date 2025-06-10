@@ -6,9 +6,17 @@ const PlatformContext = createContext();
 
 export const PlatformProvider = ({ children }) => {
   const [checkedItems, setCheckedItems] = useState({});
+  const [selectedEjes, setSelectedEjes] = useState([]);
 
   return (
-    <PlatformContext.Provider value={{ checkedItems, setCheckedItems }}>
+    <PlatformContext.Provider
+      value={{
+        checkedItems,
+        setCheckedItems,
+        selectedEjes,
+        setSelectedEjes
+      }}
+    >
       {children}
     </PlatformContext.Provider>
   );
