@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 import styles from "./StrategicPlatform.module.css";
 
 const ITEMS = [
@@ -30,43 +31,68 @@ export default function StrategicPlatform({ onChange }) {
   };
 
   return (
-    <div className={styles.StrategicPlatform}>
-      <h2><span className="spanDoarado">Plataforma </span><span className="spanVino">Estratégica</span> </h2>
-      <ul>
-        {ITEMS.map((label) => (
-          <li key={label} className={styles.item}>
-            <label className={styles.container}>
-              <input
-                type="checkbox"
-                checked={checkedItems[label]}
-                onChange={() => handleToggle(label)}
-              />
-              <div className={styles.checkmark}>
-                <svg
-                  className={styles.checkboxSvg}
-                  viewBox="0 0 200 200"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <circle
-                    cx="100"
-                    cy="100"
-                    r="80"
-                    className={styles.checkboxCircle}
-                    strokeWidth="20"
-                  />
-                  <path
-                    className={styles.checkboxTick}
-                    d="M52 111.018L76.9867 136L149 64"
-                    strokeWidth="15"
-                  ></path>
-                </svg>
-              </div>
-            </label>
-            <span className={styles.labelText}>{label}</span>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <section className={styles.containerStrategicPlatform}>
+      <div className={styles.StrategicPlatform}>
+        <h2 className={styles.titule}><span className="spanDoarado">Plataforma </span><span className="spanVino">Estratégica</span> </h2>
+        <ul>
+          {ITEMS.map((label) => (
+            <li key={label} className={styles.item}>
+              <label className={styles.container}>
+                <input
+                  type="checkbox"
+                  checked={checkedItems[label]}
+                  onChange={() => handleToggle(label)}
+                />
+                <div className={styles.checkmark}>
+                  <svg
+                    className={styles.checkboxSvg}
+                    viewBox="0 0 200 200"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <circle
+                      cx="100"
+                      cy="100"
+                      r="80"
+                      className={styles.checkboxCircle}
+                      strokeWidth="20"
+                    />
+                    <path
+                      className={styles.checkboxTick}
+                      d="M52 111.018L76.9867 136L149 64"
+                      strokeWidth="15"
+                    ></path>
+                  </svg>
+                </div>
+              </label>
+              <span className={styles.labelText}>{label}</span>
+            </li>
+          ))}
+        </ul>
+        <div className={styles.buttonWrapper}>
+          <Link href="/dashboard/plataforma-estrategica/revision" passHref>
+            <button className={styles.slideButton}>Ver más</button>
+          </Link>
+        </div>
+
+      </div>
+
+      <div className={styles.containerAdvertising}>
+        <h3>Impulsamos el Futuro</h3>
+        <ul className={styles.adList}>
+          <li>🌱 Desarrollo Sustentable</li>
+          <li>🚀 Innovación y Tecnología</li>
+          <li>📚 Educación y Cultura</li>
+        </ul>
+        <p>Únete a la transformación: juntos construimos el cambio.</p>
+
+        <h3>Comprometidos con el Progreso</h3>
+        <blockquote className={styles.adQuote}>
+          "El futuro lo construimos con disciplina, equidad y compromiso. Los Ejes
+          Estratégicos son nuestra guía para un estado próspero y justo."
+        </blockquote>
+        {/* <p>— Gobierno Estatal 2025</p> */}
+      </div>
+    </section>
   );
 }
