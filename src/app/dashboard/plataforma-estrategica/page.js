@@ -1,15 +1,12 @@
 "use client";
 
 import React from "react";
-import StrategicPlatform from "@/components/dashboard/StrategicPlatform/StrategicPlatform";
-import Review from "@/components/dashboard/StrategicPlatform/PlataformaEstrategicaReview";
-
+import StrategicPlatform from "@/components/dashboard/StrategicPlatform/PlataformaEstrategicaContainer";
 
 export default function DashboardPlataforma() {
   return (
     <main>
       <StrategicPlatform />
-      <Review />
     </main>
   );
 }

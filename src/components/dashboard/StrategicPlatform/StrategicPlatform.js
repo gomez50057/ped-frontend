@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
 import { usePlatform } from "@/context/PlatformContext";
 import styles from "./StrategicPlatform.module.css";
 
@@ -20,7 +19,7 @@ const ITEMS = [
   "ET3 Estado de Igualdad Sustantiva",
 ];
 
-export default function StrategicPlatform() {
+export default function StrategicPlatform({ onNext }) {
   const { checkedItems, setCheckedItems, setSelectedEjes } = usePlatform();
 
   const handleToggle = (label) => {
@@ -44,6 +43,7 @@ export default function StrategicPlatform() {
     const selectedLabels = Object.keys(checkedItems).filter((label) => checkedItems[label]);
     const ids = selectedLabels.map((label) => mapLabelToId(label)).filter(Boolean);
     setSelectedEjes(ids);
+    onNext(); // Cambio de vista
   };
 
   return (
@@ -89,11 +89,9 @@ export default function StrategicPlatform() {
           ))}
         </ul>
         <div className={styles.buttonWrapper}>
-          <Link href="/dashboard/plataforma-estrategica/" passHref>
-            <button className={styles.slideButton} onClick={handleVerMas}>
-              Guardar elección 
-            </button>
-          </Link>
+          <button className={styles.slideButton} onClick={handleVerMas}>
+            Guardar elección
+          </button>
         </div>
       </div>
 

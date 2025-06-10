@@ -37,6 +37,11 @@
   resize: vertical;
 }
 
+.buttonsContainer{
+display: flex;
+gap: 1rem;
+}
+
 .saveButton {
   background-color: var(--vinoOsc);
   color: white;

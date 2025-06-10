@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 import { dataObjetivoEG01, dataObjetivoEG02, dataObjetivoEG03, dataObjetivoEG04, dataObjetivoEG05, dataObjetivoEG06, dataObjetivoEG07, dataObjetivoEG08, dataObjetivoEG09, dataObjetivoET01, dataObjetivoET02, dataObjetivoET03 } from "@/utils/plataformaEstrategicaData";
 import { usePlatform } from "@/context/PlatformContext";
 import styles from "./PlataformaEstrategicaReview.module.css";
@@ -23,12 +25,39 @@ const allData = [
 export default function PlataformaEstrategicaReview() {
   const { selectedEjes } = usePlatform();
   const [comentarios, setComentarios] = useState({});
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "success"
+  });
 
   const handleComentarioChange = (id, campo, valor) => {
     setComentarios((prev) => ({
       ...prev,
       [id]: { ...prev[id], [campo]: valor }
     }));
+  };
+
+  const handleCloseSnackbar = () => {
+    setSnackbar((prev) => ({ ...prev, open: false }));
+  };
+
+  const handleGuardarAvance = () => {
+    console.log("Avance guardado:", comentarios);
+    setSnackbar({
+      open: true,
+      message: "¡Avance guardado con éxito!",
+      severity: "info"
+    });
+  };
+
+  const handleGuardarComentarios = () => {
+    console.log("Comentarios enviados:", comentarios);
+    setSnackbar({
+      open: true,
+      message: "¡Comentarios enviados con éxito!",
+      severity: "success"
+    });
   };
 
   const renderLineasAccion = (estrategiaId, lineas) =>
@@ -131,12 +160,31 @@ export default function PlataformaEstrategicaReview() {
           );
         })
       )}
-      <button
-        onClick={() => console.log("Comentarios enviados:", comentarios)}
-        className={styles.saveButton}
+      <div className={styles.buttonsContainer}>
+        <button onClick={handleGuardarAvance} className={styles.saveButton}>
+          Guardar avance
+        </button>
+        <button onClick={handleGuardarComentarios} className={styles.saveButton}>
+          Guardar comentarios
+        </button>
+      </div>
+
+      {/* Snackbar de Material-UI */}
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={4000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
       >
-        Guardar comentarios
-      </button>
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity={snackbar.severity}
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
     </div>
   );
 }
