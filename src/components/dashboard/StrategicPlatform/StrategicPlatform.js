@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import Link from "next/link";
+import { usePlatform } from "@/context/PlatformContext";
 import styles from "./StrategicPlatform.module.css";
 
 const ITEMS = [
@@ -19,15 +20,12 @@ const ITEMS = [
   "ET3 Estado de Igualdad Sustantiva",
 ];
 
-export default function StrategicPlatform({ onChange }) {
-  const [checkedItems, setCheckedItems] = useState(() =>
-    ITEMS.reduce((acc, label) => ({ ...acc, [label]: false }), {})
-  );
+export default function StrategicPlatform() {
+  const { checkedItems, setCheckedItems } = usePlatform();
 
   const handleToggle = (label) => {
     const updated = { ...checkedItems, [label]: !checkedItems[label] };
     setCheckedItems(updated);
-    if (onChange) onChange(updated);
   };
 
   return (
@@ -40,7 +38,7 @@ export default function StrategicPlatform({ onChange }) {
               <label className={styles.container}>
                 <input
                   type="checkbox"
-                  checked={checkedItems[label]}
+                  checked={checkedItems[label] ?? false}
                   onChange={() => handleToggle(label)}
                 />
                 <div className={styles.checkmark}>
@@ -74,7 +72,6 @@ export default function StrategicPlatform({ onChange }) {
             <button className={styles.slideButton}>Ver más</button>
           </Link>
         </div>
-
       </div>
 
       <div className={styles.containerAdvertising}>
