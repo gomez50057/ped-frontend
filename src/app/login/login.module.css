@@ -41,6 +41,7 @@
   color: var(--blanco);
   width: 90%;
   gap: 50px;
+  flex-wrap: wrap;
 }
 
 .left {
@@ -214,4 +215,74 @@
 
 .learnMore:hover .buttonText {
   letter-spacing: 1rem;
+}
+
+/* Responsive: stack columns vertically */
+@media (max-width: 1024px) {
+  .content {
+    flex-direction: column;
+    gap: 30px;
+    align-items: center;
+  }
+
+  .form {
+    width: 80vw;
+    height: auto;
+    padding: 50px 30px;
+  }
+
+  .left h1 {
+    font-size: 3.5rem;
+  }
+
+  .left h2 {
+    font-size: 1.8rem;
+  }
+
+  .left p {
+    font-size: 1.2rem;
+    text-align: center;
+  }
+}
+
+@media (max-width: 600px) {
+  .content {
+    gap: 20px;
+  }
+
+  .left h1 {
+    font-size: 3rem;
+    text-align: center;
+  }
+
+  .left h2 {
+    font-size: 1.5rem;
+    text-align: center;
+  }
+
+  .left p {
+    font-size: 1rem;
+    text-align: center;
+    max-width: 90%;
+  }
+
+  .form {
+    width: 90vw;
+    padding: 30px 20px;
+    border-radius: 15px;
+  }
+
+  .buttonText {
+    letter-spacing: 0.3rem;
+    font-size: 1.5rem;
+  }
+
+  .learnMore {
+    font-size: 1.5rem;
+  }
+
+  .circle {
+    width: 3.5rem;
+    height: 3.5rem;
+  }
 }
