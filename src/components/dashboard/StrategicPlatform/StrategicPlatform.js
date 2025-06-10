@@ -91,7 +91,7 @@ export default function StrategicPlatform() {
         <div className={styles.buttonWrapper}>
           <Link href="/dashboard/plataforma-estrategica/" passHref>
             <button className={styles.slideButton} onClick={handleVerMas}>
-              Ver más
+              Guardar elección 
             </button>
           </Link>
         </div>
