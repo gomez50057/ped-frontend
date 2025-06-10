@@ -8,7 +8,6 @@
   align-items: center;
 }
 
-/* Fondo de video */
 .bgVideo {
   position: absolute;
   top: 0;
@@ -19,7 +18,6 @@
   z-index: 0;
 }
 
-/* Capa de degradado */
 .overlay {
   position: absolute;
   top: 0;
@@ -30,7 +28,6 @@
   z-index: 1;
 }
 
-/* Contenido principal */
 .content {
   position: relative;
   z-index: 2;
@@ -67,7 +64,6 @@
   color: var(--blanco);
 }
 
-/* Formulario */
 .form {
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
@@ -133,6 +129,7 @@
   margin-top: -0.5rem;
 }
 
+/* Boton de entrar */
 .learnMore {
   position: relative;
   display: inline-block;
@@ -185,7 +182,6 @@
   transform: rotate(45deg);
 }
 
-/* Text */
 .buttonText {
   transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
   position: absolute;
@@ -203,7 +199,6 @@
   letter-spacing: 0.5rem;
 }
 
-/* Hover effects */
 .learnMore:hover .circle {
   width: 100%;
 }
@@ -217,7 +212,6 @@
   letter-spacing: 1rem;
 }
 
-/* Responsive: stack columns vertically */
 @media (max-width: 1024px) {
   .content {
     flex-direction: column;
