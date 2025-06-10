@@ -1,13 +1,16 @@
-import React from 'react';
-import ChoiceCard from '@/components/dashboard/ChoiceCard';
+'use client'
 
+import React from 'react'
+import StrategicPlatform from '@/components/dashboard/StrategicPlatform/StrategicPlatform'
 
-const DashboardPage = () => {
+export default function DashboardPlataforma() {
   return (
-    <div>
-      <ChoiceCard />
-    </div>
-  );
-};
-
-export default DashboardPage;
+    <main>
+      <StrategicPlatform
+        onChange={(selected) => {
+          console.log('Ejes marcados:', selected)
+        }}
+      />
+    </main>
+  )
+}
