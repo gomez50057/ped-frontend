@@ -106,8 +106,8 @@ export default function StrategicPlatform({ onNext }) {
 
         <h3>Comprometidos con el Progreso</h3>
         <blockquote className={styles.adQuote}>
-          "El futuro lo construimos con disciplina, equidad y compromiso. Los Ejes
-          Estratégicos son nuestra guía para un estado próspero y justo."
+          &ldquo;El futuro lo construimos con disciplina, equidad y compromiso. Los Ejes
+          Estratégicos son nuestra guía para un estado próspero y justo.&rdquo;
         </blockquote>
         {/* <p>— Gobierno Estatal 2025</p> */}
       </div>
