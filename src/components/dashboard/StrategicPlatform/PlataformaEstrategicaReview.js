@@ -107,6 +107,36 @@ export default function PlataformaEstrategicaReview() {
     setSnackbar({ open: true, message: "¡Comentarios enviados con éxito!", severity: "success" });
   };
 
+  const handleAgregarPropuesta = () => {
+    const nueva = prompt("Nueva Propuesta Objetivo");
+    if (nueva) {
+      setNuevoContenido((prev) => ({ ...prev, propuestas: [...prev.propuestas, { nombre: nueva, estrategias: [] }] }));
+    }
+  };
+
+  const handleAgregarEstrategia = (propuestaIdx) => {
+    const nueva = prompt("Nueva Estrategia");
+    if (nueva) {
+      const propuestas = [...nuevoContenido.propuestas];
+      propuestas[propuestaIdx].estrategias.push({ nombre: nueva, lineas: [] });
+      setNuevoContenido({ ...nuevoContenido, propuestas });
+    }
+  };
+
+  const handleAgregarLinea = (propuestaIdx, estrategiaIdx) => {
+    const nueva = prompt("Nueva Línea de Acción");
+    if (nueva) {
+      const propuestas = [...nuevoContenido.propuestas];
+      propuestas[propuestaIdx].estrategias[estrategiaIdx].lineas.push(nueva);
+      setNuevoContenido({ ...nuevoContenido, propuestas });
+    }
+  };
+
+  const handleEditar = (setter, valorActual) => {
+    const nuevoValor = prompt("Editar", valorActual);
+    if (nuevoValor !== null) setter(nuevoValor);
+  };
+
   const renderLineasAccion = (estrategiaId, lineas) =>
     lineas.map((linea, index) => {
       const id = `${estrategiaId}-linea-${index}`;
@@ -160,84 +190,36 @@ export default function PlataformaEstrategicaReview() {
       );
     });
 
-  const handleAgregar = (tipo, idxs = []) => {
-    const label = tipo === 'propuesta' ? 'Nueva Propuesta Objetivo' : tipo === 'estrategia' ? 'Nueva Estrategia' : 'Nueva Línea de Acción';
-    const nueva = prompt(label);
-    if (!nueva) return;
-
-    setNuevoContenido((prev) => {
-      const propuestas = [...prev.propuestas];
-      if (tipo === 'propuesta') {
-        propuestas.push({ nombre: nueva, estrategias: [] });
-      } else if (tipo === 'estrategia') {
-        if (!propuestas[idxs[0]].estrategias) propuestas[idxs[0]].estrategias = [];
-        propuestas[idxs[0]].estrategias.push({ nombre: nueva, lineas: [] });
-      } else if (tipo === 'linea') {
-        if (!propuestas[idxs[0]].estrategias[idxs[1]].lineas) propuestas[idxs[0]].estrategias[idxs[1]].lineas = [];
-        propuestas[idxs[0]].estrategias[idxs[1]].lineas.push(nueva);
-      }
-      return { ...prev, propuestas };
-    });
-  };
-
-  const handleEditar = (updateFn, valorActual) => {
-    const nuevoValor = prompt("Editar", valorActual);
-    if (nuevoValor !== null) updateFn(nuevoValor);
-  };
-
-
-  const renderNuevasPropuestas = () => nuevoContenido.propuestas.map((p, i) => (
-    <div key={`new-propuesta-${i}`} className={styles.propuesta}>
-      <h3>
-        {p.nombre}
-        <button onClick={() => handleEditar((nuevo) => setNuevoContenido((prev) => {
-          const propuestas = [...prev.propuestas];
-          propuestas[i].nombre = nuevo;
-          return { ...prev, propuestas };
-        }), p.nombre)}>✏️</button>
-        <button onClick={() => setNuevoContenido((prev) => ({
-          ...prev,
-          propuestas: prev.propuestas.filter((_, idx) => idx !== i)
-        }))}>❌</button>
-      </h3>
-      <button onClick={() => handleAgregar('estrategia', [i])}>Agregar Estrategia</button>
-      {p.estrategias.map((e, j) => (
-        <div key={`new-estrategia-${i}-${j}`} className={styles.estrategia}>
-          <h4>
-            {e.nombre}
-            <button onClick={() => handleEditar((nuevo) => setNuevoContenido((prev) => {
-              const propuestas = [...prev.propuestas];
-              propuestas[i].estrategias[j].nombre = nuevo;
-              return { ...prev, propuestas };
-            }), e.nombre)}>✏️</button>
-            <button onClick={() => setNuevoContenido((prev) => {
-              const propuestas = [...prev.propuestas];
-              propuestas[i].estrategias = propuestas[i].estrategias.filter((_, idx) => idx !== j);
-              return { ...prev, propuestas };
-            })}>❌</button>
-          </h4>
-          <button onClick={() => handleAgregar('linea', [i, j])}>Agregar Línea de Acción</button>
-          <ul>
-            {e.lineas.map((l, k) => (
-              <li key={`new-linea-${i}-${j}-${k}`} className={styles.lineaAccion}>
-                {l}
-                <button onClick={() => handleEditar((nuevo) => setNuevoContenido((prev) => {
-                  const propuestas = [...prev.propuestas];
-                  propuestas[i].estrategias[j].lineas[k] = nuevo;
-                  return { ...prev, propuestas };
-                }), l)}>✏️</button>
-                <button onClick={() => setNuevoContenido((prev) => {
-                  const propuestas = [...prev.propuestas];
-                  propuestas[i].estrategias[j].lineas = propuestas[i].estrategias[j].lineas.filter((_, idx) => idx !== k);
-                  return { ...prev, propuestas };
-                })}>❌</button>
-              </li>
-            ))}
-          </ul>
-        </div>
-      ))}
-    </div>
-  ));
+  const renderNuevasPropuestas = () =>
+    nuevoContenido.propuestas.map((p, i) => (
+      <div key={`new-propuesta-${i}`} className={styles.propuesta}>
+        <h3>
+          {p.nombre}
+          <button onClick={() => handleEditar((nuevo) => setNuevoContenido((prev) => { const propuestas = [...prev.propuestas]; propuestas[i].nombre = nuevo; return { ...prev, propuestas }; }), p.nombre)}>✏️</button>
+          <button onClick={() => setNuevoContenido((prev) => ({ ...prev, propuestas: prev.propuestas.filter((_, idx) => idx !== i) }))}>❌</button>
+        </h3>
+        <button onClick={() => handleAgregarEstrategia(i)}>Agregar Estrategia</button>
+        {p.estrategias.map((e, j) => (
+          <div key={`new-estrategia-${j}`} className={styles.estrategia}>
+            <h4>
+              {e.nombre}
+              <button onClick={() => handleEditar((nuevo) => setNuevoContenido((prev) => { const propuestas = [...prev.propuestas]; propuestas[i].estrategias[j].nombre = nuevo; return { ...prev, propuestas }; }), e.nombre)}>✏️</button>
+              <button onClick={() => setNuevoContenido((prev) => { const propuestas = [...prev.propuestas]; propuestas[i].estrategias = propuestas[i].estrategias.filter((_, idx) => idx !== j); return { ...prev, propuestas }; })}>❌</button>
+            </h4>
+            <button onClick={() => handleAgregarLinea(i, j)}>Agregar Línea de Acción</button>
+            <ul>
+              {e.lineas.map((l, k) => (
+                <li key={`new-linea-${k}`} className={styles.lineaAccion}>
+                  {l}
+                  <button onClick={() => handleEditar((nuevo) => setNuevoContenido((prev) => { const propuestas = [...prev.propuestas]; propuestas[i].estrategias[j].lineas[k] = nuevo; return { ...prev, propuestas }; }), l)}>✏️</button>
+                  <button onClick={() => setNuevoContenido((prev) => { const propuestas = [...prev.propuestas]; propuestas[i].estrategias[j].lineas = propuestas[i].estrategias[j].lineas.filter((_, idx) => idx !== k); return { ...prev, propuestas }; })}>❌</button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    ));
 
   return (
     <div className={styles.container}>
@@ -259,7 +241,7 @@ export default function PlataformaEstrategicaReview() {
       <div className={styles.buttonsContainer}>
         <button onClick={handleGuardarAvance} className={styles.saveButton}>Guardar avance</button>
         <button onClick={handleGuardarComentarios} className={styles.saveButton}>Guardar comentarios</button>
-        <button onClick={() => handleAgregar('propuesta')} className={styles.saveButton}>Agregar nueva propuesta</button>
+        <button onClick={handleAgregarPropuesta} className={styles.saveButton}>Agregar nueva propuesta</button>
       </div>
       <Snackbar open={snackbar.open} autoHideDuration={4000} onClose={handleCloseSnackbar} anchorOrigin={{ vertical: "top", horizontal: "right" }}>
         <Alert onClose={handleCloseSnackbar} severity={snackbar.severity} variant="filled" sx={{ width: "100%" }}>
