@@ -39,39 +39,23 @@ export default function PlataformaEstrategicaReview() {
   const { selectedEjes } = usePlatform();
   const [comentarios, setComentarios] = useState({});
   const [acuerdo, setAcuerdo] = useState({});
-  const [snackbar, setSnackbar] = useState({
-    open: false,
-    message: "",
-    severity: "success"
-  });
+  const [snackbar, setSnackbar] = useState({ open: false, message: "", severity: "success" });
+  const [nuevoContenido, setNuevoContenido] = useState({ propuestas: [] });
 
   const handleComentarioChange = (id, campo, valor) => {
-    setComentarios((prev) => ({
-      ...prev,
-      [id]: { ...prev[id], [campo]: valor }
-    }));
+    setComentarios((prev) => ({ ...prev, [id]: { ...prev[id], [campo]: valor } }));
   };
 
-  const handleCloseSnackbar = () => {
-    setSnackbar((prev) => ({ ...prev, open: false }));
-  };
+  const handleCloseSnackbar = () => setSnackbar((prev) => ({ ...prev, open: false }));
 
   const handleGuardarAvance = () => {
     console.log("Avance guardado:", comentarios);
-    setSnackbar({
-      open: true,
-      message: "¡Avance guardado con éxito!",
-      severity: "info"
-    });
+    setSnackbar({ open: true, message: "¡Avance guardado con éxito!", severity: "info" });
   };
 
   const handleGuardarComentarios = () => {
     console.log("Comentarios enviados:", comentarios);
-    setSnackbar({
-      open: true,
-      message: "¡Comentarios enviados con éxito!",
-      severity: "success"
-    });
+    setSnackbar({ open: true, message: "¡Comentarios enviados con éxito!", severity: "success" });
   };
 
   const renderLineasAccion = (estrategiaId, lineas) =>
@@ -229,6 +213,85 @@ export default function PlataformaEstrategicaReview() {
       );
     });
 
+  const handleAgregar = (tipo, idxs = []) => {
+    const label = tipo === 'propuesta' ? 'Nueva Propuesta Objetivo' : tipo === 'estrategia' ? 'Nueva Estrategia' : 'Nueva Línea de Acción';
+    const nueva = prompt(label);
+    if (!nueva) return;
+
+    setNuevoContenido((prev) => {
+      const propuestas = [...prev.propuestas];
+      if (tipo === 'propuesta') {
+        propuestas.push({ nombre: nueva, estrategias: [] });
+      } else if (tipo === 'estrategia') {
+        if (!propuestas[idxs[0]].estrategias) propuestas[idxs[0]].estrategias = [];
+        propuestas[idxs[0]].estrategias.push({ nombre: nueva, lineas: [] });
+      } else if (tipo === 'linea') {
+        if (!propuestas[idxs[0]].estrategias[idxs[1]].lineas) propuestas[idxs[0]].estrategias[idxs[1]].lineas = [];
+        propuestas[idxs[0]].estrategias[idxs[1]].lineas.push(nueva);
+      }
+      return { ...prev, propuestas };
+    });
+  };
+
+  const handleEditar = (updateFn, valorActual) => {
+    const nuevoValor = prompt("Editar", valorActual);
+    if (nuevoValor !== null) updateFn(nuevoValor);
+  };
+
+
+  const renderNuevasPropuestas = () => nuevoContenido.propuestas.map((p, i) => (
+    <div key={`new-propuesta-${i}`} className={styles.propuesta}>
+      <h3>
+        {p.nombre}
+        <button onClick={() => handleEditar((nuevo) => setNuevoContenido((prev) => {
+          const propuestas = [...prev.propuestas];
+          propuestas[i].nombre = nuevo;
+          return { ...prev, propuestas };
+        }), p.nombre)}>✏️</button>
+        <button onClick={() => setNuevoContenido((prev) => ({
+          ...prev,
+          propuestas: prev.propuestas.filter((_, idx) => idx !== i)
+        }))}>❌</button>
+      </h3>
+      <button onClick={() => handleAgregar('estrategia', [i])}>Agregar Estrategia</button>
+      {p.estrategias.map((e, j) => (
+        <div key={`new-estrategia-${i}-${j}`} className={styles.estrategia}>
+          <h4>
+            {e.nombre}
+            <button onClick={() => handleEditar((nuevo) => setNuevoContenido((prev) => {
+              const propuestas = [...prev.propuestas];
+              propuestas[i].estrategias[j].nombre = nuevo;
+              return { ...prev, propuestas };
+            }), e.nombre)}>✏️</button>
+            <button onClick={() => setNuevoContenido((prev) => {
+              const propuestas = [...prev.propuestas];
+              propuestas[i].estrategias = propuestas[i].estrategias.filter((_, idx) => idx !== j);
+              return { ...prev, propuestas };
+            })}>❌</button>
+          </h4>
+          <button onClick={() => handleAgregar('linea', [i, j])}>Agregar Línea de Acción</button>
+          <ul>
+            {e.lineas.map((l, k) => (
+              <li key={`new-linea-${i}-${j}-${k}`} className={styles.lineaAccion}>
+                {l}
+                <button onClick={() => handleEditar((nuevo) => setNuevoContenido((prev) => {
+                  const propuestas = [...prev.propuestas];
+                  propuestas[i].estrategias[j].lineas[k] = nuevo;
+                  return { ...prev, propuestas };
+                }), l)}>✏️</button>
+                <button onClick={() => setNuevoContenido((prev) => {
+                  const propuestas = [...prev.propuestas];
+                  propuestas[i].estrategias[j].lineas = propuestas[i].estrategias[j].lineas.filter((_, idx) => idx !== k);
+                  return { ...prev, propuestas };
+                })}>❌</button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  ));
+
   return (
     <div className={styles.container}>
       <h2>Revisión de la Plataforma Estratégica</h2>
@@ -239,38 +302,20 @@ export default function PlataformaEstrategicaReview() {
           const ejeData = allData.find((item) => item.id === eje);
           return (
             <div key={eje} className={styles.propuesta}>
-              <h3 className={styles.ejeActivo}>
-                Observación de eje a revisar: {eje}
-              </h3>
-              {ejeData?.data.length ? (
-                renderPropuestas(eje, ejeData.data)
-              ) : (
-                <p>No hay datos disponibles para este eje.</p>
-              )}
+              <h3 className={styles.ejeActivo}>Observación de eje a revisar: {eje}</h3>
+              {ejeData?.data.length ? renderPropuestas(eje, ejeData.data) : <p>No hay datos disponibles para este eje.</p>}
             </div>
           );
         })
       )}
+      {renderNuevasPropuestas()}
       <div className={styles.buttonsContainer}>
-        <button onClick={handleGuardarAvance} className={styles.saveButton}>
-          Guardar avance
-        </button>
-        <button onClick={handleGuardarComentarios} className={styles.saveButton}>
-          Enviar comentarios
-        </button>
+        <button onClick={handleGuardarAvance} className={styles.saveButton}>Guardar avance</button>
+        <button onClick={handleGuardarComentarios} className={styles.saveButton}>Guardar comentarios</button>
+        <button onClick={() => handleAgregar('propuesta')} className={styles.saveButton}>Agregar nueva propuesta</button>
       </div>
-      <Snackbar
-        open={snackbar.open}
-        autoHideDuration={4000}
-        onClose={handleCloseSnackbar}
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
-      >
-        <Alert
-          onClose={handleCloseSnackbar}
-          severity={snackbar.severity}
-          variant="filled"
-          sx={{ width: "100%" }}
-        >
+      <Snackbar open={snackbar.open} autoHideDuration={4000} onClose={handleCloseSnackbar} anchorOrigin={{ vertical: "top", horizontal: "right" }}>
+        <Alert onClose={handleCloseSnackbar} severity={snackbar.severity} variant="filled" sx={{ width: "100%" }}>
           {snackbar.message}
         </Alert>
       </Snackbar>
