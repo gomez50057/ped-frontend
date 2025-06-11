@@ -35,6 +35,50 @@ const allData = [
   { id: "ET03", data: dataObjetivoET03 }
 ];
 
+function FeedbackSection({ id, acuerdo, comentarios, onAcuerdoChange, onComentarioChange }) {
+  return (
+    <div className={styles.feedbackSection}>
+      <p>¿Estás de acuerdo con la estructura del texto anterior?</p>
+      <div className={styles.radioGroup}>
+        <label>
+          <input
+            type="radio"
+            name={`${id}-acuerdo`}
+            value="yes"
+            checked={acuerdo[id] === "yes"}
+            onChange={() => onAcuerdoChange(id, "yes")}
+          />
+          Sí
+        </label>
+        <label className={styles.radioSpacing}>
+          <input
+            type="radio"
+            name={`${id}-acuerdo`}
+            value="no"
+            checked={acuerdo[id] === "no"}
+            onChange={() => onAcuerdoChange(id, "no")}
+          />
+          No
+        </label>
+      </div>
+      {acuerdo[id] === "no" && (
+        <div className={styles.commentArea}>
+          <textarea
+            placeholder="Cómo debería decir..."
+            value={comentarios[id]?.comoDecir || ""}
+            onChange={(e) => onComentarioChange(id, "comoDecir", e.target.value)}
+          />
+          <textarea
+            placeholder="Justificación..."
+            value={comentarios[id]?.justificacion || ""}
+            onChange={(e) => onComentarioChange(id, "justificacion", e.target.value)}
+          />
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function PlataformaEstrategicaReview() {
   const { selectedEjes } = usePlatform();
   const [comentarios, setComentarios] = useState({});
@@ -44,6 +88,11 @@ export default function PlataformaEstrategicaReview() {
 
   const handleComentarioChange = (id, campo, valor) => {
     setComentarios((prev) => ({ ...prev, [id]: { ...prev[id], [campo]: valor } }));
+  };
+
+
+  const handleAcuerdoChange = (id, valor) => {
+    setAcuerdo((prev) => ({ ...prev, [id]: valor }));
   };
 
   const handleCloseSnackbar = () => setSnackbar((prev) => ({ ...prev, open: false }));
@@ -60,155 +109,53 @@ export default function PlataformaEstrategicaReview() {
 
   const renderLineasAccion = (estrategiaId, lineas) =>
     lineas.map((linea, index) => {
-      const lineaId = `${estrategiaId}-linea-${index}`;
+      const id = `${estrategiaId}-linea-${index}`;
       return (
-        <li key={lineaId} className={styles.lineaAccion}>
+        <li key={id} className={styles.lineaAccion}>
           <p>{linea}</p>
-          <p>¿Estás de acuerdo con la estructura del texto anterior?</p>
-          <div>
-            <label>
-              <input
-                type="radio"
-                name={`${lineaId}-acuerdo`}
-                value="yes"
-                checked={acuerdo[lineaId] === "yes"}
-                onChange={() => setAcuerdo({ ...acuerdo, [lineaId]: "yes" })}
-              />
-              Sí
-            </label>
-            <label style={{ marginLeft: "1rem" }}>
-              <input
-                type="radio"
-                name={`${lineaId}-acuerdo`}
-                value="no"
-                checked={acuerdo[lineaId] === "no"}
-                onChange={() => setAcuerdo({ ...acuerdo, [lineaId]: "no" })}
-              />
-              No
-            </label>
-          </div>
-          {acuerdo[lineaId] === "no" && (
-            <>
-              <textarea
-                placeholder="Cómo debería decir..."
-                value={comentarios[lineaId]?.comoDecir || ""}
-                onChange={(e) =>
-                  handleComentarioChange(lineaId, "comoDecir", e.target.value)
-                }
-              />
-              <textarea
-                placeholder="Justificación..."
-                value={comentarios[lineaId]?.justificacion || ""}
-                onChange={(e) =>
-                  handleComentarioChange(lineaId, "justificacion", e.target.value)
-                }
-              />
-            </>
-          )}
+          <FeedbackSection
+            id={id}
+            acuerdo={acuerdo}
+            comentarios={comentarios}
+            onAcuerdoChange={handleAcuerdoChange}
+            onComentarioChange={handleComentarioChange}
+          />
         </li>
       );
     });
 
   const renderEstrategias = (propuestaId, estrategias) =>
     estrategias.map((estrategia, index) => {
-      const estrategiaId = `${propuestaId}-estrategia-${index}`;
+      const id = `${propuestaId}-estrategia-${index}`;
       return (
-        <div key={estrategiaId} className={styles.estrategia}>
+        <div key={id} className={styles.estrategia}>
           <h4>{estrategia.Estrategia}</h4>
-          <p>¿Estás de acuerdo con la estructura del texto anterior?</p>
-          <div>
-            <label>
-              <input
-                type="radio"
-                name={`${estrategiaId}-acuerdo`}
-                value="yes"
-                checked={acuerdo[estrategiaId] === "yes"}
-                onChange={() => setAcuerdo({ ...acuerdo, [estrategiaId]: "yes" })}
-              />
-              Sí
-            </label>
-            <label style={{ marginLeft: "1rem" }}>
-              <input
-                type="radio"
-                name={`${estrategiaId}-acuerdo`}
-                value="no"
-                checked={acuerdo[estrategiaId] === "no"}
-                onChange={() => setAcuerdo({ ...acuerdo, [estrategiaId]: "no" })}
-              />
-              No
-            </label>
-          </div>
-          {acuerdo[estrategiaId] === "no" && (
-            <>
-              <textarea
-                placeholder="Cómo debería decir..."
-                value={comentarios[estrategiaId]?.comoDecir || ""}
-                onChange={(e) =>
-                  handleComentarioChange(estrategiaId, "comoDecir", e.target.value)
-                }
-              />
-              <textarea
-                placeholder="Justificación..."
-                value={comentarios[estrategiaId]?.justificacion || ""}
-                onChange={(e) =>
-                  handleComentarioChange(estrategiaId, "justificacion", e.target.value)
-                }
-              />
-            </>
-          )}
-          <ul>{renderLineasAccion(estrategiaId, estrategia["Lineas de acción"])}</ul>
+          <FeedbackSection
+            id={id}
+            acuerdo={acuerdo}
+            comentarios={comentarios}
+            onAcuerdoChange={handleAcuerdoChange}
+            onComentarioChange={handleComentarioChange}
+          />
+          <ul>{renderLineasAccion(id, estrategia["Lineas de acción"] || [])}</ul>
         </div>
       );
     });
 
   const renderPropuestas = (ejeId, propuestas) =>
     propuestas.map((propuesta, index) => {
-      const propuestaId = `${ejeId}-propuesta-${index}`;
+      const id = `${ejeId}-propuesta-${index}`;
       return (
-        <div key={propuestaId} className={styles.propuesta}>
+        <div key={id} className={styles.propuesta}>
           <h3>{propuesta["Propuesta Objetivo"]}</h3>
-          <p>¿Estás de acuerdo con la estructura del texto anterior?</p>
-          <div>
-            <label>
-              <input
-                type="radio"
-                name={`${propuestaId}-acuerdo`}
-                value="yes"
-                checked={acuerdo[propuestaId] === "yes"}
-                onChange={() => setAcuerdo({ ...acuerdo, [propuestaId]: "yes" })}
-              />
-              Sí
-            </label>
-            <label style={{ marginLeft: "1rem" }}>
-              <input
-                type="radio"
-                name={`${propuestaId}-acuerdo`}
-                value="no"
-                checked={acuerdo[propuestaId] === "no"}
-                onChange={() => setAcuerdo({ ...acuerdo, [propuestaId]: "no" })}
-              />
-              No
-            </label>
-          </div>
-          {acuerdo[propuestaId] === "no" && (
-            <>
-              <textarea
-                placeholder="Cómo debería decir..."
-                value={comentarios[propuestaId]?.comoDecir || ""}
-                onChange={(e) =>
-                  handleComentarioChange(propuestaId, "comoDecir", e.target.value)
-                }
-              />
-              <textarea
-                placeholder="Justificación..."
-                value={comentarios[propuestaId]?.justificacion || ""}
-                onChange={(e) =>
-                  handleComentarioChange(propuestaId, "justificacion", e.target.value)
-                }
-              />
-            </>
-          )}
-          {renderEstrategias(propuestaId, propuesta.Estrategias)}
+          <FeedbackSection
+            id={id}
+            acuerdo={acuerdo}
+            comentarios={comentarios}
+            onAcuerdoChange={handleAcuerdoChange}
+            onComentarioChange={handleComentarioChange}
+          />
+          {renderEstrategias(id, propuesta.Estrategias || [])}
         </div>
       );
     });
