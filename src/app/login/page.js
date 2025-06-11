@@ -1,4 +1,5 @@
 'use client';
+
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
@@ -14,31 +15,27 @@ export default function LoginPage() {
   const submit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('/api/login/', { username: user, password: pass }, { withCredentials: true });
+      const { data } = await axios.post('/api/auth/login/', {
+        username: user,
+        password: pass
+      });
+
+      localStorage.setItem('access', data.access);
+      localStorage.setItem('refresh', data.refresh);
+
       router.replace('/dashboard');
     } catch (e) {
-      setErr(e.response?.data?.detail || e.message);
+      setErr(e.response?.data?.detail || 'Error al iniciar sesión');
     }
   };
 
   return (
     <section className={styles.login}>
-      {/* Fondo de video */}
-      <video
-        className={styles.bgVideo}
-        src={`${videoBasePath}bgLogin.mp4`}
-        autoPlay
-        muted
-        loop
-      ></video>
-
-      {/* Capa de degradado */}
+      <video className={styles.bgVideo} src={`${videoBasePath}bgLogin.mp4`} autoPlay muted loop></video>
       <div className={styles.overlay}></div>
-
-      {/* Contenido principal */}
       <div className={styles.content}>
         <div className={styles.left}>
-          <h1><span className='spanDoarado'>Hidalgo,</span> <span>Potencia</span> en <span>Marcha</span> </h1>
+          <h1><span className='spanDoarado'>Hidalgo,</span> <span>Potencia</span> en <span>Marcha</span></h1>
           <h2>El Futuro Comienza Contigo</h2>
           <p>Inicia sesión con tu usuario y contraseña para participar y ser parte del cambio. Construyamos juntos el futuro de Hidalgo.</p>
         </div>
