@@ -18,6 +18,7 @@ import {
   dataObjetivoET03
 } from "@/utils/plataformaEstrategicaData";
 import { usePlatform } from "@/context/PlatformContext";
+import { useFeedback } from "@/hooks/useFeedback";
 import styles from "./PlataformaEstrategicaReview.module.css";
 
 const allData = [
