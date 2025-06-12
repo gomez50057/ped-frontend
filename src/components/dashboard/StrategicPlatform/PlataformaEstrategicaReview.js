@@ -3,7 +3,7 @@
 import React, { useState, useMemo } from 'react';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
-import {  dataObjetivoEG01,  dataObjetivoEG02,  dataObjetivoEG03,  dataObjetivoEG04,  dataObjetivoEG05,  dataObjetivoEG06,  dataObjetivoEG07,  dataObjetivoEG08,  dataObjetivoEG09,  dataObjetivoET01,  dataObjetivoET02,  dataObjetivoET03,} from '@/utils/plataformaEstrategicaData';
+import { dataObjetivoEG01, dataObjetivoEG02, dataObjetivoEG03, dataObjetivoEG04, dataObjetivoEG05, dataObjetivoEG06, dataObjetivoEG07, dataObjetivoEG08, dataObjetivoEG09, dataObjetivoET01, dataObjetivoET02, dataObjetivoET03, } from '@/utils/plataformaEstrategicaData';
 import { usePlatform } from '@/context/PlatformContext';
 import { useFeedback } from '@/hooks/useFeedback';
 import { v4 as uuidv4 } from 'uuid';
@@ -290,27 +290,46 @@ export default function PlataformaEstrategicaReview() {
 
   return (
     <div className={styles.container}>
-            <div className={styles.containerReview}>
+      <div className={styles.containerReview}>
 
-      <h2><span className='spanDoarado'>Revisión</span> de la <span className='spanVino'>Plataforma Estratégica</span></h2>
-      {selectedEjes.length === 0
-        ? <p>No hay ejes seleccionados para revisión.</p>
-        : selectedEjes.map(eje => {
-          const block = staticWithId.find(b => b.eje === eje);
-          return (
-            <div key={eje} className={styles.propuesta}>
-              <h3 className={styles.ejeActivo}>Observación de eje a revisar: {eje}</h3>
-              {block?.propuestas.length ? renderPropuestas(eje, block.propuestas) : <p>No hay datos disponibles para este eje.</p>}
-            </div>
-          );
-        })
-      }
+        <h2><span className='spanDoarado'>Revisión</span> de la <span className='spanVino'>Plataforma Estratégica</span></h2>
+        {selectedEjes.length === 0
+          ? <p>No hay ejes seleccionados para revisión.</p>
+          : selectedEjes.map(eje => {
+            const block = staticWithId.find(b => b.eje === eje);
+            return (
+              <div key={eje} className={styles.propuesta}>
+                <h3 className={styles.ejeActivo}>Observación de eje a revisar: {eje}</h3>
+                {block?.propuestas.length ? renderPropuestas(eje, block.propuestas) : <p>No hay datos disponibles para este eje.</p>}
+              </div>
+            );
+          })
+        }
         {renderNuevasPropuestas()}
       </div>
       <div className={styles.buttonsContainer}>
-        <button onClick={handleGuardarAvance} className={styles.saveButton}>Guardar avance</button>
-        <button onClick={handleAgregarPropuesta} className={styles.saveButton}>Agregar nueva propuesta</button>
-        <button onClick={handleGuardarComentarios} className={styles.saveButton}>Enviar comentarios</button>
+        <div className={styles.buttonsContainerfixed}>
+
+          <div className={styles.buttonWrapper}>
+            <button className={styles.slideButton} onClick={handleGuardarAvance}>
+              Guardar avance
+            </button>
+          </div>
+
+          <div className={styles.buttonWrapper}>
+            <button className={styles.slideButton} onClick={handleAgregarPropuesta}>
+              Agregar nueva propuesta
+            </button>
+          </div>
+
+          <div className={styles.buttonWrapper}>
+            <button className={styles.slideButton} onClick={handleGuardarComentarios}>
+              Enviar comentarios
+            </button>
+          </div>
+        </div>
+
+
       </div>
       <Snackbar open={snackbar.open} autoHideDuration={4000} onClose={handleCloseSnackbar} anchorOrigin={{ vertical: "top", horizontal: "right" }}>
         <Alert onClose={handleCloseSnackbar} severity={snackbar.severity} variant="filled" sx={{ width: "100%" }}>
