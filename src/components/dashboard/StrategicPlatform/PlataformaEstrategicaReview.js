@@ -8,6 +8,7 @@ import { usePlatform } from "@/context/PlatformContext";
 import { useFeedback } from "@/hooks/useFeedback";
 import { v4 as uuidv4 } from "uuid";
 import styles from "./PlataformaEstrategicaReview.module.css";
+import FeedbackSection from "../components/FeedbackSection/FeedbackSection";
 
 const allData = [
   { id: "EG01", data: dataObjetivoEG01 }, { id: "EG02", data: dataObjetivoEG02 },
@@ -17,28 +18,6 @@ const allData = [
   { id: "EG09", data: dataObjetivoEG09 }, { id: "ET01", data: dataObjetivoET01 },
   { id: "ET02", data: dataObjetivoET02 }, { id: "ET03", data: dataObjetivoET03 }
 ];
-
-function FeedbackSection({ id, acuerdo, comentarios, onAcuerdoChange, onComentarioChange }) {
-  return (
-    <div className={styles.feedbackSection}>
-      <p>¿Estás de acuerdo con la estructura del texto anterior?</p>
-      <div className={styles.radioGroup}>
-        <label>
-          <input type="radio" name={`${id}-acuerdo`} value="yes" checked={acuerdo === "yes"} onChange={() => onAcuerdoChange(id, "yes")} /> Sí
-        </label>
-        <label className={styles.radioSpacing}>
-          <input type="radio" name={`${id}-acuerdo`} value="no" checked={acuerdo === "no"} onChange={() => onAcuerdoChange(id, "no")} /> No
-        </label>
-      </div>
-      {acuerdo === "no" && (
-        <div className={styles.commentArea}>
-          <textarea placeholder="Cómo debería decir..." value={comentarios?.comoDecir || ""} onChange={e => onComentarioChange(id, "comoDecir", e.target.value)} />
-          <textarea placeholder="Justificación..." value={comentarios?.justificacion || ""} onChange={e => onComentarioChange(id, "justificacion", e.target.value)} />
-        </div>
-      )}
-    </div>
-  );
-}
 
 export default function PlataformaEstrategicaReview() {
   const { selectedEjes } = usePlatform();
