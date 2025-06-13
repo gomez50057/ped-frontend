@@ -53,6 +53,11 @@ export default function StrategicPlatform({ onNext }) {
           <span className="spanDoarado">Plataforma </span>
           <span className="spanVino">Estratégica</span>
         </h2>
+        <p className={styles.description}>
+          Revisa la siguiente lista de ejes, ve seleccionado aquellos de tu interés para revisar. Tu participación es clave para construir un futuro mejor.
+          <br />
+          <span className={styles.descriptionBold}> ¡Tu voz cuenta!</span>
+        </p>
         <ul>
           {ITEMS.map((label) => (
             <li key={label} className={styles.item}>

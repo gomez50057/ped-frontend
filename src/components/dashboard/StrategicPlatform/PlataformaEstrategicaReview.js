@@ -176,7 +176,7 @@ export default function PlataformaEstrategicaReview() {
               onComentarioChange={handleComentarioChange}
             />
           )}
-
+          <ul>{renderLineasAccion(fid, estr.lineas)}</ul>
           <button
             className={styles.addButton}
             onClick={() =>
@@ -187,8 +187,6 @@ export default function PlataformaEstrategicaReview() {
           >
             Agregar Línea de Acción
           </button>
-
-          <ul>{renderLineasAccion(fid, estr.lineas)}</ul>
         </div>
       );
     });
@@ -208,7 +206,7 @@ export default function PlataformaEstrategicaReview() {
             onAcuerdoChange={handleAcuerdoChange}
             onComentarioChange={handleComentarioChange}
           />
-
+          {renderEstrategias(prop.id, prefix, prop.Estrategias || [], true)}
           <button
             className={styles.addButton}
             onClick={() =>
@@ -219,8 +217,6 @@ export default function PlataformaEstrategicaReview() {
           >
             {isStatic ? 'Proponer Estrategia' : 'Agregar Estrategia'}
           </button>
-
-          {renderEstrategias(prop.id, prefix, prop.Estrategias || [], true)}
 
           {(nuevasEstrategias[prop.id] || []).map((nestr) =>
             renderEstrategias(prop.id, prefix, [nestr], true)
@@ -291,7 +287,6 @@ export default function PlataformaEstrategicaReview() {
   return (
     <div className={styles.container}>
       <div className={styles.containerReview}>
-
         <h2><span className='spanDoarado'>Revisión</span> de la <span className='spanVino'>Plataforma Estratégica</span></h2>
         {selectedEjes.length === 0
           ? <p>No hay ejes seleccionados para revisión.</p>
@@ -306,30 +301,19 @@ export default function PlataformaEstrategicaReview() {
           })
         }
         {renderNuevasPropuestas()}
+        <div className={styles.buttonWrapper}>
+          <button className={styles.slideButton} onClick={handleAgregarPropuesta}>Agregar nueva propuesta</button>
+        </div>
       </div>
       <div className={styles.buttonsContainer}>
         <div className={styles.buttonsContainerfixed}>
-
           <div className={styles.buttonWrapper}>
-            <button className={styles.slideButton} onClick={handleGuardarAvance}>
-              Guardar avance
-            </button>
+            <button className={styles.slideButton} onClick={handleGuardarAvance}>Guardar avance</button>
           </div>
-
           <div className={styles.buttonWrapper}>
-            <button className={styles.slideButton} onClick={handleAgregarPropuesta}>
-              Agregar nueva propuesta
-            </button>
-          </div>
-
-          <div className={styles.buttonWrapper}>
-            <button className={styles.slideButton} onClick={handleGuardarComentarios}>
-              Enviar comentarios
-            </button>
+            <button className={styles.slideButton} onClick={handleGuardarComentarios}>Enviar comentarios</button>
           </div>
         </div>
-
-
       </div>
       <Snackbar open={snackbar.open} autoHideDuration={4000} onClose={handleCloseSnackbar} anchorOrigin={{ vertical: "top", horizontal: "right" }}>
         <Alert onClose={handleCloseSnackbar} severity={snackbar.severity} variant="filled" sx={{ width: "100%" }}>
