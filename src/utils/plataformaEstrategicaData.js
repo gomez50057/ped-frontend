@@ -1,3 +1,85 @@
+export const dataObjetivoEG01_ejemplo = [
+  {
+    "id": "1_1_EG01",
+    "Propuesta Objetivo": "1.1 Impulsar una planeación del desarrollo basada en elementos estratégicos, prospectivos y democráticos, para el fortalecimiento del estado.",
+    "Estrategias": [
+      {
+        "id": "1_1_1_EG01",
+        "Estrategia": "1.1.1. Fortalecer el Sistema Estatal de Planeación Democrática, mediante la integración de enfoques estratégicos, prospectivos y participativos para un desarrollo ordenado y sostenible, con ello, garantizando la efectividad de las políticas públicas.",
+        "Lineas de acción": [
+          {
+            "id": "1_1_1_1_EG01",
+            "Linea de acción": "Fortalecer la planeación estratégica y democrática estatal mediante mecanismos de seguimiento, análisis prospectivo e instrumentos estratégicos que impulsen el desarrollo con inclusión social, sostenibilidad y capacidad de adaptación."
+          },
+          {
+            "id": "1_1_1_2_EG01",
+            "Linea de acción": "Impulsar esquemas efectivos de participación ciudadana, fortaleciendo la corresponsabilidad social y la construcción de políticas públicas basadas en un contexto real."
+          },
+          {
+            "id": "1_1_1_3_EG01",
+            "Linea de acción": "Fomentar investigaciones políticas y sociales, orientado al diseño, implementación y evaluación de políticas, programas y acciones públicas, sirviendo de base para la toma de decisiones informada."
+          }
+        ]
+      },
+      {
+        "id": "1_1_2_EG01",
+        "Estrategia": "1.1.2. Consolidar el Sistema Estatal de Ordenamiento Territorial y Desarrollo Urbano, permitiendo una gestión eficiente y planificada del espacio, mejorando el acceso equitativo a oportunidades, infraestructura y servicios.",
+        "Lineas de acción": [
+          {
+            "id": "1_1_2_1_EG01",
+            "Linea de acción": "Fortalecer los instrumentos de planeación territorial y urbana, articulando el ordenamiento ecológico y el uso sostenible del suelo, en promoción del desarrollo equitativo y ambientalmente responsable."
+          },
+          {
+            "id": "1_1_2_2_EG01",
+            "Linea de acción": "Impulsar acciones de desarrollo regional y metropolitano a través de modelos que atiendan sus vocaciones, potencialidades y necesidades, equilibrando el crecimiento económico, social."
+          },
+          {
+            "id": "1_1_2_3_EG01",
+            "Linea de acción": "Consolidar un banco estatal de proyectos estratégicos de alto impacto, con viabilidad técnica y financiera, facilitando la toma de decisiones para el impulso al desarrollo."
+          }
+        ]
+      },
+      {
+        "id": "1_1_3_EG01",
+        "Estrategia": "1.1.3. Mejorar el Sistema Estatal de Monitoreo y Evaluación a través de mecanismos de seguimiento, análisis y mejora continua de la acción gubernamental, garantizando decisiones públicas efectivas y transparentes.",
+        "Lineas de acción": [
+          {
+            "id": "1_1_3_1_EG01",
+            "Linea de acción": "Impulsar la evaluación de programas y políticas públicas con criterios de eficacia, eficiencia, pertinencia e impacto, optimizando el diseño e implementación, para la óptima atención de las prioridades sociales."
+          },
+          {
+            "id": "1_1_3_2_EG01",
+            "Linea de acción": "Mejorar los indicadores de impacto, dando seguimiento puntual a los objetivos gubernamentales y midiendo los avances reales en el desempeño público."
+          },
+          {
+            "id": "1_1_3_3_EG01",
+            "Linea de acción": "Garantizar servicios y acciones eficaces y eficientes por parte de las entidades paraestatales y los organismos gubernamentales, para el impulso a las necesidades del pueblo."
+          }
+        ]
+      },
+      {
+        "id": "1_1_4_EG01",
+        "Estrategia": "1.1.4. Fortalecer las capacidades institucionales en análisis geoespacial y demográfico para la toma de decisiones basadas en evidencia, que contribuyan al desarrollo sostenible y equitativo.",
+        "Lineas de acción": [
+          {
+            "id": "1_1_4_1_EG01",
+            "Linea de acción": "Impulsar el Sistema de Información Georreferenciada, a través de herramientas de análisis geográfico y geoprocesamiento para la integración, modelado y visualización de datos espaciales en los sistemas de planeación estatal y municipal."
+          },
+          {
+            "id": "1_1_4_2_EG01",
+            "Linea de acción": "Actualizar la cartografía temática del estado para, garantizando información precisa y oportuna y sirviendo para proyectos de desarrollo urbano."
+          },
+          {
+            "id": "1_1_4_3_EG01",
+            "Linea de acción": "Impulsar políticas de seguimiento y atención frente a las dinámicas poblacionales de la entidad, para el fomento a programas y acciones encaminadas al desarrollo integral de toda la población."
+          }
+        ]
+      }
+    ]
+  },
+  // los demas 
+]
+
 export const dataObjetivoEG01 = [
   {
     "Propuesta Objetivo": "1.1 Impulsar una planeación del desarrollo basada en elementos estratégicos, prospectivos y democráticos, para el fortalecimiento del estado.",
