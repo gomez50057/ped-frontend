@@ -256,17 +256,17 @@ export default function PlataformaEstrategicaReview() {
     });
 
   const renderNuevasPropuestas = () =>
-  nuevoContenido.propuestas.map(p => {
-    const prefix = `${p.id}-propuesta`;
+    nuevoContenido.propuestas.map(p => {
+      const prefix = `${p.id}-propuesta`;
 
-    return (
-      <div key={p.id} className={styles.propuesta}>
-        <PropuestaHeader p={p} />
-        <PropuestaActions propId={p.id} />
-        {renderEstrategias(p.id, prefix, p.estrategias, false)}
-      </div>
-    );
-  });
+      return (
+        <div key={p.id} className={styles.propuesta}>
+          <PropuestaHeader p={p} />
+          <PropuestaActions propId={p.id} />
+          {renderEstrategias(p.id, prefix, p.estrategias, false)}
+        </div>
+      );
+    });
 
   return (
     <div className={styles.container}>
