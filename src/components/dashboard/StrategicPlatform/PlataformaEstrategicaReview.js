@@ -10,6 +10,7 @@ import { useFeedback } from '@/hooks/useFeedback';
 import { v4 as uuidv4 } from 'uuid';
 import styles from './PlataformaEstrategicaReview.module.css';
 import FeedbackSection from '../components/FeedbackSection/FeedbackSection';
+import EditDeleteButtons from '../components/EditDeleteButtons/EditDeleteButtons';
 
 const allData = [
   { id: 'EG01', data: dataObjetivoEG01 },
@@ -188,17 +189,19 @@ export default function PlataformaEstrategicaReview() {
         <li key={l.id} className={styles.lineaAccion}>
           <p>
             {l.text}
-            {esDinamica && (
-              <>
-                <button onClick={() => handleEditLinea(l.id)}>✏️</button>
-                <button onClick={() => handleDeleteLinea(l.id)}>❌</button>
-              </>
-            )}
-            {esExtraStatic && !esDinamica && (
-              <>
-                <button onClick={() => handleEditLineaStatic(l.id)}>✏️</button>
-                <button onClick={() => handleDeleteLineaStatic(l.id)}>❌</button>
-              </>
+            {(esDinamica || (esExtraStatic && !esDinamica)) && (
+              <EditDeleteButtons
+                onEdit={() =>
+                  esDinamica
+                    ? handleEditLinea(l.id)
+                    : handleEditLineaStatic(l.id)
+                }
+                onDelete={() =>
+                  esDinamica
+                    ? handleDeleteLinea(l.id)
+                    : handleDeleteLineaStatic(l.id)
+                }
+              />
             )}
           </p>
 
@@ -272,13 +275,15 @@ export default function PlataformaEstrategicaReview() {
             {estr.Estrategia || estr.nombre}
             {!showQuestion && (
               <>
-                <button onClick={() => {
-                  const nuevoNombre = prompt('Editar estrategia', estr.Estrategia || estr.nombre);
-                  if (nuevoNombre !== null) {
-                    handleEditEstrategia(nuevoNombre);
-                  }
-                }}>✏️</button>
-                <button onClick={handleDeleteEstrategia}>❌</button>
+                <EditDeleteButtons
+                  onEdit={() => {
+                    const nuevoNombre = prompt('Editar estrategia', estr.Estrategia || estr.nombre);
+                    if (nuevoNombre !== null) {
+                      handleEditEstrategia(nuevoNombre);
+                    }
+                  }}
+                  onDelete={handleDeleteEstrategia}
+                />
               </>
             )}
           </h4>
@@ -347,23 +352,24 @@ export default function PlataformaEstrategicaReview() {
         <div key={p.id} className={styles.propuesta}>
           <h3>
             {p.nombre}
-            <button onClick={() => {
-              const nombre = prompt('Editar propuesta', p.nombre);
-              if (nombre !== null) {
+            <EditDeleteButtons
+              onEdit={() => {
+                const nombre = prompt('Editar propuesta', p.nombre);
+                if (nombre !== null) {
+                  setNuevoContenido(prev => ({
+                    ...prev,
+                    propuestas: updateById(prev.propuestas, p.id, x => ({ ...x, nombre }))
+                  }));
+                }
+              }}
+              onDelete={() =>
                 setNuevoContenido(prev => ({
                   ...prev,
-                  propuestas: prev.propuestas.map(x => x.id === p.id ? { ...x, nombre } : x)
-                }));
+                  propuestas: removeById(prev.propuestas, p.id)
+                }))
               }
-            }}>✏️</button>
-            <button onClick={() =>
-              setNuevoContenido(prev => ({
-                ...prev,
-                propuestas: prev.propuestas.filter(x => x.id !== p.id)
-              }))
-            }>❌</button>
+            />
           </h3>
-
           <button
             className={styles.addButton}
             onClick={() => handleAgregarEstrategiaGeneral(p.id, false)}
