@@ -4,6 +4,7 @@ import React, { useState, useMemo } from 'react';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import { dataObjetivoEG01, dataObjetivoEG02, dataObjetivoEG03, dataObjetivoEG04, dataObjetivoEG05, dataObjetivoEG06, dataObjetivoEG07, dataObjetivoEG08, dataObjetivoEG09, dataObjetivoET01, dataObjetivoET02, dataObjetivoET03, } from '@/utils/plataformaEstrategicaData';
+import { updateById, removeById, pushToArrayById, pushToNestedMapArray } from '@/utils/arrayHelpers';
 import { usePlatform } from '@/context/PlatformContext';
 import { useFeedback } from '@/hooks/useFeedback';
 import { v4 as uuidv4 } from 'uuid';
@@ -85,11 +86,8 @@ export default function PlataformaEstrategicaReview() {
         }));
       } else {
         setNuevoContenido(prev => ({
-          propuestas: prev.propuestas.map(p =>
-            p.id === propuestaId
-              ? { ...p, estrategias: [...p.estrategias, nuevaEstrategia] }
-              : p
-          )
+          ...prev,
+          propuestas: pushToArrayById(prev.propuestas, propuestaId, 'estrategias', nuevaEstrategia)
         }));
       }
     });
@@ -97,21 +95,13 @@ export default function PlataformaEstrategicaReview() {
 
   const handleAgregarLineaStatic = (propuestaId, estrategiaId) => {
     agregarElemento('Agregar nuevo Lineamiento', (text) => {
-      setNuevasLineas(prev => {
-        const byProp = prev[propuestaId] || {};
-        const arr = byProp[estrategiaId] || [];
-        return {
-          ...prev,
-          [propuestaId]: {
-            ...byProp,
-            [estrategiaId]: [...arr, { id: uuidv4(), text }]
-          }
-        };
-      });
+      const nuevaLinea = { id: uuidv4(), text };
+      setNuevasLineas(prev =>
+        pushToNestedMapArray(prev, propuestaId, estrategiaId, nuevaLinea)
+      );
     });
   };
 
-  // Mismo renderLineas con mínima optimización
   const renderLineas = (prefix, originales, propId, estrId) => {
     const extra = nuevasLineas[propId]?.[estrId] || [];
 
@@ -128,23 +118,16 @@ export default function PlataformaEstrategicaReview() {
       if (nuevoTexto !== null) {
         setNuevoContenido(prev => ({
           ...prev,
-          propuestas: prev.propuestas.map(p =>
-            p.id === propId
-              ? {
-                ...p,
-                estrategias: p.estrategias.map(e =>
-                  e.id === estrId
-                    ? {
-                      ...e,
-                      lineas: e.lineas.map(l =>
-                        l.id === lineaId ? { ...l, text: nuevoTexto } : l
-                      )
-                    }
-                    : e
-                )
-              }
-              : p
-          )
+          propuestas: updateById(prev.propuestas, propId, p => ({
+            ...p,
+            estrategias: updateById(p.estrategias, estrId, e => ({
+              ...e,
+              lineas: updateById(e.lineas, lineaId, l => ({
+                ...l,
+                text: nuevoTexto
+              }))
+            }))
+          }))
         }));
       }
     };
@@ -152,21 +135,13 @@ export default function PlataformaEstrategicaReview() {
     const handleDeleteLinea = (lineaId) => {
       setNuevoContenido(prev => ({
         ...prev,
-        propuestas: prev.propuestas.map(p =>
-          p.id === propId
-            ? {
-              ...p,
-              estrategias: p.estrategias.map(e =>
-                e.id === estrId
-                  ? {
-                    ...e,
-                    lineas: e.lineas.filter(l => l.id !== lineaId)
-                  }
-                  : e
-              )
-            }
-            : p
-        )
+        propuestas: updateById(prev.propuestas, propId, p => ({
+          ...p,
+          estrategias: updateById(p.estrategias, estrId, e => ({
+            ...e,
+            lineas: removeById(e.lineas, lineaId)
+          }))
+        }))
       }));
     };
 
@@ -256,16 +231,13 @@ export default function PlataformaEstrategicaReview() {
         if (esDinamica) {
           setNuevoContenido(prev => ({
             ...prev,
-            propuestas: prev.propuestas.map(p =>
-              p.id === propId
-                ? {
-                  ...p,
-                  estrategias: p.estrategias.map(e =>
-                    e.id === estr.id ? { ...e, nombre: nuevoNombre } : e
-                  )
-                }
-                : p
-            )
+            propuestas: updateById(prev.propuestas, propId, p => ({
+              ...p,
+              estrategias: updateById(p.estrategias, estr.id, e => ({
+                ...e,
+                nombre: nuevoNombre
+              }))
+            }))
           }));
         } else if (esExtraStatic) {
           setNuevasEstrategias(prev => ({
@@ -281,19 +253,15 @@ export default function PlataformaEstrategicaReview() {
         if (esDinamica) {
           setNuevoContenido(prev => ({
             ...prev,
-            propuestas: prev.propuestas.map(p =>
-              p.id === propId
-                ? {
-                  ...p,
-                  estrategias: p.estrategias.filter(e => e.id !== estr.id)
-                }
-                : p
-            )
+            propuestas: updateById(prev.propuestas, propId, p => ({
+              ...p,
+              estrategias: removeById(p.estrategias, estr.id)
+            }))
           }));
         } else if (esExtraStatic) {
           setNuevasEstrategias(prev => ({
             ...prev,
-            [propId]: prev[propId].filter(e => e.id !== estr.id)
+            [propId]: removeById(prev[propId], estr.id)
           }));
         }
       };
