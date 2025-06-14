@@ -140,7 +140,44 @@ export default function PlataformaEstrategicaReview() {
 
       return (
         <div key={estr.id} className={styles.estrategia}>
-          <h4>{estr.Estrategia || estr.nombre}</h4>
+          <h4>
+            {estr.Estrategia || estr.nombre}
+            {!showQuestion && (
+              <>
+                <button onClick={() => {
+                  const nuevoNombre = prompt('Editar estrategia', estr.nombre);
+                  if (nuevoNombre !== null) {
+                    setNuevoContenido(prev => ({
+                      ...prev,
+                      propuestas: prev.propuestas.map(p =>
+                        p.id === propId
+                          ? {
+                            ...p,
+                            estrategias: p.estrategias.map(e =>
+                              e.id === estr.id ? { ...e, nombre: nuevoNombre } : e
+                            )
+                          }
+                          : p
+                      )
+                    }));
+                  }
+                }}>✏️</button>
+                <button onClick={() => {
+                  setNuevoContenido(prev => ({
+                    ...prev,
+                    propuestas: prev.propuestas.map(p =>
+                      p.id === propId
+                        ? {
+                          ...p,
+                          estrategias: p.estrategias.filter(e => e.id !== estr.id)
+                        }
+                        : p
+                    )
+                  }));
+                }}>❌</button>
+              </>
+            )}
+          </h4>
 
           {showQuestion && (
             <FeedbackSection
