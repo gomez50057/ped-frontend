@@ -59,70 +59,59 @@ export default function PlataformaEstrategicaReview() {
   const handleGuardarAvance = () => setSnackbar({ open: true, message: '¡Avance guardado!', severity: 'info' });
   const handleGuardarComentarios = () => setSnackbar({ open: true, message: '¡Comentarios enviados!', severity: 'success' });
 
-  // Dinámico: nuevas propuestas/estrategias/líneas
-  const handleAgregarPropuesta = () => {
-    const nombre = prompt('Nueva Propuesta');
+  const agregarElemento = (promptText, callback) => {
+    const nombre = prompt(promptText);
     if (!nombre) return;
-    setNuevoContenido(prev => ({
-      propuestas: [...prev.propuestas, { id: uuidv4(), nombre, estrategias: [] }]
-    }));
+    callback(nombre);
   };
-  const handleAgregarEstrategia = propuestaId => {
-    const nombre = prompt('Nueva Estrategia');
-    if (!nombre) return;
 
-    setNuevoContenido(prev => {
-      const propuestas = prev.propuestas.map(p => {
-        if (p.id !== propuestaId) return p;
-
-        const idEstr = uuidv4();
-        return {
-          ...p,
-          estrategias: [
-            ...p.estrategias,
-            {
-              id: idEstr,
-              nombre,
-              lineas: []   // siempre vacías al crear la estrategia
-            }
-          ]
-        };
-      });
-
-      return { propuestas };
+  const handleAgregarPropuesta = () => {
+    agregarElemento('Nueva Propuesta', (nombre) => {
+      setNuevoContenido(prev => ({
+        propuestas: [...prev.propuestas, { id: uuidv4(), nombre, estrategias: [] }]
+      }));
     });
   };
 
-  // Estático: proponer estrategia y línea inicial
-  const handleAgregarEstrategiaStatic = propuestaId => {
-    const nombre = prompt('Proponer nueva Estrategia');
-    if (!nombre) return;
-    setNuevasEstrategias(prev => ({
-      ...prev,
-      [propuestaId]: [
-        ...(prev[propuestaId] || []),
-        { id: uuidv4(), nombre, lineas: [] }
-      ]
-    }));
+  const handleAgregarEstrategiaGeneral = (propuestaId, isStatic) => {
+    const promptText = isStatic ? 'Proponer nueva Estrategia' : 'Nueva Estrategia';
+    agregarElemento(promptText, (nombre) => {
+      const nuevaEstrategia = { id: uuidv4(), nombre, lineas: [] };
+
+      if (isStatic) {
+        setNuevasEstrategias(prev => ({
+          ...prev,
+          [propuestaId]: [...(prev[propuestaId] || []), nuevaEstrategia]
+        }));
+      } else {
+        setNuevoContenido(prev => ({
+          propuestas: prev.propuestas.map(p =>
+            p.id === propuestaId
+              ? { ...p, estrategias: [...p.estrategias, nuevaEstrategia] }
+              : p
+          )
+        }));
+      }
+    });
   };
 
   const handleAgregarLineaStatic = (propuestaId, estrategiaId) => {
-    const text = prompt('Agregar nuevo Lineamiento');
-    if (!text) return;
-    setNuevasLineas(prev => {
-      const byProp = prev[propuestaId] || {};
-      const arr = byProp[estrategiaId] || [];
-      return {
-        ...prev,
-        [propuestaId]: {
-          ...byProp,
-          [estrategiaId]: [...arr, { id: uuidv4(), text }]
-        }
-      };
+    agregarElemento('Agregar nuevo Lineamiento', (text) => {
+      setNuevasLineas(prev => {
+        const byProp = prev[propuestaId] || {};
+        const arr = byProp[estrategiaId] || [];
+        return {
+          ...prev,
+          [propuestaId]: {
+            ...byProp,
+            [estrategiaId]: [...arr, { id: uuidv4(), text }]
+          }
+        };
+      });
     });
   };
 
-  // Render helpers
+  // Mismo renderLineas con mínima optimización
   const renderLineas = (prefix, originales, propId, estrId) => {
     const extra = nuevasLineas[propId]?.[estrId] || [];
     return [...originales, ...extra].map(l => {
@@ -130,7 +119,6 @@ export default function PlataformaEstrategicaReview() {
       return (
         <li key={l.id} className={styles.lineaAccion}>
           <p>{l.text}</p>
-          {/* Solo originales y estáticas usan FeedbackSection */}
           {originales.find(o => o.id === l.id) && (
             <FeedbackSection
               id={fid}
@@ -176,54 +164,13 @@ export default function PlataformaEstrategicaReview() {
       );
     });
 
-  const PropuestaHeader = ({ p }) => (
-    <h3>
-      {p.nombre}
-      <button
-        onClick={() => {
-          const nombre = prompt('Editar propuesta', p.nombre);
-          if (nombre !== null) {
-            setNuevoContenido(prev => ({
-              ...prev,
-              propuestas: prev.propuestas.map(x =>
-                x.id === p.id ? { ...x, nombre } : x
-              )
-            }));
-          }
-        }}
-      >
-        ✏️
-      </button>
-      <button
-        onClick={() =>
-          setNuevoContenido(prev => ({
-            ...prev,
-            propuestas: prev.propuestas.filter(x => x.id !== p.id)
-          }))
-        }
-      >
-        ❌
-      </button>
-    </h3>
-  );
-
-  const PropuestaActions = ({ propId }) => (
-    <>
-      <button
-        className={styles.addButton}
-        onClick={() => handleAgregarEstrategia(propId)}
-      >
-        Agregar Estrategia hoal
-      </button>
-    </>
-  );
-
   const renderPropuestas = (eje, propuestas) =>
     propuestas.map(prop => {
       const prefix = `${eje}-propuesta-${prop.id}`;
       const isStatic = !!prop['Propuesta Objetivo'];
-      const estáticas = prop.Estrategias || [];
-      const nuevas = nuevasEstrategias[prop.id] || [];
+      const estrategiasExistentes = prop.Estrategias || [];
+      const estrategiasNuevas = nuevasEstrategias[prop.id] || [];
+
       return (
         <div key={prop.id} className={styles.propuesta}>
           <h3>{prop['Propuesta Objetivo'] || prop.nombre}</h3>
@@ -238,16 +185,12 @@ export default function PlataformaEstrategicaReview() {
             />
           )}
 
-          {renderEstrategias(prop.id, prefix, estáticas, isStatic)}
-          {renderEstrategias(prop.id, prefix, nuevas, false)}
+          {renderEstrategias(prop.id, prefix, estrategiasExistentes, isStatic)}
+          {renderEstrategias(prop.id, prefix, estrategiasNuevas, false)}
 
           <button
             className={styles.addButton}
-            onClick={() =>
-              isStatic
-                ? handleAgregarEstrategiaStatic(prop.id)
-                : handleAgregarEstrategia(prop.id)
-            }
+            onClick={() => handleAgregarEstrategiaGeneral(prop.id, isStatic)}
           >
             {isStatic ? 'Proponer Estrategia' : 'Agregar Estrategia'}
           </button>
@@ -261,8 +204,32 @@ export default function PlataformaEstrategicaReview() {
 
       return (
         <div key={p.id} className={styles.propuesta}>
-          <PropuestaHeader p={p} />
-          <PropuestaActions propId={p.id} />
+          <h3>
+            {p.nombre}
+            <button onClick={() => {
+              const nombre = prompt('Editar propuesta', p.nombre);
+              if (nombre !== null) {
+                setNuevoContenido(prev => ({
+                  ...prev,
+                  propuestas: prev.propuestas.map(x => x.id === p.id ? { ...x, nombre } : x)
+                }));
+              }
+            }}>✏️</button>
+            <button onClick={() =>
+              setNuevoContenido(prev => ({
+                ...prev,
+                propuestas: prev.propuestas.filter(x => x.id !== p.id)
+              }))
+            }>❌</button>
+          </h3>
+
+          <button
+            className={styles.addButton}
+            onClick={() => handleAgregarEstrategiaGeneral(p.id, false)}
+          >
+            Agregar Estrategia
+          </button>
+
           {renderEstrategias(p.id, prefix, p.estrategias, false)}
         </div>
       );
