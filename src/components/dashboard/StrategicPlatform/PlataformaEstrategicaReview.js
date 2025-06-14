@@ -114,12 +114,120 @@ export default function PlataformaEstrategicaReview() {
   // Mismo renderLineas con mínima optimización
   const renderLineas = (prefix, originales, propId, estrId) => {
     const extra = nuevasLineas[propId]?.[estrId] || [];
+
+    const isDynamicLinea = (lineaId) => {
+      const propuesta = nuevoContenido.propuestas.find(p => p.id === propId);
+      if (!propuesta) return false;
+      const estrategia = propuesta.estrategias.find(e => e.id === estrId);
+      if (!estrategia) return false;
+      return estrategia.lineas.some(l => l.id === lineaId);
+    };
+
+    const handleEditLinea = (lineaId) => {
+      const nuevoTexto = prompt('Editar línea de acción');
+      if (nuevoTexto !== null) {
+        setNuevoContenido(prev => ({
+          ...prev,
+          propuestas: prev.propuestas.map(p =>
+            p.id === propId
+              ? {
+                ...p,
+                estrategias: p.estrategias.map(e =>
+                  e.id === estrId
+                    ? {
+                      ...e,
+                      lineas: e.lineas.map(l =>
+                        l.id === lineaId ? { ...l, text: nuevoTexto } : l
+                      )
+                    }
+                    : e
+                )
+              }
+              : p
+          )
+        }));
+      }
+    };
+
+    const handleDeleteLinea = (lineaId) => {
+      setNuevoContenido(prev => ({
+        ...prev,
+        propuestas: prev.propuestas.map(p =>
+          p.id === propId
+            ? {
+              ...p,
+              estrategias: p.estrategias.map(e =>
+                e.id === estrId
+                  ? {
+                    ...e,
+                    lineas: e.lineas.filter(l => l.id !== lineaId)
+                  }
+                  : e
+              )
+            }
+            : p
+        )
+      }));
+    };
+
+    const handleEditLineaStatic = (lineaId) => {
+      const nuevoTexto = prompt('Editar línea de acción');
+      if (nuevoTexto !== null) {
+        setNuevasLineas(prev => {
+          const prop = prev[propId] || {};
+          const lineas = prop[estrId] || [];
+          return {
+            ...prev,
+            [propId]: {
+              ...prop,
+              [estrId]: lineas.map(l =>
+                l.id === lineaId ? { ...l, text: nuevoTexto } : l
+              )
+            }
+          };
+        });
+      }
+    };
+
+    const handleDeleteLineaStatic = (lineaId) => {
+      setNuevasLineas(prev => {
+        const prop = prev[propId] || {};
+        const lineas = prop[estrId] || [];
+        return {
+          ...prev,
+          [propId]: {
+            ...prop,
+            [estrId]: lineas.filter(l => l.id !== lineaId)
+          }
+        };
+      });
+    };
+
     return [...originales, ...extra].map(l => {
       const fid = `${prefix}-linea-${l.id}`;
+      const esOriginal = originales.find(o => o.id === l.id);
+      const esDinamica = isDynamicLinea(l.id);
+      const esExtraStatic = extra.find(e => e.id === l.id);
+
       return (
         <li key={l.id} className={styles.lineaAccion}>
-          <p>{l.text}</p>
-          {originales.find(o => o.id === l.id) && (
+          <p>
+            {l.text}
+            {esDinamica && (
+              <>
+                <button onClick={() => handleEditLinea(l.id)}>✏️</button>
+                <button onClick={() => handleDeleteLinea(l.id)}>❌</button>
+              </>
+            )}
+            {esExtraStatic && !esDinamica && (
+              <>
+                <button onClick={() => handleEditLineaStatic(l.id)}>✏️</button>
+                <button onClick={() => handleDeleteLineaStatic(l.id)}>❌</button>
+              </>
+            )}
+          </p>
+
+          {esOriginal && (
             <FeedbackSection
               id={fid}
               acuerdo={feedback[fid]?.acuerdo}
@@ -138,6 +246,58 @@ export default function PlataformaEstrategicaReview() {
       const fid = `${prefix}-estrategia-${estr.id}`;
       const lineas = estr.lineas || [];
 
+      const esDinamica = nuevoContenido.propuestas.some(p =>
+        p.id === propId && p.estrategias.some(e => e.id === estr.id)
+      );
+
+      const esExtraStatic = nuevasEstrategias[propId]?.some(e => e.id === estr.id);
+
+      const handleEditEstrategia = (nuevoNombre) => {
+        if (esDinamica) {
+          setNuevoContenido(prev => ({
+            ...prev,
+            propuestas: prev.propuestas.map(p =>
+              p.id === propId
+                ? {
+                  ...p,
+                  estrategias: p.estrategias.map(e =>
+                    e.id === estr.id ? { ...e, nombre: nuevoNombre } : e
+                  )
+                }
+                : p
+            )
+          }));
+        } else if (esExtraStatic) {
+          setNuevasEstrategias(prev => ({
+            ...prev,
+            [propId]: prev[propId].map(e =>
+              e.id === estr.id ? { ...e, nombre: nuevoNombre } : e
+            )
+          }));
+        }
+      };
+
+      const handleDeleteEstrategia = () => {
+        if (esDinamica) {
+          setNuevoContenido(prev => ({
+            ...prev,
+            propuestas: prev.propuestas.map(p =>
+              p.id === propId
+                ? {
+                  ...p,
+                  estrategias: p.estrategias.filter(e => e.id !== estr.id)
+                }
+                : p
+            )
+          }));
+        } else if (esExtraStatic) {
+          setNuevasEstrategias(prev => ({
+            ...prev,
+            [propId]: prev[propId].filter(e => e.id !== estr.id)
+          }));
+        }
+      };
+
       return (
         <div key={estr.id} className={styles.estrategia}>
           <h4>
@@ -145,36 +305,12 @@ export default function PlataformaEstrategicaReview() {
             {!showQuestion && (
               <>
                 <button onClick={() => {
-                  const nuevoNombre = prompt('Editar estrategia', estr.nombre);
+                  const nuevoNombre = prompt('Editar estrategia', estr.Estrategia || estr.nombre);
                   if (nuevoNombre !== null) {
-                    setNuevoContenido(prev => ({
-                      ...prev,
-                      propuestas: prev.propuestas.map(p =>
-                        p.id === propId
-                          ? {
-                            ...p,
-                            estrategias: p.estrategias.map(e =>
-                              e.id === estr.id ? { ...e, nombre: nuevoNombre } : e
-                            )
-                          }
-                          : p
-                      )
-                    }));
+                    handleEditEstrategia(nuevoNombre);
                   }
                 }}>✏️</button>
-                <button onClick={() => {
-                  setNuevoContenido(prev => ({
-                    ...prev,
-                    propuestas: prev.propuestas.map(p =>
-                      p.id === propId
-                        ? {
-                          ...p,
-                          estrategias: p.estrategias.filter(e => e.id !== estr.id)
-                        }
-                        : p
-                    )
-                  }));
-                }}>❌</button>
+                <button onClick={handleDeleteEstrategia}>❌</button>
               </>
             )}
           </h4>
