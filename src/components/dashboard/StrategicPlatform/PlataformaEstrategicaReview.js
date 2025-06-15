@@ -187,24 +187,21 @@ export default function PlataformaEstrategicaReview() {
 
       return (
         <li key={l.id} className={styles.lineaAccion}>
-          <p>
-            {l.text}
-            {(esDinamica || (esExtraStatic && !esDinamica)) && (
-              <EditDeleteButtons
-                onEdit={() =>
-                  esDinamica
-                    ? handleEditLinea(l.id)
-                    : handleEditLineaStatic(l.id)
-                }
-                onDelete={() =>
-                  esDinamica
-                    ? handleDeleteLinea(l.id)
-                    : handleDeleteLineaStatic(l.id)
-                }
-              />
-            )}
-          </p>
-
+          <p>{l.text}</p>
+          {(esDinamica || (esExtraStatic && !esDinamica)) && (
+            <EditDeleteButtons
+              onEdit={() =>
+                esDinamica
+                  ? handleEditLinea(l.id)
+                  : handleEditLineaStatic(l.id)
+              }
+              onDelete={() =>
+                esDinamica
+                  ? handleDeleteLinea(l.id)
+                  : handleDeleteLineaStatic(l.id)
+              }
+            />
+          )}
           {esOriginal && (
             <FeedbackSection
               id={fid}
