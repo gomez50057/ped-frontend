@@ -4,7 +4,7 @@
 }
 
 .ctaLink {
-  color: #fff;
+  color: var(--blanco);
   z-index: 2;
 }
 
@@ -17,6 +17,7 @@
   max-height: 100vh;
 }
 
+/* Imágenes */
 .imgRepresentationDesignA img,
 .imgeWrapperDesignA img,
 .imgTituleDesignB img,
@@ -28,13 +29,33 @@
   height: auto;
 }
 
+/* Imágenes con width: 120% */
+.imgRepresentationDesignA img,
+.imgRepresentationDesignC img,
+.imgRepresentationDesignE img {
+  width: 120%;
+}
+
+/* Botones */
 .buttonDesignB,
 .buttonDesignC,
 .buttonDesignE {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30%;
+  height: 60px;
+  background: linear-gradient(-45deg, var(--vinoOsc), var(--vinoClr));
+  border: none;
+  cursor: pointer;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  font-weight: 800;
   text-decoration: none;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   overflow: hidden;
   z-index: 1;
+  position: relative;
 }
 
 .buttonDesignB::before,
@@ -62,11 +83,17 @@
   transform: scale(1.2);
 }
 
+/* Hover únicos para cada botón */
+.buttonDesignB:hover {
+  transform: translateY(-20px) scale(1.05);
+}
 
-/*  */
-/* designA */
-/*  */
+.buttonDesignC:hover,
+.buttonDesignE:hover {
+  transform: translateX(20px) translateY(-10px) scale(1.05);
+}
 
+/* --- Sección designA --- */
 .designA {
   display: flex;
   background: var(--vinoGradient);
@@ -97,10 +124,6 @@
   width: 55%;
   height: 100%;
   z-index: 500;
-}
-
-.imgRepresentationDesignA img {
-  width: 120%;
 }
 
 /* WRAPPER DE BOTÓN Y TEXTO */
@@ -147,10 +170,7 @@
   padding: 0 1rem;
 }
 
-/*  */
-/* designB */
-/*  */
-
+/* --- Sección designB --- */
 .backgroundVideo {
   position: absolute;
   top: 0;
@@ -204,29 +224,7 @@
   text-align: center;
 }
 
-.buttonDesignB {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 30%;
-  height: 60px;
-  background: linear-gradient(-45deg, var(--vinoOsc), var(--vinoClr));
-  border: none;
-  cursor: pointer;
-  border-radius: 50px;
-  font-size: 1.1rem;
-  font-weight: 800;
-}
-
-.buttonDesignB:hover {
-  transform: translateY(-20px) scale(1.05);
-}
-
-/*  */
-/* designC */
-/*  */
-
-
+/* --- Sección designC --- */
 .designC {
   display: flex;
   background: var(--grisGradient);
@@ -257,10 +255,6 @@
   width: 55%;
   height: 100%;
   z-index: 500;
-}
-
-.imgRepresentationDesignC img {
-  width: 120%;
 }
 
 /* WRAPPER DE BOTÓN Y TEXTO */
@@ -310,29 +304,7 @@
   padding: 0 1rem;
 }
 
-.buttonDesignC {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 30%;
-  height: 60px;
-  background: linear-gradient(-45deg, var(--vinoOsc), var(--vinoClr));
-  border: none;
-  cursor: pointer;
-  border-radius: 50px;
-  font-size: 1.1rem;
-  font-weight: 800;
-}
-
-.buttonDesignC:hover {
-  transform: translateX(20px) translateY(-10px) scale(1.05);
-}
-
-
-/*  */
-/* designE */
-/*  */
-
+/* --- Sección designE --- */
 .designE {
   display: flex;
   background: var(--doradoGradient);
@@ -363,10 +335,6 @@
   width: 55%;
   height: 100%;
   z-index: 500;
-}
-
-.imgRepresentationDesignE img {
-  width: 120%;
 }
 
 /* WRAPPER DE BOTÓN Y TEXTO */
@@ -416,163 +384,11 @@
   padding: 0 1rem;
 }
 
-.buttonDesignE {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 30%;
-  height: 60px;
-  background: linear-gradient(-45deg, var(--vinoOsc), var(--vinoClr));
-  border: none;
-  cursor: pointer;
-  border-radius: 50px;
-  font-size: 1.1rem;
-  font-weight: 800;
-}
-
-.buttonDesignE:hover {
-  transform: translateX(20px) translateY(-10px) scale(1.05);
-}
-
-/* Laptops medianos (1024px - 1199px) */
-/* @media (max-width: 1199px) and (min-width: 1024px) {
-
-  .overlayTextDesignA p,
-  .overlayTextDesignB p,
-  .textContentDesignC p {
-    font-size: 1.8rem;
-  }
-
-  .buttonDesignA,
-  .buttonDesignB,
-  .buttonDesignC {
-    width: 35%;
-    font-size: 1rem;
-  }
-
-  .textContentDesignC {
-    width: 60vw;
-  }
-
-  .imgDesignC {
-    width: 50vw;
-  }
-} */
-
-/* Tablets (768px) */
-/* @media (max-width: 1023px) {
-  .sectionStack {
-    padding: 1rem 1.2rem;
-  }
-
-  .sectionItem {
-    flex-direction: column;
-    height: auto;
-    gap: 2rem;
-    padding: 1rem;
-  }
-
-  .overlayTextDesignA p,
-  .overlayTextDesignB p,
-  .textContentDesignC p {
-    font-size: 1.5rem;
-    padding: 0 1rem;
-  }
-
-  .textContentDesignC p {
-    font-size: 1.2rem;
-    padding: 1rem 3.2rem;
-    margin: 0;
-  }
-
-  .overlayTextDesignA {
-    width: 100%;
-  }
-
-  .buttonDesignB,
-  .buttonDesignC {
-    width: 60%;
-    font-size: 1rem;
-  }
-
-  .imgRepresentationDesignA,
-  .imgTituleDesignB,
-  .imgTituleDesignC,
-  .imgDesignC {
-    width: 80vw;
-  }
-
-  .containerDesignA {
-    flex-direction: column;
-  }
-
-  .overlayTextDesignB {
-    width: 100%;
-  }
-
-  .buttonDesignA {
-    position: static;
-    top: 0;
-    right: 0;
-    width: 100%;
-    font-size: 1rem;
-    padding: 1rem 0;
-    margin-bottom: 20px;
-  }
-
-  .textContentDesignC {
-    width: 70vw;
-  }
-} */
-
-/* Celulares (<=767px) */
-/* @media (max-width: 767px) {
-
-  .sectionStack {
-    padding: 1rem 1.2rem;
-  }
-
-  .sectionItem {
-    flex-direction: column;
-    height: auto;
-    gap: 1.5rem;
-    padding: 0rem;
-  }
-
-  .overlayTextDesignA p,
-  .overlayTextDesignB p,
-  .textContentDesignC p {
-    font-size: 1.2rem;
-    padding: 0rem;
-    margin: 0;
-  }
-
-  .textContentDesignC p {
-    padding: 1rem 3.2rem;
-  }
-
-  .buttonDesignB,
-  .buttonDesignC {
-    width: 80%;
-    font-size: 0.9rem;
-  }
-
-  .buttonDesignA {
-    font-size: 0.9rem;
-  }
-
-  .imgRepresentationDesignA,
-  .imgTituleDesignB {
-    width: 70vw;
-  }
-
-  .imgTituleDesignC,
-  .imgDesignC {
-    width: 90vw;
-  }
-
-  .containerDesignA {
-    flex-direction: column;
-  }
-
-} */
+/* ------------------------------------------
+   Media Queries originales comentadas:
+--------------------------------------------*/
+/*
+@media (max-width: 1199px) and (min-width: 1024px) { ... }
+@media (max-width: 1023px) { ... }
+@media (max-width: 767px) { ... }
+*/
