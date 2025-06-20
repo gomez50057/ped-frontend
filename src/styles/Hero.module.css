@@ -1,9 +1,12 @@
 .contentHeader {
   width: 100vw;
   height: 100vh;
+  margin: 0;
+  position: relative;
 }
 
-.contentHeader .headerTxt {
+/* Texto sobre el header */
+.headerTxt {
   position: absolute;
   top: 54vh;
   left: 0;
@@ -17,11 +20,13 @@
   padding: 0;
 }
 
-.contentHeader .headerTxt img {
+/* Imagen dentro de headerTxt */
+.headerTxt img {
   width: 100%;
   height: auto;
 }
 
+/* Tren */
 .contentTren {
   position: absolute;
   bottom: 15vh;
@@ -31,7 +36,8 @@
   z-index: 100;
 }
 
-.contentHeader .headerImg {
+/* Imagen de header (de fondo) */
+.headerImg {
   position: absolute;
   top: 0;
   right: 0;
@@ -42,18 +48,25 @@
   will-change: opacity, transform;
 }
 
-.contentHeader .headerImg img {
+.headerImg img {
   width: 100%;
   height: auto;
 }
 
+/* Flotante animado */
 .floatingImg {
   display: block;
   animation: floatingAnimation 10s infinite alternate ease-in-out, shadowAnimation 8s infinite alternate ease-in-out;
   will-change: transform, filter;
 }
 
-/* @keyframes floatingAnimation {
+/* Clases para mostrar animación */
+.fadeIn {
+  opacity: 1 !important;
+}
+
+/* Animaciones */
+@keyframes floatingAnimation {
   0% {
     transform: translateY(0);
   }
@@ -71,57 +84,56 @@
   100% {
     filter: drop-shadow(10px 10px 15px rgba(0, 0, 0, 0.35));
   }
-} */
-
-.fadeIn {
-  opacity: 1 !important;
 }
 
-/* Tamaño para 'md' */
-@media (min-width: 576px) {}
-
-/* Tamaño para 'lg' */
+/* Para pantallas menores a 768px ("lg") */
 @media (max-width: 768px) {
-
   .contentHeader {
     width: 100vw;
-    height: 100vh;
+    height: auto;
     margin: 0;
   }
 
-  .contentHeader .headerTxt {
+  .headerTxt {
     position: relative;
-    top: 20%;
+    top: 6vh;
     left: 0;
     transform: none;
-    width: 100vw;
+    width: 90vw;
     height: auto;
   }
 
-  /* .contentHeader .headerImg {
-    position: relative;
-    display: flex;
-    align-items: center;
-    bottom: 0;
+  .contentTren {
+    position: absolute;
+    top: 15vh;
     left: 0;
-    width: 150vw;
-    height: 50%;
-  } */
+    width: 100vw;
+    height: 50px;
+    z-index: 100;
+  }
+
+  /* Animaciones */
+  @keyframes floatingAnimation {
+    0% {
+      transform: translateY(0);
+    }
+
+    100% {
+      transform: translateY(-8px);
+    }
+  }
+
+
 }
 
-/* Tamaño para 'xl' */
-/* @media (min-width: 1024px) {
-  .dualContainer {
-    background-color: lightcoral;
-  }
-} */
+/* 'md' placeholder: (min-width: 576px) (puedes agregar reglas aquí si quieres) */
+@media (min-width: 576px) {}
 
-/* Tamaño para 'xxl' */
+/* 'xl' y 'xxl' media queries están comentadas por ahora */
+@media (min-width: 1024px) {
+  /* .dualContainer { background-color: lightcoral; } */
+}
+
 @media (min-width: 1400px) {
-  /* .dualContainer {
-    background-color: lightgoldenrodyellow;
-  } */
-
-
-
+  /* .dualContainer { background-color: lightgoldenrodyellow; } */
 }
