@@ -1,0 +1,578 @@
+.sectionStack {
+  width: 100%;
+  padding: 2rem 2.5rem;
+}
+
+.ctaLink {
+  color: #fff;
+  z-index: 2;
+}
+
+.sectionItem {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+  border-radius: 3rem;
+  max-height: 100vh;
+}
+
+.imgRepresentationDesignA img,
+.imgeWrapperDesignA img,
+.imgTituleDesignB img,
+.imgBotonDesignC img,
+.imgDesignC img,
+.imgRepresentationDesignE img,
+.imgeWrapperDesignE img {
+  width: 100%;
+  height: auto;
+}
+
+.buttonDesignB,
+.buttonDesignC,
+.buttonDesignE {
+  text-decoration: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.buttonDesignB::before,
+.buttonDesignC::before,
+.buttonDesignE::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.5;
+  z-index: -1;
+  transform: scale(0.75);
+  transition: transform 0.4s ease;
+  filter: blur(10px);
+}
+
+.buttonDesignB:hover,
+.buttonDesignC:hover,
+.buttonDesignE:hover {
+  box-shadow: 0 0 25px var(--vinoClr), 0 0 15px var(--doradoClr);
+}
+
+.buttonDesignB:hover::before,
+.buttonDesignC:hover::before,
+.buttonDesignE:hover::before {
+  transform: scale(1.2);
+}
+
+
+/*  */
+/* designA */
+/*  */
+
+.designA {
+  display: flex;
+  background: var(--vinoGradient);
+}
+
+.bgImgDesignA {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.bgImgDesignA img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.containerDesignA {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+.imgRepresentationDesignA {
+  width: 55%;
+  height: 100%;
+  z-index: 500;
+}
+
+.imgRepresentationDesignA img {
+  width: 120%;
+}
+
+/* WRAPPER DE BOTÓN Y TEXTO */
+.imgeWrapperDesignA {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 45%;
+  z-index: 400;
+}
+
+/* BOTÓN */
+.imgBotonDesignA {
+  position: relative;
+  top: -5rem;
+  width: 90%;
+  filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.3));
+}
+
+.imgBotonDesignA img {
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.imgBotonDesignA img:hover {
+  transform: scale(1.05);
+  filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.5));
+}
+
+/* OVERLAY DEL TEXTO */
+.overlayTextDesignA {
+  position: relative;
+  width: 110%;
+  background: var(--vinoClr);
+  padding: 1rem 8rem 1rem calc(8rem + 10%);
+}
+
+.overlayTextDesignA p {
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--blanco);
+  text-align: center;
+  padding: 0 1rem;
+}
+
+/*  */
+/* designB */
+/*  */
+
+.backgroundVideo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
+}
+
+.gradientOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(26, 26, 26, 0.596) 100%);
+  z-index: -1;
+}
+
+.designB {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 80vh;
+  border-radius: 3rem;
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.overlayTextDesignB {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 55%;
+  gap: 1rem;
+}
+
+.imgTituleDesignB {
+  width: 100%;
+  height: auto;
+}
+
+.overlayTextDesignB p {
+  font-size: 2rem;
+  font-weight: 500;
+  color: var(--blanco);
+  padding: 0.8rem 1.3rem;
+  margin: 0;
+  text-align: center;
+}
+
+.buttonDesignB {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30%;
+  height: 60px;
+  background: linear-gradient(-45deg, var(--vinoOsc), var(--vinoClr));
+  border: none;
+  cursor: pointer;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  font-weight: 800;
+}
+
+.buttonDesignB:hover {
+  transform: translateY(-20px) scale(1.05);
+}
+
+/*  */
+/* designC */
+/*  */
+
+
+.designC {
+  display: flex;
+  background: var(--grisGradient);
+}
+
+.bgImgDesignC {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.bgImgDesignC img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.containerDesignC {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+.imgRepresentationDesignC {
+  width: 55%;
+  height: 100%;
+  z-index: 500;
+}
+
+.imgRepresentationDesignC img {
+  width: 120%;
+}
+
+/* WRAPPER DE BOTÓN Y TEXTO */
+.imgeWrapperDesignC {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 45%;
+  z-index: 400;
+}
+
+/* BOTÓN */
+.imgBotonDesignC {
+  position: relative;
+  top: -5rem;
+  width: 90%;
+  filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.3));
+}
+
+.imgBotonDesignC img {
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.imgBotonDesignC img:hover {
+  transform: scale(1.05);
+  filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.2));
+}
+
+/* OVERLAY DEL TEXTO */
+.overlayTextDesignC {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  width: 150%;
+  background: var(--vinoOsc);
+  padding: 1rem 20rem 1rem calc(4rem + 10%);
+}
+
+.overlayTextDesignC p {
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--blanco);
+  text-align: center;
+  padding: 0 1rem;
+}
+
+.buttonDesignC {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30%;
+  height: 60px;
+  background: linear-gradient(-45deg, var(--vinoOsc), var(--vinoClr));
+  border: none;
+  cursor: pointer;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  font-weight: 800;
+}
+
+.buttonDesignC:hover {
+  transform: translateX(20px) translateY(-10px) scale(1.05);
+}
+
+
+/*  */
+/* designE */
+/*  */
+
+.designE {
+  display: flex;
+  background: var(--doradoGradient);
+}
+
+.bgImgDesignE {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.bgImgDesignE img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.containerDesignE {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+.imgRepresentationDesignE {
+  width: 55%;
+  height: 100%;
+  z-index: 500;
+}
+
+.imgRepresentationDesignE img {
+  width: 120%;
+}
+
+/* WRAPPER DE BOTÓN Y TEXTO */
+.imgeWrapperDesignE {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 45%;
+  z-index: 400;
+}
+
+/* BOTÓN */
+.imgBotonDesignE {
+  position: relative;
+  top: -5rem;
+  width: 90%;
+  filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.3));
+}
+
+.imgBotonDesignE img {
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.imgBotonDesignE img:hover {
+  transform: scale(1.05);
+  filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.2));
+}
+
+/* OVERLAY DEL TEXTO */
+.overlayTextDesignE {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  width: 110%;
+  background: var(--grisOsc);
+  padding: 1rem 8rem 1rem calc(8rem + 10%);
+}
+
+.overlayTextDesignE p {
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--blanco);
+  text-align: center;
+  padding: 0 1rem;
+}
+
+.buttonDesignE {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30%;
+  height: 60px;
+  background: linear-gradient(-45deg, var(--vinoOsc), var(--vinoClr));
+  border: none;
+  cursor: pointer;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  font-weight: 800;
+}
+
+.buttonDesignE:hover {
+  transform: translateX(20px) translateY(-10px) scale(1.05);
+}
+
+/* Laptops medianos (1024px - 1199px) */
+/* @media (max-width: 1199px) and (min-width: 1024px) {
+
+  .overlayTextDesignA p,
+  .overlayTextDesignB p,
+  .textContentDesignC p {
+    font-size: 1.8rem;
+  }
+
+  .buttonDesignA,
+  .buttonDesignB,
+  .buttonDesignC {
+    width: 35%;
+    font-size: 1rem;
+  }
+
+  .textContentDesignC {
+    width: 60vw;
+  }
+
+  .imgDesignC {
+    width: 50vw;
+  }
+} */
+
+/* Tablets (768px) */
+/* @media (max-width: 1023px) {
+  .sectionStack {
+    padding: 1rem 1.2rem;
+  }
+
+  .sectionItem {
+    flex-direction: column;
+    height: auto;
+    gap: 2rem;
+    padding: 1rem;
+  }
+
+  .overlayTextDesignA p,
+  .overlayTextDesignB p,
+  .textContentDesignC p {
+    font-size: 1.5rem;
+    padding: 0 1rem;
+  }
+
+  .textContentDesignC p {
+    font-size: 1.2rem;
+    padding: 1rem 3.2rem;
+    margin: 0;
+  }
+
+  .overlayTextDesignA {
+    width: 100%;
+  }
+
+  .buttonDesignB,
+  .buttonDesignC {
+    width: 60%;
+    font-size: 1rem;
+  }
+
+  .imgRepresentationDesignA,
+  .imgTituleDesignB,
+  .imgTituleDesignC,
+  .imgDesignC {
+    width: 80vw;
+  }
+
+  .containerDesignA {
+    flex-direction: column;
+  }
+
+  .overlayTextDesignB {
+    width: 100%;
+  }
+
+  .buttonDesignA {
+    position: static;
+    top: 0;
+    right: 0;
+    width: 100%;
+    font-size: 1rem;
+    padding: 1rem 0;
+    margin-bottom: 20px;
+  }
+
+  .textContentDesignC {
+    width: 70vw;
+  }
+} */
+
+/* Celulares (<=767px) */
+/* @media (max-width: 767px) {
+
+  .sectionStack {
+    padding: 1rem 1.2rem;
+  }
+
+  .sectionItem {
+    flex-direction: column;
+    height: auto;
+    gap: 1.5rem;
+    padding: 0rem;
+  }
+
+  .overlayTextDesignA p,
+  .overlayTextDesignB p,
+  .textContentDesignC p {
+    font-size: 1.2rem;
+    padding: 0rem;
+    margin: 0;
+  }
+
+  .textContentDesignC p {
+    padding: 1rem 3.2rem;
+  }
+
+  .buttonDesignB,
+  .buttonDesignC {
+    width: 80%;
+    font-size: 0.9rem;
+  }
+
+  .buttonDesignA {
+    font-size: 0.9rem;
+  }
+
+  .imgRepresentationDesignA,
+  .imgTituleDesignB {
+    width: 70vw;
+  }
+
+  .imgTituleDesignC,
+  .imgDesignC {
+    width: 90vw;
+  }
+
+  .containerDesignA {
+    flex-direction: column;
+  }
+
+} */

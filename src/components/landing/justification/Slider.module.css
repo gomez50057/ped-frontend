@@ -1,0 +1,400 @@
+.sliderContainer {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+  padding: 2rem 0;
+}
+
+.wrapper {
+  display: flex;
+  max-height: 100vh;
+  padding: 1rem 0;
+  gap: 2rem;
+}
+
+.element01,
+.element02 {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.element01 {
+  width: calc(100VW + 650px);
+}
+
+.element02 {
+  width: 75vw;
+}
+
+
+/*  */
+/* Elemento 01 */
+/*  */
+
+.imgBackContainer {
+  position: relative;
+  width: auto;
+  height: 100%;
+  z-index: 1;
+}
+
+.imgContainer {
+  position: relative;
+  right: 0;
+  width: auto;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.imgContainer img {
+  height: 100%;
+  width: auto;
+}
+
+.textElement01 {
+  width: 100%;
+  height: auto;
+}
+
+.textElement01 h2 {
+  color: var(--grisClr);
+  font-weight: 500;
+  font-size: 3rem;
+  margin: 0;
+}
+
+.line {
+  width: 100%;
+  border: #861a3e solid 1px;
+  border-radius: 1px;
+  margin: 10px 0;
+}
+
+.textElement01 p {
+  margin-top: 10px;
+  font-weight: 400;
+  font-size: 1.4rem;
+  text-align: justify;
+}
+
+.textElement01 p span {
+  color: var(--vinoOsc);
+  font-weight: 600;
+}
+
+/*  */
+/* Elemento 02 */
+/*  */
+
+.imgContainerElement02 {
+  max-width: 40vw;
+  max-height: 100%;
+  display: flex;
+
+}
+
+.imgContainerElement02 img {
+  height: auto;
+  width: 100%;
+  object-fit: contain;
+}
+
+.fileShapeL,
+.fileShapeR {
+  height: auto;
+  width: 600px;
+  max-width: 100%;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: left top;
+  padding: 2rem 0;
+  margin-left: 2rem;
+}
+
+.fileShapeL {
+  background-image: url('/img/file-mask-izquierda.svg');
+}
+
+.fileShapeR {
+  background-image: url('/img/file-mask-derecha.svg');
+}
+
+.title {
+  font-size: 1.8rem;
+  font-style: italic;
+  font-weight: 600;
+  color: white;
+  padding: 6rem 1.5rem 0rem 1.5rem;
+  margin: 0;
+}
+
+.cardElement02 {
+  width: calc(100% - 3rem);
+  height: auto;
+  padding: 1rem 1.5rem;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  position: relative;
+  right: 36px;
+  width: 125%;
+  gap: 0.8rem;
+  padding: 0.9rem 0.3rem;
+  margin: 25px 0;
+  background-color: #b5486b;
+}
+
+.item::after {
+  content: "";
+  position: absolute;
+  bottom: -20px;
+  right: 0;
+  width: 0;
+  height: 0;
+  border-right: 20px solid transparent;
+  border-top: 20px solid var(--vinoOsc);
+}
+
+.circle {
+  width: 30px;
+  height: 40px;
+  flex-shrink: 0;
+}
+
+.textElement02 {
+  color: var(--blanco);
+  font-size: 1.3rem;
+  line-height: 1.5;
+  word-break: break-word;
+  flex: 1;
+  font-weight: 500;
+}
+
+
+/* ==========================
+   Laptops medianos (1300px - 1199px)
+   ========================== */
+@media (max-width: 1300px) and (min-width: 1199px) {
+  .element01 {
+    width: 100vw;
+  }
+
+  .element02 {
+    width: 75vw;
+  }
+
+  .textElement01 h2 {
+    font-size: 2.5rem;
+  }
+
+  .textElement01 p {
+    font-size: 1.2rem;
+  }
+
+  .imgContainerElement02 {
+    max-width: 90vw;
+  }
+
+  .title {
+    font-size: 1.35rem;
+    padding: 5.5rem 1.2rem 0rem 1.2rem;
+  }
+
+  .item {
+    width: 136%;
+    gap: 0.8rem;
+    padding: 0.61rem 0.3rem;
+    margin: 20px 0;
+  }
+  
+  .textElement02 {
+    font-size: 0.8rem;
+  }
+
+}
+
+/* ==========================
+   Tablets (768px - 1023px)
+   ========================== */
+@media (max-width: 1299px) and (min-width: 768px) {
+
+
+  .element01 {
+    width: 100vw;
+  }
+
+  .element02 {
+    width: 75vw;
+  }
+
+  .textElement01 h2 {
+    font-size: 2.5rem;
+  }
+
+  .textElement01 p {
+    font-size: 1.2rem;
+  }
+
+  .imgContainerElement02 {
+    max-width: 90vw;
+  }
+
+  .title {
+    font-size: 1.35rem;
+    padding: 5.5rem 1.2rem 0rem 1.2rem;
+  }
+
+  .item {
+    width: 136%;
+    gap: 0.8rem;
+    padding: 0.61rem 0.3rem;
+    margin: 20px 0;
+  }
+  
+  .textElement02 {
+    font-size: 0.8rem;
+  }
+
+
+  
+
+  .element01,
+  .element02 {
+    width: 100vw;
+    gap: 1.5rem;
+  }
+
+  .textElement01 h2 {
+    font-size: 2rem;
+    text-align: center;
+  }
+
+  .textElement01 p {
+    font-size: 1.1rem;
+    text-align: justify;
+  }
+
+  .imgContainerElement02 {
+    max-width: 90vw;
+  }
+
+  .imgContainerElement02 img:nth-of-type(1) {
+    width: 60%;
+    margin: 0 auto;
+  }
+
+  .imgContainerElement02 img:nth-of-type(2) {
+    width: 100%;
+  }
+
+  .fileShapeR {
+    width: 100vw;
+    margin-left: 0;
+  }
+
+  .item {
+    width: 125%;
+    right: 0;
+  }
+}
+
+/* ==========================
+   Celulares (<=767px)
+   ========================== */
+@media (max-width: 767px) {
+  /* .wrapper {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .element01,
+  .element02 {
+    flex-direction: column;
+    width: 95vw;
+    gap: 1rem;
+  }
+
+  .textElement01 h2 {
+    font-size: 1.5rem;
+    text-align: center;
+  }
+
+  .textElement01 p {
+    font-size: 1rem;
+    text-align: justify;
+  }
+
+  .imgContainerElement02 {
+    max-width: 95vw;
+  }
+
+  .imgContainerElement02 img:nth-of-type(1) {
+    width: 70%;
+    margin: 0 auto;
+  }
+
+  .imgContainerElement02 img:nth-of-type(2) {
+    width: 100%;
+  }
+
+  .fileShapeR {
+    width: 95vw;
+    margin-left: 0;
+  }
+
+  .item {
+    width: 100%;
+    right: 0;
+  }
+
+  .cardElement02 {
+    padding: 1rem;
+  } */
+
+  
+
+  .element01 {
+    width: 400vw;
+  }
+
+  .element02 {
+    width: 200vw;
+  }
+
+  .textElement01 h2 {
+    font-size: 2.5rem;
+  }
+
+  .textElement01 p {
+    font-size: 1.2rem;
+  }
+
+  .imgContainerElement02 {
+    max-width: 90vw;
+  }
+
+  .title {
+    font-size: 1.35rem;
+    padding: 5.5rem 1.2rem 0rem 1.2rem;
+  }
+
+  .item {
+    width: 136%;
+    gap: 0.8rem;
+    padding: 0.61rem 0.3rem;
+    margin: 20px 0;
+  }
+  
+  .textElement02 {
+    font-size: 0.8rem;
+  }
+}

@@ -1,0 +1,127 @@
+.contentHeader {
+  width: 100vw;
+  height: 100vh;
+}
+
+.contentHeader .headerTxt {
+  position: absolute;
+  top: 54vh;
+  left: 0;
+  transform: translate(0%, -50%);
+  width: 78vw;
+  height: auto;
+  opacity: 0;
+  transition: opacity 1s ease-in;
+  z-index: 200;
+  margin: 0;
+  padding: 0;
+}
+
+.contentHeader .headerTxt img {
+  width: 100%;
+  height: auto;
+}
+
+.contentTren {
+  position: absolute;
+  bottom: 15vh;
+  left: 0;
+  width: 100vw;
+  height: 200px;
+  z-index: 100;
+}
+
+.contentHeader .headerImg {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100vw;
+  height: auto;
+  opacity: 0;
+  transition: opacity 1s ease-in;
+  will-change: opacity, transform;
+}
+
+.contentHeader .headerImg img {
+  width: 100%;
+  height: auto;
+}
+
+.floatingImg {
+  display: block;
+  animation: floatingAnimation 10s infinite alternate ease-in-out, shadowAnimation 8s infinite alternate ease-in-out;
+  will-change: transform, filter;
+}
+
+/* @keyframes floatingAnimation {
+  0% {
+    transform: translateY(0);
+  }
+
+  100% {
+    transform: translateY(-30px);
+  }
+}
+
+@keyframes shadowAnimation {
+  0% {
+    filter: drop-shadow(10px 10px 15px rgba(0, 0, 0, 0.2));
+  }
+
+  100% {
+    filter: drop-shadow(10px 10px 15px rgba(0, 0, 0, 0.35));
+  }
+} */
+
+.fadeIn {
+  opacity: 1 !important;
+}
+
+/* Tamaño para 'md' */
+@media (min-width: 576px) {}
+
+/* Tamaño para 'lg' */
+@media (max-width: 768px) {
+
+  .contentHeader {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+  }
+
+  .contentHeader .headerTxt {
+    position: relative;
+    top: 20%;
+    left: 0;
+    transform: none;
+    width: 100vw;
+    height: auto;
+  }
+
+  /* .contentHeader .headerImg {
+    position: relative;
+    display: flex;
+    align-items: center;
+    bottom: 0;
+    left: 0;
+    width: 150vw;
+    height: 50%;
+  } */
+}
+
+/* Tamaño para 'xl' */
+/* @media (min-width: 1024px) {
+  .dualContainer {
+    background-color: lightcoral;
+  }
+} */
+
+/* Tamaño para 'xxl' */
+@media (min-width: 1400px) {
+  /* .dualContainer {
+    background-color: lightgoldenrodyellow;
+  } */
+
+
+
+}

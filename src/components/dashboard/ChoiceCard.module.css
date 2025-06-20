@@ -1,0 +1,140 @@
+.ChoiceCard {
+  padding: 1rem;
+}
+
+.ChoiceCard .titule {
+  font-style: italic;
+  font-size: 2rem;
+  color: var(--vinoOsc);
+  font-weight: 400;
+  margin-bottom: 1rem;
+}
+
+.titule .spanDoarado,
+.titule .spanVino,
+.titule span {
+  font-weight: 700;
+}
+
+.titule .spanDoarado {
+  color: var(--doradoOsc);
+}
+
+.titule .spanVino {
+  color: var(--vinoOsc);
+}
+
+.card {
+  width: 100vw;
+  max-width: 1200px;
+  height: 600px;
+  border-radius: 4px;
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.4em;
+  margin: 0 auto;
+  transition: width 0.3s ease;
+}
+
+.cardItem {
+  text-decoration: none;
+  position: relative;
+  height: 100%;
+  flex: 1;
+  overflow: hidden;
+  cursor: pointer;
+  border-radius: 2rem;
+  transition: all 0.5s;
+  background-size: cover;
+  background-position: center;
+  border: 2px solid var(--vinoOsc);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Gradient overlay */
+.cardItem::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top,
+      rgba(0, 0, 0, 0.7) 0%,
+      rgba(0, 0, 0, 0.3) 50%,
+      transparent 100%);
+  border-radius: 2rem;
+  z-index: 0;
+}
+
+.cardItem:hover {
+  flex: 4;
+}
+
+.cardText {
+  min-width: 14em;
+  padding: 0.5em;
+  margin: 0 1.5rem;
+  text-align: center;
+  transform: rotate(-90deg);
+  transition: all 0.5s;
+  text-transform: uppercase;
+  color: var(--blanco);
+  font-size: 1.1rem;
+  letter-spacing: 0.15em;
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 1rem;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.cardItem:hover .cardText {
+  transform: rotate(0);
+}
+
+.cardButton,
+.downloadButton {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  background: var(--doradoClr);
+  border: none;
+  padding: 0.5em;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s;
+  color: var(--grisOsc);
+}
+
+.cardButton:hover,
+.downloadButton:hover {
+  background: var(--doradoOsc);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .card {
+    flex-direction: column;
+    height: auto;
+    width: 90vw;
+  }
+
+  .cardItem {
+    width: 100%;
+    min-height: 120px;
+    flex: none;
+  }
+
+  .cardItem:hover {
+    flex: none;
+  }
+
+  .cardText {
+    transform: rotate(0);
+    white-space: nowrap;
+  }
+}

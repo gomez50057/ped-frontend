@@ -1,0 +1,35 @@
+{
+  "name": "ped-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@gsap/react": "^2.1.2",
+    "@mui/icons-material": "^7.0.0",
+    "@mui/material": "^7.0.2",
+    "axios": "^1.9.0",
+    "chart.js": "^4.4.8",
+    "export-to-csv": "^1.4.0",
+    "formik": "^2.4.6",
+    "gsap": "^3.12.7",
+    "material-react-table": "^3.2.1",
+    "next": "15.3.3",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-select": "^5.10.1",
+    "swiper": "^10.1.0",
+    "uuid": "^11.1.0"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "eslint": "^9",
+    "eslint-config-next": "15.3.3"
+  }
+}

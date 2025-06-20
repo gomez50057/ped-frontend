@@ -1,0 +1,119 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;900&display=swap');
+
+:root {
+  --doradoOsc: #bc955b;
+  --doradoClr: #DEC9A3;
+  --vinoOsc: #691B32;
+  --vinoClr: #A02142;
+  --grisOsc: #707271;
+  --grisClr: #98989a;
+  --blanco: #F5F3F5;
+  --vinoGradient: linear-gradient(-45deg, var(--vinoOsc), var(--vinoClr));
+  --doradoGradient: linear-gradient(-45deg, var(--doradoOsc), var(--doradoClr));
+  --grisGradient: linear-gradient(-45deg, var(--grisClr), var(--blanco));
+}
+
+/* Root para swiper */
+:root {
+  --swiper-navigation-color: white;
+  --swiper-navigation-size: 1.5rem;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: #F1F1F1;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+/* overflow-y: scroll; */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(152, 152, 154, 0.8);
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--grisClr);
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+h1,
+h2 {
+  font-size: 45px;
+  color: var(--vinoOsc);
+  font-weight: 400;
+}
+
+h1 span,
+h2 span,
+h3 span {
+  font-weight: 700;
+}
+
+h1 .spanDoarado,
+h2 .spanDoarado {
+  color: var(--doradoOsc);
+  font-style: italic;
+}
+
+
+h1 .spanDoaradoClr,
+h2 .spanDoaradoClr {
+  color: var(--doradoClr);
+  font-style: italic;
+}
+
+h1 .spanVino,
+h2 .spanvino {
+  color: var(--vinoOsc);
+  font-style: italic;
+}
+
+p {
+  color: var(--grisOsc);
+  font-weight: 500;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+
+.swiper-cards .swiper-slide {
+  transform-origin: center bottom;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  overflow: hidden;
+  border-radius: 50px;
+  border: 2px solid var(--vinoOsc);
+}
+
+
+.swiper-button-prev:hover,
+.swiper-button-next:hover {
+  color: #800020;
+  /* Color vino al hacer hover */
+}
