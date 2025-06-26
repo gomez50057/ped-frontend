@@ -6,7 +6,6 @@ import Alert from '@mui/material/Alert';
 import * as objetivos from '@/utils/plataformaEstrategicaData';
 import { updateById, removeById, pushToArrayById, pushToNestedMapArray } from '@/utils/arrayHelpers';
 import { useFeedback } from '@/hooks/useFeedback';
-// import { v4 as uuidv4 } from 'uuid'; // YA NO LO NECESITAS
 import styles from './PlataformaEstrategicaReview.module.css';
 import FeedbackSection from '../components/FeedbackSection/FeedbackSection';
 import EditDeleteButtons from '../components/EditDeleteButtons/EditDeleteButtons';
