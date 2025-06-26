@@ -10,26 +10,26 @@
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
-    "@emotion/styled": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
     "@gsap/react": "^2.1.2",
-    "@mui/icons-material": "^7.0.0",
-    "@mui/material": "^7.0.2",
-    "axios": "^1.9.0",
-    "chart.js": "^4.4.8",
+    "@mui/icons-material": "^7.1.2",
+    "@mui/material": "^7.1.2",
+    "axios": "^1.10.0",
+    "chart.js": "^4.5.0",
     "export-to-csv": "^1.4.0",
     "formik": "^2.4.6",
-    "gsap": "^3.12.7",
+    "gsap": "^3.13.0",
     "material-react-table": "^3.2.1",
-    "next": "15.3.3",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
+    "next": "15.3.4",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
     "react-select": "^5.10.1",
-    "swiper": "^10.1.0",
+    "swiper": "^11.2.8",
     "uuid": "^11.1.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "eslint": "^9",
-    "eslint-config-next": "15.3.3"
+    "eslint-config-next": "15.3.4"
   }
 }
