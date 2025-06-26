@@ -1,18 +1,35 @@
 "use client";
 
-import React, { useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import { dataObjetivoEG01, dataObjetivoEG02, dataObjetivoEG03, dataObjetivoEG04, dataObjetivoEG05, dataObjetivoEG06, dataObjetivoEG07, dataObjetivoEG08, dataObjetivoEG09, dataObjetivoET01, dataObjetivoET02, dataObjetivoET03, } from '@/utils/plataformaEstrategicaData';
 import { updateById, removeById, pushToArrayById, pushToNestedMapArray } from '@/utils/arrayHelpers';
-import { usePlatform } from '@/context/PlatformContext';
+// import { usePlatform } from '@/context/PlatformContext';
 import { useFeedback } from '@/hooks/useFeedback';
 import { v4 as uuidv4 } from 'uuid';
 import styles from './PlataformaEstrategicaReview.module.css';
 import FeedbackSection from '../components/FeedbackSection/FeedbackSection';
 import EditDeleteButtons from '../components/EditDeleteButtons/EditDeleteButtons';
 import InputModal from '../components/InputModal/InputModal';
+import { fetchWithAuth } from '@/utils/auth';
 
+
+// Relación de ejes y sus IDs
+const ITEMS = [
+  { id: 1, code: "EG01" },
+  { id: 2, code: "EG02" },
+  { id: 3, code: "EG03" },
+  { id: 4, code: "EG04" },
+  { id: 5, code: "EG05" },
+  { id: 6, code: "EG06" },
+  { id: 7, code: "EG07" },
+  { id: 8, code: "EG08" },
+  { id: 9, code: "EG09" },
+  { id: 10, code: "ET01" },
+  { id: 11, code: "ET02" },
+  { id: 12, code: "ET03" }
+];
 
 const allData = [
   { id: 'EG01', data: dataObjetivoEG01 },
@@ -30,20 +47,16 @@ const allData = [
 ];
 
 export default function PlataformaEstrategicaReview() {
-  const { selectedEjes } = usePlatform();
+  const [selectedAxesIds, setSelectedAxesIds] = useState([]); // Guarda los ids numéricos de ejes seleccionados
+  const [loadingEjes, setLoadingEjes] = useState(true);
   const { feedback, setAcuerdo, setComentario } = useFeedback();
-  // Modal para agregar nuevas propuestas(objetivos), estrategias o líneas de acción
   const [modalOpen, setModalOpen] = useState(false);
   const [modalTitle, setModalTitle] = useState('');
   const [modalDefault, setModalDefault] = useState('');
   const [modalCallback, setModalCallback] = useState(() => () => { });
-
-
   const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
   const [nuevoContenido, setNuevoContenido] = useState({ propuestas: [] });
-  // Para nuevas estrategias de datos estáticos
   const [nuevasEstrategias, setNuevasEstrategias] = useState({});
-  // Para nuevas líneas de acción (estáticos y dinámicos unificados)
   const [nuevasLineas, setNuevasLineas] = useState({});
 
   const openInputModal = (title, defaultValue, callback) => {
@@ -53,8 +66,39 @@ export default function PlataformaEstrategicaReview() {
     setModalOpen(true);
   };
 
+  // Cargar los ejes seleccionados desde el backend usando ids numéricos
+  useEffect(() => {
+    async function loadEjes() {
+      setLoadingEjes(true);
+      try {
+        const response = await fetchWithAuth('/api/plataforma/user-axis-selection/');
+        if (response.ok) {
+          const data = await response.json();
+          let ids = [];
+          if (Array.isArray(data)) {
+            ids = data[0]?.axes || [];
+          } else if (typeof data === 'object' && data !== null) {
+            ids = data.axes || [];
+          }
+          setSelectedAxesIds(Array.isArray(ids) ? ids : []);
+        } else {
+          setSelectedAxesIds([]);
+        }
+      } catch (err) {
+        console.error(err);
+        setSelectedAxesIds([]);
+      }
+      setLoadingEjes(false);
+    }
+    loadEjes();
+  }, []);
 
-  // Generar IDs para datos estáticos
+  // Map de id numérico a code
+  const selectedCodes = useMemo(() => {
+    return ITEMS.filter(item => selectedAxesIds.includes(item.id)).map(item => item.code);
+  }, [selectedAxesIds]);
+
+  // allData (code) -> lo que seleccionó el usuario (id)
   const staticWithId = useMemo(() =>
     allData.map(({ id: eje, data }) => ({
       eje,
@@ -69,6 +113,8 @@ export default function PlataformaEstrategicaReview() {
       })),
     })), []
   );
+
+  // ...tu resto del componente igual, aquí no hay cambios...
 
   const handleAcuerdoChange = (id, valor) => setAcuerdo(id, valor);
   const handleComentarioChange = (id, campo, valor) => setComentario(id, campo, valor);
@@ -400,15 +446,17 @@ export default function PlataformaEstrategicaReview() {
           <span className="spanVino">Plataforma Estratégica</span>
         </h2>
 
-        {selectedEjes.length === 0 ? (
+        {loadingEjes ? (
+          <p>Cargando ejes...</p>
+        ) : selectedCodes.length === 0 ? (
           <p>No hay ejes seleccionados.</p>
-        ) : selectedEjes.map(eje => {
-          const block = staticWithId.find(b => b.eje === eje);
+        ) : selectedCodes.map(ejeCode => {
+          const block = staticWithId.find(b => b.eje === ejeCode);
           return (
-            <div key={eje} className={styles.propuesta}>
-              <h3 className={styles.ejeActivo}>Observación eje: {eje}</h3>
+            <div key={ejeCode} className={styles.propuesta}>
+              <h3 className={styles.ejeActivo}>Observación eje: {ejeCode}</h3>
               {block?.propuestas.length
-                ? renderPropuestas(eje, block.propuestas)
+                ? renderPropuestas(ejeCode, block.propuestas)
                 : <p>No hay datos.</p>}
             </div>
           );

@@ -20,7 +20,7 @@ const ITEMS = [
 ];
 
 export default function StrategicPlatform({ onNext }) {
-  const [checkedItems, setCheckedItems] = useState({});
+  const [checkedItems, setCheckedItems] = useState({}); // { [id]: boolean }
   const [loading, setLoading] = useState(true);
   const [selectionId, setSelectionId] = useState(null);
   const [saving, setSaving] = useState(false);
@@ -39,12 +39,8 @@ export default function StrategicPlatform({ onNext }) {
         setSelectionId(sel.id);
 
         let selectedAxesIds = [];
-        if (Array.isArray(sel.selected_axes)) {
-          if (typeof sel.selected_axes[0] === "object" && sel.selected_axes[0] !== null) {
-            selectedAxesIds = sel.selected_axes.map(ax => ax.id);
-          } else {
-            selectedAxesIds = sel.selected_axes;
-          }
+        if (Array.isArray(sel.axes)) {
+          selectedAxesIds = sel.axes;
         }
         const checked = {};
         ITEMS.forEach(item => {
@@ -68,26 +64,25 @@ export default function StrategicPlatform({ onNext }) {
     }));
   };
 
-  // Aquí está el cambio: solo usa "axes_ids"
   const handleGuardar = async () => {
     setSaving(true);
     setError("");
     const token = typeof window !== "undefined" ? localStorage.getItem('access') : null;
     const selectedIds = Object.entries(checkedItems)
       .filter(([, checked]) => checked)
-      .map(([id]) => parseInt(id, 10));
+      .map(([id]) => Number(id));
     try {
       let res;
       if (selectionId) {
         res = await axios.put(
           `/api/plataforma/user-axis-selection/${selectionId}/`,
-          { axes_ids: selectedIds },
+          { axes: selectedIds },
           { headers: { Authorization: `Bearer ${token}` } }
         );
       } else {
         res = await axios.post(
           "/api/plataforma/user-axis-selection/",
-          { axes_ids: selectedIds },
+          { axes: selectedIds },
           { headers: { Authorization: `Bearer ${token}` } }
         );
         setSelectionId(res.data.id);
