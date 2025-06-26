@@ -3,9 +3,8 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
-import { dataObjetivoEG01, dataObjetivoEG02, dataObjetivoEG03, dataObjetivoEG04, dataObjetivoEG05, dataObjetivoEG06, dataObjetivoEG07, dataObjetivoEG08, dataObjetivoEG09, dataObjetivoET01, dataObjetivoET02, dataObjetivoET03, } from '@/utils/plataformaEstrategicaData';
+import * as objetivos from '@/utils/plataformaEstrategicaData';
 import { updateById, removeById, pushToArrayById, pushToNestedMapArray } from '@/utils/arrayHelpers';
-// import { usePlatform } from '@/context/PlatformContext';
 import { useFeedback } from '@/hooks/useFeedback';
 import { v4 as uuidv4 } from 'uuid';
 import styles from './PlataformaEstrategicaReview.module.css';
@@ -14,9 +13,8 @@ import EditDeleteButtons from '../components/EditDeleteButtons/EditDeleteButtons
 import InputModal from '../components/InputModal/InputModal';
 import { fetchWithAuth } from '@/utils/auth';
 
-
-// Relación de ejes y sus IDs
-const ITEMS = [
+// 1. Datos centrales y mapeos
+const AXES = [
   { id: 1, code: "EG01" },
   { id: 2, code: "EG02" },
   { id: 3, code: "EG03" },
@@ -31,45 +29,17 @@ const ITEMS = [
   { id: 12, code: "ET03" }
 ];
 
-const allData = [
-  { id: 'EG01', data: dataObjetivoEG01 },
-  { id: 'EG02', data: dataObjetivoEG02 },
-  { id: 'EG03', data: dataObjetivoEG03 },
-  { id: 'EG04', data: dataObjetivoEG04 },
-  { id: 'EG05', data: dataObjetivoEG05 },
-  { id: 'EG06', data: dataObjetivoEG06 },
-  { id: 'EG07', data: dataObjetivoEG07 },
-  { id: 'EG08', data: dataObjetivoEG08 },
-  { id: 'EG09', data: dataObjetivoEG09 },
-  { id: 'ET01', data: dataObjetivoET01 },
-  { id: 'ET02', data: dataObjetivoET02 },
-  { id: 'ET03', data: dataObjetivoET03 },
-];
+const AXES_MAP = Object.fromEntries(AXES.map(a => [a.id, a.code]));
 
-export default function PlataformaEstrategicaReview() {
-  const [selectedAxesIds, setSelectedAxesIds] = useState([]); // Guarda los ids numéricos de ejes seleccionados
-  const [loadingEjes, setLoadingEjes] = useState(true);
-  const { feedback, setAcuerdo, setComentario } = useFeedback();
-  const [modalOpen, setModalOpen] = useState(false);
-  const [modalTitle, setModalTitle] = useState('');
-  const [modalDefault, setModalDefault] = useState('');
-  const [modalCallback, setModalCallback] = useState(() => () => { });
-  const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
-  const [nuevoContenido, setNuevoContenido] = useState({ propuestas: [] });
-  const [nuevasEstrategias, setNuevasEstrategias] = useState({});
-  const [nuevasLineas, setNuevasLineas] = useState({});
+// 2. Custom hook para cargar ejes seleccionados
+function useSelectedAxes() {
+  const [selectedAxesIds, setSelectedAxesIds] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const openInputModal = (title, defaultValue, callback) => {
-    setModalTitle(title);
-    setModalDefault(defaultValue);
-    setModalCallback(() => callback);
-    setModalOpen(true);
-  };
-
-  // Cargar los ejes seleccionados desde el backend usando ids numéricos
   useEffect(() => {
+    let ignore = false;
     async function loadEjes() {
-      setLoadingEjes(true);
+      setLoading(true);
       try {
         const response = await fetchWithAuth('/api/plataforma/user-axis-selection/');
         if (response.ok) {
@@ -80,29 +50,33 @@ export default function PlataformaEstrategicaReview() {
           } else if (typeof data === 'object' && data !== null) {
             ids = data.axes || [];
           }
-          setSelectedAxesIds(Array.isArray(ids) ? ids : []);
-        } else {
+          if (!ignore) setSelectedAxesIds(Array.isArray(ids) ? ids : []);
+        } else if (!ignore) {
           setSelectedAxesIds([]);
         }
       } catch (err) {
-        console.error(err);
-        setSelectedAxesIds([]);
+        if (!ignore) setSelectedAxesIds([]);
       }
-      setLoadingEjes(false);
+      if (!ignore) setLoading(false);
     }
     loadEjes();
+    return () => { ignore = true };
   }, []);
 
-  // Map de id numérico a code
-  const selectedCodes = useMemo(() => {
-    return ITEMS.filter(item => selectedAxesIds.includes(item.id)).map(item => item.code);
-  }, [selectedAxesIds]);
+  const selectedCodes = useMemo(
+    () => selectedAxesIds.map(id => AXES_MAP[id]).filter(Boolean),
+    [selectedAxesIds]
+  );
 
-  // allData (code) -> lo que seleccionó el usuario (id)
-  const staticWithId = useMemo(() =>
-    allData.map(({ id: eje, data }) => ({
-      eje,
-      propuestas: data.map(prop => ({
+  return { selectedAxesIds, selectedCodes, loading };
+}
+
+// 3. Memoizar datos estáticos con IDs únicos
+function useStaticWithId() {
+  return useMemo(() => {
+    return AXES.map(({ code }) => ({
+      eje: code,
+      propuestas: (objetivos[`dataObjetivo${code}`] || []).map(prop => ({
         ...prop,
         id: uuidv4(),
         Estrategias: (prop.Estrategias || []).map(estr => ({
@@ -111,18 +85,37 @@ export default function PlataformaEstrategicaReview() {
           lineas: (estr['Lineas de acción'] || []).map(lin => ({ id: uuidv4(), text: lin })),
         })),
       })),
-    })), []
-  );
+    }));
+  }, []);
+}
 
-  // ...tu resto del componente igual, aquí no hay cambios...
+export default function PlataformaEstrategicaReview() {
+  const { selectedCodes, loading } = useSelectedAxes();
+  const staticWithId = useStaticWithId();
 
-  const handleAcuerdoChange = (id, valor) => setAcuerdo(id, valor);
-  const handleComentarioChange = (id, campo, valor) => setComentario(id, campo, valor);
+  const { feedback, setAcuerdo, setComentario } = useFeedback();
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalTitle, setModalTitle] = useState('');
+  const [modalDefault, setModalDefault] = useState('');
+  const [modalCallback, setModalCallback] = useState(() => () => { });
+  const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
+  const [nuevoContenido, setNuevoContenido] = useState({ propuestas: [] });
+  const [nuevasEstrategias, setNuevasEstrategias] = useState({});
+  const [nuevasLineas, setNuevasLineas] = useState({});
+
+  // --- Helpers UI y feedback ---
+  const openInputModal = (title, defaultValue, callback) => {
+    setModalTitle(title);
+    setModalDefault(defaultValue);
+    setModalCallback(() => callback);
+    setModalOpen(true);
+  };
 
   const handleCloseSnackbar = () => setSnackbar(prev => ({ ...prev, open: false }));
   const handleGuardarAvance = () => setSnackbar({ open: true, message: '¡Avance guardado!', severity: 'info' });
   const handleGuardarComentarios = () => setSnackbar({ open: true, message: '¡Comentarios enviados!', severity: 'success' });
 
+  // --- CRUD Handlers para propuestas, estrategias y líneas ---
   const agregarElemento = (promptText, callback) => {
     openInputModal(promptText, '', (valor) => {
       const cleaned = valor.trim();
@@ -165,6 +158,10 @@ export default function PlataformaEstrategicaReview() {
       );
     });
   };
+
+  // --- Renders auxiliares ---
+  const handleAcuerdoChange = (id, valor) => setAcuerdo(id, valor);
+  const handleComentarioChange = (id, campo, valor) => setComentario(id, campo, valor);
 
   const renderLineas = (prefix, originales, propId, estrId) => {
     const extra = nuevasLineas[propId]?.[estrId] || [];
@@ -438,6 +435,7 @@ export default function PlataformaEstrategicaReview() {
       );
     });
 
+  // --- Render principal ---
   return (
     <div className={styles.container}>
       <div className={styles.containerReview}>
@@ -446,7 +444,7 @@ export default function PlataformaEstrategicaReview() {
           <span className="spanVino">Plataforma Estratégica</span>
         </h2>
 
-        {loadingEjes ? (
+        {loading ? (
           <p>Cargando ejes...</p>
         ) : selectedCodes.length === 0 ? (
           <p>No hay ejes seleccionados.</p>
@@ -490,7 +488,6 @@ export default function PlataformaEstrategicaReview() {
           setModalOpen(false);
         }}
       />
-
 
       <Snackbar open={snackbar.open} autoHideDuration={4000} onClose={handleCloseSnackbar} anchorOrigin={{ vertical: "top", horizontal: "right" }}>
         <Alert onClose={handleCloseSnackbar} severity={snackbar.severity} variant="filled" sx={{ width: "100%" }}>
