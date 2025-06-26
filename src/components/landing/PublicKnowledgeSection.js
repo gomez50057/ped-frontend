@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import CarouselSlider from "@/components/landing/CarouselSlider";
 import styles from "@/styles/PublicKnowledgeSection.module.css";
 import Link from "next/link";
 const imgConsultaDigital = "/img/page_links/consulta_digital/";
@@ -18,21 +19,21 @@ const info = [
     href: "/consulta-digital",
   },
   {
-    title: "Consulta a pueblos y comunidades indígenas",
+    title: "Espacios de Encuentro y Diálogo en Hidalgo",
     subtitle:
-      "Mantente pendiente de esta sección para conocer las próximas fechas, formas de participación y toda la información relevante sobre la Consulta Pública a Pueblos y Comunidades Indígenas.",
+      "Te invitamos a estar pendiente de los foros que se estarán llevando a cabo próximamente en las regiones de Hidalgo. Tu participación es fundamental para fortalecer el diálogo y construir juntos un futuro con inclusión y respeto a la diversidad. ¡Súmate a este espacio de encuentro y diálogo abierto para todas y todos!",
     href: "",
   },
   {
     title: "Convocatoria al reto de inteligencia artificial (Reto IA)",
     subtitle:
       "Únete al Reto IA. Imagina el futuro de Hidalgo utilizando de manera creativa herramientas de inteligencia artificial. ¡Construyamos juntos las visiones que transformarán nuestro Estado!",
-    href: "",
+    href: "/pdf/Reto IA.pdf",
   },
   {
-    title: "Espacios de Encuentro y Diálogo en Hidalgo",
+    title: "Consulta a pueblos y comunidades indígenas",
     subtitle:
-      "Te invitamos a estar pendiente de los foros que se estarán llevando a cabo próximamente en las regiones de Hidalgo. Tu participación es fundamental para fortalecer el diálogo y construir juntos un futuro con inclusión y respeto a la diversidad. ¡Súmate a este espacio de encuentro y diálogo abierto para todas y todos!",
+      "Mantente pendiente de esta sección para conocer las próximas fechas, formas de participación y toda la información relevante sobre la Consulta Pública a Pueblos y Comunidades Indígenas.",
     href: "",
   },
   {
@@ -49,33 +50,36 @@ export default function PublicKnowledgeSection() {
       {info.map((item, idx) => {
         if (idx === 0) {
           return (
-            <div key={idx} className={`${styles.sectionItem} ${styles.designA}`} >
-              <div className={styles.containerDesignA}>
-                <div className={styles.bgImgDesignA}>
-                  <img src={`${imgBasePath}bg.png`} alt={item.title} />
-                </div>
-                <div className={styles.imgRepresentationDesignA}>
-                  <img src={`${imgConsultaDigital}persona.png`} alt={item.title} />
-                </div>
-                <div className={styles.imgeWrapperDesignA}>
-                  <Link href={item.href}>
-                    <div className={styles.imgBotonDesignA}>
-                      <img src={`${imgConsultaDigital}boton.png`} alt={item.title} />
+            <React.Fragment key={idx} >
+              <div key={idx} className={`${styles.sectionItem} ${styles.designA}`} >
+                <div className={styles.containerDesignA}>
+                  <div className={styles.bgImgDesignA}>
+                    <img src={`${imgBasePath}bg.png`} alt={item.title} />
+                  </div>
+                  <div className={styles.imgRepresentationDesignA}>
+                    <img src={`${imgConsultaDigital}persona.png`} alt={item.title} />
+                  </div>
+                  <div className={styles.imgeWrapperDesignA}>
+                    <Link href={item.href}>
+                      <div className={styles.imgBotonDesignA}>
+                        <img src={`${imgConsultaDigital}boton.png`} alt={item.title} />
+                      </div>
+                    </Link>
+                    <div className={styles.overlayTextDesignA}>
+                      <p>{item.subtitle}</p>
                     </div>
-                  </Link>
-                  <div className={styles.overlayTextDesignA}>
-                    <p>{item.subtitle}</p>
                   </div>
                 </div>
               </div>
-            </div>
+              <CarouselSlider />
+            </React.Fragment>
           );
         }
         if (idx === 1) {
           return (
             <div key={idx} className={`${styles.sectionItem} ${styles.designB}`} style={{ position: 'relative' }}>
               <video autoPlay loop muted playsInline className={styles.backgroundVideo}>
-                <source src={`${videoBasePath}pueblos_comunidades_indigenas.mp4`} type="video/mp4" />
+                <source src={`${videoBasePath}foros_general.mp4`} type="video/mp4" />
                 Tu navegador no soporta la reproducción de video.
               </video>
               <div className={styles.overlayTextDesignB}>
@@ -126,7 +130,8 @@ export default function PublicKnowledgeSection() {
           return (
             <div key={idx} className={`${styles.sectionItem} ${styles.designB}`} style={{ position: 'relative' }}>
               <video autoPlay loop muted playsInline className={styles.backgroundVideo}>
-                <source src={`${videoBasePath}foros_general.mp4`} type="video/mp4" />
+                <source src={`${videoBasePath}pueblos_comunidades_indigenas.mp4`} type="video/mp4" />
+
                 Tu navegador no soporta la reproducción de video.
               </video>
               <div className={styles.overlayTextDesignB}>

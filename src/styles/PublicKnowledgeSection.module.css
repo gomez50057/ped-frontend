@@ -44,6 +44,7 @@
   justify-content: center;
   align-items: center;
   width: 30%;
+  min-width: 200px;
   height: 60px;
   background: linear-gradient(-45deg, var(--vinoOsc), var(--vinoClr));
   border: none;
@@ -216,7 +217,7 @@
 }
 
 .overlayTextDesignB p {
-  font-size: 2rem;
+  font-size: clamp(1.2rem, 2vw + 0.8rem, 2.5rem);
   font-weight: 500;
   color: var(--blanco);
   padding: 0.8rem 1.3rem;
@@ -304,6 +305,11 @@
   padding: 0 1rem;
 }
 
+.overlayTextDesignC span {
+  font-size: 1rem;
+}
+
+
 /* --- Sección designE --- */
 .designE {
   display: flex;
@@ -384,11 +390,139 @@
   padding: 0 1rem;
 }
 
-/* ------------------------------------------
-   Media Queries originales comentadas:
---------------------------------------------*/
-/*
-@media (max-width: 1199px) and (min-width: 1024px) { ... }
+
+@media (max-width: 768px) {
+  .sectionStack {
+    padding: 1rem;
+  }
+
+  .sectionItem {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+    border-radius: 3rem;
+    max-height: 100vh;
+  }
+
+  .overlayTextDesignB p {
+    width: 150%;
+  }
+
+  .imgRepresentationDesignA,
+  .imgRepresentationDesignC,
+  .imgRepresentationDesignE {
+    width: 100%;
+    height: auto;
+    z-index: 500;
+  }
+
+  .imgeWrapperDesignA,
+  .imgeWrapperDesignC,
+  .imgeWrapperDesignE {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    z-index: 700;
+  }
+
+  .overlayTextDesignA {
+    position: relative;
+    width: 100%;
+    background: var(--vinoClr);
+    padding: 0.8rem 0.5rem;
+  }
+
+  .overlayTextDesignA p {
+    font-size: 0.8rem;
+    padding: 0 1rem;
+  }
+
+  .overlayTextDesignC {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    background: var(--vinoOsc);
+    padding: 0.8rem 0.5rem;
+  }
+
+  .overlayTextDesignC p {
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: var(--blanco);
+    text-align: center;
+    padding: 0 1rem;
+  }
+
+  .imgRepresentationDesignA img,
+  .imgRepresentationDesignC img,
+  .imgRepresentationDesignE img {
+    width: 100%;
+  }
+
+  .imgBotonDesignA {
+    top: 0;
+    width: 100%;
+    padding: 0.8rem 0.5rem;
+  }
+
+  .imgBotonDesignC {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 0.8rem 0.5rem;
+  }
+
+  .overlayTextDesignE {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    background: var(--grisOsc);
+    padding: 0.8rem 0.5rem;
+  }
+
+  .overlayTextDesignE p {
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: var(--blanco);
+    text-align: center;
+    padding: 0 1rem;
+  }
+
+  .imgBotonDesignE {
+    position: relative;
+    top: 0;
+    width: 100%;
+    padding: 0.8rem 0.5rem;
+  }
+
+
+  .containerDesignA,
+  .containerDesignB,
+  .containerDesignC,
+  .containerDesignE {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 425px) {
+
+  .containerDesignA,
+  .containerDesignB,
+  .containerDesignC,
+  .containerDesignE {
+    flex-direction: column;
+  }
+}
+
+/* @media (max-width: 1199px) and (min-width: 1024px) { ... }
 @media (max-width: 1023px) { ... }
-@media (max-width: 767px) { ... }
-*/
+@media (max-width: 767px) { ... } */

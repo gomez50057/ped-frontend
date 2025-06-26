@@ -7,7 +7,7 @@ import styles from './Navbar.module.css';
 
 const LOGOS = [
   { src: "/img/Logox2.png", alt: "Gobierno del Estado de Hidalgo y Planeación" },
-  { src: "/img/headertxt.png", alt: "Logo de PED" },
+  { src: "/img/logo.png", alt: "Logo de PED" },
 ];
 
 const NAV_ITEMS = [

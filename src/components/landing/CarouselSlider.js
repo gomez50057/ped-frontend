@@ -21,7 +21,7 @@ const slides = [
     title: "Plan Estatal de Desarrollo del Estado de Hidalgo (vigente)",
     description:
       "Revisa el Plan Estatal de Desarrollo actualmente en vigor, que contiene la visión, estrategias y acciones que han guiado la administración pública del estado.",
-    image: "/img/slider/PED.jpg",
+    image: "/img/slider/PED.png",
     href: "/pdf/Plan Estatal de Desarrollo 2022-2028.pdf"
   },
   {

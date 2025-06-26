@@ -73,10 +73,19 @@
   }
 
   .footer .footer_contacto {
-    width: 50%;
+    width: auto;
   }
 
   .footer .footer_redes {
     width: 50%;
+    gap: 0.3rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .footer .footer_redes {
+    width: 50%;
+    gap: 0.3rem;
+    flex-direction: column;
   }
 }

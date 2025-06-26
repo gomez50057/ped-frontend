@@ -26,7 +26,7 @@
   justify-content: space-between;
   align-items: center;
   width: 90vw;
-  padding: 4px 20px;
+  padding: 1.5rem 20px;
   margin: 10px 0;
   background-color: hsla(240, 33%, 96%, 0.81);
   box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.15);
@@ -35,7 +35,7 @@
 }
 
 .NavbarImg img {
-  height: 30px;
+  height: 40px;
   margin: 0 5px;
 }
 
@@ -265,6 +265,6 @@
 
 @media (max-width: 767px) {
   .NavbarImg img {
-    height: 20px;
+    height: 15px;
   }
 }
