@@ -6,7 +6,7 @@ import Alert from '@mui/material/Alert';
 import * as objetivos from '@/utils/plataformaEstrategicaData';
 import { updateById, removeById, pushToArrayById, pushToNestedMapArray } from '@/utils/arrayHelpers';
 import { useFeedback } from '@/hooks/useFeedback';
-import { v4 as uuidv4 } from 'uuid';
+// import { v4 as uuidv4 } from 'uuid'; // YA NO LO NECESITAS
 import styles from './PlataformaEstrategicaReview.module.css';
 import FeedbackSection from '../components/FeedbackSection/FeedbackSection';
 import EditDeleteButtons from '../components/EditDeleteButtons/EditDeleteButtons';
@@ -71,18 +71,30 @@ function useSelectedAxes() {
   return { selectedAxesIds, selectedCodes, loading };
 }
 
-// 3. Memoizar datos estáticos con IDs únicos
+// 3. Memoizar datos estáticos usando los IDs que ya existen
 function useStaticWithId() {
   return useMemo(() => {
     return AXES.map(({ code }) => ({
       eje: code,
       propuestas: (objetivos[`dataObjetivo${code}`] || []).map(prop => ({
         ...prop,
-        id: uuidv4(),
+        // id: prop.id // Ya viene incluido
         Estrategias: (prop.Estrategias || []).map(estr => ({
           ...estr,
-          id: uuidv4(),
-          lineas: (estr['Lineas de acción'] || []).map(lin => ({ id: uuidv4(), text: lin })),
+          // id: estr.id
+          lineas: (estr['Lineas de acción'] || []).map(lin =>
+            typeof lin === "object"
+              ? ({
+                  ...lin,
+                  text: lin["Linea de acción"] || lin.text, // soporta ambos casos
+                  // id: lin.id
+                })
+              : ({
+                  // Por si la línea viene como string simple (no recomendado)
+                  id: undefined,
+                  text: lin
+                })
+          ),
         })),
       })),
     }));
@@ -123,10 +135,16 @@ export default function PlataformaEstrategicaReview() {
     });
   };
 
+  // Si agregas elementos desde el frontend, deberás generar un ID temporal:
+  const generateTempId = () => `temp_${Date.now()}_${Math.floor(Math.random()*1000)}`;
+
   const handleAgregarPropuesta = () => {
     agregarElemento('Nueva Propuesta', (nombre) => {
       setNuevoContenido(prev => ({
-        propuestas: [...prev.propuestas, { id: uuidv4(), nombre, estrategias: [] }]
+        propuestas: [
+          ...prev.propuestas,
+          { id: generateTempId(), nombre, estrategias: [] }
+        ]
       }));
     });
   };
@@ -134,7 +152,7 @@ export default function PlataformaEstrategicaReview() {
   const handleAgregarEstrategiaGeneral = (propuestaId, isStatic) => {
     const promptText = isStatic ? 'Proponer nueva Estrategia' : 'Nueva Estrategia';
     agregarElemento(promptText, (nombre) => {
-      const nuevaEstrategia = { id: uuidv4(), nombre, lineas: [] };
+      const nuevaEstrategia = { id: generateTempId(), nombre, lineas: [] };
 
       if (isStatic) {
         setNuevasEstrategias(prev => ({
@@ -152,7 +170,7 @@ export default function PlataformaEstrategicaReview() {
 
   const handleAgregarLineaStatic = (propuestaId, estrategiaId) => {
     agregarElemento('Agregar Nuevo Lineamiento', (text) => {
-      const nuevaLinea = { id: uuidv4(), text };
+      const nuevaLinea = { id: generateTempId(), text };
       setNuevasLineas(prev =>
         pushToNestedMapArray(prev, propuestaId, estrategiaId, nuevaLinea)
       );
