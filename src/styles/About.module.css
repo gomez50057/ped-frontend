@@ -8,6 +8,12 @@
   gap: 20px;
 }
 
+.titule{
+  font-size: 1rem;
+  color: var(--grisClr);
+  
+}
+
 .logoAcuerdo,
 .aboutTxt {
   width: 50vw;
