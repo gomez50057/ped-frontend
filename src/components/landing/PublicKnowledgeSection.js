@@ -24,10 +24,16 @@ const info = [
       "Te invitamos a estar pendiente de los foros que se estarán llevando a cabo próximamente en las regiones de Hidalgo. Tu participación es fundamental para fortalecer el diálogo y construir juntos un futuro con inclusión y respeto a la diversidad. ¡Súmate a este espacio de encuentro y diálogo abierto para todas y todos!",
     href: "",
   },
+  // {
+  //   title: "Convocatoria al reto de inteligencia artificial (Reto IA)",
+  //   subtitle:
+  //     "Únete al Reto IA. Imagina el futuro de Hidalgo utilizando de manera creativa herramientas de inteligencia artificial. ¡Construyamos juntos las visiones que transformarán nuestro Estado!",
+  //   href: "/pdf/Reto IA.pdf",
+  // },
   {
     title: "Convocatoria al reto de inteligencia artificial (Reto IA)",
     subtitle:
-      "Únete al Reto IA. Imagina el futuro de Hidalgo utilizando de manera creativa herramientas de inteligencia artificial. ¡Construyamos juntos las visiones que transformarán nuestro Estado!",
+      "Espera próximamente al Reto IA. Imagina el futuro de Hidalgo utilizando de manera creativa herramientas de inteligencia artificial. ¡Construyamos juntos las visiones que transformarán nuestro Estado!",
     href: "/pdf/Reto IA.pdf",
   },
   {
@@ -108,18 +114,21 @@ export default function PublicKnowledgeSection() {
                   <img src={`${imgBconvocatoriaIA}mano.png`} alt={item.title} />
                 </div>
                 <div className={styles.imgeWrapperDesignC}>
-                  <Link href={item.href} target="_blank" rel="noopener noreferrer">
+                  {/* <Link href={item.href} target="_blank" rel="noopener noreferrer">
                     <div className={styles.imgBotonDesignC}>
                       <img src={`${imgBconvocatoriaIA}boton.png`} alt={item.title} />
                     </div>
-                  </Link>
+                  </Link> */}
+                    <div className={styles.imgBotonDesignC}>
+                      <img src={`${imgBconvocatoriaIA}boton.png`} alt={item.title} />
+                    </div>
                   <div className={styles.overlayTextDesignC}>
                     <p>{item.subtitle}</p>
-                    <Link href={item.href} target="_blank" rel="noopener noreferrer" className={styles.buttonDesignC}>
+                    {/* <Link href={item.href} target="_blank" rel="noopener noreferrer" className={styles.buttonDesignC}>
                       <div className={styles.ctaLink}>
                         Conoce más ↗
                       </div>
-                    </Link>
+                    </Link> */}
                   </div>
                 </div>
               </div>
