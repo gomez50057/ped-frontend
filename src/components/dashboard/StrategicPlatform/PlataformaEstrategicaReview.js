@@ -12,7 +12,7 @@ import EditDeleteButtons from '../components/EditDeleteButtons/EditDeleteButtons
 import InputModal from '../components/InputModal/InputModal';
 import { fetchWithAuth } from '@/utils/auth';
 
-// 1. Datos centrales y mapeos
+// --- AXES map ---
 const AXES = [
   { id: 1, code: "EG01" },
   { id: 2, code: "EG02" },
@@ -27,10 +27,9 @@ const AXES = [
   { id: 11, code: "ET02" },
   { id: 12, code: "ET03" }
 ];
-
 const AXES_MAP = Object.fromEntries(AXES.map(a => [a.id, a.code]));
 
-// 2. Custom hook para cargar ejes seleccionados
+// --- Hook ejes seleccionados ---
 function useSelectedAxes() {
   const [selectedAxesIds, setSelectedAxesIds] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -66,33 +65,28 @@ function useSelectedAxes() {
     () => selectedAxesIds.map(id => AXES_MAP[id]).filter(Boolean),
     [selectedAxesIds]
   );
-
   return { selectedAxesIds, selectedCodes, loading };
 }
 
-// 3. Memoizar datos estáticos usando los IDs que ya existen
+// --- Memoizar datos estáticos ---
 function useStaticWithId() {
   return useMemo(() => {
     return AXES.map(({ code }) => ({
       eje: code,
       propuestas: (objetivos[`dataObjetivo${code}`] || []).map(prop => ({
         ...prop,
-        // id: prop.id // Ya viene incluido
         Estrategias: (prop.Estrategias || []).map(estr => ({
           ...estr,
-          // id: estr.id
           lineas: (estr['Lineas de acción'] || []).map(lin =>
             typeof lin === "object"
               ? ({
-                  ...lin,
-                  text: lin["Linea de acción"] || lin.text, // soporta ambos casos
-                  // id: lin.id
-                })
+                ...lin,
+                text: lin["Linea de acción"] || lin.text,
+              })
               : ({
-                  // Por si la línea viene como string simple (no recomendado)
-                  id: undefined,
-                  text: lin
-                })
+                id: undefined,
+                text: lin
+              })
           ),
         })),
       })),
@@ -100,9 +94,35 @@ function useStaticWithId() {
   }, []);
 }
 
+// --- Component principal ---
 export default function PlataformaEstrategicaReview() {
   const { selectedCodes, loading } = useSelectedAxes();
   const staticWithId = useStaticWithId();
+
+  // --- Datos de la BD ---
+  const [datosBD, setDatosBD] = useState([]);
+  const [loadingBD, setLoadingBD] = useState(true);
+
+  async function cargarDesdeBD() {
+    setLoadingBD(true);
+    try {
+      const token = typeof window !== "undefined" ? localStorage.getItem('access') : null;
+      const res = await fetch("/api/objetivos/mis-objetivos/", {
+        headers: { ...(token && { Authorization: `Bearer ${token}` }) }
+      });
+      if (!res.ok) throw new Error('No se pudo cargar');
+      const data = await res.json();
+      setDatosBD(data.objetivos || []);
+    } catch {
+      setDatosBD([]);
+      setSnackbar({ open: true, message: "Error al cargar datos guardados.", severity: "error" });
+    }
+    setLoadingBD(false);
+  }
+
+  useEffect(() => {
+    cargarDesdeBD();
+  }, []);
 
   const { feedback, setAcuerdo, setComentario } = useFeedback();
   const [modalOpen, setModalOpen] = useState(false);
@@ -126,7 +146,158 @@ export default function PlataformaEstrategicaReview() {
   const handleGuardarAvance = () => setSnackbar({ open: true, message: '¡Avance guardado!', severity: 'info' });
   const handleGuardarComentarios = () => setSnackbar({ open: true, message: '¡Comentarios enviados!', severity: 'success' });
 
-  // --- CRUD Handlers para propuestas, estrategias y líneas ---
+  // --- ENVÍA TODO (propuestas, estrategias, líneas) al backend
+  const handleEnviarNuevosElementos = async () => {
+    // Arma el array final de objetivos fusionando todos los estados
+    const objetivos = (nuevoContenido.propuestas || []).map(prop => ({
+      id: prop.id,
+      nombre: prop.nombre,
+      estrategias: (prop.estrategias || []).map(e => {
+        // Encuentra líneas nuevas agregadas desde el flujo separado
+        const extraLineas = (nuevasLineas[prop.id]?.[e.id]) || [];
+        // Fusiona líneas antiguas y nuevas (elimina duplicados por id)
+        const allLineasMap = {};
+        [...(e.lineas || []), ...extraLineas].forEach(l => {
+          if (l && l.id) allLineasMap[l.id] = l;
+        });
+        const allLineas = Object.values(allLineasMap);
+        return {
+          id: e.id,
+          nombre: e.nombre,
+          lineas: allLineas.map(l => ({
+            id: l.id,
+            text: l.text
+          }))
+        }
+      })
+    }));
+
+    // Ahora filtra para asegurarte que no hay vacíos
+    const objetivosFiltrados = objetivos
+      .filter(o => (o.estrategias || []).length)
+      .map(o => ({
+        ...o,
+        estrategias: (o.estrategias || []).filter(e => (e.lineas || []).length)
+      }));
+
+    // Suma también estrategias nuevas que agregaste por el flujo de "nuevasEstrategias"
+    Object.entries(nuevasEstrategias).forEach(([objetivo_id, estrategias]) => {
+      const propIndex = objetivos.findIndex(o => o.id === objetivo_id);
+      if (propIndex !== -1) {
+        // Combina las estrategias nuevas, fusionando por id (no duplica si ya existen)
+        estrategias.forEach(estr => {
+          if (!objetivos[propIndex].estrategias.some(e => e.id === estr.id)) {
+            // Igual fusiona las líneas de nuevasLineas
+            const extraLineas = (nuevasLineas[objetivo_id]?.[estr.id]) || [];
+            const allLineasMap = {};
+            [...(estr.lineas || []), ...extraLineas].forEach(l => {
+              if (l && l.id) allLineasMap[l.id] = l;
+            });
+            objetivos[propIndex].estrategias.push({
+              id: estr.id,
+              nombre: estr.nombre,
+              lineas: Object.values(allLineasMap).map(l => ({
+                id: l.id,
+                text: l.text
+              }))
+            });
+          }
+        });
+      }
+    });
+
+    // Por último, suma líneas nuevas a estrategias existentes que vengan desde nuevasLineas (si las hay)
+    Object.entries(nuevasLineas).forEach(([objetivo_id, estrategiasObj]) => {
+      const prop = objetivos.find(o => o.id === objetivo_id);
+      if (prop) {
+        Object.entries(estrategiasObj).forEach(([estrategia_id, lineas]) => {
+          const estr = prop.estrategias.find(e => e.id === estrategia_id);
+          if (estr) {
+            // Fusiona líneas nuevas con las que ya están
+            const allLineasMap = {};
+            [...(estr.lineas || []), ...lineas].forEach(l => {
+              if (l && l.id) allLineasMap[l.id] = l;
+            });
+            estr.lineas = Object.values(allLineasMap).map(l => ({
+              id: l.id,
+              text: l.text
+            }));
+          }
+        });
+      }
+    });
+
+    // 🚨 No envíes si está vacío
+    if (!objetivos.length) {
+      setSnackbar({
+        open: true,
+        message: "No hay objetivos para enviar.",
+        severity: "warning"
+      });
+      return;
+    }
+
+    const payload = { objetivos: objetivosFiltrados };
+
+    try {
+      const token = typeof window !== "undefined" ? localStorage.getItem('access') : null;
+      let res = await fetch("/api/objetivos/mis-objetivos/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          ...(token && { Authorization: `Bearer ${token}` })
+        },
+        body: JSON.stringify(payload)
+      });
+
+      // Si ya existe el conjunto, el backend responde 400: {detail: "..."}
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}));
+        if (
+          res.status === 400 &&
+          errorData.detail &&
+          errorData.detail.includes("usa PUT")
+        ) {
+          // Haz PUT para actualizar
+          res = await fetch("/api/objetivos/mis-objetivos/", {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              ...(token && { Authorization: `Bearer ${token}` })
+            },
+            body: JSON.stringify(payload)
+          });
+        }
+      }
+
+      if (!res.ok) throw new Error(await res.text());
+
+      setSnackbar({
+        open: true,
+        message: "¡Elementos enviados con éxito!",
+        severity: "success"
+      });
+
+      setNuevoContenido({ propuestas: [] });
+      setNuevasEstrategias({});
+      setNuevasLineas({});
+      await cargarDesdeBD();
+
+    } catch (error) {
+      setSnackbar({
+        open: true,
+        message: "Error al enviar los elementos.",
+        severity: "error"
+      });
+      console.error(error);
+    }
+  };
+
+
+
+
+
+  // CRUD Handlers ... (sin cambios)
   const agregarElemento = (promptText, callback) => {
     openInputModal(promptText, '', (valor) => {
       const cleaned = valor.trim();
@@ -134,8 +305,7 @@ export default function PlataformaEstrategicaReview() {
     });
   };
 
-  // Si agregas elementos desde el frontend, deberás generar un ID temporal:
-  const generateTempId = () => `temp_${Date.now()}_${Math.floor(Math.random()*1000)}`;
+  const generateTempId = () => `temp_${Date.now()}_${Math.floor(Math.random() * 1000)}`;
 
   const handleAgregarPropuesta = () => {
     agregarElemento('Nueva Propuesta', (nombre) => {
@@ -452,7 +622,35 @@ export default function PlataformaEstrategicaReview() {
       );
     });
 
-  // --- Render principal ---
+  // --- NUEVO: Render BD primero (siempre todos sus objetivos) ---
+  const renderBDObjetivos = () => (
+    <>
+      <h3 style={{ margin: "32px 0 0 0" }}>Objetivos agregados en tu cuenta</h3>
+      {loadingBD ? (
+        <p>Cargando datos guardados...</p>
+      ) : datosBD.length === 0 ? (
+        <p>No hay propuestas guardadas en BD.</p>
+      ) : (
+        datosBD.map(objetivo => (
+          <div key={objetivo.id} className={styles.propuesta}>
+            <h3 className={styles.ejeActivo}>Objetivo: {objetivo.nombre}</h3>
+            {objetivo.estrategias.map(estr => (
+              <div key={estr.id} className={styles.estrategia}>
+                <h4>{estr.nombre}</h4>
+                <ul>
+                  {estr.lineas.map(linea => (
+                    <li key={linea.id}>{linea.text}</li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        ))
+      )}
+    </>
+  );
+
+  // --- Render principal (estructura original + bloque BD al inicio) ---
   return (
     <div className={styles.container}>
       <div className={styles.containerReview}>
@@ -461,6 +659,10 @@ export default function PlataformaEstrategicaReview() {
           <span className="spanVino">Plataforma Estratégica</span>
         </h2>
 
+        {/* 1. Render de BD */}
+        {renderBDObjetivos()}
+
+        {/* 2. Resto del render: propuestas estáticas, nuevas, etc */}
         {loading ? (
           <p>Cargando ejes...</p>
         ) : selectedCodes.length === 0 ? (
@@ -492,6 +694,7 @@ export default function PlataformaEstrategicaReview() {
           <div className={styles.buttonWrapper}>
             <button className={styles.slideButton} onClick={handleGuardarComentarios}>Enviar comentarios</button>
           </div>
+          <button className={styles.slideButton} onClick={handleEnviarNuevosElementos}>Enviar nuevos elementos</button>
         </div>
       </div>
 
