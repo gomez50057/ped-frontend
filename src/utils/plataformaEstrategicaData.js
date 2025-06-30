@@ -149,7 +149,7 @@ export const dataObjetivoEG01 = [
     "Estrategias": [
       {
         "id": "1_4_1_EG01",
-        "Estrategia": "1.4.1. Fortalecer la comunicación y difusión de información oficial con la población, garantizando el derecho a la información y fomentando la participación ciudadana en la solución de problemáticas sociales.",
+        "Estrategia": "1.4.1 Fortalecer la comunicación y difusión de información oficial con la población, garantizando el derecho a la información y fomentando la participación ciudadana en la solución de problemáticas sociales.",
         "Lineas de acción": [
           {
             "id": "1_4_1_1_EG01",
@@ -382,6 +382,7 @@ export const dataObjetivoEG02 = [
     ]
   }
 ]
+
 export const dataObjetivoEG03 = [
   {
     "id": "3_1_EG03",
@@ -664,6 +665,7 @@ export const dataObjetivoEG03 = [
     ]
   }
 ]
+
 export const dataObjetivoEG04 = [
   {
     "id": "4_1_EG04",
@@ -938,6 +940,7 @@ export const dataObjetivoEG04 = [
     ]
   }
 ]
+
 export const dataObjetivoEG05 = [
   {
     "id": "5_1_EG05",
@@ -1120,3 +1123,916 @@ export const dataObjetivoEG05 = [
     ]
   }
 ]
+
+export const dataObjetivoEG06 = [
+  {
+    "id": "6_1_EG06",
+    "Propuesta Objetivo": "6.1 Impulsar el desarrollo económico mediante la consolidación de sectores estratégicos, favoreciendo el crecimiento y competitividad del estado de Hidalgo.",
+    "Estrategias": [
+      {
+        "id": "6_1_1_EG06",
+        "Estrategia": "6.1.1 Consolidar una política de desarrollo económico local, basada en las ventajas competitivas regionales, situando a la entidad como polo de desarrollo atractivo para la inversión nacional e internacional.",
+        "Lineas de acción": [
+          {
+            "id": "6_1_1_1_EG06",
+            "Linea de acción": "6.1.1.1 Aprovechar las oportunidades de desarrollo e inversión, derivadas de proyectos estratégicos de alcance regional, mediante el impulso a clústeres industriales que potencien el crecimiento en el estado.",
+          },
+          {
+            "id": "6_1_1_2_EG06",
+            "Linea de acción": "6.1.1.2 Promover prácticas industriales sostenibles, integrando modelos innovadores como el de economía circular con el objetivo de mejorar la productividad y reducir el impacto ambiental.",
+          },
+          {
+            "id": "6_1_1_3_EG06",
+            "Linea de acción": "6.1.1.3 Promover el desarrollo y gestión de los espacios industriales a largo plazo, aprovechando las ventajas comparativas de cada región y cadenas productivas, fomentando la atracción de nuevas economías.",
+          },
+          {
+            "id": "6_1_1_4_EG06",
+            "Linea de acción": "6.1.1.4 Dotar de las herramientas necesarias a las y los emprendedores, que les permita asegurar la viabilidad en la apertura de nuevas empresas, reduciendo la incertidumbre y facilitando la inversión en el estado.",
+          },
+          {
+            "id": "6_1_1_5_EG06",
+            "Linea de acción": "6.1.1.5 Fomentar las economías digitales, generando oportunidades de desarrollo basadas en la innovación y el empleo de nuevas tecnologías.",
+          },
+          {
+            "id": "6_1_1_6_EG06",
+            "Linea de acción": "6.1.1.6 Fomentar el comercio de la producción local, bajo una visión estratégica en mercados nacionales e internacionales, impulsando la calidad y competitividad del estado, mejorando así los ingresos económicos.",
+          },
+          {
+            "id": "6_1_1_7_EG06",
+            "Linea de acción": "6.1.1.7 Consolidar un entorno favorable para las inversiones nacionales y extranjeras, asegurando su viabilidad y la estabilidad económica en el estado.",
+          },
+          {
+            "id": "6_1_1_8_EG06",
+            "Linea de acción": "6.1.1.8 Impulsar la tecnificación de los procesos productivos, reduciendo los costos de los productos en el mercado, fortaleciendo con ello los ingresos recibidos.",
+          },
+          {
+            "id": "6_1_1_9_EG06",
+            "Linea de acción": "6.1.1.9 Fortalecer la infraestructura industrial para el desarrollo y producción de bienes, el comercio y la prestación de servicios en el estado, impulsando el crecimiento económico bajo un enfoque sustentable.",
+          },
+          {
+            "id": "6_1_1_10_EG06",
+            "Linea de acción": "6.1.1.10 Favorecer el desarrollo de los mercados y centros de abasto, promoviendo las economías locales, la distribución de bienes y proporcionando un servicio efectivo a las y los productores y consumidores.",
+          },
+          {
+            "id": "6_1_1_11_EG06",
+            "Linea de acción": "6.1.1.11 Impulsar políticas públicas para el desarrollo del sector energético como fuente de crecimiento sostenible en la entidad."
+          }
+        ]
+      },
+      {
+        "id": "6_1_2_EG06",
+        "Estrategia": "6.1.2 Impulsar el mercado local y las cadenas productivas, generando dinamismo económico, para el desarrollo de Hidalgo.",
+        "Lineas de acción": [
+          {
+            "id": "6_1_2_1_EG06",
+            "Linea de acción": "6.1.2.1 Fortalecer los sectores económicos en el estado mediante acciones estratégicas que permitan la identificación de las oportunidades y desafíos, proporcionando con ello un mayor desarrollo estatal.",
+          },
+          {
+            "id": "6_1_2_2_EG06",
+            "Linea de acción": "6.1.2.2 Fortalecer las redes de empresas y actividades económicas, en las cadenas productivas, de valor y logísticas, con una visión de desarrollo interno y respeto al medio ambiente.",
+          },
+          {
+            "id": "6_1_2_3_EG06",
+            "Linea de acción": "6.1.2.3 Fomentar el acceso de las y los productores locales a los fondos de financiamiento productivos, con una visión de industrialización que promueva el crecimiento y desarrollo estatal, regional y local.",
+          },
+          {
+            "id": "6_1_2_4_EG06",
+            "Linea de acción": "6.1.2.4 Consolidar la identificación de la producción hecha en Hidalgo, impulsando el comercio, la producción y el consumo de productos locales.",
+          },
+          {
+            "id": "6_1_2_5_EG06",
+            "Linea de acción": "6.1.2.5 Fortalecer los procesos de contratación pública del Gobierno Estatal, priorizando empresas locales, con base en el padrón de proveedores y contratistas, fomentando la economía.",
+          },
+          {
+            "id": "6_1_2_6_EG06",
+            "Linea de acción": "6.1.2.6 Promover la competitividad, aprovechando los recursos y fortalezas regionales, metropolitanas y municipales, mediante la colaboración con organizaciones empresariales, productivas, gremiales y otras.",
+          },
+          {
+            "id": "6_1_2_7_EG06",
+            "Linea de acción": "6.1.2.7 Impulsar un ecosistema adecuado que permita el desarrollo de empresas cooperativas en la entidad, que generen empleos dignos, promuevan la economía social y solidaria, y el desarrollo sostenible en las regiones.",
+          },
+          {
+            "id": "6_1_2_8_EG06",
+            "Linea de acción": "6.1.2.8 Promover la vinculación con organizaciones gremiales, comerciales, industriales y obreras, en el fomento al desarrollo económico de la entidad, bajo condiciones de respeto, cooperación e impulso al bienestar económico generalizado en la entidad.",
+          },
+          {
+            "id": "6_1_2_9_EG06",
+            "Linea de acción": "6.1.2.9 Impulsar las actividades económicas cooperativistas en la entidad, bajo una visión de desarrollo económico compartido, competitividad y combate a las desigualdades regionales.",
+          },
+          {
+            "id": "6_1_2_10_EG06",
+            "Linea de acción": "6.1.2.10 Impulsar el acceso y desarrollo a fideicomisos para el crecimiento con un firme apego a los marcos normativos y promoción de las economías en la entidad."
+          }
+        ]
+      },
+      {
+        "id": "6_1_3_EG06",
+        "Estrategia": "6.1.3 Expandir la presencia de los productos hidalguenses en el mercado nacional e internacional mediante la promoción y vinculación productiva, mejorando la actividad económica.",
+        "Lineas de acción": [
+          {
+            "id": "6_1_3_1_EG06",
+            "Linea de acción": "6.1.3.1 Coadyuvar en el desarrollo productivo local bajo una perspectiva de comercio basado en los mercados exteriores con oportunidades de crecimiento sostenible de largo plazo.",
+          },
+          {
+            "id": "6_1_3_2_EG06",
+            "Linea de acción": "6.1.3.2 Impulsar las sinergias productivas de las empresas hidalguenses, a través de la coordinación con la Cancillería y la realización de encuentros de negocios con consumidores del extranjero."
+          }
+        ]
+      },
+      {
+        "id": "6_1_4_EG06",
+        "Estrategia": "6.1.4 Fortalecer el emprendimiento y apoyo a las micro, pequeñas y medianas empresas, mejorando la competitividad e ingresos para la generación de empleo en la entidad.",
+        "Lineas de acción": [
+          {
+            "id": "6_1_4_1_EG06",
+            "Linea de acción": "6.1.4.1 Mejorar la productividad y competitividad de las MiPyMes en el estado mediante la vinculación, financiamiento y capacitación, potenciando así la economía y el desarrollo en la entidad.",
+          },
+          {
+            "id": "6_1_4_2_EG06",
+            "Linea de acción": "6.1.4.2 Desarrollar economías en torno a nichos de mercado con amplia rentabilidad para las y los emprendedores, diversificando sus oportunidades y generando empleos de calidad.",
+          },
+          {
+            "id": "6_1_4_3_EG06",
+            "Linea de acción": "6.1.4.3 Mejorar el desarrollo del emprendimiento hidalguense, así como de las MiPyMEs, los mercados locales, las economías comunitarias, las cooperativas y las digitales, entre otras, mejorando sus economías.",
+          },
+          {
+            "id": "6_1_4_4_EG06",
+            "Linea de acción": "6.1.4.4 Impulsar a las juventudes en sus emprendimientos económicos con productos y servicios rentables, logrando un futuro más sólido y con mejores oportunidades de desarrollo dentro y fuera del estado.",
+          },
+          {
+            "id": "6_1_4_5_EG06",
+            "Linea de acción": "6.1.4.5 Coadyuvar en el fomento a los esquemas de inversión público, privada y público-privada, fortaleciendo la competitividad y desarrollo de economías de largo plazo en la entidad.",
+          },
+          {
+            "id": "6_1_4_6_EG06",
+            "Linea de acción": "6.1.4.6 Brindar apoyos para las y los emprendedores y MiPyMEs, para su consolidación y crecimiento, mediante el impulso al financiamiento, promoviendo su consolidación y expansión."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "6_2_EG06",
+    "Propuesta Objetivo": "6.2 Brindar oportunidades para el desarrollo de las personas, a través de la capacitación y vinculación laboral, fomentando el empleo digno y asegurando el ejercicio pleno de sus derechos.",
+    "Estrategias": [
+      {
+        "id": "6_2_1_EG06",
+        "Estrategia": "6.2.1 Impulsar relaciones laborales que garanticen el ejercicio pleno de los derechos y el acceso a la justicia conforme a la normatividad aplicable al empleo.",
+        "Lineas de acción": [
+          {
+            "id": "6_2_1_1_EG06",
+            "Linea de acción": "6.2.1.1 Garantizar el respeto a los derechos fundamentales de las y los trabajadores, generando un entorno laboral justo, equitativo y seguro, promoviendo así, el trabajo digno.",
+          },
+          {
+            "id": "6_2_1_2_EG06",
+            "Linea de acción": "6.2.1.2 Realizar acciones diversas de capacitación, formación y difusión sobre los derechos laborales, en colaboración con organizaciones y participantes clave en el ámbito.",
+          },
+          {
+            "id": "6_2_1_3_EG06",
+            "Linea de acción": "6.2.1.3 Proporcionar asistencia efectiva a las personas en búsqueda de empleo, vinculándoles con oportunidades laborales formales de manera equitativa, permitiendo una mayor certidumbre laboral.",
+          },
+          {
+            "id": "6_2_1_4_EG06",
+            "Linea de acción": "6.2.1.4 Fortalecer el conocimiento de los derechos y obligaciones laborales entre las y los trabajadores y empleadores, promoviendo una cultura laboral basada en el respeto, la legalidad y la corresponsabilidad, con salarios dignos que mejoren la calidad de vida del pueblo.",
+          },
+          {
+            "id": "6_2_1_5_EG06",
+            "Linea de acción": "6.2.1.5 Impulsar la igualdad de oportunidades en el ámbito laboral, promoviendo la equidad de género y la no discriminación en el estado.",
+          },
+          {
+            "id": "6_2_1_6_EG06",
+            "Linea de acción": "6.2.1.6 Resolver los conflictos laborales de manera eficiente, justa y pacífica, fomentando relaciones de trabajo cordiales y cooperativas, respetando los derechos de las y los trabajadores y patrones."
+          }
+        ]
+      },
+      {
+        "id": "6_2_2_EG06",
+        "Estrategia": "6.2.2 Fomentar la generación de empleo y mejores condiciones laborales que permitan el desarrollo de una vida plena de la población.",
+        "Lineas de acción": [
+          {
+            "id": "6_2_2_1_EG06",
+            "Linea de acción": "6.2.2.1 Fomentar la vinculación del empleo formal, con énfasis en los sectores más vulnerables y regiones de menor desarrollo, mejorando sus oportunidades de desarrollo.",
+          },
+          {
+            "id": "6_2_2_2_EG06",
+            "Linea de acción": "6.2.2.2 Impulsar la movilidad laboral nacional e internacional, a través de alianzas estratégicas con empresas y la implementación de programas de capacitación y apoyo a la población buscadora de empleo.",
+          },
+          {
+            "id": "6_2_2_3_EG06",
+            "Linea de acción": "6.2.2.3 Impulsar programas y acciones de certificación, capacitación y formación de capital humano, fortaleciendo las habilidades y destrezas de las y los hidalguenses, logrando el impulso de nuevas oportunidades de empleo o autoempleo.",
+          },
+          {
+            "id": "6_2_2_4_EG06",
+            "Linea de acción": "6.2.2.4 Colaborar con los sectores educativos, productivos y gubernamentales para la formación de capital humano, de acuerdo con las oportunidades de desarrollo regional, fortaleciendo los perfiles profesionales.",
+          },
+          {
+            "id": "6_2_2_5_EG06",
+            "Linea de acción": "6.2.2.5 Mejorar las condiciones laborales dignas en Hidalgo, incluyendo el trabajo doméstico, aumentando con ello la calidad de vida de todas y todos los trabajadores en la entidad."
+          }
+        ]
+      }
+    ]
+  }
+]
+
+export const dataObjetivoEG07 = [
+  {
+    "id": "7_1_EG07",
+    "Propuesta Objetivo": "7.1 Fortalecer la preservación, difusión y aprovechamiento del patrimonio cultural y artístico, promoviendo las tradiciones, riquezas y diversidad de la entidad.",
+    "Estrategias": [
+      {
+        "id": "7_1_1_EG07",
+        "Estrategia": "7.1.1 Consolidar el patrimonio y diversidad cultural del estado como un eje de identidad colectiva, desarrollo social y atractivo turístico, fortaleciendo el tejido social y detonando el bienestar integral de toda la población.",
+        "Lineas de acción": [
+          {
+            "id": "7_1_1_1_EG07",
+            "Linea de acción": "7.1.1.1 Fomentar proyectos de restauración y preservación de inmuebles y espacios con valor histórico y arquitectónico que refuercen la identidad de las comunidades.",
+          },
+          {
+            "id": "7_1_1_2_EG07",
+            "Linea de acción": "7.1.1.2 Implementar programas de preservación, registro y difusión del patrimonio histórico-cultural, material e inmaterial, fortaleciendo la identidad estatal y regional.",
+          },
+          {
+            "id": "7_1_1_3_EG07",
+            "Linea de acción": "7.1.1.3 Integrar acciones interinstitucionales que protejan los entornos naturales y culturales, asegurando su legado para las futuras generaciones de hidalguenses.",
+          },
+          {
+            "id": "7_1_1_4_EG07",
+            "Linea de acción": "7.1.1.4 Establecer programas de educación, divulgación científica y participación comunitaria, promoviendo la conservación del patrimonio geológico y natural del Geoparque.",
+          },
+          {
+            "id": "7_1_1_5_EG07",
+            "Linea de acción": "7.1.1.5 Impulsar campañas y carteleras culturales en el estado, que acerquen las distintas expresiones artísticas a públicos diversos en todo el territorio.",
+          },
+          {
+            "id": "7_1_1_6_EG07",
+            "Linea de acción": "7.1.1.6 Desarrollar programas que promuevan la formación artística, el consumo cultural y el desarrollo de audiencias en todos los municipios."
+          }
+        ]
+      },
+      {
+        "id": "7_1_2_EG07",
+        "Estrategia": "7.1.2 Impulsar el arte como motor de desarrollo cultural mediante el fortalecimiento de espacios, la promoción de expresiones artísticas y el fomento de la participación social y artesanal en toda la entidad.",
+        "Lineas de acción": [
+          {
+            "id": "7_1_2_1_EG07",
+            "Linea de acción": "7.1.2.1 Impulsar campañas y carteleras culturales en el estado, que acerquen las distintas expresiones artísticas a públicos diversos en todo el territorio.",
+          },
+          {
+            "id": "7_1_2_2_EG07",
+            "Linea de acción": "7.1.2.2 Desarrollar programas que promuevan la formación artística, el consumo cultural y el desarrollo de audiencias en todos los municipios.",
+          },
+          {
+            "id": "7_1_2_3_EG07",
+            "Linea de acción": "7.1.2.3 Modernizar los espacios culturales y de resguardo documental, mejorando su aprovechamiento educativo y turístico.",
+          },
+          {
+            "id": "7_1_2_4_EG07",
+            "Linea de acción": "7.1.2.4 Fortalecer la infraestructura, equipamiento y los programas de centros culturales hidalguenses, ampliando el acceso a las expresiones artísticas en todas las regiones del estado.",
+          },
+          {
+            "id": "7_1_2_5_EG07",
+            "Linea de acción": "7.1.2.5 Desarrollar mecanismos de fortalecimiento económico, promoción comercial y mejora de capacidades productivas del sector artesanal.",
+          },
+          {
+            "id": "7_1_2_6_EG07",
+            "Linea de acción": "7.1.2.6 Impulsar la participación comunitaria en programas de preservación, formación y transmisión del conocimiento artesanal tradicional.",
+          },
+          {
+            "id": "7_1_2_7_EG07",
+            "Linea de acción": "7.1.2.7 Establecer alianzas estratégicas para atraer a productoras de la industria cinematográfica, promoviendo la imagen del estado en producciones nacionales e internacionales.",
+          },
+          {
+            "id": "7_1_2_8_EG07",
+            "Linea de acción": "7.1.2.8 Crear incentivos fiscales, apoyos logísticos y convenios de colaboración que atraigan producciones audiovisuales nacionales e internacionales a la entidad.",
+          },
+          {
+            "id": "7_1_2_9_EG07",
+            "Linea de acción": "7.1.2.9 Establecer mecanismos de protección y promoción de los derechos de autor y propiedad intelectual de creadores culturales y artísticos hidalguenses."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "7_2_EG07",
+    "Propuesta Objetivo": "7.2 Promover el turismo sostenible mediante el aprovechamiento responsable del patrimonio cultural, natural y atractivos convirtiendo a la entidad en un destino referente nacional e internacional.",
+    "Estrategias": [
+      {
+        "id": "7_2_1_EG07",
+        "Estrategia": "7.2.1 Fomentar una política cultural que promueva la identidad, el intercambio y la diversidad, fortaleciendo el desarrollo económico y social a través del aprovechamiento responsable del patrimonio y las expresiones culturales.",
+        "Lineas de acción": [
+          {
+            "id": "7_2_1_1_EG07",
+            "Linea de acción": "7.2.1.1 Establecer lineamientos y certificaciones, promoviendo el turismo responsable, ambientalmente sustentable y socialmente incluyente.",
+          },
+          {
+            "id": "7_2_1_2_EG07",
+            "Linea de acción": "7.2.1.2 Promover el diseño de productos turísticos con enfoque intercultural que fomenten la diversidad étnica y las tradiciones locales del estado.",
+          },
+          {
+            "id": "7_2_1_3_EG07",
+            "Linea de acción": "7.2.1.3 Fomentar programas de intercambio cultural y turístico con otras entidades y países, enriqueciendo la oferta turística de Hidalgo.",
+          },
+          {
+            "id": "7_2_1_4_EG07",
+            "Linea de acción": "7.2.1.4 Generar campañas de difusión que proyecten la riqueza cultural del estado hacia mercados turísticos nacionales e internacionales.",
+          },
+          {
+            "id": "7_2_1_5_EG07",
+            "Linea de acción": "7.2.1.5 Establecer estrategias para atraer inversión extranjera en proyectos turísticos sustentables y de alto impacto social.",
+          },
+          {
+            "id": "7_2_1_6_EG07",
+            "Linea de acción": "7.2.1.6 Mejorar la atención al turismo mediante protocolos de atención, servicios de información, seguridad y asistencia profesional.",
+          },
+          {
+            "id": "7_2_1_7_EG07",
+            "Linea de acción": "7.2.1.7 Promover la generación de empleos dignos en el sector turístico mediante formación técnica y vinculación laboral."
+          }
+        ]
+      },
+      {
+        "id": "7_2_2_EG07",
+        "Estrategia": "7.2.2 Fomentar el acceso a denominaciones turísticas que impulsen la competitividad y atractivo de los destinos en la entidad, como generadores de desarrollo bajo una visión de largo plazo.",
+        "Lineas de acción": [
+          {
+            "id": "7_2_2_1_EG07",
+            "Linea de acción": "7.2.2.1 Mejorar la infraestructura y calidad de los servicios turísticos en los Pueblos Mágicos, mediante la profesionalización de las y los prestadores de servicios y el fortalecimiento de capacidades locales.",
+          },
+          {
+            "id": "7_2_2_2_EG07",
+            "Linea de acción": "7.2.2.2 Implementar campañas integrales de promoción turística que destaquen los atractivos culturales, naturales y gastronómicos de Hidalgo, impulsando su posicionamiento y el consecuente desarrollo económico local.",
+          },
+          {
+            "id": "7_2_2_3_EG07",
+            "Linea de acción": "7.2.2.3 Fortalecer la calidad y cobertura de los servicios turísticos mediante la profesionalización, certificación e infraestructura."
+          }
+        ]
+      },
+      {
+        "id": "7_2_3_EG07",
+        "Estrategia": "7.2.3 Consolidar a Hidalgo como un destino diverso de atractivos turísticos, partiendo de su oferta actual y el desarrollo de nuevos productos para la atracción de otros mercados.",
+        "Lineas de acción": [
+          {
+            "id": "7_2_3_1_EG07",
+            "Linea de acción": "7.2.3.1 Implementar programas y acciones regionales de desarrollo turístico con enfoque sustentable, que integren a participantes locales y promuevan cadenas de valor.",
+          },
+          {
+            "id": "7_2_3_2_EG07",
+            "Linea de acción": "7.2.3.2 Consolidar atractivos turísticos con potencial que detone el desarrollo económico regional, impulsando modalidades como el turismo rural, de naturaleza, de negocios, ecoturismo, cultural y de aventura, diversificando la oferta y fortaleciendo las economías locales.",
+          },
+          {
+            "id": "7_2_3_3_EG07",
+            "Linea de acción": "7.2.3.3 Promover el turismo como motor de desarrollo, con base en los diversos tipos y modalidades, impulsando aquellos que resulten congruentes con el contexto, así como rentables para las y los proveedores de servicios y comunidades locales, bajo una perspectiva de largo plazo y una estrategia de mercado integral."
+          }
+        ]
+      }
+    ]
+  }
+]
+
+export const dataObjetivoEG08 = [
+  {
+    "id": "8_1_EG08",
+    "Propuesta Objetivo": "8.1 Fortalecer la infraestructura pública y equipamiento urbano, promoviendo el acceso equitativo a servicios de calidad y el desarrollo de mejores ciudades y comunidades rurales.",
+    "Estrategias": [
+      {
+        "id": "8_1_1_EG08",
+        "Estrategia": "8.1.1 Impulsar el desarrollo urbano y rural promoviendo la infraestructura básica, vivienda, equipamientos y servicios, en beneficio de las familias del estado.",
+        "Lineas de acción": [
+          {
+            "id": "8_1_1_1_EG08",
+            "Linea de acción": "8.1.1.1 Mejorar la infraestructura de telecomunicaciones en el estado incluyendo la construcción de redes, instalación de equipos, y expansión de servicios como internet, telefonía, radiodifusión, etc., garantizando el acceso a las tecnologías de la información y comunicación para todas y todos.",
+          },
+          {
+            "id": "8_1_1_2_EG08",
+            "Linea de acción": "8.1.1.2 Incrementar la cobertura y ampliación de la infraestructura pública y los servicios básicos de la vivienda, enfatizando en las zonas con mayor rezago y demanda, mejorando con ello la calidad de vida de la población.",
+          },
+          {
+            "id": "8_1_1_3_EG08",
+            "Linea de acción": "8.1.1.3 Promover el equipamiento urbano en la entidad, mejorando las condiciones de desarrollo, vida y competitividad en favor de la población, garantizando el acceso equitativo y la congruencia con los contextos.",
+          },
+          {
+            "id": "8_1_1_4_EG08",
+            "Linea de acción": "8.1.1.4 Abatir el rezago habitacional, mejorando el estado de las viviendas en la entidad y brindando una especial atención a los grupos vulnerables y las regiones con mayores problemáticas de hacinamiento y rezago.",
+          },
+          {
+            "id": "8_1_1_5_EG08",
+            "Linea de acción": "8.1.1.5 Ampliar la cobertura y efectividad de los servicios de electrificación y alumbrado público en el ámbito urbano y rural, bajo una perspectiva de desarrollo sustentable, mejorando el bienestar social local.",
+          },
+          {
+            "id": "8_1_1_6_EG08",
+            "Linea de acción": "8.1.1.6 Fortalecer la infraestructura hídrica, de drenaje, pluvial y tratamiento de aguas de toda la entidad, bajo una perspectiva de aprovechamiento sustentable del recurso, la atención a demandas sociales y productivas, así como un manejo que incluya la participación ciudadana y los diversos niveles de gobierno.",
+          },
+          {
+            "id": "8_1_1_7_EG08",
+            "Linea de acción": "8.1.1.7 Garantizar que la ejecución de obras públicas sea con procesos transparentes y bajo la normativa vigente, asegurando la calidad y el uso eficiente de los recursos públicos.",
+          },
+          {
+            "id": "8_1_1_8_EG08",
+            "Linea de acción": "8.1.1.8 Fortalecer los mecanismos de gestión de expedientes técnicos, licitación y contratos en las obras que se vayan a ejecutar en el estado, asegurando que sean de calidad y aprovechamiento para las y los hidalguenses."
+          }
+        ]
+      },
+      {
+        "id": "8_1_2_EG08",
+        "Estrategia": "8.1.2 Fortalecer la infraestructura vial en la entidad, asegurando la conexión de todas las regiones y traslados eficaces y seguros de la población.",
+        "Lineas de acción": [
+          {
+            "id": "8_1_2_1_EG08",
+            "Linea de acción": "8.1.2.1 Fortalecer la red estatal de carreteras, alimentadoras, calles, caminos rurales, brechas y puentes, con una visión de largo plazo que garantice la conectividad en el estado.",
+          },
+          {
+            "id": "8_1_2_2_EG08",
+            "Linea de acción": "8.1.2.2 Impulsar la conservación y construcción de carreteras a través del Programa Construye tu Camino, promoviendo la corresponsabilidad social y el desarrollo comunitario, con énfasis en las regiones de mayor rezago mejorando su calidad de vida."
+          }
+        ]
+      },
+      {
+        "id": "8_1_3_EG08",
+        "Estrategia": "8.1.3 Fortalecer la planeación territorial y urbana, con vista al desarrollo equilibrado y ordenado en todos los espacios de la entidad.",
+        "Lineas de acción": [
+          {
+            "id": "8_1_3_1_EG08",
+            "Linea de acción": "8.1.3.1 Promover la realización y actualización de los programas de ordenamiento territorial y desarrollo urbano, que regulen los usos y destinos de los espacios en la entidad, bajo una perspectiva sustentable e incluyente, así como de los asentamientos humanos y centros de población, mejorando la gestión y la calidad de vida de la población.",
+          },
+          {
+            "id": "8_1_3_2_EG08",
+            "Linea de acción": "8.1.3.2 Implementar instrumentos de ordenamiento ecológico territorial, para el aprovechamiento sustentable de los territorios, con base en la coordinación institucional y la participación ciudadana, generando ciudades y espacios ordenados y resilientes.",
+          },
+          {
+            "id": "8_1_3_3_EG08",
+            "Linea de acción": "8.1.3.3 Fortalecer los instrumentos y procesos que conforman el Sistema Estatal de Desarrollo Urbano, mejorando la planeación y gestión del crecimiento en el territorio para que sea de forma ordenada y sostenible.",
+          },
+          {
+            "id": "8_1_3_4_EG08",
+            "Linea de acción": "8.1.3.4 Promover un desarrollo territorial y urbano con apego a las normativas e instrumentos de planeación, enfatizando en las zonas no urbanizables por razones ecológicas o de prevención de riesgos, garantizando así la seguridad de la población e inversiones en la entidad.",
+          },
+          {
+            "id": "8_1_3_5_EG08",
+            "Linea de acción": "8.1.3.5 Cooperar interinstitucionalmente en la planeación y ejecución de acciones en las zonas metropolitanas del estado con proyectos estratégicos, ampliando el desarrollo del estado.",
+          },
+          {
+            "id": "8_1_3_6_EG08",
+            "Linea de acción": "8.1.3.6 Garantizar el buen manejo de los usos de suelo a través de dictámenes de impacto urbano, ambiental y vial, con firme apego a la norma e instrumentos de planeación aplicables.",
+          },
+          {
+            "id": "8_1_3_7_EG08",
+            "Linea de acción": "8.1.3.7 Ejecutar obras de mitigación de acuerdo a los resultados de los dictámenes de impacto urbano, ambiental y vial, conforme a la normativa vigente.",
+          },
+          {
+            "id": "8_1_3_8_EG08",
+            "Linea de acción": "8.1.3.8 Implementar políticas e instrumentos de imagen urbana, con apego al contexto de aplicación, impulso a la sustentabilidad y la inclusión, con ello mejorando los espacios públicos en el estado."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "8_2_EG08",
+    "Propuesta Objetivo": "8.2 Establecer un modelo de movilidad sustentable que garantice traslados eficientes de personas y mercancías entre los asentamientos humanos a través de sistemas de transporte conforme a las características del territorio.",
+    "Estrategias": [
+      {
+        "id": "8_2_1_EG08",
+        "Estrategia": "8.2.1 Promover una política de movilidad que priorice los desplazamientos seguros y eficientes de la población y bienes, facilitando con ello, la conectividad, el desarrollo regional, sustentable e incluyente en el estado.",
+        "Lineas de acción": [
+          {
+            "id": "8_2_1_1_EG08",
+            "Linea de acción": "8.2.1.1 Fomentar integralmente la movilidad peatonal, mejorando la calidad de vida de las y los hidalguenses y la reducción de la contaminación ambiental.",
+          },
+          {
+            "id": "8_2_1_2_EG08",
+            "Linea de acción": "8.2.1.2 Impulsar la infraestructura de ciclovías con señalización adecuada y estacionamientos en puntos de mayor frecuencia generando redes que promuevan la movilidad y seguridad de las y los ciclistas.",
+          },
+          {
+            "id": "8_2_1_3_EG08",
+            "Linea de acción": "8.2.1.3 Consolidar el derecho a la movilidad, bajo una perspectiva sustentable e incluyente, enfatizando en aquellas modalidades de bajo impacto ambiental.",
+          },
+          {
+            "id": "8_2_1_4_EG08",
+            "Linea de acción": "8.2.1.4 Contribuir a la promoción de incentivos, así como las bases de las prioridades ambientales, tecnológicas, técnicas, financieras, legales, institucionales y administrativas, que permitan el desarrollo y consolidación de la movilidad eléctrica en el estado, disminuyendo el impacto negativo al medio ambiente."
+          }
+        ]
+      },
+      {
+        "id": "8_2_2_EG08",
+        "Estrategia": "8.2.2 Promover un sistema integral de transporte considerando las diversas formas de desplazamiento, mediante modelos accesibles, seguros, sostenibles e incluyentes en la entidad, fortaleciendo la infraestructura y la conectividad.",
+        "Lineas de acción": [
+          {
+            "id": "8_2_2_1_EG08",
+            "Linea de acción": "8.2.2.1 Robustecer la infraestructura y equipamiento para la gestión de la movilidad en el estado, promoviendo traslados confiables, eficientes, cómodos y seguros en toda la entidad.",
+          },
+          {
+            "id": "8_2_2_2_EG08",
+            "Linea de acción": "8.2.2.2 Coadyuvar en el seguimiento efectivo al transporte de carga en el estado, con acciones de vigilancia y monitoreo eficientes, garantizando la seguridad en las vías de comunicación, así como el impulso a la competitividad local, con ello promoviendo un mayor desarrollo.",
+          },
+          {
+            "id": "8_2_2_3_EG08",
+            "Linea de acción": "8.2.2.3 Impulsar el transporte público convencional, mediante acciones integrales que permitan un servicio cómodo, seguro y digno, con conexiones efectivas en toda la entidad, impulsando el desarrollo y calidad de vida en la población.",
+          },
+          {
+            "id": "8_2_2_4_EG08",
+            "Linea de acción": "8.2.2.4 Promover el desarrollo integral del servicio de transporte masivo en la entidad, mediante acciones en infraestructura, equipamiento, capacitaciones y comunicación, logrando una oportuna movilidad para la población.",
+          },
+          {
+            "id": "8_2_2_5_EG08",
+            "Linea de acción": "8.2.2.5 Colaborar con las y los concesionarios de servicios de transporte, impulsando la mejora integral para la población usuaria, bajo estricto apego a la normatividad aplicable, logrando el beneficio colectivo.",
+          },
+          {
+            "id": "8_2_2_6_EG08",
+            "Linea de acción": "8.2.2.6 Eficientar la movilidad en el estado mediante el establecimiento de rutas de servicio de transporte congruentes con el contexto, enfatizando en las comunidades y zonas con mayor rezago, logrando así el desarrollo integral y a largo plazo en todo el territorio.",
+          },
+          {
+            "id": "8_2_2_7_EG08",
+            "Linea de acción": "8.2.2.7 Mejorar la planeación, regularización y supervisión de los servicios de transporte especial, escolar y de personal, mediante esquemas de coordinación que garanticen la seguridad y eficiencia para las y los usuarios.",
+          },
+          {
+            "id": "8_2_2_8_EG08",
+            "Linea de acción": "8.2.2.8 Garantizar un correcto registro y otorgamiento de permisos de circulación para el servicio público convencional, mediante procesos eficientes, transparentes y oportunos, proporcionando así mayor seguridad para la población."
+          }
+        ]
+      },
+      {
+        "id": "8_2_3_EG08",
+        "Estrategia": "8.2.3 Desarrollar una política local de seguridad y educación vial, con base en la planeación democrática y la corresponsabilidad.",
+        "Lineas de acción": [
+          {
+            "id": "8_2_3_1_EG08",
+            "Linea de acción": "8.2.3.1 Coadyuvar con los municipios en el fortalecimiento a la movilidad segura y eficiente, contribuyendo a la generación de políticas públicas de mayor impacto, apego a la normativa y comprensión del contexto, beneficiando así a todas y todos.",
+          },
+          {
+            "id": "8_2_3_2_EG08",
+            "Linea de acción": "8.2.3.2 Impulsar la participación y educación ciudadana sobre la importancia de la movilidad segura y efectiva, el aprovechamiento responsable de las infraestructuras, equipamientos, servicios y modalidades, fortaleciendo así la seguridad vial en la entidad.",
+          },
+          {
+            "id": "8_2_3_3_EG08",
+            "Linea de acción": "8.2.3.3 Implementar campañas de concientización sobre la movilidad responsable, mantenimiento preventivo y uso racional de los distintos tipos de vehículos, logrando una reducción de la congestión vial y el incremento de la seguridad en todas las zonas del estado."
+          }
+        ]
+      }
+    ]
+  }
+]
+
+export const dataObjetivoEG09 = [
+  {
+    "id": "9_1_EG09",
+    "Propuesta Objetivo": "9.1 Fortalecer la política hídrica estatal que promueva el aprovechamiento sustentable del recurso, garantizando su acceso para todas y todos.",
+    "Estrategias": [
+      {
+        "id": "9_1_1_EG09",
+        "Estrategia": "9.1.1 Consolidar las acciones necesarias que permitan ejercer el acceso al agua como un derecho humano, priorizando el bienestar de la población y el equilibrio ambiental.",
+        "Lineas de acción": [
+          {
+            "id": "9_1_1_1_EG09",
+            "Linea de acción": "9.1.1.1 Implementar un Programa Hídrico Estatal como instrumento rector para la gestión integral del agua, que establezca acciones para el uso eficiente, conservación, tratamiento y distribución equitativa del recurso en todo el estado.",
+          },
+          {
+            "id": "9_1_1_2_EG09",
+            "Linea de acción": "9.1.1.2 Armonizar la legislación estatal con los marcos nacionales e internacionales, garantizando el acceso efectivo al agua potable y el saneamiento de la misma.",
+          },
+          {
+            "id": "9_1_1_3_EG09",
+            "Linea de acción": "9.1.1.3 Implementar estrategias de gestión de los recursos hídricos que promuevan su uso racional, conservación y disponibilidad a largo plazo.",
+          },
+          {
+            "id": "9_1_1_4_EG09",
+            "Linea de acción": "9.1.1.4 Implementar un monitoreo efectivo del aprovechamiento del agua, identificando rezagos, evaluando la calidad del servicio y orientando la inversión pública hacia la mejora."
+          }
+        ]
+      },
+      {
+        "id": "9_1_2_EG09",
+        "Estrategia": "9.1.2 Modernizar la infraestructura hídrica mediante acciones integrales, asegurando la disponibilidad y calidad del recurso en el largo plazo.",
+        "Lineas de acción": [
+          {
+            "id": "9_1_2_1_EG09",
+            "Linea de acción": "9.1.2.1 Ejecutar acciones de restauración, conservación y gestión sustentable en las cuencas hídricas prioritarias del estado.",
+          },
+          {
+            "id": "9_1_2_2_EG09",
+            "Linea de acción": "9.1.2.2 Implementar acciones de conservación, monitoreo, recarga y rehabilitación de cuerpos de agua y acuíferos, promoviendo su uso sustentable y la participación comunitaria, garantizando su preservación y funcionalidad ecológica a largo plazo.",
+          },
+          {
+            "id": "9_1_2_3_EG09",
+            "Linea de acción": "9.1.2.3 Desarrollar proyectos estratégicos de infraestructura hídrica con enfoque regional, considerando la gestión integrada de cuencas y la captación pluvial.",
+          },
+          {
+            "id": "9_1_2_4_EG09",
+            "Linea de acción": "9.1.2.4 Ampliar la infraestructura de alcantarillado y saneamiento, mejorando la calidad de vida de la población hidalguense y reduciendo riesgos a la salud pública.",
+          },
+          {
+            "id": "9_1_2_5_EG09",
+            "Linea de acción": "9.1.2.5 Fortalecer las capacidades técnicas y de gestión de los organismos operadores para la operación eficiente, mantenimiento y modernización de la red de abastecimiento de agua potable y saneamiento."
+          }
+        ]
+      },
+      {
+        "id": "9_1_3_EG09",
+        "Estrategia": "9.1.3 Impulsar el tratamiento eficiente y sustentable del agua mediante tecnologías limpias, esquemas de reúso y fortalecimiento de capacidades locales, con enfoque de sostenibilidad ambiental y aprovechamiento circular.",
+        "Lineas de acción": [
+          {
+            "id": "9_1_3_1_EG09",
+            "Linea de acción": "9.1.3.1 Promover la colaboración interinstitucional para el tratamiento y reúso de aguas residuales en la entidad.",
+          },
+          {
+            "id": "9_1_3_2_EG09",
+            "Linea de acción": "9.1.3.2 Fortalecer las capacidades técnicas para operar, mantener y monitorear plantas de tratamiento bajo criterios de eficiencia, sostenibilidad y normatividad ambiental."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "9_2_EG09",
+    "Propuesta Objetivo": "9.2 Impulsar estrategias integrales que contribuyan a la gestión sustentable de los recursos naturales, el equilibrio ecológico en la entidad y la transición energética, disminuyendo los impactos del cambio climático.",
+    "Estrategias": [
+      {
+        "id": "9_2_1_EG09",
+        "Estrategia": "9.2.1 Fomentar el aprovechamiento racional y sustentable de los recursos naturales del estado, mediante esquemas productivos responsables y regulaciones ambientales que aseguren su conservación a largo plazo.",
+        "Lineas de acción": [
+          {
+            "id": "9_2_1_1_EG09",
+            "Linea de acción": "9.2.1.1 Promover prácticas agrícolas, forestales y extractivas sostenibles que minimicen la degradación de los ecosistemas, con base en criterios técnicos y de conservación ambiental.",
+          },
+          {
+            "id": "9_2_1_2_EG09",
+            "Linea de acción": "9.2.1.2 Impulsar la certificación ambiental de actividades productivas, garantizando su compatibilidad con el entorno natural, y fomentando su cumplimiento con estándares nacionales e internacionales.",
+          },
+          {
+            "id": "9_2_1_3_EG09",
+            "Linea de acción": "9.2.1.3 Fomentar la colaboración entre gobierno, sector privado y comunidades, consolidando cadenas de valor verde y proyectos de biocomercio con impacto regional.",
+          },
+          {
+            "id": "9_2_1_4_EG09",
+            "Linea de acción": "9.2.1.4 Promover modelos de economía circular en sectores productivos estratégicos, que optimicen el uso de recursos naturales, minimicen residuos y generen valor ambiental, económico y social sostenibles.",
+          },
+          {
+            "id": "9_2_1_5_EG09",
+            "Linea de acción": "9.2.1.5 Promover incentivos para el desarrollo de actividades productivas sustentables y de oferta de servicios ambientales en zonas rurales, forestales y de alta biodiversidad.",
+          },
+          {
+            "id": "9_2_1_6_EG09",
+            "Linea de acción": "9.2.1.6 Establecer mecanismos de evaluación y control del uso de recursos naturales en zonas de alta vulnerabilidad ambiental, garantizando su aprovechamiento sustentable y protegiendo el ecosistema de la zona.",
+          },
+          {
+            "id": "9_2_1_7_EG09",
+            "Linea de acción": "9.2.1.7 Establecer medidas de control y manejo de especies exóticas e invasoras, previniendo su impacto en los ecosistemas locales, garantizando con ello la protección de la fauna y flora nativas.",
+          },
+          {
+            "id": "9_2_1_8_EG09",
+            "Linea de acción": "9.2.1.8 Implementar acciones de vigilancia, control y certificación, asegurando la sanidad de los productos forestales y previniendo la propagación de plagas y enfermedades."
+          }
+        ]
+      },
+      {
+        "id": "9_2_2_EG09",
+        "Estrategia": "9.2.2 Fortalecer la preservación y restauración de ecosistemas prioritarios mediante una política integral de conservación, reforestación y manejo sustentable del territorio, que articule acciones interinstitucionales y fomente la participación activa.",
+        "Lineas de acción": [
+          {
+            "id": "9_2_2_1_EG09",
+            "Linea de acción": "9.2.2.1 Implementar acciones de conservación ecológica que promuevan el uso sustentable de los recursos naturales en beneficio de las comunidades en todas las regiones.",
+          },
+          {
+            "id": "9_2_2_2_EG09",
+            "Linea de acción": "9.2.2.2 Desarrollar proyectos de preservación y restauración de ecosistemas naturales prioritarios que incrementen la resiliencia territorial ante los efectos del cambio climático.",
+          },
+          {
+            "id": "9_2_2_3_EG09",
+            "Linea de acción": "9.2.2.3 Fortalecer las áreas naturales protegidas y los corredores biológicos del estado bajo criterios de conectividad ecológica y resiliencia climática.",
+          },
+          {
+            "id": "9_2_2_4_EG09",
+            "Linea de acción": "9.2.2.4 Promover la educación ambiental y la participación comunitaria en proyectos de protección, restauración y cuidado del patrimonio natural del estado.",
+          },
+          {
+            "id": "9_2_2_5_EG09",
+            "Linea de acción": "9.2.2.5 Establecer un sistema de monitoreo y control ambiental que permita prevenir y mitigar daños en ecosistemas estratégicos, garantizando su protección.",
+          },
+          {
+            "id": "9_2_2_6_EG09",
+            "Linea de acción": "9.2.2.6 Implementar criterios de conservación ecológica obligatorios en los proyectos de desarrollo urbano, agrícola, industrial y de infraestructura pública o privada.",
+          },
+          {
+            "id": "9_2_2_7_EG09",
+            "Linea de acción": "9.2.2.7 Efectuar proyectos de restauración ambiental en cuencas, bosques, suelos erosionados y zonas afectadas por actividades extractivas que contribuyan a mantener la estabilidad de los ecosistemas y su resiliencia ante el cambio climático.",
+          },
+          {
+            "id": "9_2_2_8_EG09",
+            "Linea de acción": "9.2.2.8 Involucrar a comunidades, juventudes y pueblos originarios en brigadas de restauración ecológica con acompañamiento y respaldo técnico.",
+          },
+          {
+            "id": "9_2_2_9_EG09",
+            "Linea de acción": "9.2.2.9 Crear mecanismos de financiamiento y compensación ambiental, garantizando la sostenibilidad de los proyectos de restauración municipal o regional a largo plazo.",
+          },
+          {
+            "id": "9_2_2_10_EG09",
+            "Linea de acción": "9.2.2.10 Impulsar el manejo forestal comunitario sustentable, promoviendo la reforestación, protección de áreas arboladas y generación de medios de vida en regiones forestales."
+          }
+        ]
+      },
+      {
+        "id": "9_2_3_EG09",
+        "Estrategia": "9.2.3 Impulsar la gestión integral y sustentable del territorio mediante instrumentos de ordenamiento ecológico, que aseguren el equilibrio ecológico, la conservación de ecosistemas y el desarrollo con enfoque ambiental.",
+        "Lineas de acción": [
+          {
+            "id": "9_2_3_1_EG09",
+            "Linea de acción": "9.2.3.1 Impulsar políticas de conservación del patrimonio natural de la entidad, como elemento estratégico para la biodiversidad, el equilibrio ecológico y el desarrollo local.",
+          },
+          {
+            "id": "9_2_3_2_EG09",
+            "Linea de acción": "9.2.3.2 Fortalecer las capacidades técnicas, normativas y tecnológicas de las instituciones ambientales estatales mediante alianzas estratégicas.",
+          },
+          {
+            "id": "9_2_3_3_EG09",
+            "Linea de acción": "9.2.3.3 Promover la participación ciudadana y educación ambiental fomentando una cultura de gobernanza que impulse la corresponsabilidad y vigilancia ambiental.",
+          },
+          {
+            "id": "9_2_3_4_EG09",
+            "Linea de acción": "9.2.3.4 Implementar los programas de ordenamiento ecológico territorial con un enfoque preventivo y participativo, previendo riesgos y orientando al desarrollo sostenible y resiliente.",
+          },
+          {
+            "id": "9_2_3_5_EG09",
+            "Linea de acción": "9.2.3.5 Coordinar políticas interinstitucionales para la protección de corredores biológicos, zonas de recarga hídrica y ecosistemas estratégicos, integrando acciones del ámbito local al estatal.",
+          },
+          {
+            "id": "9_2_3_6_EG09",
+            "Linea de acción": "9.2.3.6 Incorporar criterios de sustentabilidad, resiliencia climática y equilibrio ecológico en los instrumentos de planeación, como condición para un ordenamiento territorial responsable y con visión de largo plazo.",
+          },
+          {
+            "id": "9_2_3_7_EG09",
+            "Linea de acción": "9.2.3.7 Implementar programas de prevención, monitoreo y control de la contaminación del aire, agua y suelo, con énfasis en zonas urbanas e industriales.",
+          },
+          {
+            "id": "9_2_3_8_EG09",
+            "Linea de acción": "9.2.3.8 Consolidar el marco normativo estatal en materia ambiental, generando una política integral y transversal de desarrollo sustentable.",
+          },
+          {
+            "id": "9_2_3_9_EG09",
+            "Linea de acción": "9.2.3.9 Impulsar la gestión integral de residuos sólidos urbanos a través de esquemas regionales de separación, valorización y reciclaje.",
+          },
+          {
+            "id": "9_2_3_10_EG09",
+            "Linea de acción": "9.2.3.10 Establecer protocolos de prevención, respuesta y recuperación ante contingencias ambientales en coordinación con los tres órdenes de gobierno.",
+          },
+          {
+            "id": "9_2_3_11_EG09",
+            "Linea de acción": "9.2.3.11 Fortalecer la implementación del Programa Estatal de Acción ante el Cambio Climático con un enfoque regional y perspectiva social."
+          }
+        ]
+      },
+      {
+        "id": "9_2_4_EG09",
+        "Estrategia": "9.2.4 Impulsar la transición energética sustentable en el estado mediante el desarrollo de infraestructura para energías limpias, la promoción de proyectos de generación renovable y el fortalecimiento de capacidades locales.",
+        "Lineas de acción": [
+          {
+            "id": "9_2_4_1_EG09",
+            "Linea de acción": "9.2.4.1 Fortalecer la planeación energética estatal mediante políticas públicas que regulen el aprovechamiento eficiente y responsable de fuentes de energía convencional, priorizando la reducción de emisiones y el uso racional de recursos.",
+          },
+          {
+            "id": "9_2_4_2_EG09",
+            "Linea de acción": "9.2.4.2 Coadyuvar en la modernización de la infraestructura de generación, distribución y transmisión de energía convencional, incorporando tecnologías que mejoren su eficiencia, reduzcan pérdidas y mitiguen su impacto ambiental.",
+          },
+          {
+            "id": "9_2_4_3_EG09",
+            "Linea de acción": "9.2.4.3 Promover incentivos y marcos normativos que favorezcan la inversión en energías limpias, impulsando la participación del sector público, privado y social en proyectos de generación sustentable.",
+          },
+          {
+            "id": "9_2_4_4_EG09",
+            "Linea de acción": "9.2.4.4 Fomentar el desarrollo de infraestructura estratégica para la producción y almacenamiento de energías renovables (solar, eólica, hidráulica y biomasa) en regiones con alto potencial energético.",
+          },
+          {
+            "id": "9_2_4_5_EG09",
+            "Linea de acción": "9.2.4.5 Promover la instalación de sistemas de energía limpia en espacios públicos, instituciones gubernamentales y comunidades rurales, como modelo de transición energética y reducción de la huella de carbono."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "9_3_EG09",
+    "Propuesta Objetivo": "9.3 Consolidar al sector agropecuario como eje estratégico del desarrollo económico local y sustentable, mejorando la productividad y condiciones de vida de las y los productores.",
+    "Estrategias": [
+      {
+        "id": "9_3_1_EG09",
+        "Estrategia": "9.3.1 Fortalecer una política agropecuaria sustentable que promueva sistemas productivos alternativos, rentables y con enfoque territorial, integrando el desarrollo rural, los agronegocios y el bienestar de las y los productores.",
+        "Lineas de acción": [
+          {
+            "id": "9_3_1_1_EG09",
+            "Linea de acción": "9.3.1.1 Implementar programas integrales orientados a elevar la productividad del sector agropecuario con enfoque territorial, sustentabilidad ambiental y bienestar comunitario.",
+          },
+          {
+            "id": "9_3_1_2_EG09",
+            "Linea de acción": "9.3.1.2 Fortalecer los agronegocios mediante esquemas de financiamiento, infraestructura, innovación tecnológica y acceso a mercados.",
+          },
+          {
+            "id": "9_3_1_3_EG09",
+            "Linea de acción": "9.3.1.3 Aprovechar las vocaciones productivas de cada región del estado, orientando estratégicamente la inversión pública y privada.",
+          },
+          {
+            "id": "9_3_1_4_EG09",
+            "Linea de acción": "9.3.1.4 Impulsar la diversificación productiva en el medio rural a través de actividades innovadoras como el agroturismo y la agricultura sustentable, que generen nuevas fuentes de ingreso y fortalezcan el arraigo comunitario.",
+          },
+          {
+            "id": "9_3_1_5_EG09",
+            "Linea de acción": "9.3.1.5 Consolidar al sector agroalimentario como motor del desarrollo estatal, mediante la integración de cadenas productivas, industrialización responsable y expansión comercial.",
+          },
+          {
+            "id": "9_3_1_6_EG09",
+            "Linea de acción": "9.3.1.6 Impulsar el desarrollo de la apicultura mediante capacitación técnica, acceso a insumos e infraestructura, así como el fortalecimiento de los canales de comercialización de la miel y sus derivados, con enfoque en la sostenibilidad y la economía local.",
+          },
+          {
+            "id": "9_3_1_7_EG09",
+            "Linea de acción": "9.3.1.7 Promover la silvicultura como actividad económica y ambientalmente viable, mediante esquemas de aprovechamiento responsable y restauración ambiental.",
+          },
+          {
+            "id": "9_3_1_8_EG09",
+            "Linea de acción": "9.3.1.8 Fomentar el uso sostenible de recursos pesqueros y acuícolas con enfoque de conservación y aprovechamiento económico para comunidades rurales.",
+          },
+          {
+            "id": "9_3_1_9_EG09",
+            "Linea de acción": "9.3.1.9 Desarrollar la acuacultura como motor económico a través de la transferencia tecnológica, financiamiento especializado y asistencia técnica integral.",
+          },
+          {
+            "id": "9_3_1_10_EG09",
+            "Linea de acción": "9.3.1.10 Integrar el agroturismo como estrategia de diversificación económica que promueva el empleo, la conservación de tradiciones y la valorización del entorno rural.",
+          },
+          {
+            "id": "9_3_1_11_EG09",
+            "Linea de acción": "9.3.1.11 Impulsar la integración y modernización del sector agropecuario mediante esquemas asociativos, transferencia tecnológica y vinculación con cadenas de valor sostenibles que mejoren la competitividad y el ingreso de las y los productores.",
+          },
+          {
+            "id": "9_3_1_12_EG09",
+            "Linea de acción": "9.3.1.12 Fortalecer la producción de ovinos, porcinos, aves de traspatio y otras especies comercializables, mediante programas de mejora genética, sanidad animal, acceso a infraestructura productiva y estrategias de comercialización orientadas a mercados locales y regionales.",
+          },
+          {
+            "id": "9_3_1_13_EG09",
+            "Linea de acción": "9.3.1.13 Consolidar cadenas de valor frutícolas en regiones con alto potencial, mediante apoyo técnico, innovación y vinculación con los mercados.",
+          },
+          {
+            "id": "9_3_1_14_EG09",
+            "Linea de acción": "9.3.1.14 Establecer programas estatales para el fortalecimiento de la producción de bovinos y caprinos, con enfoque de autosuficiencia alimentaria y comercialización local y nacional.",
+          },
+          {
+            "id": "9_3_1_15_EG09",
+            "Linea de acción": "9.3.1.15 Impulsar la competitividad del sector bovino mediante la mejora genética, infraestructura productiva, capacitación y prácticas sustentables."
+          }
+        ]
+      },
+      {
+        "id": "9_3_2_EG09",
+        "Estrategia": "9.3.2 Impulsar la tecnificación del campo con criterios de sustenibilidad, eficiencia en el uso del agua y justicia social, priorizando a comunidades indígenas y regiones de mayor rezago.",
+        "Lineas de acción": [
+          {
+            "id": "9_3_2_1_EG09",
+            "Linea de acción": "9.3.2.1 Impulsar la tecnificación del campo, conforme a las condiciones locales, fortaleciendo las capacidades productivas, de acuerdo a las características, potencialidades y escalas propias de producción.",
+          },
+          {
+            "id": "9_3_2_2_EG09",
+            "Linea de acción": "9.3.2.2 Promover la implementación de técnicas agrícolas sostenibles e innovadoras que optimicen el uso de recursos, mejoren la productividad del campo y contribuyan a la conservación del suelo y del medio ambiente.",
+          },
+          {
+            "id": "9_3_2_3_EG09",
+            "Linea de acción": "9.3.2.3 Promover prácticas agroecológicas y tecnologías limpias que minimicen el impacto ambiental y aseguren la sostenibilidad del sector.",
+          },
+          {
+            "id": "9_3_2_4_EG09",
+            "Linea de acción": "9.3.2.4 Fomentar el manejo sostenible, la restauración y protección de suelos agrícolas como base de la soberanía y seguridad alimentaria de las futuras generaciones.",
+          },
+          {
+            "id": "9_3_2_5_EG09",
+            "Linea de acción": "9.3.2.5 Impulsar el riego tecnificado en la entidad, con base en las características regionales y la disponibilidad hídrica de cada región."
+          }
+        ]
+      },
+      {
+        "id": "9_3_3_EG09",
+        "Estrategia": "9.3.3 Consolidar un sistema integral e interinstitucional de sanidad e inocuidad agroalimentaria que eleve la competitividad del sector, proteja la salud pública y facilite el acceso efectivo a mercados nacionales e internacionales.",
+        "Lineas de acción": [
+          {
+            "id": "9_3_3_1_EG09",
+            "Linea de acción": "9.3.3.1 Consolidar los sistemas de movilización, control, sanidad y bioseguridad en la producción ganadera, avícola y de subproductos, garantizando la inocuidad y competitividad del sector.",
+          },
+          {
+            "id": "9_3_3_2_EG09",
+            "Linea de acción": "9.3.3.2 Fortalecer la coordinación institucional y normativa para el monitoreo sanitario y la vigilancia epidemiológica en las cadenas agroalimentarias.",
+          },
+          {
+            "id": "9_3_3_3_EG09",
+            "Linea de acción": "9.3.3.3 Implementar un sistema estatal de trazabilidad e inocuidad alimentaria que certifique procesos desde la producción hasta el consumo, alineado con estándares nacionales e internacionales.",
+          },
+          {
+            "id": "9_3_3_4_EG09",
+            "Linea de acción": "9.3.3.4 Fortalecer los sistemas de vigilancia epidemiológica, control sanitario y bioseguridad en la producción agropecuaria, para prevenir riesgos a la salud y asegurar la calidad de los productos.",
+          },
+          {
+            "id": "9_3_3_5_EG09",
+            "Linea de acción": "9.3.3.5 Impulsar la capacitación técnica y certificación de unidades productivas en buenas prácticas agrícolas, pecuarias y de manufactura para elevar la competitividad y seguridad alimentaria."
+          }
+        ]
+      }
+    ]
+  }
+]
+
