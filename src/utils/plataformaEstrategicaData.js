@@ -2036,3 +2036,363 @@ export const dataObjetivoEG09 = [
   }
 ]
 
+export const dataObjetivoET01 = [
+  {
+    "id": "ET_1_1_ET01",
+    "Propuesta Objetivo": "1.1 Consolidar la transparencia y rendición de cuentas de la administración gubernamental, reforzando la confianza ciudadana en las instituciones, la responsabilidad en el servicio y el acceso a la información pública, enfrentando a la corrupción.",
+    "Estrategias": [
+      {
+        "id": "ET_1_1_1_ET01",
+        "Estrategia": "1.1.1 Fortalecer la transparencia y garantizar el acceso efectivo a la información pública mediante esquemas abiertos, fomentando un ambiente de confianza mutua entre la ciudadanía y el gobierno.",
+        "Lineas de acción": [
+          {
+            "id": "LAT_1_1_1_1_ET01",
+            "Linea de acción": "1.1.1.1 Facilitar el acceso de la ciudadanía a la información pública a través de canales digitales y físicos, promoviendo la construcción de una sociedad más informada.",
+          },
+          {
+            "id": "LAT_1_1_1_2_ET01",
+            "Linea de acción": "1.1.1.2 Fortalecer los sistemas institucionales de archivo del estado de Hidalgo, contribuyendo a la transparencia y rendición de cuentas.",
+          },
+          {
+            "id": "LAT_1_1_1_3_ET01",
+            "Linea de acción": "1.1.1.3 Cumplir plenamente con las obligaciones en materia de transparencia y rendición de cuentas con acciones proactivas, fomentando una mayor confianza en la ciudadanía."
+          }
+        ]
+      },
+      {
+        "id": "ET_1_1_2_ET01",
+        "Estrategia": "1.1.2 Transformar la acción gubernamental a través del seguimiento efectivo a los recursos públicos, garantizando su uso eficiente en beneficio de las y los hidalguenses.",
+        "Lineas de acción": [
+          {
+            "id": "LAT_1_1_2_1_ET01",
+            "Linea de acción": "1.1.2.1 Realizar auditorías al ejercicio de los recursos públicos conforme a la normativa vigente, fomentando con ello la honestidad y eficiencia en su empleo.",
+          },
+          {
+            "id": "LAT_1_1_2_2_ET01",
+            "Linea de acción": "1.1.2.2 Fortalecer los Órganos Internos de Control de la Administración Pública, garantizando la correcta aplicación de los recursos públicos, la transparencia y el cumplimiento de las normativas vigentes.",
+          },
+          {
+            "id": "LAT_1_1_2_3_ET01",
+            "Linea de acción": "1.1.2.3 Realizar la inspección, supervisión, control, vigilancia, monitoreo, evaluación y seguimiento de las acciones y los recursos públicos, garantizando su adecuada ejecución."
+          }
+        ]
+      },
+      {
+        "id": "ET_1_1_3_ET01",
+        "Estrategia": "1.1.3 Fortalecer los mecanismos interinstitucionales que eliminen los actos de corrupción dentro de la administración pública, incrementando con ello la confianza ciudadana.",
+        "Lineas de acción": [
+          {
+            "id": "LAT_1_1_3_1_ET01",
+            "Linea de acción": "1.1.3.1 Implementar mecanismos de prevención y sanción para la identificación temprana de conductas y actos de corrupción, nepotismo o lavado de dinero, fortaleciendo así, la confianza ciudadana.",
+          },
+          {
+            "id": "LAT_1_1_3_2_ET01",
+            "Linea de acción": "1.1.3.2 Fortalecer la coordinación interinstitucional en el Sistema Estatal Anticorrupción, promoviendo la participación activa de las y los hidalguenses.",
+          },
+          {
+            "id": "LAT_1_1_3_3_ET01",
+            "Linea de acción": "1.1.3.3 Robustecer las acciones y procesos que realiza el estado para la administración de los bienes públicos, eficientando su uso para el beneficio de las y los hidalguenses.",
+          },
+          {
+            "id": "LAT_1_1_3_4_ET01",
+            "Linea de acción": "1.1.3.4 Implementar mecanismos eficaces para la detección, aseguramiento, recuperación y restitución de activos obtenidos mediante actos de corrupción, promoviendo con ello la confianza de la población."
+          }
+        ]
+      },
+      {
+        "id": "ET_1_1_4_ET01",
+        "Estrategia": "1.1.4 Consolidar la ética y la moral en las personas servidoras públicas mejorando el ejercicio de sus funciones, logrando un gobierno con transparencia y rendición de cuentas.",
+        "Lineas de acción": [
+          {
+            "id": "LAT_1_1_4_1_ET01",
+            "Linea de acción": "1.1.4.1 Fortalecer los sistemas de controles internos en la administración pública, asegurando procesos transparentes y responsables que garanticen el correcto ejercicio de funciones de las personas servidores públicas, mejorando la eficiencia gubernamental.",
+          },
+          {
+            "id": "LAT_1_1_4_2_ET01",
+            "Linea de acción": "1.1.4.2 Generar programas de formación ética para las personas servidoras públicas, respecto al desarrollo de sus funciones, logrando una atención ciudadana efectiva y humana.",
+          },
+          {
+            "id": "LAT_1_1_4_3_ET01",
+            "Linea de acción": "1.1.4.3 Dar seguimiento a los códigos de ética y de conducta en la administración estatal, asegurando que las personas servidoras públicas cumplan con sus responsabilidades administrativas y laborales."
+          }
+        ]
+      }
+    ]
+  }
+]
+
+export const dataObjetivoET02 = [
+  {
+    "id": "ET_2_1_ET02",
+    "Propuesta Objetivo": "2.1 Promover el desarrollo tecnológico y científico con una visión humanista que mejore la calidad de vida de la población para la transformación de la entidad.",
+    "Estrategias": [
+      {
+        "id": "ET_2_1_1_ET02",
+        "Estrategia": "2.1.1 Reducir la brecha digital mediante el acceso equitativo a tecnologías de la información y la comunicación en todo el territorio hidalguense.",
+        "Lineas de acción": [
+          {
+            "id": "LAT_2_1_1_1_ET02",
+            "Linea de acción": "2.1.1.1 Fortalecer la conexión y comunicación mediante infraestructura de telecomunicaciones en comunidades rurales y zonas de difícil acceso, reduciendo la brecha digital.",
+          },
+          {
+            "id": "LAT_2_1_1_2_ET02",
+            "Linea de acción": "2.1.1.2 Robustecer los programas y acciones de conexión a internet gratuito en espacios públicos y educativos, garantizando igualdad de oportunidades en el acceso a la red."
+          }
+        ]
+      },
+      {
+        "id": "ET_2_1_2_ET02",
+        "Estrategia": "2.1.2 Implementar una política integral digital con enfoque humanista, priorizando la inclusión, la mejora en los servicios públicos y el desarrollo para la población.",
+        "Lineas de acción": [
+          {
+            "id": "LAT_2_1_2_1_ET02",
+            "Linea de acción": "2.1.2.1 Impulsar la transformación digital del sector público, educativo y productivo mediante el desarrollo y uso de aplicaciones tecnológicas, mejorando la eficiencia, promoviendo la innovación, así como fortaleciendo la atención y servicios a la población.",
+          },
+          {
+            "id": "LAT_2_1_2_2_ET02",
+            "Linea de acción": "2.1.2.2 Implementar soluciones digitales que optimicen la atención en los servicios que ofrece la administración pública estatal, priorizando la eficiencia de los recursos y la inclusión social.",
+          },
+          {
+            "id": "LAT_2_1_2_3_ET02",
+            "Linea de acción": "2.1.2.3 Desarrollar herramientas tecnológicas orientadas a resolver problemáticas locales, con una visión incluyente y en congruencia con el contexto, mejorando así la calidad de vida de la población."
+          }
+        ]
+      },
+      {
+        "id": "ET_2_1_3_ET02",
+        "Estrategia": "2.1.3 Consolidar un ecosistema científico y tecnológico participativo, posicionando la entidad como un referente nacional en la materia.",
+        "Lineas de acción": [
+          {
+            "id": "LAT_2_1_3_1_ET02",
+            "Linea de acción": "2.1.3.1 Desarrollar una red estatal de divulgación científica con enfoque incluyente y territorial, que acerque el conocimiento a toda la población y posicione a Hidalgo en mira de nuevas investigaciones.",
+          },
+          {
+            "id": "LAT_2_1_3_2_ET02",
+            "Linea de acción": "2.1.3.2 Establecer convenios con instituciones científicas, tecnológicas y académicas de prestigio nacional e internacional, para la transferencia de conocimiento y vinculación científica.",
+          },
+          {
+            "id": "LAT_2_1_3_3_ET02",
+            "Linea de acción": "2.1.3.3 Fomentar el desarrollo del talento científico en la entidad, a través de acciones diversas en vinculación, financiamiento u otros apoyos, con énfasis en la atención a problemáticas de carácter local, impulsando así el desarrollo y bienestar del pueblo.",
+          },
+          {
+            "id": "LAT_2_1_3_4_ET02",
+            "Linea de acción": "2.1.3.4 Potenciar la infraestructura y equipamiento de los centros y espacios de investigación, así como de los laboratorios públicos, fortaleciendo los ecosistemas de innovación regional."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "OT_2_2_ET02",
+    "Propuesta Objetivo": "2.2 Impulsar una política de innovación que transforme los procesos y servicios de los sectores público y privado en beneficio de la sociedad.",
+    "Estrategias": [
+      {
+        "id": "ET_2_2_1_ET02",
+        "Estrategia": "2.2.1 Promover la adopción de soluciones innovadoras en los sectores público y privado, fortaleciendo las capacidades tecnológicas, la articulación con centros de investigación y desarrollo del estado.",
+        "Lineas de acción": [
+          {
+            "id": "LAT_2_2_1_1_ET02",
+            "Linea de acción": "2.2.1.1 Impulsar políticas públicas integrales que articulen ciencia, tecnología e innovación como pilares estratégicos para un desarrollo estatal incluyente y competitivo.",
+          },
+          {
+            "id": "LAT_2_2_1_2_ET02",
+            "Linea de acción": "2.2.1.2 Consolidar redes de colaboración con instituciones nacionales e internacionales para el desarrollo de proyectos de innovación científica y tecnológica con alto impacto social.",
+          },
+          {
+            "id": "LAT_2_2_1_3_ET02",
+            "Linea de acción": "2.2.1.3 Establecer mecanismos institucionales de transferencia tecnológica entre instituciones académicas, centros de investigación, sector privado y gobiernos locales, aumentando la ciberseguridad, la productividad y competitividad estatal."
+          }
+        ]
+      },
+      {
+        "id": "ET_2_2_2_ET02",
+        "Estrategia": "2.2.2 Consolidar el cambio gubernamental mediante la transformación de procesos y servicios públicos digitales, incrementando la eficiencia operativa y mejorando la capacidad de respuesta a las demandas ciudadanas.",
+        "Lineas de acción": [
+          {
+            "id": "LAT_2_2_2_1_ET02",
+            "Linea de acción": "2.2.2.1 Promover la adopción de herramientas digitales para la mejora continua de procesos y trámites, mediante la modernización en las operaciones financieras del gobierno estatal, facilitando la toma de decisiones y reduciendo la corrupción administrativa.",
+          },
+          {
+            "id": "LAT_2_2_2_2_ET02",
+            "Linea de acción": "2.2.2.2 Fortalecer los procesos institucionales mediante soluciones digitales que promuevan la innovación, eliminen barreras regulatorias y estimulen el desarrollo tecnológico, incrementando la agilidad y la capacidad de respuesta a la población, generando un efectivo gobierno electrónico."
+          }
+        ]
+      },
+      {
+        "id": "ET_2_2_3_ET02",
+        "Estrategia": "2.2.3 Potenciar el desarrollo de tecnologías emergentes y de frontera con enfoque ético y sostenible, orientado a resolver problemas y desafíos en sectores sociales, logrando un desarrollo integral que responda a las necesidades de la población.",
+        "Lineas de acción": [
+          {
+            "id": "LAT_2_2_3_1_ET02",
+            "Linea de acción": "2.2.3.1 Impulsar el desarrollo de soluciones basadas en inteligencia artificial u otras tecnologías de la información, aplicadas a los diversos sectores, asegurando criterios éticos y de inclusión que permitan llevar a Hidalgo a su máxima potencia.",
+          },
+          {
+            "id": "LAT_2_2_3_2_ET02",
+            "Linea de acción": "2.2.3.2 Implementar plataformas de análisis de macrodatos, optimizando la planeación, evaluación y toma de decisiones en políticas públicas y servicios estatales.",
+          },
+          {
+            "id": "LAT_2_2_3_3_ET02",
+            "Linea de acción": "2.2.3.3 Aplicar tecnologías de Internet de las cosas, mediante el uso de dispositivos y sistemas conectados entre sí y con la red, potenciando la transmisión y recepción de información y con ello mejorando los procesos y la productividad.",
+          },
+          {
+            "id": "LAT_2_2_3_4_ET02",
+            "Linea de acción": "2.2.3.4 Promover el uso de tecnologías de automatización de los procesos administrativos y productivos, aumentando la eficiencia operativa del estado y de los sectores económicos.",
+          },
+          {
+            "id": "LAT_2_2_3_5_ET02",
+            "Linea de acción": "2.2.3.5 Promover la investigación y uso de robótica y drones en sectores como agricultura de precisión, educación técnica, vigilancia y protección civil, así como aquellos en beneficio del pueblo.",
+          },
+          {
+            "id": "LAT_2_2_3_6_ET02",
+            "Linea de acción": "2.2.3.6 Impulsar el desarrollo de soluciones de realidad virtual y aumentada en proyectos y programas con enfoque innovador e inclusivo, permitiendo soluciones eficientes que beneficien a todas y todas.",
+          },
+          {
+            "id": "LAT_2_2_3_7_ET02",
+            "Linea de acción": "2.2.3.7 Desarrollar aplicaciones de blockchain, garantizando procesos seguros, eficientes y transparentes en cadenas de suministro, servicios públicos y trámites administrativos, entre otros.",
+          },
+          {
+            "id": "LAT_2_2_3_8_ET02",
+            "Linea de acción": "2.2.3.8 Promover la recopilación, análisis y uso estratégico de la data y metadata pública para la toma de decisiones basadas en evidencia, respetando principios de transparencia y protección de datos personales.",
+          },
+          {
+            "id": "LAT_2_2_3_9_ET02",
+            "Linea de acción": "2.2.3.9 Promover proyectos de investigación o desarrollo basado en tecnologías de frontera, con aplicaciones diversas para la atención a problemáticas locales, mejorando con ello las condiciones de vida de la población de la entidad."
+          }
+        ]
+      }
+    ]
+  }
+]
+
+export const dataObjetivoET03 = [
+  {
+    "id": "ET_3_1_ET03",
+    "Propuesta Objetivo": "3.1 Promover el desarrollo integral de las mujeres, adolescentes y niñas hidalguenses, garantizando el ejercicio de sus derechos, que les permita el goce de una vida plena.",
+    "Estrategias": [
+      {
+        "id": "ET_3_1_1_ET03",
+        "Estrategia": "3.1.1 Promover condiciones igualitarias que reduzcan las brechas estructurales en la administración pública, mejorando las condiciones sociales.",
+        "Lineas de acción": [
+          {
+            "id": "LAT_3_1_1_1_ET03",
+            "Linea de acción": "3.1.1.1 Fortalecer la integración de la perspectiva de género en el diseño, implementación y evaluación de programas y servicios públicos, así como en la normatividad aplicable, garantizando una atención adecuada.",
+          },
+          {
+            "id": "LAT_3_1_1_2_ET03",
+            "Linea de acción": "3.1.1.2 Impulsar mecanismos normativos e institucionales que garanticen la paridad de género en todos los niveles de gobierno y espacios de representación, promoviendo la participación equitativa para el ejercicio pleno de los derechos.",
+          },
+          {
+            "id": "LAT_3_1_1_3_ET03",
+            "Linea de acción": "3.1.1.3 Promover políticas y acciones institucionales que garanticen la igualdad sustantiva entre mujeres y hombres, fomentando la igualdad de género y asegurando las condiciones de equidad y seguridad para todas las personas en los espacios públicos y de toma de decisiones."
+          }
+        ]
+      },
+      {
+        "id": "ET_3_1_2_ET03",
+        "Estrategia": "3.1.2 Desarrollar un modelo de seguridad y justicia integral que garantice la protección, el acceso a la justicia y el ejercicio pleno de los derechos de todas las mujeres en la entidad.",
+        "Lineas de acción": [
+          {
+            "id": "LAT_3_1_2_1_ET03",
+            "Linea de acción": "3.1.2.1 Brindar una atención integral, especializada y con enfoque de género a las mujeres víctimas de violencias, garantizando su protección y seguridad, acceso a la justicia, servicios de apoyo y restitución de derechos.",
+          },
+          {
+            "id": "LAT_3_1_2_2_ET03",
+            "Linea de acción": "3.1.2.2 Fortalecer los sistemas en materia de acceso a la justicia, alcanzando la digna y plena defensa de las mujeres hidalguenses, permitiendo el ejercicio pleno de sus derechos.",
+          },
+          {
+            "id": "LAT_3_1_2_3_ET03",
+            "Linea de acción": "3.1.2.3 Fortalecer el acceso de las mujeres a una vida libre de violencias con oportunidades sociales sin discriminación ni barreras, mejorando su desarrollo y calidad de vida.",
+          },
+          {
+            "id": "LAT_3_1_2_4_ET03",
+            "Linea de acción": "3.1.2.4 Impulsar acciones integrales en beneficio del ejercicio pleno de los derechos sexuales y reproductivos de las mujeres del estado de Hidalgo."
+          }
+        ]
+      },
+      {
+        "id": "ET_3_1_3_ET03",
+        "Estrategia": "3.1.3 Promover oportunidades socioeconómicas para las mujeres, promoviendo su autonomía y consolidando su independencia económica.",
+        "Lineas de acción": [
+          {
+            "id": "LAT_3_1_3_1_ET03",
+            "Linea de acción": "3.1.3.1 Efectuar acciones en materia de capacitación y profesionalización de las mujeres, mejorando su desarrollo y calidad de vida.",
+          },
+          {
+            "id": "LAT_3_1_3_2_ET03",
+            "Linea de acción": "3.1.3.2 Fortalecer el emprendimiento de las mujeres hidalguenses, en su enfoque financiero, técnico y en especie, mejorando sus economías.",
+          },
+          {
+            "id": "LAT_3_1_3_3_ET03",
+            "Linea de acción": "3.1.3.3 Promover acciones encaminadas a reducir la brecha de género salarial y erradicar las prácticas discriminatorias en los entornos laborales, impulsando el desarrollo pleno de las mujeres de la entidad."
+          }
+        ]
+      },
+      {
+        "id": "ET_3_1_4_ET03",
+        "Estrategia": "3.1.4 Garantizar una vida libre de violencias para las niñas, niños y adolescentes en el estado, promoviendo el respeto de sus derechos fundamentales en el estado.",
+        "Lineas de acción": [
+          {
+            "id": "LAT_3_1_4_1_ET03",
+            "Linea de acción": "3.1.4.1 Desarrollar la infraestructura de los espacios de atención integral para las niñas, niños y adolescentes, así como las estancias infantiles, disminuyendo la transgresión de sus derechos.",
+          },
+          {
+            "id": "LAT_3_1_4_2_ET03",
+            "Linea de acción": "3.1.4.2 Mejorar los servicios de salud para los niños, niñas y adolescentes, ofreciendo una atención integral, oportuna y de alta calidad.",
+          },
+          {
+            "id": "LAT_3_1_4_3_ET03",
+            "Linea de acción": "3.1.4.3 Fortalecer las acciones en materia de alimentación para las niñas, niños y adolescentes de la entidad, priorizando a quienes se encuentren en regiones de mayor rezago o marginación.",
+          },
+          {
+            "id": "LAT_3_1_4_4_ET03",
+            "Linea de acción": "3.1.4.4 Mejorar la infraestructura y servicios educativos para las niñas, niños y adolescentes o quienes pertenezcan a grupos vulnerables garantizando su aprovechamiento pleno.",
+          },
+          {
+            "id": "LAT_3_1_4_5_ET03",
+            "Linea de acción": "3.1.4.5 Fortalecer los mecanismos de prevención y atención integral para disminuir las violencias y proteger a las niñas, niños y adolescentes, fomentando un entorno seguro y libre de abusos.",
+          },
+          {
+            "id": "LAT_3_1_4_6_ET03",
+            "Linea de acción": "3.1.4.6 Ampliar las redes de colaboración institucional y alianzas con los diferentes sectores que fortalezcan la atención y protección de las niñas, niños y adolescentes en situaciones de riesgo que vulneren sus derechos.",
+          },
+          {
+            "id": "LAT_3_1_4_7_ET03",
+            "Linea de acción": "3.1.4.7 Capacitar continuamente a las y los profesionales de la salud sobre la atención integral para las infancias y con perspectiva de género, promoviendo el bienestar de largo plazo."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "OT_3_2_ET03",
+    "Propuesta Objetivo": "3.2 Asegurar el ejercicio de los derechos humanos, para el desarrollo individual y en comunidad de las personas, fomentando una sociedad más justa, inclusiva y pacífica.",
+    "Estrategias": [
+      {
+        "id": "ET_3_2_1_ET03",
+        "Estrategia": "3.2.1 Promover el desarrollo social y humano con enfoque de respeto absoluto a los derechos, fomentando así una sociedad más justa, inclusiva y equitativa.",
+        "Lineas de acción": [
+          {
+            "id": "LAT_3_2_1_1_ET03",
+            "Linea de acción": "3.2.1.1 Consolidar las acciones institucionales que fomenten el ejercicio de los derechos humanos, bajo una perspectiva de corresponsabilidad y participación, mejorando con ello el desarrollo, bienestar social y las condiciones de vida de las y los hidalguenses.",
+          },
+          {
+            "id": "LAT_3_2_1_2_ET03",
+            "Linea de acción": "3.2.1.2 Garantizar que las políticas públicas sean más inclusivas para que prevengan, atiendan, sancionen y eliminen todas las formas de discriminación, promoviendo una sociedad más justa, equitativa e inclusiva.",
+          },
+          {
+            "id": "LAT_3_2_1_3_ET03",
+            "Linea de acción": "3.2.1.3 Garantizar el ejercicio pleno del derecho humano a la salud y educación, promoviendo el desarrollo integral de todas y todos, en las diferentes regiones de la entidad.",
+          },
+          {
+            "id": "LAT_3_2_1_4_ET03",
+            "Linea de acción": "3.2.1.4 Promover entornos laborales dignos, implementando mecanismos eficaces que contribuyan al goce del derecho humano en la materia.",
+          },
+          {
+            "id": "LAT_3_2_1_5_ET03",
+            "Linea de acción": "3.2.1.5 Prevenir actos de acoso u hostigamiento, logrando la seguridad y el bienestar de las y los trabajadores en la entidad."
+          }
+        ]
+      }
+    ]
+  }
+]
