@@ -148,14 +148,11 @@ export default function PlataformaEstrategicaReview() {
 
   // --- ENVÍA TODO (propuestas, estrategias, líneas) al backend
   const handleEnviarNuevosElementos = async () => {
-    // Arma el array final de objetivos fusionando todos los estados
-    const objetivos = (nuevoContenido.propuestas || []).map(prop => ({
-      id: prop.id,
-      nombre: prop.nombre,
-      estrategias: (prop.estrategias || []).map(e => {
-        // Encuentra líneas nuevas agregadas desde el flujo separado
+    // 1. Construye los NUEVOS objetivos a enviar igual que ahora (como lo haces)
+    let nuevosObjetivos = (nuevoContenido.propuestas || []).map(prop => {
+      // ... mismo merge de estrategias y líneas que ya tienes ...
+      let estrategias = (prop.estrategias || []).map(e => {
         const extraLineas = (nuevasLineas[prop.id]?.[e.id]) || [];
-        // Fusiona líneas antiguas y nuevas (elimina duplicados por id)
         const allLineasMap = {};
         [...(e.lineas || []), ...extraLineas].forEach(l => {
           if (l && l.id) allLineasMap[l.id] = l;
@@ -168,32 +165,19 @@ export default function PlataformaEstrategicaReview() {
             id: l.id,
             text: l.text
           }))
-        }
-      })
-    }));
+        };
+      });
 
-    // Ahora filtra para asegurarte que no hay vacíos
-    const objetivosFiltrados = objetivos
-      .filter(o => (o.estrategias || []).length)
-      .map(o => ({
-        ...o,
-        estrategias: (o.estrategias || []).filter(e => (e.lineas || []).length)
-      }));
-
-    // Suma también estrategias nuevas que agregaste por el flujo de "nuevasEstrategias"
-    Object.entries(nuevasEstrategias).forEach(([objetivo_id, estrategias]) => {
-      const propIndex = objetivos.findIndex(o => o.id === objetivo_id);
-      if (propIndex !== -1) {
-        // Combina las estrategias nuevas, fusionando por id (no duplica si ya existen)
-        estrategias.forEach(estr => {
-          if (!objetivos[propIndex].estrategias.some(e => e.id === estr.id)) {
-            // Igual fusiona las líneas de nuevasLineas
-            const extraLineas = (nuevasLineas[objetivo_id]?.[estr.id]) || [];
+      // Agrega estrategias creadas con el flujo especial
+      if (nuevasEstrategias[prop.id]) {
+        nuevasEstrategias[prop.id].forEach(estr => {
+          if (!estrategias.some(e => e.id === estr.id)) {
+            const extraLineas = (nuevasLineas[prop.id]?.[estr.id]) || [];
             const allLineasMap = {};
             [...(estr.lineas || []), ...extraLineas].forEach(l => {
               if (l && l.id) allLineasMap[l.id] = l;
             });
-            objetivos[propIndex].estrategias.push({
+            estrategias.push({
               id: estr.id,
               nombre: estr.nombre,
               lineas: Object.values(allLineasMap).map(l => ({
@@ -204,16 +188,12 @@ export default function PlataformaEstrategicaReview() {
           }
         });
       }
-    });
 
-    // Por último, suma líneas nuevas a estrategias existentes que vengan desde nuevasLineas (si las hay)
-    Object.entries(nuevasLineas).forEach(([objetivo_id, estrategiasObj]) => {
-      const prop = objetivos.find(o => o.id === objetivo_id);
-      if (prop) {
-        Object.entries(estrategiasObj).forEach(([estrategia_id, lineas]) => {
-          const estr = prop.estrategias.find(e => e.id === estrategia_id);
+      // Agrega líneas a estrategias existentes desde nuevasLineas
+      if (nuevasLineas[prop.id]) {
+        Object.entries(nuevasLineas[prop.id]).forEach(([estrId, lineas]) => {
+          const estr = estrategias.find(e => e.id === estrId);
           if (estr) {
-            // Fusiona líneas nuevas con las que ya están
             const allLineasMap = {};
             [...(estr.lineas || []), ...lineas].forEach(l => {
               if (l && l.id) allLineasMap[l.id] = l;
@@ -225,10 +205,22 @@ export default function PlataformaEstrategicaReview() {
           }
         });
       }
-    });
+
+      return {
+        id: prop.id,
+        nombre: prop.nombre,
+        estrategias: estrategias.filter(e => e.lineas && e.lineas.length)
+      };
+    }).filter(o => o.estrategias && o.estrategias.length);
+
+    // 2. Los objetivos a enviar son los que ya están en la BD + los nuevos
+    const objetivosTotales = [
+      ...(datosBD || []), // <- esto son los que YA tiene el usuario
+      ...nuevosObjetivos  // <- estos son los nuevos de la sesión actual
+    ];
 
     // 🚨 No envíes si está vacío
-    if (!objetivos.length) {
+    if (!objetivosTotales.length) {
       setSnackbar({
         open: true,
         message: "No hay objetivos para enviar.",
@@ -237,7 +229,7 @@ export default function PlataformaEstrategicaReview() {
       return;
     }
 
-    const payload = { objetivos: objetivosFiltrados };
+    const payload = { objetivos: objetivosTotales };
 
     try {
       const token = typeof window !== "undefined" ? localStorage.getItem('access') : null;
@@ -250,7 +242,6 @@ export default function PlataformaEstrategicaReview() {
         body: JSON.stringify(payload)
       });
 
-      // Si ya existe el conjunto, el backend responde 400: {detail: "..."}
       if (!res.ok) {
         const errorData = await res.json().catch(() => ({}));
         if (
@@ -258,7 +249,6 @@ export default function PlataformaEstrategicaReview() {
           errorData.detail &&
           errorData.detail.includes("usa PUT")
         ) {
-          // Haz PUT para actualizar
           res = await fetch("/api/objetivos/mis-objetivos/", {
             method: "PUT",
             headers: {
@@ -281,7 +271,7 @@ export default function PlataformaEstrategicaReview() {
       setNuevoContenido({ propuestas: [] });
       setNuevasEstrategias({});
       setNuevasLineas({});
-      await cargarDesdeBD();
+      await cargarDesdeBD(); // Recarga la lista
 
     } catch (error) {
       setSnackbar({
