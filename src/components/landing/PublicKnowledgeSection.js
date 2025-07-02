@@ -31,10 +31,10 @@ const info = [
   //   href: "/pdf/Reto IA.pdf",
   // },
   {
-    title: "Convocatoria al reto de inteligencia artificial (Reto IA)",
+    title: "Convocatoria al Reto IA: Visión Prospectiva",
     subtitle:
-      "Espera próximamente al Reto IA. Imagina el futuro de Hidalgo utilizando de manera creativa herramientas de inteligencia artificial. ¡Construyamos juntos las visiones que transformarán nuestro Estado!",
-    href: "/pdf/Reto IA.pdf",
+      "Únete al Reto IA: Visión Prospectiva. Imagina el futuro de Hidalgo utilizando de manera creativa herramientas de inteligencia artificial. ¡Construyamos juntos las visiones que transformarán nuestro Estado!",
+    href: "/pdf/Reto_IA.pdf",
   },
   {
     title: "Consulta a pueblos y comunidades indígenas",
@@ -114,21 +114,28 @@ export default function PublicKnowledgeSection() {
                   <img src={`${imgBconvocatoriaIA}mano.png`} alt={item.title} />
                 </div>
                 <div className={styles.imgeWrapperDesignC}>
-                  {/* <Link href={item.href} target="_blank" rel="noopener noreferrer">
+                  <Link href={item.href} target="_blank" rel="noopener noreferrer">
                     <div className={styles.imgBotonDesignC}>
                       <img src={`${imgBconvocatoriaIA}boton.png`} alt={item.title} />
                     </div>
-                  </Link> */}
-                    <div className={styles.imgBotonDesignC}>
-                      <img src={`${imgBconvocatoriaIA}boton.png`} alt={item.title} />
-                    </div>
+                  </Link>
                   <div className={styles.overlayTextDesignC}>
-                    <p>{item.subtitle}</p>
-                    {/* <Link href={item.href} target="_blank" rel="noopener noreferrer" className={styles.buttonDesignC}>
+                    <p>
+                      {item.subtitle}{" "}
+                      <Link
+                        href="Reto_IA.pdf"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={styles.goldenLink}
+                      >
+                        <span>Descarga el formato de participación</span>
+                      </Link>
+                    </p>
+                    <Link href={item.href} target="_blank" rel="noopener noreferrer" className={styles.buttonDesignC}>
                       <div className={styles.ctaLink}>
                         Conoce más ↗
                       </div>
-                    </Link> */}
+                    </Link>
                   </div>
                 </div>
               </div>
