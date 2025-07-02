@@ -612,6 +612,131 @@ export default function PlataformaEstrategicaReview() {
       );
     });
 
+  // Para el modal de edición reutiliza tu InputModal (como ya haces)
+
+  // ---------------- OBJETIVOS ----------------
+  const handleEditarObjetivoBD = (objetivo) => {
+    openInputModal("Editar objetivo", objetivo.nombre, async (nuevoNombre) => {
+      if (!nuevoNombre || nuevoNombre.trim() === objetivo.nombre) return;
+      try {
+        const token = localStorage.getItem('access');
+        const res = await fetch(`/api/objetivos/mis-objetivos/${objetivo.id}/`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            ...(token && { Authorization: `Bearer ${token}` })
+          },
+          body: JSON.stringify({ nombre: nuevoNombre.trim() })
+        });
+        if (!res.ok) throw new Error("No se pudo editar objetivo");
+        setSnackbar({ open: true, message: "Objetivo actualizado", severity: "success" });
+        await cargarDesdeBD();
+      } catch {
+        setSnackbar({ open: true, message: "Error al editar objetivo", severity: "error" });
+      }
+    });
+  };
+
+  const handleEliminarObjetivoBD = async (objetivoId) => {
+    if (!window.confirm("¿Seguro que deseas eliminar este objetivo?")) return;
+    try {
+      const token = localStorage.getItem('access');
+      const res = await fetch(`/api/objetivos/mis-objetivos/${objetivoId}/`, {
+        method: "DELETE",
+        headers: {
+          ...(token && { Authorization: `Bearer ${token}` })
+        }
+      });
+      if (!res.ok) throw new Error("No se pudo eliminar objetivo");
+      setSnackbar({ open: true, message: "Objetivo eliminado", severity: "info" });
+      await cargarDesdeBD();
+    } catch {
+      setSnackbar({ open: true, message: "Error al eliminar objetivo", severity: "error" });
+    }
+  };
+
+  // ---------------- ESTRATEGIAS ----------------
+  const handleEditarEstrategiaBD = (objetivoId, estrategia) => {
+    openInputModal("Editar estrategia", estrategia.nombre, async (nuevoNombre) => {
+      if (!nuevoNombre || nuevoNombre.trim() === estrategia.nombre) return;
+      try {
+        const token = localStorage.getItem('access');
+        const res = await fetch(`/api/objetivos/estrategia/${estrategia.id}/`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            ...(token && { Authorization: `Bearer ${token}` })
+          },
+          body: JSON.stringify({ nombre: nuevoNombre.trim() })
+        });
+        if (!res.ok) throw new Error("No se pudo editar estrategia");
+        setSnackbar({ open: true, message: "Estrategia actualizada", severity: "success" });
+        await cargarDesdeBD();
+      } catch {
+        setSnackbar({ open: true, message: "Error al editar estrategia", severity: "error" });
+      }
+    });
+  };
+
+  const handleEliminarEstrategiaBD = async (objetivoId, estrategiaId) => {
+    if (!window.confirm("¿Seguro que deseas eliminar esta estrategia?")) return;
+    try {
+      const token = localStorage.getItem('access');
+      const res = await fetch(`/api/objetivos/estrategia/${estrategiaId}/`, {
+        method: "DELETE",
+        headers: {
+          ...(token && { Authorization: `Bearer ${token}` })
+        }
+      });
+      if (!res.ok) throw new Error("No se pudo eliminar estrategia");
+      setSnackbar({ open: true, message: "Estrategia eliminada", severity: "info" });
+      await cargarDesdeBD();
+    } catch {
+      setSnackbar({ open: true, message: "Error al eliminar estrategia", severity: "error" });
+    }
+  };
+
+  // ---------------- LÍNEAS ----------------
+  const handleEditarLineaBD = (objetivoId, estrategiaId, linea) => {
+    openInputModal("Editar línea de acción", linea.text, async (nuevoTexto) => {
+      if (!nuevoTexto || nuevoTexto.trim() === linea.text) return;
+      try {
+        const token = localStorage.getItem('access');
+        const res = await fetch(`/api/objetivos/linea/${linea.id}/`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            ...(token && { Authorization: `Bearer ${token}` })
+          },
+          body: JSON.stringify({ text: nuevoTexto.trim() })
+        });
+        if (!res.ok) throw new Error("No se pudo editar línea");
+        setSnackbar({ open: true, message: "Línea de acción actualizada", severity: "success" });
+        await cargarDesdeBD();
+      } catch {
+        setSnackbar({ open: true, message: "Error al editar línea", severity: "error" });
+      }
+    });
+  };
+
+  const handleEliminarLineaBD = async (objetivoId, estrategiaId, lineaId) => {
+    if (!window.confirm("¿Seguro que deseas eliminar esta línea?")) return;
+    try {
+      const token = localStorage.getItem('access');
+      const res = await fetch(`/api/objetivos/linea/${lineaId}/`, {
+        method: "DELETE",
+        headers: {
+          ...(token && { Authorization: `Bearer ${token}` })
+        }
+      });
+      if (!res.ok) throw new Error("No se pudo eliminar línea");
+      setSnackbar({ open: true, message: "Línea de acción eliminada", severity: "info" });
+      await cargarDesdeBD();
+    } catch {
+      setSnackbar({ open: true, message: "Error al eliminar línea", severity: "error" });
+    }
+  };
+
   // --- NUEVO: Render BD primero (siempre todos sus objetivos) ---
   const renderBDObjetivos = () => (
     <>
@@ -623,13 +748,34 @@ export default function PlataformaEstrategicaReview() {
       ) : (
         datosBD.map(objetivo => (
           <div key={objetivo.id} className={styles.propuesta}>
-            <h3 className={styles.ejeActivo}>Objetivo: {objetivo.nombre}</h3>
+            {/* OBJETIVO */}
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+              <h3 className={styles.ejeActivo} style={{ flex: 1 }}>Objetivo: {objetivo.nombre}</h3>
+              <EditDeleteButtons
+                onEdit={() => handleEditarObjetivoBD(objetivo)}
+                onDelete={() => handleEliminarObjetivoBD(objetivo.id)}
+              />
+            </div>
+
             {objetivo.estrategias.map(estr => (
               <div key={estr.id} className={styles.estrategia}>
-                <h4>{estr.nombre}</h4>
+                {/* ESTRATEGIA */}
+                <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                  <h4 style={{ flex: 1 }}>{estr.nombre}</h4>
+                  <EditDeleteButtons
+                    onEdit={() => handleEditarEstrategiaBD(objetivo.id, estr)}
+                    onDelete={() => handleEliminarEstrategiaBD(objetivo.id, estr.id)}
+                  />
+                </div>
                 <ul>
                   {estr.lineas.map(linea => (
-                    <li key={linea.id}>{linea.text}</li>
+                    <li key={linea.id} style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                      <span style={{ flex: 1 }}>{linea.text}</span>
+                      <EditDeleteButtons
+                        onEdit={() => handleEditarLineaBD(objetivo.id, estr.id, linea)}
+                        onDelete={() => handleEliminarLineaBD(objetivo.id, estr.id, linea.id)}
+                      />
+                    </li>
                   ))}
                 </ul>
               </div>
