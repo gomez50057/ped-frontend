@@ -5,6 +5,8 @@ import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import styles from "./ObservationsSection.module.css";
 import { fetchWithAuth } from '@/utils/auth';
+import ConfirmDialog from "@/components/dashboard/components/ConfirmDialog/ConfirmDialog";
+
 
 const defaultObservation = {
   sectionName: "",
@@ -27,6 +29,7 @@ const areAllObservationsComplete = (obsList) =>
 const API_URL = "/api/otro_apartados/elementos/";
 
 const ObservationsSection = ({ observations = [], onChange }) => {
+  const [openConfirm, setOpenConfirm] = useState(false);
   const [obsList, setObsList] = useState([defaultObservation]);
   const [loading, setLoading] = useState(true);
   const [snackbar, setSnackbar] = useState({
@@ -83,12 +86,42 @@ const ObservationsSection = ({ observations = [], onChange }) => {
   };
 
   // 4. Eliminar observación
-  const handleRemove = (idx) => {
+  const handleRemove = async (idx) => {
+    // Si solo hay una observación, no se permite eliminar
     if (obsList.length === 1) return;
+
+    const obsToDelete = obsList[idx];
+
+    // Si tiene id, elimina en el backend antes de actualizar la lista
+    if (obsToDelete.id) {
+      try {
+        const res = await fetchWithAuth(`${API_URL}${obsToDelete.id}/`, {
+          method: "DELETE",
+        });
+        if (!res.ok) {
+          setSnackbar({
+            open: true,
+            message: "No se pudo eliminar en el servidor.",
+            severity: "error",
+          });
+          return;
+        }
+      } catch (error) {
+        setSnackbar({
+          open: true,
+          message: error?.message || "Error de red o sesión expirada.",
+          severity: "error",
+        });
+        return;
+      }
+    }
+
+    // Elimina localmente
     const newObs = obsList.filter((_, i) => i !== idx);
     setObsList(newObs);
     onChange && onChange(newObs);
   };
+
 
   // 5. Guardar avance local (opcional)
   const handleGuardarAvance = () => {
@@ -302,8 +335,9 @@ const ObservationsSection = ({ observations = [], onChange }) => {
               </div>
               <div className={styles.buttonWrapper}>
                 <button
+                  type="button"
                   className={styles.slideButton}
-                  onClick={handleGuardarComentarios}
+                  onClick={() => setOpenConfirm(true)}
                   disabled={!areAllObservationsComplete(obsList)}
                   title={
                     !areAllObservationsComplete(obsList)
@@ -318,6 +352,18 @@ const ObservationsSection = ({ observations = [], onChange }) => {
           </div>
         </>
       )}
+      <ConfirmDialog
+        open={openConfirm}
+        onClose={() => setOpenConfirm(false)}
+        onConfirm={async () => {
+          setOpenConfirm(false);
+          await handleGuardarComentarios();
+        }}
+        title="¿Estás seguro de que quieres enviar los comentarios? Esta acción no se puede deshacer."
+        confirmText="Sí, enviar"
+        cancelText="Cancelar"
+      />
+
       <Snackbar
         open={snackbar.open}
         autoHideDuration={4000}
