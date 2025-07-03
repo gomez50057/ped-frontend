@@ -16,12 +16,12 @@ const items = [
     href: '/dashboard/indicadores'
   },
   {
-    label: 'Otros apartados del PED',
+    label: 'Otros Apartados del PED',
     bg: '/img/dashboard/bg/otros.webp',
     href: '/dashboard/otros-apartados'
   },
   {
-    label: 'Consulta el Documento propuesto',
+    label: 'Cónsula el Documento Preliminar ',
     bg: '/img/dashboard/bg/consulta.webp',
     download: '/pdf/Actualizacion_PED.pdf'
   },

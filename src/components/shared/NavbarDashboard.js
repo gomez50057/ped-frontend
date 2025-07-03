@@ -11,7 +11,7 @@ const LOGOS = [
 ];
 
 const NAV_ITEMS = [
-  { label: "Dashboard", href: "/dashboard" },
+  { label: "Menú General", href: "/dashboard" },
   { label: "Salir", href: "/login" },
 
   // {

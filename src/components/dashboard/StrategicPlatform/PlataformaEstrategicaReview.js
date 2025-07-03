@@ -1,102 +1,22 @@
 "use client";
 
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState } from 'react';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
-import * as objetivos from '@/utils/plataformaEstrategicaData';
 import { updateById, removeById, pushToArrayById, pushToNestedMapArray } from '@/utils/arrayHelpers';
 import { useFeedback } from '@/hooks/useFeedback';
 import styles from './PlataformaEstrategicaReview.module.css';
 import FeedbackSection from '../components/FeedbackSection/FeedbackSection';
 import EditDeleteButtons from '../components/EditDeleteButtons/EditDeleteButtons';
 import InputModal from '../components/InputModal/InputModal';
-import { fetchWithAuth } from '@/utils/auth';
+import { useSelectedAxes } from '@/hooks/StrategicPlatform/useSelectedAxes';
+import { useStaticWithId } from '@/hooks/StrategicPlatform/useStaticWithId';
 
-// --- AXES map ---
-const AXES = [
-  { id: 1, code: "EG01" },
-  { id: 2, code: "EG02" },
-  { id: 3, code: "EG03" },
-  { id: 4, code: "EG04" },
-  { id: 5, code: "EG05" },
-  { id: 6, code: "EG06" },
-  { id: 7, code: "EG07" },
-  { id: 8, code: "EG08" },
-  { id: 9, code: "EG09" },
-  { id: 10, code: "ET01" },
-  { id: 11, code: "ET02" },
-  { id: 12, code: "ET03" }
-];
-const AXES_MAP = Object.fromEntries(AXES.map(a => [a.id, a.code]));
-
-// --- Hook ejes seleccionados ---
-function useSelectedAxes() {
-  const [selectedAxesIds, setSelectedAxesIds] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    let ignore = false;
-    async function loadEjes() {
-      setLoading(true);
-      try {
-        const response = await fetchWithAuth('/api/plataforma/user-axis-selection/');
-        if (response.ok) {
-          const data = await response.json();
-          let ids = [];
-          if (Array.isArray(data)) {
-            ids = data[0]?.axes || [];
-          } else if (typeof data === 'object' && data !== null) {
-            ids = data.axes || [];
-          }
-          if (!ignore) setSelectedAxesIds(Array.isArray(ids) ? ids : []);
-        } else if (!ignore) {
-          setSelectedAxesIds([]);
-        }
-      } catch (err) {
-        if (!ignore) setSelectedAxesIds([]);
-      }
-      if (!ignore) setLoading(false);
-    }
-    loadEjes();
-    return () => { ignore = true };
-  }, []);
-
-  const selectedCodes = useMemo(
-    () => selectedAxesIds.map(id => AXES_MAP[id]).filter(Boolean),
-    [selectedAxesIds]
-  );
-  return { selectedAxesIds, selectedCodes, loading };
-}
-
-// --- Memoizar datos estáticos ---
-function useStaticWithId() {
-  return useMemo(() => {
-    return AXES.map(({ code }) => ({
-      eje: code,
-      propuestas: (objetivos[`dataObjetivo${code}`] || []).map(prop => ({
-        ...prop,
-        Estrategias: (prop.Estrategias || []).map(estr => ({
-          ...estr,
-          lineas: (estr['Lineas de acción'] || []).map(lin =>
-            typeof lin === "object"
-              ? ({
-                ...lin,
-                text: lin["Linea de acción"] || lin.text,
-              })
-              : ({
-                id: undefined,
-                text: lin
-              })
-          ),
-        })),
-      })),
-    }));
-  }, []);
-}
 
 // --- Component principal ---
 export default function PlataformaEstrategicaReview() {
   const { selectedCodes, loading } = useSelectedAxes();
+  // Memo de los datos estáticosF
   const staticWithId = useStaticWithId();
 
   // --- Datos de la BD ---
@@ -283,10 +203,6 @@ export default function PlataformaEstrategicaReview() {
     }
   };
 
-
-
-
-
   // CRUD Handlers ... (sin cambios)
   const agregarElemento = (promptText, callback) => {
     openInputModal(promptText, '', (valor) => {
@@ -328,7 +244,7 @@ export default function PlataformaEstrategicaReview() {
   };
 
   const handleAgregarLineaStatic = (propuestaId, estrategiaId) => {
-    agregarElemento('Agregar Nuevo Lineamiento', (text) => {
+    agregarElemento('Agregar Nueva Línea de Acción', (text) => {
       const nuevaLinea = { id: generateTempId(), text };
       setNuevasLineas(prev =>
         pushToNestedMapArray(prev, propuestaId, estrategiaId, nuevaLinea)
@@ -612,180 +528,6 @@ export default function PlataformaEstrategicaReview() {
       );
     });
 
-  // Para el modal de edición reutiliza tu InputModal (como ya haces)
-
-  // ---------------- OBJETIVOS ----------------
-  const handleEditarObjetivoBD = (objetivo) => {
-    openInputModal("Editar objetivo", objetivo.nombre, async (nuevoNombre) => {
-      if (!nuevoNombre || nuevoNombre.trim() === objetivo.nombre) return;
-      try {
-        const token = localStorage.getItem('access');
-        const res = await fetch(`/api/objetivos/mis-objetivos/${objetivo.id}/`, {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            ...(token && { Authorization: `Bearer ${token}` })
-          },
-          body: JSON.stringify({ nombre: nuevoNombre.trim() })
-        });
-        if (!res.ok) throw new Error("No se pudo editar objetivo");
-        setSnackbar({ open: true, message: "Objetivo actualizado", severity: "success" });
-        await cargarDesdeBD();
-      } catch {
-        setSnackbar({ open: true, message: "Error al editar objetivo", severity: "error" });
-      }
-    });
-  };
-
-  const handleEliminarObjetivoBD = async (objetivoId) => {
-    if (!window.confirm("¿Seguro que deseas eliminar este objetivo?")) return;
-    try {
-      const token = localStorage.getItem('access');
-      const res = await fetch(`/api/objetivos/mis-objetivos/${objetivoId}/`, {
-        method: "DELETE",
-        headers: {
-          ...(token && { Authorization: `Bearer ${token}` })
-        }
-      });
-      if (!res.ok) throw new Error("No se pudo eliminar objetivo");
-      setSnackbar({ open: true, message: "Objetivo eliminado", severity: "info" });
-      await cargarDesdeBD();
-    } catch {
-      setSnackbar({ open: true, message: "Error al eliminar objetivo", severity: "error" });
-    }
-  };
-
-  // ---------------- ESTRATEGIAS ----------------
-  const handleEditarEstrategiaBD = (objetivoId, estrategia) => {
-    openInputModal("Editar estrategia", estrategia.nombre, async (nuevoNombre) => {
-      if (!nuevoNombre || nuevoNombre.trim() === estrategia.nombre) return;
-      try {
-        const token = localStorage.getItem('access');
-        const res = await fetch(`/api/objetivos/estrategia/${estrategia.id}/`, {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            ...(token && { Authorization: `Bearer ${token}` })
-          },
-          body: JSON.stringify({ nombre: nuevoNombre.trim() })
-        });
-        if (!res.ok) throw new Error("No se pudo editar estrategia");
-        setSnackbar({ open: true, message: "Estrategia actualizada", severity: "success" });
-        await cargarDesdeBD();
-      } catch {
-        setSnackbar({ open: true, message: "Error al editar estrategia", severity: "error" });
-      }
-    });
-  };
-
-  const handleEliminarEstrategiaBD = async (objetivoId, estrategiaId) => {
-    if (!window.confirm("¿Seguro que deseas eliminar esta estrategia?")) return;
-    try {
-      const token = localStorage.getItem('access');
-      const res = await fetch(`/api/objetivos/estrategia/${estrategiaId}/`, {
-        method: "DELETE",
-        headers: {
-          ...(token && { Authorization: `Bearer ${token}` })
-        }
-      });
-      if (!res.ok) throw new Error("No se pudo eliminar estrategia");
-      setSnackbar({ open: true, message: "Estrategia eliminada", severity: "info" });
-      await cargarDesdeBD();
-    } catch {
-      setSnackbar({ open: true, message: "Error al eliminar estrategia", severity: "error" });
-    }
-  };
-
-  // ---------------- LÍNEAS ----------------
-  const handleEditarLineaBD = (objetivoId, estrategiaId, linea) => {
-    openInputModal("Editar línea de acción", linea.text, async (nuevoTexto) => {
-      if (!nuevoTexto || nuevoTexto.trim() === linea.text) return;
-      try {
-        const token = localStorage.getItem('access');
-        const res = await fetch(`/api/objetivos/linea/${linea.id}/`, {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            ...(token && { Authorization: `Bearer ${token}` })
-          },
-          body: JSON.stringify({ text: nuevoTexto.trim() })
-        });
-        if (!res.ok) throw new Error("No se pudo editar línea");
-        setSnackbar({ open: true, message: "Línea de acción actualizada", severity: "success" });
-        await cargarDesdeBD();
-      } catch {
-        setSnackbar({ open: true, message: "Error al editar línea", severity: "error" });
-      }
-    });
-  };
-
-  const handleEliminarLineaBD = async (objetivoId, estrategiaId, lineaId) => {
-    if (!window.confirm("¿Seguro que deseas eliminar esta línea?")) return;
-    try {
-      const token = localStorage.getItem('access');
-      const res = await fetch(`/api/objetivos/linea/${lineaId}/`, {
-        method: "DELETE",
-        headers: {
-          ...(token && { Authorization: `Bearer ${token}` })
-        }
-      });
-      if (!res.ok) throw new Error("No se pudo eliminar línea");
-      setSnackbar({ open: true, message: "Línea de acción eliminada", severity: "info" });
-      await cargarDesdeBD();
-    } catch {
-      setSnackbar({ open: true, message: "Error al eliminar línea", severity: "error" });
-    }
-  };
-
-  // --- NUEVO: Render BD primero (siempre todos sus objetivos) ---
-  const renderBDObjetivos = () => (
-    <>
-      <h3 style={{ margin: "32px 0 0 0" }}>Objetivos agregados en tu cuenta</h3>
-      {loadingBD ? (
-        <p>Cargando datos guardados...</p>
-      ) : datosBD.length === 0 ? (
-        <p>No hay propuestas guardadas en BD.</p>
-      ) : (
-        datosBD.map(objetivo => (
-          <div key={objetivo.id} className={styles.propuesta}>
-            {/* OBJETIVO */}
-            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-              <h3 className={styles.ejeActivo} style={{ flex: 1 }}>Objetivo: {objetivo.nombre}</h3>
-              <EditDeleteButtons
-                onEdit={() => handleEditarObjetivoBD(objetivo)}
-                onDelete={() => handleEliminarObjetivoBD(objetivo.id)}
-              />
-            </div>
-
-            {objetivo.estrategias.map(estr => (
-              <div key={estr.id} className={styles.estrategia}>
-                {/* ESTRATEGIA */}
-                <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                  <h4 style={{ flex: 1 }}>{estr.nombre}</h4>
-                  <EditDeleteButtons
-                    onEdit={() => handleEditarEstrategiaBD(objetivo.id, estr)}
-                    onDelete={() => handleEliminarEstrategiaBD(objetivo.id, estr.id)}
-                  />
-                </div>
-                <ul>
-                  {estr.lineas.map(linea => (
-                    <li key={linea.id} style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                      <span style={{ flex: 1 }}>{linea.text}</span>
-                      <EditDeleteButtons
-                        onEdit={() => handleEditarLineaBD(objetivo.id, estr.id, linea)}
-                        onDelete={() => handleEliminarLineaBD(objetivo.id, estr.id, linea.id)}
-                      />
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        ))
-      )}
-    </>
-  );
-
   // --- Render principal (estructura original + bloque BD al inicio) ---
   return (
     <div className={styles.container}>
@@ -795,10 +537,7 @@ export default function PlataformaEstrategicaReview() {
           <span className="spanVino">Plataforma Estratégica</span>
         </h2>
 
-        {/* 1. Render de BD */}
-        {renderBDObjetivos()}
-
-        {/* 2. Resto del render: propuestas estáticas, nuevas, etc */}
+        {/* render: propuestas estáticas, nuevas, etc */}
         {loading ? (
           <p>Cargando ejes...</p>
         ) : selectedCodes.length === 0 ? (
