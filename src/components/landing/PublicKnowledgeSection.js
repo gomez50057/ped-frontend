@@ -123,7 +123,7 @@ export default function PublicKnowledgeSection() {
                     <p>
                       {item.subtitle}{" "}
                       <Link
-                        href="Reto_IA.pdf"
+                        href="/pdf/formato_de_participacion.pdf"
                         target="_blank"
                         rel="noopener noreferrer"
                         className={styles.goldenLink}
