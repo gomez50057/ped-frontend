@@ -5,15 +5,15 @@ import styles from "./StrategicPlatform.module.css";
 import axios from "axios";
 
 const ITEMS = [
-  { id: 1,  code: "EG01", label: "Eje 1 Estado Planificado, Ordenado" },
-  { id: 2,  code: "EG02", label: "Eje 2 Estado Eficiente y Disciplinado" },
-  { id: 3,  code: "EG03", label: "Eje 3 Estado Seguro y Justo" },
-  { id: 4,  code: "EG04", label: "Eje 4 Estado Fraterno de Bienes" },
-  { id: 5,  code: "EG05", label: "Eje 5 Estado Educado y Humanista" },
-  { id: 6,  code: "EG06", label: "Eje 6 Estado Próspero y de Oportunidades" },
-  { id: 7,  code: "EG07", label: "Eje 7 Estado Orgulloso de su Cultura" },
-  { id: 8,  code: "EG08", label: "Eje 8 Estado Conectado y con Innovación" },
-  { id: 9,  code: "EG09", label: "Eje 9 Estado Sustentable y Productivo" },
+  { id: 1, code: "EG01", label: "Eje 1 Estado Planificado, Ordenado" },
+  { id: 2, code: "EG02", label: "Eje 2 Estado Eficiente y Disciplinado" },
+  { id: 3, code: "EG03", label: "Eje 3 Estado Seguro y Justo" },
+  { id: 4, code: "EG04", label: "Eje 4 Estado Fraterno de Bienes" },
+  { id: 5, code: "EG05", label: "Eje 5 Estado Educado y Humanista" },
+  { id: 6, code: "EG06", label: "Eje 6 Estado Próspero y de Oportunidades" },
+  { id: 7, code: "EG07", label: "Eje 7 Estado Orgulloso de su Cultura" },
+  { id: 8, code: "EG08", label: "Eje 8 Estado Conectado y con Innovación" },
+  { id: 9, code: "EG09", label: "Eje 9 Estado Sustentable y Productivo" },
   { id: 10, code: "ET01", label: "ET1 Estado Transparente y de Rendición" },
   { id: 11, code: "ET02", label: "ET2 Estado Tecnológico, Científico" },
   { id: 12, code: "ET03", label: "ET3 Estado de Igualdad Sustantiva" }
@@ -33,28 +33,28 @@ export default function StrategicPlatform({ onNext }) {
     axios.get("/api/plataforma/user-axis-selection/", {
       headers: { Authorization: `Bearer ${token}` }
     })
-    .then(res => {
-      if (Array.isArray(res.data) && res.data.length > 0) {
-        const sel = res.data[0];
-        setSelectionId(sel.id);
+      .then(res => {
+        if (Array.isArray(res.data) && res.data.length > 0) {
+          const sel = res.data[0];
+          setSelectionId(sel.id);
 
-        let selectedAxesIds = [];
-        if (Array.isArray(sel.axes)) {
-          selectedAxesIds = sel.axes;
+          let selectedAxesIds = [];
+          if (Array.isArray(sel.axes)) {
+            selectedAxesIds = sel.axes;
+          }
+          const checked = {};
+          ITEMS.forEach(item => {
+            checked[item.id] = selectedAxesIds.includes(item.id);
+          });
+          setCheckedItems(checked);
+        } else {
+          const checked = {};
+          ITEMS.forEach(item => { checked[item.id] = false; });
+          setCheckedItems(checked);
         }
-        const checked = {};
-        ITEMS.forEach(item => {
-          checked[item.id] = selectedAxesIds.includes(item.id);
-        });
-        setCheckedItems(checked);
-      } else {
-        const checked = {};
-        ITEMS.forEach(item => { checked[item.id] = false; });
-        setCheckedItems(checked);
-      }
-    })
-    .catch(() => setError("No se pudo cargar la selección previa"))
-    .finally(() => setLoading(false));
+      })
+      .catch(() => setError("No se pudo cargar la selección previa"))
+      .finally(() => setLoading(false));
   }, []);
 
   const handleToggle = id => {
@@ -157,7 +157,7 @@ export default function StrategicPlatform({ onNext }) {
         )}
       </div>
 
-      <div className={styles.containerAdvertising}>
+      {/* <div className={styles.containerAdvertising}>
         <h3>Impulsamos el Futuro</h3>
         <ul className={styles.adList}>
           <li>🌱 Desarrollo Sustentable</li>
@@ -170,7 +170,11 @@ export default function StrategicPlatform({ onNext }) {
           &ldquo;El futuro lo construimos con disciplina, equidad y compromiso. Los Ejes
           Estratégicos son nuestra guía para un estado próspero y justo.&rdquo;
         </blockquote>
-        {/* <p>— Gobierno Estatal 2025</p> */}
+        <p>— Gobierno Estatal 2025</p>
+      </div> */}
+
+      <div className={styles.containerAdvertising}>
+        <img src="/img/dashboard/bg/plataforma.webp" alt="Publicidad" className={styles.adImage} />
       </div>
     </section>
   );
