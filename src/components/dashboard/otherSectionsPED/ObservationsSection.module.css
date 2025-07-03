@@ -1,6 +1,7 @@
-.container{
+.container {
   display: flex;
   justify-content: center;
+  padding-top: 50px;
 }
 
 .observationsContainer {
@@ -30,7 +31,7 @@
 }
 
 .observationCard:hover {
-  box-shadow: 0 4px 24px rgba(101,12,36,0.08);
+  box-shadow: 0 4px 24px rgba(101, 12, 36, 0.08);
 }
 
 .formGroup {
@@ -84,9 +85,11 @@
   margin-top: 4px;
   transition: background .2s;
 }
+
 .removeBtn:hover:not(:disabled) {
   background: #ffd6de;
 }
+
 .removeBtn:disabled {
   opacity: 0.6;
   cursor: not-allowed;
@@ -101,7 +104,7 @@
   font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
-  box-shadow: 0 2px 10px rgba(101,27,50,0.08);
+  box-shadow: 0 2px 10px rgba(101, 27, 50, 0.08);
   transition: background .2s;
   margin-top: .5rem;
   display: block;

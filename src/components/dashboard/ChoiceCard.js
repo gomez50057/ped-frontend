@@ -25,11 +25,11 @@ const items = [
     bg: '/img/dashboard/bg/consulta.webp',
     download: '/pdf/Actualizacion_PED.pdf'
   },
-  {
-    label: 'Editar',
-    bg: '/img/dashboard/bg/editar.webp',
-    href: '/dashboard/editar'
-  }
+  // {
+  //   label: 'Editar',
+  //   bg: '/img/dashboard/bg/editar.webp',
+  //   href: '/dashboard/editar'
+  // }
 ];
 
 export default function ChoiceCard() {

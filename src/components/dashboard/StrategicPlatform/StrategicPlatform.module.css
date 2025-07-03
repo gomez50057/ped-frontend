@@ -1,9 +1,10 @@
-.StrategicPlatform .titule{
+.StrategicPlatform .titule {
   font-size: 3rem;
 }
 
 .containerStrategicPlatform {
   display: flex;
+  padding-top: 50px;
 }
 
 .containerAdvertising {
@@ -84,7 +85,7 @@
   margin-top: 2rem;
 }
 
-.buttonWrapper  a {
+.buttonWrapper a {
   text-decoration: none;
 }
 
@@ -155,7 +156,7 @@
 .slideButton:active::after {
   transition: 0s;
   transform: translate(0, 5%);
-} 
+}
 
 /*  */
 /* checkmark */
