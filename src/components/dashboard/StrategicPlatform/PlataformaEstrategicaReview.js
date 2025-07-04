@@ -9,6 +9,7 @@ import styles from './PlataformaEstrategicaReview.module.css';
 import FeedbackSection from '../components/FeedbackSection/FeedbackSection';
 import EditDeleteButtons from '../components/EditDeleteButtons/EditDeleteButtons';
 import InputModal from '../components/InputModal/InputModal';
+import { fetchWithAuth } from '@/utils/auth';
 import { useSelectedAxes } from '@/hooks/StrategicPlatform/useSelectedAxes';
 import { useStaticWithId } from '@/hooks/StrategicPlatform/useStaticWithId';
 
@@ -18,32 +19,6 @@ export default function PlataformaEstrategicaReview() {
   const { selectedCodes, loading } = useSelectedAxes();
   // Memo de los datos estáticosF
   const staticWithId = useStaticWithId();
-
-  // --- Datos de la BD ---
-  const [datosBD, setDatosBD] = useState([]);
-  const [loadingBD, setLoadingBD] = useState(true);
-
-  async function cargarDesdeBD() {
-    setLoadingBD(true);
-    try {
-      const token = typeof window !== "undefined" ? localStorage.getItem('access') : null;
-      const res = await fetch("/api/objetivos/mis-objetivos/", {
-        headers: { ...(token && { Authorization: `Bearer ${token}` }) }
-      });
-      if (!res.ok) throw new Error('No se pudo cargar');
-      const data = await res.json();
-      setDatosBD(data.objetivos || []);
-    } catch {
-      setDatosBD([]);
-      setSnackbar({ open: true, message: "Error al cargar datos guardados.", severity: "error" });
-    }
-    setLoadingBD(false);
-  }
-
-  useEffect(() => {
-    cargarDesdeBD();
-  }, []);
-
   const { feedback, setAcuerdo, setComentario } = useFeedback();
   const [modalOpen, setModalOpen] = useState(false);
   const [modalTitle, setModalTitle] = useState('');
@@ -63,153 +38,84 @@ export default function PlataformaEstrategicaReview() {
   };
 
   const handleCloseSnackbar = () => setSnackbar(prev => ({ ...prev, open: false }));
-  // const handleGuardarAvance = () => setSnackbar({ open: true, message: '¡Avance guardado!', severity: 'info' });
-  const handleGuardarAvance = () => {
-    const dinamicos = extraerTextoDinamico();
-    console.log(JSON.stringify(dinamicos, null, 2));
-    setSnackbar({ open: true, message: '¡Avance guardado!', severity: 'info' });
-  };
-
-
-
-  const handleGuardarComentarios = () => setSnackbar({ open: true, message: '¡Comentarios enviados!', severity: 'success' });
-
-  // --- ENVÍA TODO (propuestas, estrategias, líneas) al backend
-  const handleEnviarNuevosElementos = async () => {
-    // 1. Construye los NUEVOS objetivos a enviar igual que ahora (como lo haces)
-    let nuevosObjetivos = (nuevoContenido.propuestas || []).map(prop => {
-      // ... mismo merge de estrategias y líneas que ya tienes ...
-      let estrategias = (prop.estrategias || []).map(e => {
-        const extraLineas = (nuevasLineas[prop.id]?.[e.id]) || [];
-        const allLineasMap = {};
-        [...(e.lineas || []), ...extraLineas].forEach(l => {
-          if (l && l.id) allLineasMap[l.id] = l;
-        });
-        const allLineas = Object.values(allLineasMap);
-        return {
-          id: e.id,
-          nombre: e.nombre,
-          lineas: allLineas.map(l => ({
-            id: l.id,
-            text: l.text
-          }))
-        };
-      });
-
-      // Agrega estrategias creadas con el flujo especial
-      if (nuevasEstrategias[prop.id]) {
-        nuevasEstrategias[prop.id].forEach(estr => {
-          if (!estrategias.some(e => e.id === estr.id)) {
-            const extraLineas = (nuevasLineas[prop.id]?.[estr.id]) || [];
-            const allLineasMap = {};
-            [...(estr.lineas || []), ...extraLineas].forEach(l => {
-              if (l && l.id) allLineasMap[l.id] = l;
-            });
-            estrategias.push({
-              id: estr.id,
-              nombre: estr.nombre,
-              lineas: Object.values(allLineasMap).map(l => ({
-                id: l.id,
-                text: l.text
-              }))
-            });
-          }
-        });
-      }
-
-      // Agrega líneas a estrategias existentes desde nuevasLineas
-      if (nuevasLineas[prop.id]) {
-        Object.entries(nuevasLineas[prop.id]).forEach(([estrId, lineas]) => {
-          const estr = estrategias.find(e => e.id === estrId);
-          if (estr) {
-            const allLineasMap = {};
-            [...(estr.lineas || []), ...lineas].forEach(l => {
-              if (l && l.id) allLineasMap[l.id] = l;
-            });
-            estr.lineas = Object.values(allLineasMap).map(l => ({
-              id: l.id,
-              text: l.text
-            }));
-          }
-        });
-      }
-
-      return {
-        id: prop.id,
-        nombre: prop.nombre,
-        estrategias: estrategias.filter(e => e.lineas && e.lineas.length)
-      };
-    }).filter(o => o.estrategias && o.estrategias.length);
-
-    // 2. Los objetivos a enviar son los que ya están en la BD + los nuevos
-    const objetivosTotales = [
-      ...(datosBD || []), // <- esto son los que YA tiene el usuario
-      ...nuevosObjetivos  // <- estos son los nuevos de la sesión actual
-    ];
-
-    // 🚨 No envíes si está vacío
-    if (!objetivosTotales.length) {
-      setSnackbar({
-        open: true,
-        message: "No hay objetivos para enviar.",
-        severity: "warning"
-      });
-      return;
-    }
-
-    const payload = { objetivos: objetivosTotales };
-
+  const handleGuardarAvance = async () => {
+    const dinamicos = extraerTextoDinamicoJerarquico();
     try {
-      const token = typeof window !== "undefined" ? localStorage.getItem('access') : null;
-      let res = await fetch("/api/objetivos/mis-objetivos/", {
+      // Intenta primero con POST
+      let response = await fetchWithAuth("/api/objetivos/mis-objetivos/", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          ...(token && { Authorization: `Bearer ${token}` })
-        },
-        body: JSON.stringify(payload)
+        body: JSON.stringify(dinamicos),
       });
 
-      if (!res.ok) {
-        const errorData = await res.json().catch(() => ({}));
-        if (
-          res.status === 400 &&
-          errorData.detail &&
-          errorData.detail.includes("usa PUT")
-        ) {
-          res = await fetch("/api/objetivos/mis-objetivos/", {
+      // Si el backend responde con error de "usa PUT", haz el PUT automáticamente
+      if (!response.ok) {
+        let errorText = await response.text();
+        let isPutNeeded = false;
+
+        try {
+          const errorData = JSON.parse(errorText);
+          if (
+            response.status === 400 &&
+            errorData.detail &&
+            errorData.detail.includes("usa PUT")
+          ) {
+            isPutNeeded = true;
+          }
+        } catch {
+          // No es JSON, no hace nada
+        }
+
+        if (isPutNeeded) {
+          response = await fetchWithAuth("/api/objetivos/mis-objetivos/", {
             method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-              ...(token && { Authorization: `Bearer ${token}` })
-            },
-            body: JSON.stringify(payload)
+            body: JSON.stringify(dinamicos),
           });
+
+          // Checa si el PUT fue exitoso
+          if (!response.ok) {
+            const putError = await response.text();
+            setSnackbar({
+              open: true,
+              message: "Error al actualizar avance: " + putError,
+              severity: "error",
+            });
+            return;
+          }
+
+          setSnackbar({
+            open: true,
+            message: "¡Avance actualizado exitosamente!",
+            severity: "success",
+          });
+          // await cargarDesdeBD();
+          return;
+        } else {
+          // No fue error de PUT, muestra el error normal
+          setSnackbar({
+            open: true,
+            message: "Error al guardar avance: " + errorText,
+            severity: "error",
+          });
+          return;
         }
       }
 
-      if (!res.ok) throw new Error(await res.text());
-
+      // Si el POST fue exitoso
       setSnackbar({
         open: true,
-        message: "¡Elementos enviados con éxito!",
-        severity: "success"
+        message: "¡Avance guardado exitosamente!",
+        severity: "success",
       });
-
-      setNuevoContenido({ propuestas: [] });
-      setNuevasEstrategias({});
-      setNuevasLineas({});
-      await cargarDesdeBD(); // Recarga la lista
-
+      // await cargarDesdeBD();
     } catch (error) {
       setSnackbar({
         open: true,
-        message: "Error al enviar los elementos.",
-        severity: "error"
+        message: "Error al guardar avance: " + (error.message || error),
+        severity: "error",
       });
-      console.error(error);
     }
   };
+  const handleGuardarComentarios = () => setSnackbar({ open: true, message: '¡Comentarios enviados!', severity: 'success' });
 
   // CRUD Handlers ... (sin cambios)
   const agregarElemento = (promptText, callback) => {
@@ -536,76 +442,80 @@ export default function PlataformaEstrategicaReview() {
       );
     });
 
-  const extraerTextoDinamico = () => {
-    const dinamicos = {
-      propuestas: [],
-      estrategias: [],
-      lineas: [],
-    };
+  const extraerTextoDinamicoJerarquico = () => {
+    // Solo propuestas dinámicas
+    const objetivos = (nuevoContenido.propuestas || []).map(prop => ({
+      id: prop.id,
+      nombre: prop.nombre,
+      estrategias: (prop.estrategias || []).map(estr => ({
+        id: estr.id,
+        nombre: estr.nombre,
+        lineas: (estr.lineas || []).map(lin => ({
+          id: lin.id,
+          text: lin.text
+        }))
+      }))
+    }));
 
-    // Propuestas dinámicas (las que tienen .nombre y NO tienen 'Propuesta Objetivo')
-    for (const prop of nuevoContenido.propuestas) {
-      dinamicos.propuestas.push({
-        id: prop.id,
-        nombre: prop.nombre
-      });
-
-      // Estrategias dinámicas dentro de propuestas dinámicas
-      for (const estr of prop.estrategias || []) {
-        dinamicos.estrategias.push({
-          idObjetivo: prop.id,
-          id: estr.id,
-          nombre: estr.nombre
-        });
-
-        // Líneas dinámicas dentro de estrategias dinámicas
-        for (const lin of estr.lineas || []) {
-          dinamicos.lineas.push({
-            idObjetivo: prop.id,
-            idEstrategia: estr.id,
-            id: lin.id,
-            text: lin.text
-          });
-        }
-      }
-    }
-
-    // Estrategias dinámicas propuestas sobre propuestas estáticas
+    // Estrategias nuevas agregadas sobre propuestas estáticas
     for (const [propId, estrategiasNuevas] of Object.entries(nuevasEstrategias)) {
+      // Busca si ya existe el objetivo en objetivos dinámicos
+      let objetivo = objetivos.find(o => o.id === propId);
+      if (!objetivo) {
+        // Si no existe, crea un objetivo vacío solo con el id
+        objetivo = {
+          id: propId,
+          nombre: '', // Podrías buscar el nombre en staticWithId si lo necesitas
+          estrategias: []
+        };
+        objetivos.push(objetivo);
+      }
       for (const estr of estrategiasNuevas) {
-        dinamicos.estrategias.push({
-          idObjetivo: propId,    // aquí propId es el id de la propuesta estática
+        objetivo.estrategias.push({
           id: estr.id,
-          nombre: estr.nombre
+          nombre: estr.nombre,
+          lineas: (estr.lineas || []).map(lin => ({
+            id: lin.id,
+            text: lin.text
+          }))
         });
-
-        // Líneas dinámicas dentro de estas estrategias nuevas
-        for (const lin of estr.lineas || []) {
-          dinamicos.lineas.push({
-            idObjetivo: propId,
-            idEstrategia: estr.id,
-            id: lin.id,
-            text: lin.text
-          });
-        }
       }
     }
 
-    // Líneas dinámicas agregadas sobre estrategias estáticas o nuevas
+    // Líneas nuevas agregadas sobre estrategias estáticas
     for (const [propId, estrategias] of Object.entries(nuevasLineas)) {
+      let objetivo = objetivos.find(o => o.id === propId);
+      if (!objetivo) {
+        objetivo = {
+          id: propId,
+          nombre: '',
+          estrategias: []
+        };
+        objetivos.push(objetivo);
+      }
       for (const [estrId, lineas] of Object.entries(estrategias)) {
+        let estrategia = objetivo.estrategias.find(e => e.id === estrId);
+        if (!estrategia) {
+          estrategia = {
+            id: estrId,
+            nombre: '',
+            lineas: []
+          };
+          objetivo.estrategias.push(estrategia);
+        }
         for (const lin of lineas) {
-          dinamicos.lineas.push({
-            idObjetivo: propId,   // id de propuesta estática o dinámica
-            idEstrategia: estrId, // id de estrategia estática o dinámica
-            id: lin.id,
-            text: lin.text
-          });
+          // Evita duplicados
+          if (!estrategia.lineas.some(l => l.id === lin.id)) {
+            estrategia.lineas.push({
+              id: lin.id,
+              text: lin.text
+            });
+          }
         }
       }
     }
 
-    return dinamicos;
+    return { objetivos };
   };
 
   // --- Render principal (estructura original + bloque BD al inicio) ---
@@ -633,9 +543,7 @@ export default function PlataformaEstrategicaReview() {
             </div>
           );
         })}
-
         {renderNuevasPropuestas()}
-
         <div className={styles.buttonWrapper}>
           <button className={styles.slideButton} onClick={handleAgregarPropuesta}>Agregar nueva propuesta</button>
         </div>
@@ -649,7 +557,6 @@ export default function PlataformaEstrategicaReview() {
           <div className={styles.buttonWrapper}>
             <button className={styles.slideButton} onClick={handleGuardarComentarios}>Enviar comentarios</button>
           </div>
-          <button className={styles.slideButton} onClick={handleEnviarNuevosElementos}>Enviar nuevos elementos</button>
         </div>
       </div>
 
