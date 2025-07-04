@@ -63,7 +63,15 @@ export default function PlataformaEstrategicaReview() {
   };
 
   const handleCloseSnackbar = () => setSnackbar(prev => ({ ...prev, open: false }));
-  const handleGuardarAvance = () => setSnackbar({ open: true, message: '¡Avance guardado!', severity: 'info' });
+  // const handleGuardarAvance = () => setSnackbar({ open: true, message: '¡Avance guardado!', severity: 'info' });
+  const handleGuardarAvance = () => {
+    const dinamicos = extraerTextoDinamico();
+    console.log(JSON.stringify(dinamicos, null, 2));
+    setSnackbar({ open: true, message: '¡Avance guardado!', severity: 'info' });
+  };
+
+
+
   const handleGuardarComentarios = () => setSnackbar({ open: true, message: '¡Comentarios enviados!', severity: 'success' });
 
   // --- ENVÍA TODO (propuestas, estrategias, líneas) al backend
@@ -527,6 +535,78 @@ export default function PlataformaEstrategicaReview() {
         </div>
       );
     });
+
+  const extraerTextoDinamico = () => {
+    const dinamicos = {
+      propuestas: [],
+      estrategias: [],
+      lineas: [],
+    };
+
+    // Propuestas dinámicas (las que tienen .nombre y NO tienen 'Propuesta Objetivo')
+    for (const prop of nuevoContenido.propuestas) {
+      dinamicos.propuestas.push({
+        id: prop.id,
+        nombre: prop.nombre
+      });
+
+      // Estrategias dinámicas dentro de propuestas dinámicas
+      for (const estr of prop.estrategias || []) {
+        dinamicos.estrategias.push({
+          idObjetivo: prop.id,
+          id: estr.id,
+          nombre: estr.nombre
+        });
+
+        // Líneas dinámicas dentro de estrategias dinámicas
+        for (const lin of estr.lineas || []) {
+          dinamicos.lineas.push({
+            idObjetivo: prop.id,
+            idEstrategia: estr.id,
+            id: lin.id,
+            text: lin.text
+          });
+        }
+      }
+    }
+
+    // Estrategias dinámicas propuestas sobre propuestas estáticas
+    for (const [propId, estrategiasNuevas] of Object.entries(nuevasEstrategias)) {
+      for (const estr of estrategiasNuevas) {
+        dinamicos.estrategias.push({
+          idObjetivo: propId,    // aquí propId es el id de la propuesta estática
+          id: estr.id,
+          nombre: estr.nombre
+        });
+
+        // Líneas dinámicas dentro de estas estrategias nuevas
+        for (const lin of estr.lineas || []) {
+          dinamicos.lineas.push({
+            idObjetivo: propId,
+            idEstrategia: estr.id,
+            id: lin.id,
+            text: lin.text
+          });
+        }
+      }
+    }
+
+    // Líneas dinámicas agregadas sobre estrategias estáticas o nuevas
+    for (const [propId, estrategias] of Object.entries(nuevasLineas)) {
+      for (const [estrId, lineas] of Object.entries(estrategias)) {
+        for (const lin of lineas) {
+          dinamicos.lineas.push({
+            idObjetivo: propId,   // id de propuesta estática o dinámica
+            idEstrategia: estrId, // id de estrategia estática o dinámica
+            id: lin.id,
+            text: lin.text
+          });
+        }
+      }
+    }
+
+    return dinamicos;
+  };
 
   // --- Render principal (estructura original + bloque BD al inicio) ---
   return (
