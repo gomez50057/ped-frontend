@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import styles from "./StrategicPlatform.module.css";
-import axios from "axios";
+import { fetchWithAuth } from '@/utils/auth';
 
 const ITEMS = [
   { id: 1, code: "EG01", label: "Eje 1 Estado Planificado, Ordenado" },
@@ -29,13 +29,14 @@ export default function StrategicPlatform({ onNext }) {
   // Al montar, carga la selección previa del usuario
   useEffect(() => {
     setLoading(true);
-    const token = typeof window !== "undefined" ? localStorage.getItem('access') : null;
-    axios.get("/api/plataforma/user-axis-selection/", {
-      headers: { Authorization: `Bearer ${token}` }
-    })
-      .then(res => {
-        if (Array.isArray(res.data) && res.data.length > 0) {
-          const sel = res.data[0];
+    async function loadAxes() {
+      try {
+        const response = await fetchWithAuth("/api/plataforma/user-axis-selection/");
+        if (!response.ok) throw new Error("No se pudo cargar");
+        const resData = await response.json();
+
+        if (Array.isArray(resData) && resData.length > 0) {
+          const sel = resData[0];
           setSelectionId(sel.id);
 
           let selectedAxesIds = [];
@@ -52,9 +53,13 @@ export default function StrategicPlatform({ onNext }) {
           ITEMS.forEach(item => { checked[item.id] = false; });
           setCheckedItems(checked);
         }
-      })
-      .catch(() => setError("No se pudo cargar la selección previa"))
-      .finally(() => setLoading(false));
+      } catch {
+        setError("No se pudo cargar la selección previa");
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadAxes();
   }, []);
 
   const handleToggle = id => {
@@ -67,25 +72,37 @@ export default function StrategicPlatform({ onNext }) {
   const handleGuardar = async () => {
     setSaving(true);
     setError("");
-    const token = typeof window !== "undefined" ? localStorage.getItem('access') : null;
     const selectedIds = Object.entries(checkedItems)
       .filter(([, checked]) => checked)
       .map(([id]) => Number(id));
     try {
-      let res;
+      let response;
       if (selectionId) {
-        res = await axios.put(
+        // PUT si ya existe selección
+        response = await fetchWithAuth(
           `/api/plataforma/user-axis-selection/${selectionId}/`,
-          { axes: selectedIds },
-          { headers: { Authorization: `Bearer ${token}` } }
+          {
+            method: "PUT",
+            body: JSON.stringify({ axes: selectedIds })
+          }
         );
       } else {
-        res = await axios.post(
+        // POST si no existe selección
+        response = await fetchWithAuth(
           "/api/plataforma/user-axis-selection/",
-          { axes: selectedIds },
-          { headers: { Authorization: `Bearer ${token}` } }
+          {
+            method: "POST",
+            body: JSON.stringify({ axes: selectedIds })
+          }
         );
-        setSelectionId(res.data.id);
+      }
+
+      if (!response.ok) throw new Error("No se pudo guardar tu selección.");
+
+      // Si es POST y regresa el id, guárdalo
+      if (!selectionId) {
+        const data = await response.json();
+        if (data.id) setSelectionId(data.id);
       }
       if (onNext) onNext();
     } catch (err) {
@@ -94,6 +111,7 @@ export default function StrategicPlatform({ onNext }) {
       setSaving(false);
     }
   };
+
 
   return (
     <section className={styles.containerStrategicPlatform}>
