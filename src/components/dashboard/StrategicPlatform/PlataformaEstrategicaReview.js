@@ -13,7 +13,6 @@ import { fetchWithAuth } from '@/utils/auth';
 import { useSelectedAxes } from '@/hooks/StrategicPlatform/useSelectedAxes';
 import { useStaticWithId } from '@/hooks/StrategicPlatform/useStaticWithId';
 
-
 // --- Component principal ---
 export default function PlataformaEstrategicaReview() {
   const { selectedCodes, loading } = useSelectedAxes();
@@ -36,6 +35,83 @@ export default function PlataformaEstrategicaReview() {
     setModalCallback(() => callback);
     setModalOpen(true);
   };
+
+  const cargarDatosUsuario = async () => {
+    try {
+      const response = await fetchWithAuth("/api/objetivos/mis-objetivos/");
+      if (!response.ok) return;
+      const data = await response.json();
+      const objetivos = data.objetivos || [];
+
+      // Armado de estados:
+      // 1. propuestas dinámicas completas (con estrategias y líneas anidadas)
+      const propuestas = [];
+      // 2. nuevasEstrategias sobre objetivos estáticos
+      const estrategiasStatic = {};
+      // 3. nuevasLineas sobre estrategias estáticas
+      const lineasStatic = {};
+
+      for (const obj of objetivos) {
+        // Si el objetivo tiene nombre (es dinámico) => va a propuestas (nuevoContenido)
+        if (obj.nombre && obj.nombre.trim() !== "") {
+          propuestas.push({
+            id: obj.id,
+            nombre: obj.nombre,
+            estrategias: (obj.estrategias || []).map(estr => ({
+              id: estr.id,
+              nombre: estr.nombre,
+              lineas: (estr.lineas || []).map(lin => ({
+                id: lin.id,
+                text: lin.text
+              }))
+            }))
+          });
+        } else {
+          // Es estrategia dinámica sobre objetivo estático
+          if (obj.estrategias) {
+            for (const estr of obj.estrategias) {
+              // Si tiene nombre (dinámica sobre estático)
+              if (estr.nombre && estr.nombre.trim() !== "") {
+                if (!estrategiasStatic[obj.id]) estrategiasStatic[obj.id] = [];
+                estrategiasStatic[obj.id].push({
+                  id: estr.id,
+                  nombre: estr.nombre,
+                  lineas: (estr.lineas || []).map(lin => ({
+                    id: lin.id,
+                    text: lin.text
+                  }))
+                });
+              } else {
+                // Línea dinámica sobre estrategia estática
+                if (estr.lineas && estr.lineas.length) {
+                  if (!lineasStatic[obj.id]) lineasStatic[obj.id] = {};
+                  if (!lineasStatic[obj.id][estr.id]) lineasStatic[obj.id][estr.id] = [];
+                  for (const lin of estr.lineas) {
+                    lineasStatic[obj.id][estr.id].push({
+                      id: lin.id,
+                      text: lin.text
+                    });
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+      setNuevoContenido({ propuestas });
+      setNuevasEstrategias(estrategiasStatic);
+      setNuevasLineas(lineasStatic);
+    } catch (e) {
+      // Opcional: mostrar mensaje de error
+    }
+  };
+
+
+  useEffect(() => {
+  cargarDatosUsuario();
+}, []);
+
 
   const handleCloseSnackbar = () => setSnackbar(prev => ({ ...prev, open: false }));
   const handleGuardarAvance = async () => {
