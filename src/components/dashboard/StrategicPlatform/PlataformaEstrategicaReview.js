@@ -107,11 +107,9 @@ export default function PlataformaEstrategicaReview() {
     }
   };
 
-
   useEffect(() => {
-  cargarDatosUsuario();
-}, []);
-
+    cargarDatosUsuario();
+  }, []);
 
   const handleCloseSnackbar = () => setSnackbar(prev => ({ ...prev, open: false }));
   const handleGuardarAvance = async () => {
@@ -191,7 +189,82 @@ export default function PlataformaEstrategicaReview() {
       });
     }
   };
-  const handleGuardarComentarios = () => setSnackbar({ open: true, message: '¡Comentarios enviados!', severity: 'success' });
+
+  const handleGuardarComentarios = async () => {
+    // 1. Arma el arreglo listo para el backend
+    const feedbackArr = Object.entries(feedback)
+      .filter(
+        ([, val]) =>
+          val.acuerdo ||
+          (val.comentarios && (val.comentarios.comoDecir || val.comentarios.justificacion))
+      )
+      .map(([clave, val]) => ({
+        clave,
+        acuerdo: val.acuerdo || "",
+        comoDecir: val.acuerdo === "yes" ? "No Aplica" : (val.comentarios?.comoDecir || ""),
+        justificacion: val.acuerdo === "yes" ? "No Aplica" : (val.comentarios?.justificacion || "")
+      }));
+
+    if (feedbackArr.length === 0 || feedbackArr.some(
+      obj => !obj.clave || !obj.acuerdo || !obj.comoDecir || !obj.justificacion
+    )) {
+      setSnackbar({ open: true, message: 'Faltan campos requeridos.', severity: 'error' });
+      return;
+    }
+
+    // 2. Intenta POST masivo
+    try {
+      let res = await fetchWithAuth("/api/objetivos/feedback-avance/", {
+        method: "POST",
+        body: JSON.stringify(feedbackArr)
+      });
+
+      // 3. Si backend pide PUT, lo intenta de nuevo
+      if (!res.ok) {
+        let errorText = await res.text();
+        let needPut = false;
+        try {
+          const errData = JSON.parse(errorText);
+          // Aquí podrías ajustar la lógica según cómo te responde tu backend, por ejemplo error de unique o instrucciones de usar PUT
+          if (
+            (res.status === 400 || res.status === 409) && // Conflict o Bad Request
+            (Array.isArray(errData) || errData.detail || errData.clave)
+          ) {
+            // Asumimos que si ya existen, se puede hacer PUT masivo
+            needPut = true;
+          }
+        } catch { }
+        if (needPut) {
+          // PUT masivo (puede variar, a veces tu backend podría esperar uno por uno, ajústalo según tu API)
+          res = await fetchWithAuth("/api/objetivos/feedback-avance/", {
+            method: "PUT",
+            body: JSON.stringify(feedbackArr)
+          });
+        }
+        if (!res.ok) {
+          setSnackbar({
+            open: true,
+            message: "Error al enviar comentarios: " + (await res.text()),
+            severity: "error"
+          });
+          return;
+        }
+      }
+
+      setSnackbar({
+        open: true,
+        message: '¡Comentarios enviados!',
+        severity: 'success'
+      });
+    } catch (error) {
+      setSnackbar({
+        open: true,
+        message: "Error al enviar comentarios: " + (error.message || error),
+        severity: "error"
+      });
+    }
+  };
+
 
   // CRUD Handlers ... (sin cambios)
   const agregarElemento = (promptText, callback) => {
@@ -594,6 +667,23 @@ export default function PlataformaEstrategicaReview() {
     return { objetivos };
   };
 
+  const [isSaving, setIsSaving] = useState(false);
+
+  const handleGuardarTodo = async () => {
+    setIsSaving(true);
+    try {
+      // Primero guarda avance (await porque es async)
+      await handleGuardarAvance();
+      // Después guarda comentarios (puede ser sync)
+      handleGuardarComentarios();
+    } catch (err) {
+      setSnackbar({ open: true, message: 'Error al guardar.', severity: 'error' });
+      console.error(err);
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
   // --- Render principal (estructura original + bloque BD al inicio) ---
   return (
     <div className={styles.container}>
@@ -628,10 +718,9 @@ export default function PlataformaEstrategicaReview() {
       <div className={styles.buttonsContainer}>
         <div className={styles.buttonsContainerfixed}>
           <div className={styles.buttonWrapper}>
-            <button className={styles.slideButton} onClick={handleGuardarAvance}>Guardar avance</button>
-          </div>
-          <div className={styles.buttonWrapper}>
-            <button className={styles.slideButton} onClick={handleGuardarComentarios}>Enviar comentarios</button>
+            <button className={styles.slideButton} onClick={handleGuardarTodo} disabled={isSaving}>
+              {isSaving ? 'Guardando...' : 'Guardar avance'}
+            </button>
           </div>
         </div>
       </div>
