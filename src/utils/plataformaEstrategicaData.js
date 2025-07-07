@@ -440,7 +440,7 @@ export const dataObjetivoEG03 = [
           },
           {
             "id": "3_1_2_5_EG03",
-            "Linea de acción": "3.1.2.5 Mejorar la infraestructura y el equipamiento que permita a las y los elementos de seguridad, el combate efectivo los diferentes tipos de delitos, logrando que la población se sienta más segura.",
+            "Linea de acción": "3.1.2.5 Mejorar la infraestructura y el equipamiento que permita a las y los elementos de seguridad, el combate efectivo de los diferentes tipos de delitos, logrando que la población se sienta más segura.",
           },
           {
             "id": "3_1_2_6_EG03",
@@ -1359,14 +1359,6 @@ export const dataObjetivoEG07 = [
           {
             "id": "7_1_1_4_EG07",
             "Linea de acción": "7.1.1.4 Establecer programas de educación, divulgación científica y participación comunitaria, promoviendo la conservación del patrimonio geológico y natural del Geoparque.",
-          },
-          {
-            "id": "7_1_1_5_EG07",
-            "Linea de acción": "7.1.1.5 Impulsar campañas y carteleras culturales en el estado, que acerquen las distintas expresiones artísticas a públicos diversos en todo el territorio.",
-          },
-          {
-            "id": "7_1_1_6_EG07",
-            "Linea de acción": "7.1.1.6 Desarrollar programas que promuevan la formación artística, el consumo cultural y el desarrollo de audiencias en todos los municipios."
           }
         ]
       },
@@ -2244,7 +2236,7 @@ export const dataObjetivoET02 = [
           },
           {
             "id": "LAT_2_2_3_6_ET02",
-            "Linea de acción": "2.2.3.6 Impulsar el desarrollo de soluciones de realidad virtual y aumentada en proyectos y programas con enfoque innovador e inclusivo, permitiendo soluciones eficientes que beneficien a todas y todas.",
+            "Linea de acción": "2.2.3.6 Impulsar el desarrollo de soluciones de realidad virtual y aumentada en proyectos y programas con enfoque innovador e inclusivo, permitiendo soluciones eficientes que beneficien a todas y todos.",
           },
           {
             "id": "LAT_2_2_3_7_ET02",
