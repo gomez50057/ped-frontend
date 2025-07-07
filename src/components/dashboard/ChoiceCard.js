@@ -46,7 +46,6 @@ export default function ChoiceCard() {
                 <p className={styles.cardText}>{item.label}</p>
                 <p className={styles.cardDescription}>{item.text}</p>
               </div>
-
               <span
                 className={item.download ? styles.downloadButton : styles.cardButton}
                 aria-hidden="true"
