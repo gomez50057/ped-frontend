@@ -341,7 +341,7 @@ export default function PlataformaEstrategicaReview() {
   const handleAcuerdoChange = (id, valor) => setAcuerdo(id, valor);
   const handleComentarioChange = (id, campo, valor) => setComentario(id, campo, valor);
 
-  const renderLineas = (prefix, originales, propId, estrId) => {
+  const renderLineas = (prefix, originales, propId, estrId, esEstrategiaEstatica) => {
     const extra = nuevasLineas[propId]?.[estrId] || [];
 
     const isDynamicLinea = (lineaId) => {
@@ -417,7 +417,7 @@ export default function PlataformaEstrategicaReview() {
 
     return [...originales, ...extra].map(l => {
       const fid = `${prefix}-linea-${l.id}`;
-      const esOriginal = originales.find(o => o.id === l.id);
+      const isStaticLinea = esEstrategiaEstatica && originales.some(o => o.id === l.id);
       const esDinamica = isDynamicLinea(l.id);
       const esExtraStatic = extra.find(e => e.id === l.id);
 
@@ -438,7 +438,8 @@ export default function PlataformaEstrategicaReview() {
               }
             />
           )}
-          {esOriginal && (
+          {/* SOLO para líneas originales de estrategia estatica */}
+          {isStaticLinea && (
             <FeedbackSection
               id={fid}
               acuerdo={feedback[fid]?.acuerdo}
@@ -452,7 +453,7 @@ export default function PlataformaEstrategicaReview() {
     });
   };
 
-  const renderEstrategias = (propId, prefix, estrategias = [], showQuestion = false) =>
+  const renderEstrategias = (propId, prefix, estrategias = [], esEstrategiaEstatica = false) =>
     estrategias.map(estr => {
       const fid = `${prefix}-estrategia-${estr.id}`;
       const lineas = estr.lineas || [];
@@ -502,11 +503,12 @@ export default function PlataformaEstrategicaReview() {
         }
       };
 
+      // esEstrategiaEstatica se propaga a las líneas
       return (
         <div key={estr.id} className={styles.estrategia}>
           <h4>
             {estr.Estrategia || estr.nombre}
-            {!showQuestion && (
+            {!esEstrategiaEstatica && (
               <EditDeleteButtons
                 onEdit={() => {
                   openInputModal('Editar Estrategia', estr.Estrategia || estr.nombre, (nuevoNombre) => {
@@ -520,7 +522,8 @@ export default function PlataformaEstrategicaReview() {
             )}
           </h4>
 
-          {showQuestion && (
+          {/* Feedback solo si es estatica */}
+          {esEstrategiaEstatica && (
             <FeedbackSection
               id={fid}
               acuerdo={feedback[fid]?.acuerdo}
@@ -530,7 +533,9 @@ export default function PlataformaEstrategicaReview() {
             />
           )}
 
-          <ul>{renderLineas(fid, lineas, propId, estr.id)}</ul>
+          <ul>
+            {renderLineas(fid, lineas, propId, estr.id, esEstrategiaEstatica)}
+          </ul>
 
           <button
             className={styles.addButton}
@@ -733,7 +738,7 @@ export default function PlataformaEstrategicaReview() {
         })}
         {renderNuevasPropuestas()}
         <div className={styles.buttonWrapper}>
-          <button className={styles.slideButton} onClick={handleAgregarPropuesta}>Agregar nueva propuesta</button>
+          <button className={styles.slideButton} onClick={handleAgregarPropuesta}>Agregar nuevo objetivo</button>
         </div>
       </div>
 
