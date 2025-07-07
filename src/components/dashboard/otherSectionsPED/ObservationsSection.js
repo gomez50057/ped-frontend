@@ -5,6 +5,8 @@ import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import styles from "./ObservationsSection.module.css";
 import { fetchWithAuth } from '@/utils/auth';
+import { contenidoPEDOpciones } from '@/utils/utils';
+
 import ConfirmDialog from "@/components/dashboard/components/ConfirmDialog/ConfirmDialog";
 
 
@@ -230,14 +232,19 @@ const ObservationsSection = ({ observations = [], onChange }) => {
               <div className={styles.observationCard} key={obs.id ? `id-${obs.id}` : `idx-${idx}`}>
                 <div className={styles.formGroup}>
                   <label>Nombre del Apartado <span style={{ color: 'red' }}>*</span></label>
-                  <input
-                    type="text"
+                  <select
                     value={obs.sectionName}
                     onChange={e => handleChange(idx, "sectionName", e.target.value)}
-                    placeholder="Ej. Introducción"
                     className={styles.input}
                     required
-                  />
+                  >
+                    <option value="">Selecciona un apartado...</option>
+                    {contenidoPEDOpciones.map(opcion => (
+                      <option key={opcion.value} value={opcion.value}>
+                        {opcion.label}
+                      </option>
+                    ))}
+                  </select>
                 </div>
                 <div className={styles.formGroup}>
                   <label>Página en la que se encuentra la observación <span style={{ color: 'red' }}>*</span></label>

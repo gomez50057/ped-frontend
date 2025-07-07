@@ -37,3 +37,21 @@ export const identificacionOpciones = [
   { value: 'no', label: 'No' }
 ];
 
+export const contenidoPEDOpciones =[
+  { "value": "directorio", "label": "I. Directorio" },
+  { "value": "mensaje", "label": "II. Mensaje" },
+  { "value": "presentacion", "label": "III. Presentación" },
+  { "value": "como_leer_ped", "label": "IV. ¿Cómo leer el PED?" },
+  { "value": "metodologia", "label": "V. Metodología" },
+  { "value": "marco_normativo", "label": "VI. Marco Normativo" },
+  { "value": "marco_planeacion", "label": "VII. Marco de Planeación" },
+  { "value": "participacion_ciudadana", "label": "VIII. Participación Ciudadana" },
+  { "value": "panorama_hidalgo", "label": "IX. Panorama del Estado de Hidalgo" },
+  { "value": "evaluacion_plan_2022_2028", "label": "X. Evaluación del Plan Estatal de Desarrollo 2022 – 2028" },
+  { "value": "plataforma_estrategica", "label": "XI. Plataforma Estratégica" },
+  { "value": "rutas_transformacion_planeacion", "label": "XII. Las Rutas de la Transformación a través de la Planeación" },
+  { "value": "programas_por_desarrollar", "label": "XIII. Programas por desarrollar" },
+  { "value": "referencias", "label": "XIV. Referencias" },
+  { "value": "glosario", "label": "XV. Glosario" },
+  { "value": "anexo", "label": "XVI. Anexo" }
+]
