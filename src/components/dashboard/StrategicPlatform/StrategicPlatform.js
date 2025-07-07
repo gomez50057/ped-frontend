@@ -5,18 +5,18 @@ import styles from "./StrategicPlatform.module.css";
 import { fetchWithAuth } from '@/utils/auth';
 
 const ITEMS = [
-  { id: 1, code: "EG01", label: "Eje 1 Estado Planificado, Ordenado" },
-  { id: 2, code: "EG02", label: "Eje 2 Estado Eficiente y Disciplinado" },
-  { id: 3, code: "EG03", label: "Eje 3 Estado Seguro y Justo" },
-  { id: 4, code: "EG04", label: "Eje 4 Estado Fraterno de Bienes" },
-  { id: 5, code: "EG05", label: "Eje 5 Estado Educado y Humanista" },
-  { id: 6, code: "EG06", label: "Eje 6 Estado Próspero y de Oportunidades" },
-  { id: 7, code: "EG07", label: "Eje 7 Estado Orgulloso de su Cultura" },
-  { id: 8, code: "EG08", label: "Eje 8 Estado Conectado y con Innovación" },
-  { id: 9, code: "EG09", label: "Eje 9 Estado Sustentable y Productivo" },
-  { id: 10, code: "ET01", label: "ET1 Estado Transparente y de Rendición" },
-  { id: 11, code: "ET02", label: "ET2 Estado Tecnológico, Científico" },
-  { id: 12, code: "ET03", label: "ET3 Estado de Igualdad Sustantiva" }
+  { id: 1, code: "EG01", label: "Eje 1. Estado Planificado, Ordenado y Democrático" },
+  { id: 2, code: "EG02", label: "Eje 2. Estado Eficiente y Disciplinado con sus Finanzas" },
+  { id: 3, code: "EG03", label: "Eje 3. Estado Seguro y Justo" },
+  { id: 4, code: "EG04", label: "Eje 4. Estado para el Bienestar de Todas y Todos y Fraterno con los Pueblos y Comunidades Indígenas" },
+  { id: 5, code: "EG05", label: "Eje 5. Estado Educado y Humanista" },
+  { id: 6, code: "EG06", label: "Eje 6. Estado Próspero y de Oportunidades" },
+  { id: 7, code: "EG07", label: "Eje 7. Estado Orgulloso de su Cultura y Turismo" },
+  { id: 8, code: "EG08", label: "Eje 8. Estado Conectado y con Infraestructura para el Desarrollo" },
+  { id: 9, code: "EG09", label: "Eje 9. Estado Sustentable y Productivo" },
+  { id: 10, code: "ET01", label: "Eje Transversal 1. Estado Transparente y de Rendición de Cuentas" },
+  { id: 11, code: "ET02", label: "Eje Transversal 2. Estado Tecnológico, Científico e Innovador" },
+  { id: 12, code: "ET03", label: "Eje Transversal 3. Estado de Igualdad Sustantiva y de Derechos Humanos" }
 ];
 
 export default function StrategicPlatform({ onNext }) {
