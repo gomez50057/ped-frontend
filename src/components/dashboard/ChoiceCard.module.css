@@ -1,6 +1,6 @@
 .ChoiceCard {
   padding: 1rem;
-    padding-top: 70px;
+  padding-top: 70px;
 
 }
 
@@ -72,27 +72,56 @@
   flex: 4;
 }
 
-.cardText {
+.containerCard {
+  display: flex;
+  flex-direction: column;
+}
+
+
+
+.cardText,
+.cardDescription {
   min-width: 14em;
   padding: 0.5em;
   margin: 0 1.5rem;
   text-align: center;
   transform: rotate(-90deg);
-  transition: all 0.5s;
-  text-transform: uppercase;
-  color: var(--blanco);
-  font-size: 1.1rem;
+  transition: transform 0.5s, opacity 0.5s, backdrop-filter 0.5s;
+  will-change: transform, opacity;
   letter-spacing: 0.15em;
   z-index: 1;
-  background: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.35);
   border-radius: 1rem;
   backdrop-filter: blur(10px);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.3);
+  color: var(--blanco, #fff);
+  font-size: 1.1rem;
+  text-transform: uppercase;
+}
+
+.cardDescription {
+  opacity: 0;
+  position: absolute;
+  width: 80%;
+  left: 50%;
+  top: 50%;
+  text-transform: none;
+  transform: translate(-50%, -50%) rotate(-90deg);
+  pointer-events: none;
+  transition: transform 0.5s, opacity 0.5s, backdrop-filter 0.5s;
+  z-index: 2;
 }
 
 .cardItem:hover .cardText {
   transform: rotate(0);
+  opacity: 0;
+}
+
+.cardItem:hover .cardDescription {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(-50%, -50%) rotate(0);
 }
 
 .cardButton,

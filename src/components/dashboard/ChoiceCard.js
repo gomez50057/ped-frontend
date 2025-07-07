@@ -8,28 +8,27 @@ const items = [
   {
     label: 'Plataforma Estratégica',
     bg: '/img/dashboard/bg/plataforma.webp',
-    href: '/dashboard/plataforma-estrategica'
+    href: '/dashboard/plataforma-estrategica',
+    text: 'Comprende los ejes, objetivos, estrategias y líneas de acción que guían el rumbo de Hidalgo a partir de cada sector. Cada uno de ellos responde a los retos y necesidades de la población, reflejando el compromiso del gobierno por un futuro más justo, sostenible y con oportunidades para todas y todos.'
   },
   {
     label: 'Indicadores',
     bg: '/img/dashboard/bg/indicadores.webp',
-    href: '/dashboard/indicadores'
+    href: '/dashboard/indicadores',
+    text: 'Contiene los indicadores que darán seguimiento a los avances, identificando áreas de mejora. Contribuyen a un gobierno más transparente, tomando decisiones a partir de datos reales y orientando cada acción a alcanzar beneficios concretos para las personas.'
   },
   {
     label: 'Otros Apartados del PED',
     bg: '/img/dashboard/bg/otros.webp',
-    href: '/dashboard/otros-apartados'
+    href: '/dashboard/otros-apartados',
+    text: 'Incluye apartados clave como el panorama del estado, el marco normativo, la participación ciudadana, las rutas de la transformación y los programas por desarrollar. Todos estos elementos garantizan que el Plan tenga bases sólidas y que la voz del pueblo esté presente en cada paso hacia la Transformación de Hidalgo.'
   },
   {
-    label: 'Cónsula el Documento Preliminar ',
+    label: 'Consulta el Documento Preliminar',
     bg: '/img/dashboard/bg/consulta.webp',
-    download: '/pdf/Actualizacion_PED.pdf'
-  },
-  // {
-  //   label: 'Editar',
-  //   bg: '/img/dashboard/bg/editar.webp',
-  //   href: '/dashboard/editar'
-  // }
+    download: '/pdf/Actualizacion_PED.pdf',
+    text: 'Contiene el documento preliminar de la Actualización del Plan Estatal de Desarrollo 2025–2028 para su visualización.'
+  }
 ];
 
 export default function ChoiceCard() {
@@ -43,7 +42,11 @@ export default function ChoiceCard() {
         {items.map((item, idx) => {
           const content = (
             <>
-              <p className={styles.cardText}>{item.label}</p>
+              <div className={styles.containerCard}>
+                <p className={styles.cardText}>{item.label}</p>
+                <p className={styles.cardDescription}>{item.text}</p>
+              </div>
+
               <span
                 className={item.download ? styles.downloadButton : styles.cardButton}
                 aria-hidden="true"
