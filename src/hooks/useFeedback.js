@@ -3,7 +3,7 @@ import { useReducer, useCallback } from 'react';
 
 // Estado inicial para el feedback
 export const initialFeedbackState = {
-  // La clave será el id de cada sección:
+  // Ejemplo:
   // "EG01-propuesta-0": { acuerdo: null, comentarios: { comoDecir: "", justificacion: "" } }
 };
 
@@ -35,6 +35,10 @@ export function feedbackReducer(state, action) {
         }
       };
 
+    case '__SET_ALL__':
+      // Sobrescribe todo el estado con el nuevo objeto
+      return { ...value };
+
     default:
       return state;
   }
@@ -63,11 +67,18 @@ export function useFeedback() {
     dispatch({ type: 'SET_COMENTARIO', id, field, value });
   }, []);
 
+  /**
+   * Permite precargar todo el feedback de una sola vez (por ejemplo, desde el backend)
+   * @param {object} data - Estado completo, con ids como llavesF
+   */
+  const setFeedback = useCallback((data) => {
+    dispatch({ type: '__SET_ALL__', value: data });
+  }, []);
+
   return {
-    // Estado completo de feedback: { [id]: { acuerdo, comentarios } }
     feedback: state,
-    // Funciones para actualizar el estado
     setAcuerdo,
-    setComentario
+    setComentario,
+    setFeedback,
   };
 }

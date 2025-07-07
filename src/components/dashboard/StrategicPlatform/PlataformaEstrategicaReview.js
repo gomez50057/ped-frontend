@@ -18,7 +18,7 @@ export default function PlataformaEstrategicaReview() {
   const { selectedCodes, loading } = useSelectedAxes();
   // Memo de los datos estáticosF
   const staticWithId = useStaticWithId();
-  const { feedback, setAcuerdo, setComentario } = useFeedback();
+  const { feedback, setAcuerdo, setComentario, setFeedback } = useFeedback();
   const [modalOpen, setModalOpen] = useState(false);
   const [modalTitle, setModalTitle] = useState('');
   const [modalDefault, setModalDefault] = useState('');
@@ -107,8 +107,30 @@ export default function PlataformaEstrategicaReview() {
     }
   };
 
+  const cargarFeedbackUsuario = async () => {
+    try {
+      const response = await fetchWithAuth('/api/objetivos/feedback-avance/');
+      if (!response.ok) return;
+      const data = await response.json();
+      const feedbackPreCargado = {};
+      for (const fb of data) {
+        feedbackPreCargado[fb.clave] = {
+          acuerdo: fb.acuerdo,
+          comentarios: {
+            comoDecir: fb.comoDecir,
+            justificacion: fb.justificacion,
+          },
+        };
+      }
+      setFeedback(feedbackPreCargado);
+    } catch (err) {
+      // Manejo de error opcional
+    }
+  };
+
   useEffect(() => {
     cargarDatosUsuario();
+    cargarFeedbackUsuario();
   }, []);
 
   const handleCloseSnackbar = () => setSnackbar(prev => ({ ...prev, open: false }));
