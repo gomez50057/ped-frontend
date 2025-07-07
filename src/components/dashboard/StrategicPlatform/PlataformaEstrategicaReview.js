@@ -12,6 +12,7 @@ import InputModal from '../components/InputModal/InputModal';
 import { fetchWithAuth } from '@/utils/auth';
 import { useSelectedAxes } from '@/hooks/StrategicPlatform/useSelectedAxes';
 import { useStaticWithId } from '@/hooks/StrategicPlatform/useStaticWithId';
+import ConfirmDialog from "@/components/dashboard/components/ConfirmDialog/ConfirmDialog";
 
 // --- Component principal ---
 export default function PlataformaEstrategicaReview() {
@@ -27,6 +28,7 @@ export default function PlataformaEstrategicaReview() {
   const [nuevoContenido, setNuevoContenido] = useState({ propuestas: [] });
   const [nuevasEstrategias, setNuevasEstrategias] = useState({});
   const [nuevasLineas, setNuevasLineas] = useState({});
+  const [confirmOpen, setConfirmOpen] = useState(false);
 
   // --- Helpers UI y feedback ---
   const openInputModal = (title, defaultValue, callback) => {
@@ -745,7 +747,12 @@ export default function PlataformaEstrategicaReview() {
       <div className={styles.buttonsContainer}>
         <div className={styles.buttonsContainerfixed}>
           <div className={styles.buttonWrapper}>
-            <button className={styles.slideButton} onClick={handleGuardarTodo} disabled={isSaving}>
+            <button
+              type="button"
+              className={styles.slideButton}
+              onClick={() => setConfirmOpen(true)}
+              disabled={isSaving}
+            >
               {isSaving ? 'Guardando...' : 'Guardar avance'}
             </button>
           </div>
@@ -761,6 +768,18 @@ export default function PlataformaEstrategicaReview() {
           modalCallback(value);
           setModalOpen(false);
         }}
+      />
+
+      <ConfirmDialog
+        open={confirmOpen}
+        onClose={() => setConfirmOpen(false)}
+        onConfirm={async () => {
+          setConfirmOpen(false);
+          await handleGuardarTodo();
+        }}
+        title="¿Estás seguro de que quieres guardar tu avance?"
+        confirmText="Sí, guardar"
+        cancelText="Cancelar"
       />
 
       <Snackbar open={snackbar.open} autoHideDuration={4000} onClose={handleCloseSnackbar} anchorOrigin={{ vertical: "top", horizontal: "right" }}>
