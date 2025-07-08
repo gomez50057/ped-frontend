@@ -24,7 +24,7 @@ const items = [
     text: 'Incluye apartados clave como el panorama del estado, el marco normativo, la participación ciudadana, las rutas de la transformación y los programas por desarrollar. Todos estos elementos garantizan que el Plan tenga bases sólidas y que la voz del pueblo esté presente en cada paso hacia la Transformación de Hidalgo.'
   },
   {
-    label: 'Consulta el Documento Preliminar',
+    label: 'Documentos de Apoyo',
     bg: '/img/dashboard/bg/consulta.webp',
     download: '/pdf/Actualización_PED_2025_2028.pdf',
     text: 'Contiene el documento preliminar de la Actualización del Plan Estatal de Desarrollo 2025–2028 para su visualización.'
