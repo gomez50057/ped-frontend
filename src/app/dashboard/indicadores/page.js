@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import StrategicPlatform from "@/components/dashboard/Indicators/StrategicPlatform";
+import StrategicPlatform from "@/components/dashboard/Indicators/ChoiceIndicators";
 import NavbarDashboard from '@/components/shared/NavbarDashboard';
 
 export default function DashboardPlataforma() {

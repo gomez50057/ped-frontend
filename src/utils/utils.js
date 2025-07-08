@@ -27,7 +27,6 @@ export const municipiosDeHidalgo = [
   '080 Yahualica', '081 Zacualtipán de Ángeles', '082 Zapotlán de Juárez', '083 Zempoala', '084 Zimapán'
 ];
 
-
 export const municipiosDeHidalgoModulos = [
   '003 Actopan', '005 Ajacuba', '006 Alfajayucan', '009 El Arenal', '010 Atitalaquia', '013 Atotonilco de Tula', '015 Cardonal', '019 Chilcuautla', '023 Francisco I. Madero', '030 Ixmiquilpan', '041 Mixquiahuala de Juárez', '050 Progreso de Obregón', '054 San Salvador', '055 Santiago de Anaya', '058 Tasquillo', '063 Tepeji del Río de Ocampo', '064 Tepetitlán', '065 Tetepango', '067 Tezontepec de Aldama', '070 Tlahuelilpan', '074 Tlaxcoapan', '076 Tula de Allende'
 ];

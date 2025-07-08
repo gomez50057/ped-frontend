@@ -55,8 +55,6 @@ export const dataIndicador01ejemplo = [
   },
   // los que falten
 ]
-
-
 export const dataIndicador01 = [
   {
     "indicador": {
@@ -228,7 +226,6 @@ export const dataIndicador03 = [
   }
 ]
 
-
 export const dataIndicador04 = [
   {
     "indicador": {
@@ -285,8 +282,6 @@ export const dataIndicador04 = [
     }
   }
 ]
-
-
 
 export const dataIndicador05 = [
   {
@@ -459,63 +454,61 @@ export const dataIndicador07 = [
   }
 ]
 
-export const dataIndicador08 = [  {
-    "indicador": {
-      "id": "indicador_1_4_B",
-      "nombre": "Porcentaje de trámites estatales en los que el usuario(a) enfrentó algún problema"
-    },
-    "alineacion_PED": {
-      "id": "alineacion_PED_objetivo_1_4_B",
-      "objetivo_texto": "1.4 Consolidar el modelo de atención ciudadana sensible y cercano a la población, a través de estrategias de vinculación permanente y comunicación efectiva para la atención de sus necesidades."
-    },
-    "alineacion_plan_nacional": {
-      "id": "alineacion_PND_indicador_1_4_B",
-      "eje": "Eje 1. Gobernanza con Justicia y Participación Ciudadana."
-    },
-    "alineacion_ODS": {
-      "id": "alineacion_ODS_indicador_1_4_B",
-      "ods": [9, 16]
-    },
-    "descripcion": {
-      "id": "descripcion_indicador_1_4_B",
-      "texto": "Mide el porcentaje de trámites en los que las personas usuarias enfrentaron algún tipo de problema al realizar el mismo, como pueden ser: barreras al trámite, asimetría de la información o problemas con las TIC (Tecnologías de la Información y la Comunicación) en la entidad."
-    },
-    "periodicidad": {
-      "id": "periodicidad_indicador_1_4_B",
-      "valor": "Bienal"
-    },
-    "sentido_indicador": {
-      "id": "sentido_indicador_1_4_B",
-      "valor": "Descendente"
-    },
-    "linea_base": {
-      "id": "linea_base_indicador_1_4_B",
-      "titulo": "2023",
-      "subtitulo": "36.1%"
-    },
-    "metas": [
-      {
-        "id": "meta_2028_indicador_1_4_B",
-        "titulo": "2028",
-        "subtitulo": "35.0%"
-      },
-      {
-        "id": "meta_2040_indicador_1_4_B",
-        "titulo": "2040",
-        "subtitulo": "33.0%"
-      }
-    ],
-    "fuente": {
-      "id": "fuente_1_4_B",
-      "organizaciones": [
-        "INEGI, Encuesta Nacional de Calidad e Impacto Gubernamental (ENCIG) https://www.inegi.org.mx/programas/encig/2023/#tabulados"
-      ],
-      "url": "https://www.inegi.org.mx/programas/encig/2023/#tabulados"
-    }
+export const dataIndicador08 = [{
+  "indicador": {
+    "id": "indicador_1_4_B",
+    "nombre": "Porcentaje de trámites estatales en los que el usuario(a) enfrentó algún problema"
   },
-  
+  "alineacion_PED": {
+    "id": "alineacion_PED_objetivo_1_4_B",
+    "objetivo_texto": "1.4 Consolidar el modelo de atención ciudadana sensible y cercano a la población, a través de estrategias de vinculación permanente y comunicación efectiva para la atención de sus necesidades."
+  },
+  "alineacion_plan_nacional": {
+    "id": "alineacion_PND_indicador_1_4_B",
+    "eje": "Eje 1. Gobernanza con Justicia y Participación Ciudadana."
+  },
+  "alineacion_ODS": {
+    "id": "alineacion_ODS_indicador_1_4_B",
+    "ods": [9, 16]
+  },
+  "descripcion": {
+    "id": "descripcion_indicador_1_4_B",
+    "texto": "Mide el porcentaje de trámites en los que las personas usuarias enfrentaron algún tipo de problema al realizar el mismo, como pueden ser: barreras al trámite, asimetría de la información o problemas con las TIC (Tecnologías de la Información y la Comunicación) en la entidad."
+  },
+  "periodicidad": {
+    "id": "periodicidad_indicador_1_4_B",
+    "valor": "Bienal"
+  },
+  "sentido_indicador": {
+    "id": "sentido_indicador_1_4_B",
+    "valor": "Descendente"
+  },
+  "linea_base": {
+    "id": "linea_base_indicador_1_4_B",
+    "titulo": "2023",
+    "subtitulo": "36.1%"
+  },
+  "metas": [
+    {
+      "id": "meta_2028_indicador_1_4_B",
+      "titulo": "2028",
+      "subtitulo": "35.0%"
+    },
+    {
+      "id": "meta_2040_indicador_1_4_B",
+      "titulo": "2040",
+      "subtitulo": "33.0%"
+    }
+  ],
+  "fuente": {
+    "id": "fuente_1_4_B",
+    "organizaciones": [
+      "INEGI, Encuesta Nacional de Calidad e Impacto Gubernamental (ENCIG) https://www.inegi.org.mx/programas/encig/2023/#tabulados"
+    ],
+    "url": "https://www.inegi.org.mx/programas/encig/2023/#tabulados"
+  }
+},
 ]
-
 
 export const dataIndicador09 = [
   {
@@ -745,634 +738,632 @@ export const dataIndicador12 = [
   }
 ]
 
-export const dataIndicador13 = [  {
-    "indicador": {
-      "id": "indicador_2_2_B",
-      "nombre": "Porcentaje de los contratos realizados por la Administración Pública Estatal por licitación pública estatal, regional o local."
-    },
-    "alineacion_PED": {
-      "id": "alineacion_PED_objetivo_2_2_B",
-      "objetivo_texto": "2.2 Gestionar el talento humano y patrimonio gubernamental asegurando el ejercicio austero, eficaz y disciplinado del gasto público."
-    },
-    "alineacion_plan_nacional": {
-      "id": "alineacion_PND_indicador_2_2_B",
-      "eje": "Eje 1. Gobernanza con Justicia y Participación Ciudadana."
-    },
-    "alineacion_ODS": {
-      "id": "alineacion_ODS_indicador_2_2_B",
-      "ods": [8, 9, 16]
-    },
-    "descripcion": {
-      "id": "descripcion_indicador_2_2_B",
-      "texto": "Mide el porcentaje de contratos que realizó la Administración Pública Estatal con personas proveedoras y contratistas con el procedimiento de licitación pública estatal, regional o local."
-    },
-    "periodicidad": {
-      "id": "periodicidad_indicador_2_2_B",
-      "valor": "Anual"
-    },
-    "sentido_indicador": {
-      "id": "sentido_indicador_2_2_B",
-      "valor": "Ascendente"
-    },
-    "linea_base": {
-      "id": "linea_base_indicador_2_2_B",
-      "titulo": "2024",
-      "subtitulo": "38.3%"
-    },
-    "metas": [
-      {
-        "id": "meta_2028_indicador_2_2_B",
-        "titulo": "2028",
-        "subtitulo": "40.0%"
-      },
-      {
-        "id": "meta_2040_indicador_2_2_B",
-        "titulo": "2040",
-        "subtitulo": "45.0%"
-      }
-    ],
-    "fuente": {
-      "id": "fuente_2_2_B",
-      "organizaciones": [
-        "INEGI, Censo Nacional de Gobiernos Estatales 2024. Tabulados básicos https://www.inegi.org.mx/programas/cnge/2024/"
-      ],
-      "url": "https://www.inegi.org.mx/programas/cnge/2024/"
-    }
+export const dataIndicador13 = [{
+  "indicador": {
+    "id": "indicador_2_2_B",
+    "nombre": "Porcentaje de los contratos realizados por la Administración Pública Estatal por licitación pública estatal, regional o local."
   },
-  
+  "alineacion_PED": {
+    "id": "alineacion_PED_objetivo_2_2_B",
+    "objetivo_texto": "2.2 Gestionar el talento humano y patrimonio gubernamental asegurando el ejercicio austero, eficaz y disciplinado del gasto público."
+  },
+  "alineacion_plan_nacional": {
+    "id": "alineacion_PND_indicador_2_2_B",
+    "eje": "Eje 1. Gobernanza con Justicia y Participación Ciudadana."
+  },
+  "alineacion_ODS": {
+    "id": "alineacion_ODS_indicador_2_2_B",
+    "ods": [8, 9, 16]
+  },
+  "descripcion": {
+    "id": "descripcion_indicador_2_2_B",
+    "texto": "Mide el porcentaje de contratos que realizó la Administración Pública Estatal con personas proveedoras y contratistas con el procedimiento de licitación pública estatal, regional o local."
+  },
+  "periodicidad": {
+    "id": "periodicidad_indicador_2_2_B",
+    "valor": "Anual"
+  },
+  "sentido_indicador": {
+    "id": "sentido_indicador_2_2_B",
+    "valor": "Ascendente"
+  },
+  "linea_base": {
+    "id": "linea_base_indicador_2_2_B",
+    "titulo": "2024",
+    "subtitulo": "38.3%"
+  },
+  "metas": [
+    {
+      "id": "meta_2028_indicador_2_2_B",
+      "titulo": "2028",
+      "subtitulo": "40.0%"
+    },
+    {
+      "id": "meta_2040_indicador_2_2_B",
+      "titulo": "2040",
+      "subtitulo": "45.0%"
+    }
+  ],
+  "fuente": {
+    "id": "fuente_2_2_B",
+    "organizaciones": [
+      "INEGI, Censo Nacional de Gobiernos Estatales 2024. Tabulados básicos https://www.inegi.org.mx/programas/cnge/2024/"
+    ],
+    "url": "https://www.inegi.org.mx/programas/cnge/2024/"
+  }
+},
+
 ]
 
-export const dataIndicador14 = [  {
-    "indicador": {
-      "id": "indicador_3_1_A",
-      "nombre": "Índice de Paz"
-    },
-    "alineacion_PED": {
-      "id": "alineacion_PED_objetivo_3_1_A",
-      "objetivo_texto": "3.1 Impulsar una política integral de seguridad y prevención del delito que atienda sus causas estructurales y contextuales, fortalezca las capacidades institucionales y promueva la recuperación del tejido social y la paz comunitaria."
-    },
-    "alineacion_plan_nacional": {
-      "id": "alineacion_PND_indicador_3_1_A",
-      "eje": "Eje 1. Gobernanza con Justicia y Participación Ciudadana."
-    },
-    "alineacion_ODS": {
-      "id": "alineacion_ODS_indicador_3_1_A",
-      "ods": [5, 10, 16]
-    },
-    "descripcion": {
-      "id": "descripcion_indicador_3_1_A",
-      "texto": "Analiza los desarrollos relacionados con la violencia y la paz en el país del año completo más reciente, así como las principales tendencias y factores que impulsan la paz."
-    },
-    "periodicidad": {
-      "id": "periodicidad_indicador_3_1_A",
-      "valor": "Anual"
-    },
-    "sentido_indicador": {
-      "id": "sentido_indicador_3_1_A",
-      "valor": "Ascendente"
-    },
-    "linea_base": {
-      "id": "linea_base_indicador_3_1_A",
-      "titulo": "2024",
-      "subtitulo": "10ª posición"
-    },
-    "metas": [
-      {
-        "id": "meta_2028_indicador_3_1_A",
-        "titulo": "2028",
-        "subtitulo": "9ª posición"
-      },
-      {
-        "id": "meta_2040_indicador_3_1_A",
-        "titulo": "2040",
-        "subtitulo": "8ª posición"
-      }
-    ],
-    "fuente": {
-      "id": "fuente_3_1_A",
-      "organizaciones": [
-        "Instituto para la Economía y la Paz. https://www.indicedepazmexico.org/mapa-mpi-2024"
-      ],
-      "url": "https://www.indicedepazmexico.org/mapa-mpi-2024"
-    }
+export const dataIndicador14 = [{
+  "indicador": {
+    "id": "indicador_3_1_A",
+    "nombre": "Índice de Paz"
   },
- 
+  "alineacion_PED": {
+    "id": "alineacion_PED_objetivo_3_1_A",
+    "objetivo_texto": "3.1 Impulsar una política integral de seguridad y prevención del delito que atienda sus causas estructurales y contextuales, fortalezca las capacidades institucionales y promueva la recuperación del tejido social y la paz comunitaria."
+  },
+  "alineacion_plan_nacional": {
+    "id": "alineacion_PND_indicador_3_1_A",
+    "eje": "Eje 1. Gobernanza con Justicia y Participación Ciudadana."
+  },
+  "alineacion_ODS": {
+    "id": "alineacion_ODS_indicador_3_1_A",
+    "ods": [5, 10, 16]
+  },
+  "descripcion": {
+    "id": "descripcion_indicador_3_1_A",
+    "texto": "Analiza los desarrollos relacionados con la violencia y la paz en el país del año completo más reciente, así como las principales tendencias y factores que impulsan la paz."
+  },
+  "periodicidad": {
+    "id": "periodicidad_indicador_3_1_A",
+    "valor": "Anual"
+  },
+  "sentido_indicador": {
+    "id": "sentido_indicador_3_1_A",
+    "valor": "Ascendente"
+  },
+  "linea_base": {
+    "id": "linea_base_indicador_3_1_A",
+    "titulo": "2024",
+    "subtitulo": "10ª posición"
+  },
+  "metas": [
+    {
+      "id": "meta_2028_indicador_3_1_A",
+      "titulo": "2028",
+      "subtitulo": "9ª posición"
+    },
+    {
+      "id": "meta_2040_indicador_3_1_A",
+      "titulo": "2040",
+      "subtitulo": "8ª posición"
+    }
+  ],
+  "fuente": {
+    "id": "fuente_3_1_A",
+    "organizaciones": [
+      "Instituto para la Economía y la Paz. https://www.indicedepazmexico.org/mapa-mpi-2024"
+    ],
+    "url": "https://www.indicedepazmexico.org/mapa-mpi-2024"
+  }
+},
+
 ]
 
-export const dataIndicador15 = [  {
-    "indicador": {
-      "id": "indicador_3_1_B",
-      "nombre": "Porcentaje de la percepción de inseguridad en la entidad"
-    },
-    "alineacion_PED": {
-      "id": "alineacion_PED_objetivo_3_1_B",
-      "objetivo_texto": "3.1 Impulsar una política integral de seguridad y prevención del delito que atienda sus causas estructurales y contextuales, fortalezca las capacidades institucionales y promueva la recuperación del tejido social y la paz comunitaria."
-    },
-    "alineacion_plan_nacional": {
-      "id": "alineacion_PND_indicador_3_1_B",
-      "eje": "Eje 1. Gobernanza con Justicia y Participación Ciudadana."
-    },
-    "alineacion_ODS": {
-      "id": "alineacion_ODS_indicador_3_1_B",
-      "ods": [5, 10, 16]
-    },
-    "descripcion": {
-      "id": "descripcion_indicador_3_1_B",
-      "texto": "Mide el porcentaje de la población de 18 años y más que califica como inseguro vivir en su entorno más cercano, colonia o localidad en la entidad."
-    },
-    "periodicidad": {
-      "id": "periodicidad_indicador_3_1_B",
-      "valor": "Anual"
-    },
-    "sentido_indicador": {
-      "id": "sentido_indicador_3_1_B",
-      "valor": "Descendente"
-    },
-    "linea_base": {
-      "id": "linea_base_indicador_3_1_B",
-      "titulo": "2024",
-      "subtitulo": "62.1%"
-    },
-    "metas": [
-      {
-        "id": "meta_2028_indicador_3_1_B",
-        "titulo": "2028",
-        "subtitulo": "58%"
-      },
-      {
-        "id": "meta_2040_indicador_3_1_B",
-        "titulo": "2040",
-        "subtitulo": "50%"
-      }
-    ],
-    "fuente": {
-      "id": "fuente_3_1_B",
-      "organizaciones": [
-        "INEGI, Encuesta Nacional de Victimización y Percepción sobre Seguridad Pública (ENVIPE)."
-      ],
-      "url": "https://www.inegi.org.mx/contenidos/programas/envipe/2024/doc/envipe2024_hgo.pdf"
-    }
+export const dataIndicador15 = [{
+  "indicador": {
+    "id": "indicador_3_1_B",
+    "nombre": "Porcentaje de la percepción de inseguridad en la entidad"
   },
-  
+  "alineacion_PED": {
+    "id": "alineacion_PED_objetivo_3_1_B",
+    "objetivo_texto": "3.1 Impulsar una política integral de seguridad y prevención del delito que atienda sus causas estructurales y contextuales, fortalezca las capacidades institucionales y promueva la recuperación del tejido social y la paz comunitaria."
+  },
+  "alineacion_plan_nacional": {
+    "id": "alineacion_PND_indicador_3_1_B",
+    "eje": "Eje 1. Gobernanza con Justicia y Participación Ciudadana."
+  },
+  "alineacion_ODS": {
+    "id": "alineacion_ODS_indicador_3_1_B",
+    "ods": [5, 10, 16]
+  },
+  "descripcion": {
+    "id": "descripcion_indicador_3_1_B",
+    "texto": "Mide el porcentaje de la población de 18 años y más que califica como inseguro vivir en su entorno más cercano, colonia o localidad en la entidad."
+  },
+  "periodicidad": {
+    "id": "periodicidad_indicador_3_1_B",
+    "valor": "Anual"
+  },
+  "sentido_indicador": {
+    "id": "sentido_indicador_3_1_B",
+    "valor": "Descendente"
+  },
+  "linea_base": {
+    "id": "linea_base_indicador_3_1_B",
+    "titulo": "2024",
+    "subtitulo": "62.1%"
+  },
+  "metas": [
+    {
+      "id": "meta_2028_indicador_3_1_B",
+      "titulo": "2028",
+      "subtitulo": "58%"
+    },
+    {
+      "id": "meta_2040_indicador_3_1_B",
+      "titulo": "2040",
+      "subtitulo": "50%"
+    }
+  ],
+  "fuente": {
+    "id": "fuente_3_1_B",
+    "organizaciones": [
+      "INEGI, Encuesta Nacional de Victimización y Percepción sobre Seguridad Pública (ENVIPE)."
+    ],
+    "url": "https://www.inegi.org.mx/contenidos/programas/envipe/2024/doc/envipe2024_hgo.pdf"
+  }
+},
+
 ]
 
-export const dataIndicador16 = [  {
-    "indicador": {
-      "id": "indicador_3_2_A",
-      "nombre": "Índice del Estado de Derecho"
-    },
-    "alineacion_PED": {
-      "id": "alineacion_PED_objetivo_3_2_A",
-      "objetivo_texto": "3.2 Garantizar el acceso a la justicia bajo el principio del debido proceso promoviendo un clima de legalidad, confianza y certidumbre en las instituciones."
-    },
-    "alineacion_plan_nacional": {
-      "id": "alineacion_PND_indicador_3_2_A",
-      "eje": "Eje 1. Gobernanza con Justicia y Participación Ciudadana."
-    },
-    "alineacion_ODS": {
-      "id": "alineacion_ODS_indicador_3_2_A",
-      "ods": [5, 10, 16]
-    },
-    "descripcion": {
-      "id": "descripcion_indicador_3_2_A",
-      "texto": "Mide datos e indicadores originales, organizados en 42 sub-factores y ocho factores: i) Límites al poder gubernamental, ii) Ausencia de corrupción, iii) Gobierno abierto, iv) Derechos fundamentales, v) Orden y seguridad, vi) Cumplimiento regulatorio, vii) Justicia civil y viii) Justicia penal. Los puntajes se ubican entre 0 y 1, donde 1 indica la máxima adhesión al Estado de Derecho."
-    },
-    "periodicidad": {
-      "id": "periodicidad_indicador_3_2_A",
-      "valor": "Anual"
-    },
-    "sentido_indicador": {
-      "id": "sentido_indicador_3_2_A",
-      "valor": "Ascendente"
-    },
-    "linea_base": {
-      "id": "linea_base_indicador_3_2_A",
-      "titulo": "2023-2024",
-      "subtitulo": "0.42 Puntaje"
-    },
-    "metas": [
-      {
-        "id": "meta_2028_indicador_3_2_A",
-        "titulo": "2028",
-        "subtitulo": "0.50 Puntaje"
-      },
-      {
-        "id": "meta_2040_indicador_3_2_A",
-        "titulo": "2040",
-        "subtitulo": "0.60 Puntaje"
-      }
-    ],
-    "fuente": {
-      "id": "fuente_3_2_A",
-      "organizaciones": [
-        "World Justice Project (WJP)."
-      ],
-      "url": "https://worldjusticeproject.mx/wp-content/uploads/2024/06/IEDMX2024_WEB.pdf"
-    }
+export const dataIndicador16 = [{
+  "indicador": {
+    "id": "indicador_3_2_A",
+    "nombre": "Índice del Estado de Derecho"
   },
- 
+  "alineacion_PED": {
+    "id": "alineacion_PED_objetivo_3_2_A",
+    "objetivo_texto": "3.2 Garantizar el acceso a la justicia bajo el principio del debido proceso promoviendo un clima de legalidad, confianza y certidumbre en las instituciones."
+  },
+  "alineacion_plan_nacional": {
+    "id": "alineacion_PND_indicador_3_2_A",
+    "eje": "Eje 1. Gobernanza con Justicia y Participación Ciudadana."
+  },
+  "alineacion_ODS": {
+    "id": "alineacion_ODS_indicador_3_2_A",
+    "ods": [5, 10, 16]
+  },
+  "descripcion": {
+    "id": "descripcion_indicador_3_2_A",
+    "texto": "Mide datos e indicadores originales, organizados en 42 sub-factores y ocho factores: i) Límites al poder gubernamental, ii) Ausencia de corrupción, iii) Gobierno abierto, iv) Derechos fundamentales, v) Orden y seguridad, vi) Cumplimiento regulatorio, vii) Justicia civil y viii) Justicia penal. Los puntajes se ubican entre 0 y 1, donde 1 indica la máxima adhesión al Estado de Derecho."
+  },
+  "periodicidad": {
+    "id": "periodicidad_indicador_3_2_A",
+    "valor": "Anual"
+  },
+  "sentido_indicador": {
+    "id": "sentido_indicador_3_2_A",
+    "valor": "Ascendente"
+  },
+  "linea_base": {
+    "id": "linea_base_indicador_3_2_A",
+    "titulo": "2023-2024",
+    "subtitulo": "0.42 Puntaje"
+  },
+  "metas": [
+    {
+      "id": "meta_2028_indicador_3_2_A",
+      "titulo": "2028",
+      "subtitulo": "0.50 Puntaje"
+    },
+    {
+      "id": "meta_2040_indicador_3_2_A",
+      "titulo": "2040",
+      "subtitulo": "0.60 Puntaje"
+    }
+  ],
+  "fuente": {
+    "id": "fuente_3_2_A",
+    "organizaciones": [
+      "World Justice Project (WJP)."
+    ],
+    "url": "https://worldjusticeproject.mx/wp-content/uploads/2024/06/IEDMX2024_WEB.pdf"
+  }
+},
+
 ]
 
-export const dataIndicador17 = [  {
-    "indicador": {
-      "id": "indicador_3_2_B",
-      "nombre": "Nivel de Confianza Ministerio Público y Fiscalías Estatales"
-    },
-    "alineacion_PED": {
-      "id": "alineacion_PED_objetivo_3_2_B",
-      "objetivo_texto": "3.2 Garantizar el acceso a la justicia bajo el principio del debido proceso promoviendo un clima de legalidad, confianza y certidumbre en las instituciones."
-    },
-    "alineacion_plan_nacional": {
-      "id": "alineacion_PND_indicador_3_2_B",
-      "eje": "Eje 1. Gobernanza con Justicia y Participación Ciudadana."
-    },
-    "alineacion_ODS": {
-      "id": "alineacion_ODS_indicador_3_2_B",
-      "ods": [5, 10, 16]
-    },
-    "descripcion": {
-      "id": "descripcion_indicador_3_2_B",
-      "texto": "Mide la proporción de la población que califica la labor realizada por parte de los ministerios públicos y la Fiscalía General del Estado como \"Mucha Confianza\" o \"Algo de Confianza\"."
-    },
-    "periodicidad": {
-      "id": "periodicidad_indicador_3_2_B",
-      "valor": "Anual"
-    },
-    "sentido_indicador": {
-      "id": "sentido_indicador_3_2_B",
-      "valor": "Ascendente"
-    },
-    "linea_base": {
-      "id": "linea_base_indicador_3_2_B",
-      "titulo": "2024",
-      "subtitulo": "64.7%"
-    },
-    "metas": [
-      {
-        "id": "meta_2028_indicador_3_2_B",
-        "titulo": "2028",
-        "subtitulo": "69%"
-      },
-      {
-        "id": "meta_2040_indicador_3_2_B",
-        "titulo": "2040",
-        "subtitulo": "75%"
-      }
-    ],
-    "fuente": {
-      "id": "fuente_3_2_B",
-      "organizaciones": [
-        "INEGI, Encuesta Nacional de Victimización y Percepción sobre Seguridad Pública (ENVIPE)."
-      ],
-      "url": "https://www.inegi.org.mx/contenidos/programas/envipe/2024/doc/envipe2024_hgo.pdf"
-    }
+export const dataIndicador17 = [{
+  "indicador": {
+    "id": "indicador_3_2_B",
+    "nombre": "Nivel de Confianza Ministerio Público y Fiscalías Estatales"
   },
-  
+  "alineacion_PED": {
+    "id": "alineacion_PED_objetivo_3_2_B",
+    "objetivo_texto": "3.2 Garantizar el acceso a la justicia bajo el principio del debido proceso promoviendo un clima de legalidad, confianza y certidumbre en las instituciones."
+  },
+  "alineacion_plan_nacional": {
+    "id": "alineacion_PND_indicador_3_2_B",
+    "eje": "Eje 1. Gobernanza con Justicia y Participación Ciudadana."
+  },
+  "alineacion_ODS": {
+    "id": "alineacion_ODS_indicador_3_2_B",
+    "ods": [5, 10, 16]
+  },
+  "descripcion": {
+    "id": "descripcion_indicador_3_2_B",
+    "texto": "Mide la proporción de la población que califica la labor realizada por parte de los ministerios públicos y la Fiscalía General del Estado como \"Mucha Confianza\" o \"Algo de Confianza\"."
+  },
+  "periodicidad": {
+    "id": "periodicidad_indicador_3_2_B",
+    "valor": "Anual"
+  },
+  "sentido_indicador": {
+    "id": "sentido_indicador_3_2_B",
+    "valor": "Ascendente"
+  },
+  "linea_base": {
+    "id": "linea_base_indicador_3_2_B",
+    "titulo": "2024",
+    "subtitulo": "64.7%"
+  },
+  "metas": [
+    {
+      "id": "meta_2028_indicador_3_2_B",
+      "titulo": "2028",
+      "subtitulo": "69%"
+    },
+    {
+      "id": "meta_2040_indicador_3_2_B",
+      "titulo": "2040",
+      "subtitulo": "75%"
+    }
+  ],
+  "fuente": {
+    "id": "fuente_3_2_B",
+    "organizaciones": [
+      "INEGI, Encuesta Nacional de Victimización y Percepción sobre Seguridad Pública (ENVIPE)."
+    ],
+    "url": "https://www.inegi.org.mx/contenidos/programas/envipe/2024/doc/envipe2024_hgo.pdf"
+  }
+},
+
 ]
 
-
-export const dataIndicador18 = [  {
-    "indicador": {
-      "id": "indicador_3_3_A",
-      "nombre": "Porcentaje de Cobertura Municipal de Atlas Estatal"
-    },
-    "alineacion_PED": {
-      "id": "alineacion_PED_objetivo_3_3_A",
-      "objetivo_texto": "3.3 Promover la gestión integral de riesgos, abordando las amenazas del entorno para la prevención, mitigación y respuesta inmediata, fomentando entornos resilientes."
-    },
-    "alineacion_plan_nacional": {
-      "id": "alineacion_PND_indicador_3_3_A",
-      "eje": "Eje 2. Desarrollo con Bienestar y Humanismo."
-    },
-    "alineacion_ODS": {
-      "id": "alineacion_ODS_indicador_3_3_A",
-      "ods": [5, 10, 16]
-    },
-    "descripcion": {
-      "id": "descripcion_indicador_3_3_A",
-      "texto": "Mide el porcentaje de municipios que cuentan con el instrumento de Atlas de Riesgos."
-    },
-    "periodicidad": {
-      "id": "periodicidad_indicador_3_3_A",
-      "valor": "Anual"
-    },
-    "sentido_indicador": {
-      "id": "sentido_indicador_3_3_A",
-      "valor": "Ascendente"
-    },
-    "linea_base": {
-      "id": "linea_base_indicador_3_3_A",
-      "titulo": "2025",
-      "subtitulo": "67%"
-    },
-    "metas": [
-      {
-        "id": "meta_2028_indicador_3_3_A",
-        "titulo": "2028",
-        "subtitulo": "70%"
-      },
-      {
-        "id": "meta_2040_indicador_3_3_A",
-        "titulo": "2040",
-        "subtitulo": "80%"
-      }
-    ],
-    "fuente": {
-      "id": "fuente_3_3_A",
-      "organizaciones": [
-        "Centro Nacional de Prevención de Desastres (CENAPRED). "
-      ],
-      "url": "http://rmgir.proyectomesoamerica.org/portal/apps/opsdashboard/index.html#/3e7adf434b834775b11ca7504d62bfe6"
-    }
+export const dataIndicador18 = [{
+  "indicador": {
+    "id": "indicador_3_3_A",
+    "nombre": "Porcentaje de Cobertura Municipal de Atlas Estatal"
   },
-  
+  "alineacion_PED": {
+    "id": "alineacion_PED_objetivo_3_3_A",
+    "objetivo_texto": "3.3 Promover la gestión integral de riesgos, abordando las amenazas del entorno para la prevención, mitigación y respuesta inmediata, fomentando entornos resilientes."
+  },
+  "alineacion_plan_nacional": {
+    "id": "alineacion_PND_indicador_3_3_A",
+    "eje": "Eje 2. Desarrollo con Bienestar y Humanismo."
+  },
+  "alineacion_ODS": {
+    "id": "alineacion_ODS_indicador_3_3_A",
+    "ods": [5, 10, 16]
+  },
+  "descripcion": {
+    "id": "descripcion_indicador_3_3_A",
+    "texto": "Mide el porcentaje de municipios que cuentan con el instrumento de Atlas de Riesgos."
+  },
+  "periodicidad": {
+    "id": "periodicidad_indicador_3_3_A",
+    "valor": "Anual"
+  },
+  "sentido_indicador": {
+    "id": "sentido_indicador_3_3_A",
+    "valor": "Ascendente"
+  },
+  "linea_base": {
+    "id": "linea_base_indicador_3_3_A",
+    "titulo": "2025",
+    "subtitulo": "67%"
+  },
+  "metas": [
+    {
+      "id": "meta_2028_indicador_3_3_A",
+      "titulo": "2028",
+      "subtitulo": "70%"
+    },
+    {
+      "id": "meta_2040_indicador_3_3_A",
+      "titulo": "2040",
+      "subtitulo": "80%"
+    }
+  ],
+  "fuente": {
+    "id": "fuente_3_3_A",
+    "organizaciones": [
+      "Centro Nacional de Prevención de Desastres (CENAPRED). "
+    ],
+    "url": "http://rmgir.proyectomesoamerica.org/portal/apps/opsdashboard/index.html#/3e7adf434b834775b11ca7504d62bfe6"
+  }
+},
+
 ]
 
-export const dataIndicador19 = [  {
-    "indicador": {
-      "id": "indicador_3_3_B",
-      "nombre": "Total de programas especiales de protección civil en la Administración Pública Estatal."
-    },
-    "alineacion_PED": {
-      "id": "alineacion_PED_objetivo_3_3_B",
-      "objetivo_texto": "3.3 Promover la gestión integral de riesgos, abordando las amenazas del entorno para la prevención, mitigación y respuesta inmediata, fomentando entornos resilientes."
-    },
-    "alineacion_plan_nacional": {
-      "id": "alineacion_PND_indicador_3_3_B",
-      "eje": "Eje 2. Desarrollo con Bienestar y Humanismo."
-    },
-    "alineacion_ODS": {
-      "id": "alineacion_ODS_indicador_3_3_B",
-      "ods": [16]
-    },
-    "descripcion": {
-      "id": "descripcion_indicador_3_3_B",
-      "texto": "Muestra el total de programas especiales de protección civil que se han elaborado en la entidad, para temáticas específicas, como por ejemplo: temporada de lluvias y huracanes, temporada vacacional, temporada invernal, entre otros."
-    },
-    "periodicidad": {
-      "id": "periodicidad_indicador_3_3_B",
-      "valor": "Anual"
-    },
-    "sentido_indicador": {
-      "id": "sentido_indicador_3_3_B",
-      "valor": "Ascendente"
-    },
-    "linea_base": {
-      "id": "linea_base_indicador_3_3_B",
-      "titulo": "2024",
-      "subtitulo": "4 programas"
-    },
-    "metas": [
-      {
-        "id": "meta_2028_indicador_3_3_B",
-        "titulo": "2028",
-        "subtitulo": "6 programas"
-      },
-      {
-        "id": "meta_2040_indicador_3_3_B",
-        "titulo": "2040",
-        "subtitulo": "8 programas"
-      }
-    ],
-    "fuente": {
-      "id": "fuente_3_3_B",
-      "organizaciones": [
-        "INEGI, Censo Nacional de Gobiernos Estatales 2024. Tabulados básicos"
-      ],
-      "url": "https://www.inegi.org.mx/programas/cnge/2024/"
-    }
+export const dataIndicador19 = [{
+  "indicador": {
+    "id": "indicador_3_3_B",
+    "nombre": "Total de programas especiales de protección civil en la Administración Pública Estatal."
   },
-  
+  "alineacion_PED": {
+    "id": "alineacion_PED_objetivo_3_3_B",
+    "objetivo_texto": "3.3 Promover la gestión integral de riesgos, abordando las amenazas del entorno para la prevención, mitigación y respuesta inmediata, fomentando entornos resilientes."
+  },
+  "alineacion_plan_nacional": {
+    "id": "alineacion_PND_indicador_3_3_B",
+    "eje": "Eje 2. Desarrollo con Bienestar y Humanismo."
+  },
+  "alineacion_ODS": {
+    "id": "alineacion_ODS_indicador_3_3_B",
+    "ods": [16]
+  },
+  "descripcion": {
+    "id": "descripcion_indicador_3_3_B",
+    "texto": "Muestra el total de programas especiales de protección civil que se han elaborado en la entidad, para temáticas específicas, como por ejemplo: temporada de lluvias y huracanes, temporada vacacional, temporada invernal, entre otros."
+  },
+  "periodicidad": {
+    "id": "periodicidad_indicador_3_3_B",
+    "valor": "Anual"
+  },
+  "sentido_indicador": {
+    "id": "sentido_indicador_3_3_B",
+    "valor": "Ascendente"
+  },
+  "linea_base": {
+    "id": "linea_base_indicador_3_3_B",
+    "titulo": "2024",
+    "subtitulo": "4 programas"
+  },
+  "metas": [
+    {
+      "id": "meta_2028_indicador_3_3_B",
+      "titulo": "2028",
+      "subtitulo": "6 programas"
+    },
+    {
+      "id": "meta_2040_indicador_3_3_B",
+      "titulo": "2040",
+      "subtitulo": "8 programas"
+    }
+  ],
+  "fuente": {
+    "id": "fuente_3_3_B",
+    "organizaciones": [
+      "INEGI, Censo Nacional de Gobiernos Estatales 2024. Tabulados básicos"
+    ],
+    "url": "https://www.inegi.org.mx/programas/cnge/2024/"
+  }
+},
+
 ]
 
-export const dataIndicador20 = [  {
-    "indicador": {
-      "id": "indicador_4_1_A",
-      "nombre": "Porcentaje de Población en Situación de Pobreza"
-    },
-    "alineacion_PED": {
-      "id": "alineacion_PED_objetivo_4_1_A",
-      "objetivo_texto": "4.1 Impulsar una política de bienestar integral con una perspectiva multidimensional de la pobreza, para la mejora de la calidad de vida del pueblo."
-    },
-    "alineacion_plan_nacional": {
-      "id": "alineacion_PND_indicador_4_1_A",
-      "eje": "Eje 2. Desarrollo con Bienestar y Humanismo."
-    },
-    "alineacion_ODS": {
-      "id": "alineacion_ODS_indicador_4_1_A",
-      "ods": [1, 2, 3, 5, 10, 17]
-    },
-    "descripcion": {
-      "id": "descripcion_indicador_4_1_A",
-      "texto": "Mide la proporción de la población cuyo ingreso es inferior al valor de la línea de bienestar y que padece al menos una carencia social."
-    },
-    "periodicidad": {
-      "id": "periodicidad_indicador_4_1_A",
-      "valor": "Bienal"
-    },
-    "sentido_indicador": {
-      "id": "sentido_indicador_4_1_A",
-      "valor": "Descendente"
-    },
-    "linea_base": {
-      "id": "linea_base_indicador_4_1_A",
-      "titulo": "2022",
-      "subtitulo": "41%"
-    },
-    "metas": [
-      {
-        "id": "meta_2028_indicador_4_1_A",
-        "titulo": "2028",
-        "subtitulo": "37%"
-      },
-      {
-        "id": "meta_2040_indicador_4_1_A",
-        "titulo": "2040",
-        "subtitulo": "30%"
-      }
-    ],
-    "fuente": {
-      "id": "fuente_4_1_A",
-      "organizaciones": [
-        "Consejo Nacional de Evaluación de la Política de Desarrollo Social (CONEVAL)."
-      ],
-      "url": "https://www.coneval.org.mx/Medicion/MP/Documents/MMP_2022/Pobreza_multidimensional_2022.pdf"
-    }
+export const dataIndicador20 = [{
+  "indicador": {
+    "id": "indicador_4_1_A",
+    "nombre": "Porcentaje de Población en Situación de Pobreza"
   },
- 
+  "alineacion_PED": {
+    "id": "alineacion_PED_objetivo_4_1_A",
+    "objetivo_texto": "4.1 Impulsar una política de bienestar integral con una perspectiva multidimensional de la pobreza, para la mejora de la calidad de vida del pueblo."
+  },
+  "alineacion_plan_nacional": {
+    "id": "alineacion_PND_indicador_4_1_A",
+    "eje": "Eje 2. Desarrollo con Bienestar y Humanismo."
+  },
+  "alineacion_ODS": {
+    "id": "alineacion_ODS_indicador_4_1_A",
+    "ods": [1, 2, 3, 5, 10, 17]
+  },
+  "descripcion": {
+    "id": "descripcion_indicador_4_1_A",
+    "texto": "Mide la proporción de la población cuyo ingreso es inferior al valor de la línea de bienestar y que padece al menos una carencia social."
+  },
+  "periodicidad": {
+    "id": "periodicidad_indicador_4_1_A",
+    "valor": "Bienal"
+  },
+  "sentido_indicador": {
+    "id": "sentido_indicador_4_1_A",
+    "valor": "Descendente"
+  },
+  "linea_base": {
+    "id": "linea_base_indicador_4_1_A",
+    "titulo": "2022",
+    "subtitulo": "41%"
+  },
+  "metas": [
+    {
+      "id": "meta_2028_indicador_4_1_A",
+      "titulo": "2028",
+      "subtitulo": "37%"
+    },
+    {
+      "id": "meta_2040_indicador_4_1_A",
+      "titulo": "2040",
+      "subtitulo": "30%"
+    }
+  ],
+  "fuente": {
+    "id": "fuente_4_1_A",
+    "organizaciones": [
+      "Consejo Nacional de Evaluación de la Política de Desarrollo Social (CONEVAL)."
+    ],
+    "url": "https://www.coneval.org.mx/Medicion/MP/Documents/MMP_2022/Pobreza_multidimensional_2022.pdf"
+  }
+},
+
 ]
 
-export const dataIndicador21 = [  {
-    "indicador": {
-      "id": "indicador_4_1_B",
-      "nombre": "Porcentaje de Población en Situación de Pobreza extrema"
-    },
-    "alineacion_PED": {
-      "id": "alineacion_PED_objetivo_4_1_B",
-      "objetivo_texto": "4.1 Impulsar una política de bienestar integral con una perspectiva multidimensional de la pobreza, para la mejora de la calidad de vida del pueblo."
-    },
-    "alineacion_plan_nacional": {
-      "id": "alineacion_PND_indicador_4_1_B",
-      "eje": "Eje 2. Desarrollo con Bienestar y Humanismo."
-    },
-    "alineacion_ODS": {
-      "id": "alineacion_ODS_indicador_4_1_B",
-      "ods": [1, 2, 3, 5, 10, 17]
-    },
-    "descripcion": {
-      "id": "descripcion_indicador_4_1_B",
-      "texto": "Medida que identifica a las personas que viven con ingresos muy bajos, generalmente por debajo de un umbral de pobreza establecido."
-    },
-    "periodicidad": {
-      "id": "periodicidad_indicador_4_1_B",
-      "valor": "Bienal"
-    },
-    "sentido_indicador": {
-      "id": "sentido_indicador_4_1_B",
-      "valor": "Descendente"
-    },
-    "linea_base": {
-      "id": "linea_base_indicador_4_1_B",
-      "titulo": "2022",
-      "subtitulo": "6.8%"
-    },
-    "metas": [
-      {
-        "id": "meta_2028_indicador_4_1_B",
-        "titulo": "2028",
-        "subtitulo": "5.9%"
-      },
-      {
-        "id": "meta_2040_indicador_4_1_B",
-        "titulo": "2040",
-        "subtitulo": "5%"
-      }
-    ],
-    "fuente": {
-      "id": "fuente_4_1_B",
-      "organizaciones": [
-        "Consejo Nacional de Evaluación de la Política de Desarrollo Social (CONEVAL)."
-      ],
-      "url": "https://www.coneval.org.mx/Medicion/MP/Documents/MMP_2022/Pobreza_multidimensional_2022.pdf"
-    }
+export const dataIndicador21 = [{
+  "indicador": {
+    "id": "indicador_4_1_B",
+    "nombre": "Porcentaje de Población en Situación de Pobreza extrema"
   },
-  
+  "alineacion_PED": {
+    "id": "alineacion_PED_objetivo_4_1_B",
+    "objetivo_texto": "4.1 Impulsar una política de bienestar integral con una perspectiva multidimensional de la pobreza, para la mejora de la calidad de vida del pueblo."
+  },
+  "alineacion_plan_nacional": {
+    "id": "alineacion_PND_indicador_4_1_B",
+    "eje": "Eje 2. Desarrollo con Bienestar y Humanismo."
+  },
+  "alineacion_ODS": {
+    "id": "alineacion_ODS_indicador_4_1_B",
+    "ods": [1, 2, 3, 5, 10, 17]
+  },
+  "descripcion": {
+    "id": "descripcion_indicador_4_1_B",
+    "texto": "Medida que identifica a las personas que viven con ingresos muy bajos, generalmente por debajo de un umbral de pobreza establecido."
+  },
+  "periodicidad": {
+    "id": "periodicidad_indicador_4_1_B",
+    "valor": "Bienal"
+  },
+  "sentido_indicador": {
+    "id": "sentido_indicador_4_1_B",
+    "valor": "Descendente"
+  },
+  "linea_base": {
+    "id": "linea_base_indicador_4_1_B",
+    "titulo": "2022",
+    "subtitulo": "6.8%"
+  },
+  "metas": [
+    {
+      "id": "meta_2028_indicador_4_1_B",
+      "titulo": "2028",
+      "subtitulo": "5.9%"
+    },
+    {
+      "id": "meta_2040_indicador_4_1_B",
+      "titulo": "2040",
+      "subtitulo": "5%"
+    }
+  ],
+  "fuente": {
+    "id": "fuente_4_1_B",
+    "organizaciones": [
+      "Consejo Nacional de Evaluación de la Política de Desarrollo Social (CONEVAL)."
+    ],
+    "url": "https://www.coneval.org.mx/Medicion/MP/Documents/MMP_2022/Pobreza_multidimensional_2022.pdf"
+  }
+},
+
 ]
 
-export const dataIndicador22 = [  {
-    "indicador": {
-      "id": "indicador_4_2_A",
-      "nombre": "Carencia por acceso a los servicios de salud"
-    },
-    "alineacion_PED": {
-      "id": "alineacion_PED_objetivo_4_2_A",
-      "objetivo_texto": "4.2 Promover el bienestar de las personas, a través de la prevención, atención integral y acceso equitativo a los servicios de salud."
-    },
-    "alineacion_plan_nacional": {
-      "id": "alineacion_PND_indicador_4_2_A",
-      "eje": "Eje 2. Desarrollo con Bienestar y Humanismo."
-    },
-    "alineacion_ODS": {
-      "id": "alineacion_ODS_indicador_4_2_A",
-      "ods": [1, 2, 3, 5, 10, 17]
-    },
-    "descripcion": {
-      "id": "descripcion_indicador_4_2_A",
-      "texto": "Porcentaje de población que no cuente con adscripción o derecho a recibir servicios de salud en alguna institución."
-    },
-    "periodicidad": {
-      "id": "periodicidad_indicador_4_2_A",
-      "valor": "Bienal"
-    },
-    "sentido_indicador": {
-      "id": "sentido_indicador_4_2_A",
-      "valor": "Descendente"
-    },
-    "linea_base": {
-      "id": "linea_base_indicador_4_2_A",
-      "titulo": "2022",
-      "subtitulo": "50.4%"
-    },
-    "metas": [
-      {
-        "id": "meta_2028_indicador_4_2_A",
-        "titulo": "2028",
-        "subtitulo": "45%"
-      },
-      {
-        "id": "meta_2040_indicador_4_2_A",
-        "titulo": "2040",
-        "subtitulo": "35%"
-      }
-    ],
-    "fuente": {
-      "id": "fuente_4_2_A",
-      "organizaciones": [
-        "Consejo Nacional de Evaluación de la Política de Desarrollo Social (CONEVAL)"
-      ],
-      "url": "https://www.coneval.org.mx/Medicion/MP/Paginas/AE_pobreza_2022.aspx"
-    }
+export const dataIndicador22 = [{
+  "indicador": {
+    "id": "indicador_4_2_A",
+    "nombre": "Carencia por acceso a los servicios de salud"
   },
-  
+  "alineacion_PED": {
+    "id": "alineacion_PED_objetivo_4_2_A",
+    "objetivo_texto": "4.2 Promover el bienestar de las personas, a través de la prevención, atención integral y acceso equitativo a los servicios de salud."
+  },
+  "alineacion_plan_nacional": {
+    "id": "alineacion_PND_indicador_4_2_A",
+    "eje": "Eje 2. Desarrollo con Bienestar y Humanismo."
+  },
+  "alineacion_ODS": {
+    "id": "alineacion_ODS_indicador_4_2_A",
+    "ods": [1, 2, 3, 5, 10, 17]
+  },
+  "descripcion": {
+    "id": "descripcion_indicador_4_2_A",
+    "texto": "Porcentaje de población que no cuente con adscripción o derecho a recibir servicios de salud en alguna institución."
+  },
+  "periodicidad": {
+    "id": "periodicidad_indicador_4_2_A",
+    "valor": "Bienal"
+  },
+  "sentido_indicador": {
+    "id": "sentido_indicador_4_2_A",
+    "valor": "Descendente"
+  },
+  "linea_base": {
+    "id": "linea_base_indicador_4_2_A",
+    "titulo": "2022",
+    "subtitulo": "50.4%"
+  },
+  "metas": [
+    {
+      "id": "meta_2028_indicador_4_2_A",
+      "titulo": "2028",
+      "subtitulo": "45%"
+    },
+    {
+      "id": "meta_2040_indicador_4_2_A",
+      "titulo": "2040",
+      "subtitulo": "35%"
+    }
+  ],
+  "fuente": {
+    "id": "fuente_4_2_A",
+    "organizaciones": [
+      "Consejo Nacional de Evaluación de la Política de Desarrollo Social (CONEVAL)"
+    ],
+    "url": "https://www.coneval.org.mx/Medicion/MP/Paginas/AE_pobreza_2022.aspx"
+  }
+},
+
 ]
 
-export const dataIndicador23 = [  {
-    "indicador": {
-      "id": "indicador_4_2_B",
-      "nombre": "Razón de médicos en instituciones públicas de salud en contacto con el paciente por cada mil habitantes"
-    },
-    "alineacion_PED": {
-      "id": "alineacion_PED_objetivo_4_2_B",
-      "objetivo_texto": "4.2 Promover el bienestar de las personas, a través de la prevención, atención integral y acceso equitativo a los servicios de salud."
-    },
-    "alineacion_plan_nacional": {
-      "id": "alineacion_PND_indicador_4_2_B",
-      "eje": "Eje 2. Desarrollo con Bienestar y Humanismo."
-    },
-    "alineacion_ODS": {
-      "id": "alineacion_ODS_indicador_4_2_B",
-      "ods": [1, 2, 3, 5, 10, 17]
-    },
-    "descripcion": {
-      "id": "descripcion_indicador_4_2_B",
-      "texto": "Mide los médicos existentes en instituciones públicas de salud en contacto con el paciente por cada mil habitantes."
-    },
-    "periodicidad": {
-      "id": "periodicidad_indicador_4_2_B",
-      "valor": "Bienal"
-    },
-    "sentido_indicador": {
-      "id": "sentido_indicador_4_2_B",
-      "valor": "Ascendente"
-    },
-    "linea_base": {
-      "id": "linea_base_indicador_4_2_B",
-      "titulo": "2022",
-      "subtitulo": "1.76 médicos por cada 1000 habitantes"
-    },
-    "metas": [
-      {
-        "id": "meta_2028_indicador_4_2_B",
-        "titulo": "2028",
-        "subtitulo": "2 médicos por cada 1000 habitantes"
-      },
-      {
-        "id": "meta_2040_indicador_4_2_B",
-        "titulo": "2040",
-        "subtitulo": "2.5 médicos por cada 1000 habitantes"
-      }
-    ],
-    "fuente": {
-      "id": "fuente_4_2_B",
-      "organizaciones": [
-        "CONEVAL. (Consejo Nacional de Evaluación de la Política de Desarrollo Social)."
-      ],
-      "url": "https://www.inegi.org.mx/app/estatal/?ag=07000013#grafica"
-    }
+export const dataIndicador23 = [{
+  "indicador": {
+    "id": "indicador_4_2_B",
+    "nombre": "Razón de médicos en instituciones públicas de salud en contacto con el paciente por cada mil habitantes"
   },
-  
-]
+  "alineacion_PED": {
+    "id": "alineacion_PED_objetivo_4_2_B",
+    "objetivo_texto": "4.2 Promover el bienestar de las personas, a través de la prevención, atención integral y acceso equitativo a los servicios de salud."
+  },
+  "alineacion_plan_nacional": {
+    "id": "alineacion_PND_indicador_4_2_B",
+    "eje": "Eje 2. Desarrollo con Bienestar y Humanismo."
+  },
+  "alineacion_ODS": {
+    "id": "alineacion_ODS_indicador_4_2_B",
+    "ods": [1, 2, 3, 5, 10, 17]
+  },
+  "descripcion": {
+    "id": "descripcion_indicador_4_2_B",
+    "texto": "Mide los médicos existentes en instituciones públicas de salud en contacto con el paciente por cada mil habitantes."
+  },
+  "periodicidad": {
+    "id": "periodicidad_indicador_4_2_B",
+    "valor": "Bienal"
+  },
+  "sentido_indicador": {
+    "id": "sentido_indicador_4_2_B",
+    "valor": "Ascendente"
+  },
+  "linea_base": {
+    "id": "linea_base_indicador_4_2_B",
+    "titulo": "2022",
+    "subtitulo": "1.76 médicos por cada 1000 habitantes"
+  },
+  "metas": [
+    {
+      "id": "meta_2028_indicador_4_2_B",
+      "titulo": "2028",
+      "subtitulo": "2 médicos por cada 1000 habitantes"
+    },
+    {
+      "id": "meta_2040_indicador_4_2_B",
+      "titulo": "2040",
+      "subtitulo": "2.5 médicos por cada 1000 habitantes"
+    }
+  ],
+  "fuente": {
+    "id": "fuente_4_2_B",
+    "organizaciones": [
+      "CONEVAL. (Consejo Nacional de Evaluación de la Política de Desarrollo Social)."
+    ],
+    "url": "https://www.inegi.org.mx/app/estatal/?ag=07000013#grafica"
+  }
+},
 
+]
 
 export const dataIndicador24 = [
   {
@@ -1488,63 +1479,62 @@ export const dataIndicador25 = [
   }
 ]
 
-export const dataIndicador26 = [  {
-    "indicador": {
-      "id": "indicador_4_3_C",
-      "nombre": "Porcentaje de población analfabeta que habla una lengua indígena"
-    },
-    "alineacion_PED": {
-      "id": "alineacion_PED_objetivo_4_3_C",
-      "objetivo_texto": "4.3 Impulsar el desarrollo sostenible de los pueblos y comunidades indígenas, preservando su identidad y valores comunitarios."
-    },
-    "alineacion_plan_nacional": {
-      "id": "alineacion_PND_indicador_4_3_C",
-      "eje": "Eje transversal 3. Derechos de las Comunidades Indígenas y Afromexicanas."
-    },
-    "alineacion_ODS": {
-      "id": "alineacion_ODS_indicador_4_3_C",
-      "ods": [1, 4, 5, 10, 17]
-    },
-    "descripcion": {
-      "id": "descripcion_indicador_4_3_C",
-      "texto": "Mide el porcentaje de la población de 15 años y más que habla una lengua indígena y que no sabe leer ni escribir."
-    },
-    "periodicidad": {
-      "id": "periodicidad_indicador_4_3_C",
-      "valor": "Lustro"
-    },
-    "sentido_indicador": {
-      "id": "sentido_indicador_4_3_C",
-      "valor": "Descendente"
-    },
-    "linea_base": {
-      "id": "linea_base_indicador_4_3_C",
-      "titulo": "2020",
-      "subtitulo": "21.4%"
-    },
-    "metas": [
-      {
-        "id": "meta_2028_indicador_4_3_C",
-        "titulo": "2028",
-        "subtitulo": "20.0%"
-      },
-      {
-        "id": "meta_2040_indicador_4_3_C",
-        "titulo": "2040",
-        "subtitulo": "15.0%"
-      }
-    ],
-    "fuente": {
-      "id": "fuente_4_3_C",
-      "organizaciones": [
-        "INEGI, Censo de Población y Vivienda 2020. Tabulados del Cuestionario Básico https://www.inegi.org.mx/programas/ccpv/2020/#tabulados"
-      ],
-      "url": "https://www.inegi.org.mx/programas/ccpv/2020/#tabulados"
-    }
+export const dataIndicador26 = [{
+  "indicador": {
+    "id": "indicador_4_3_C",
+    "nombre": "Porcentaje de población analfabeta que habla una lengua indígena"
   },
-  
-]
+  "alineacion_PED": {
+    "id": "alineacion_PED_objetivo_4_3_C",
+    "objetivo_texto": "4.3 Impulsar el desarrollo sostenible de los pueblos y comunidades indígenas, preservando su identidad y valores comunitarios."
+  },
+  "alineacion_plan_nacional": {
+    "id": "alineacion_PND_indicador_4_3_C",
+    "eje": "Eje transversal 3. Derechos de las Comunidades Indígenas y Afromexicanas."
+  },
+  "alineacion_ODS": {
+    "id": "alineacion_ODS_indicador_4_3_C",
+    "ods": [1, 4, 5, 10, 17]
+  },
+  "descripcion": {
+    "id": "descripcion_indicador_4_3_C",
+    "texto": "Mide el porcentaje de la población de 15 años y más que habla una lengua indígena y que no sabe leer ni escribir."
+  },
+  "periodicidad": {
+    "id": "periodicidad_indicador_4_3_C",
+    "valor": "Lustro"
+  },
+  "sentido_indicador": {
+    "id": "sentido_indicador_4_3_C",
+    "valor": "Descendente"
+  },
+  "linea_base": {
+    "id": "linea_base_indicador_4_3_C",
+    "titulo": "2020",
+    "subtitulo": "21.4%"
+  },
+  "metas": [
+    {
+      "id": "meta_2028_indicador_4_3_C",
+      "titulo": "2028",
+      "subtitulo": "20.0%"
+    },
+    {
+      "id": "meta_2040_indicador_4_3_C",
+      "titulo": "2040",
+      "subtitulo": "15.0%"
+    }
+  ],
+  "fuente": {
+    "id": "fuente_4_3_C",
+    "organizaciones": [
+      "INEGI, Censo de Población y Vivienda 2020. Tabulados del Cuestionario Básico https://www.inegi.org.mx/programas/ccpv/2020/#tabulados"
+    ],
+    "url": "https://www.inegi.org.mx/programas/ccpv/2020/#tabulados"
+  }
+},
 
+]
 
 export const dataIndicador27 = [
   {
@@ -2002,7 +1992,6 @@ export const dataIndicador34 = [
   }
 ]
 
-
 export const dataIndicador35 = [
   {
     "indicador": {
@@ -2060,911 +2049,909 @@ export const dataIndicador35 = [
   }
 ]
 
-
 export const dataIndicador36 = [{
-    "indicador": {
-      "id": "indicador_6_2_C",
-      "nombre": "Población ocupada de 15 años y más"
+  "indicador": {
+    "id": "indicador_6_2_C",
+    "nombre": "Población ocupada de 15 años y más"
+  },
+  "alineacion_PED": {
+    "id": "alineacion_PED_objetivo_6_2_C",
+    "objetivo_texto": "6.2. Brindar oportunidades para el desarrollo de las personas, a través de la capacitación y vinculación laboral, fomentando el empleo digno y asegurando el ejercicio pleno de sus derechos."
+  },
+  "alineacion_plan_nacional": {
+    "id": "alineacion_PND_indicador_6_2_C",
+    "eje": "Eje 3. Economía Moral y Trabajo."
+  },
+  "alineacion_ODS": {
+    "id": "alineacion_ODS_indicador_6_2_C",
+    "ods": [8, 9, 10, 11, 12, 13, 14, 15, 17]
+  },
+  "descripcion": {
+    "id": "descripcion_indicador_6_2_C",
+    "texto": "Mide la cantidad de población de 15 años y más ocupada en la entidad."
+  },
+  "periodicidad": {
+    "id": "periodicidad_indicador_6_2_C",
+    "valor": "Anual"
+  },
+  "sentido_indicador": {
+    "id": "sentido_indicador_6_2_C",
+    "valor": "Ascendente"
+  },
+  "linea_base": {
+    "id": "linea_base_indicador_6_2_C",
+    "titulo": "4to. Trimestre 2024",
+    "subtitulo": "1,467,580 personas"
+  },
+  "metas": [
+    {
+      "id": "meta_2028_indicador_6_2_C",
+      "titulo": "2028",
+      "subtitulo": "1,600,000 personas"
     },
-    "alineacion_PED": {
-      "id": "alineacion_PED_objetivo_6_2_C",
-      "objetivo_texto": "6.2. Brindar oportunidades para el desarrollo de las personas, a través de la capacitación y vinculación laboral, fomentando el empleo digno y asegurando el ejercicio pleno de sus derechos."
-    },
-    "alineacion_plan_nacional": {
-      "id": "alineacion_PND_indicador_6_2_C",
-      "eje": "Eje 3. Economía Moral y Trabajo."
-    },
-    "alineacion_ODS": {
-      "id": "alineacion_ODS_indicador_6_2_C",
-      "ods": [8, 9, 10, 11, 12, 13, 14, 15, 17]
-    },
-    "descripcion": {
-      "id": "descripcion_indicador_6_2_C",
-      "texto": "Mide la cantidad de población de 15 años y más ocupada en la entidad."
-    },
-    "periodicidad": {
-      "id": "periodicidad_indicador_6_2_C",
-      "valor": "Anual"
-    },
-    "sentido_indicador": {
-      "id": "sentido_indicador_6_2_C",
-      "valor": "Ascendente"
-    },
-    "linea_base": {
-      "id": "linea_base_indicador_6_2_C",
-      "titulo": "4to. Trimestre 2024",
-      "subtitulo": "1,467,580 personas"
-    },
-    "metas": [
-      {
-        "id": "meta_2028_indicador_6_2_C",
-        "titulo": "2028",
-        "subtitulo": "1,600,000 personas"
-      },
-      {
-        "id": "meta_2040_indicador_6_2_C",
-        "titulo": "2040",
-        "subtitulo": "2,000,000 personas"
-      }
-    ],
-    "fuente": {
-      "id": "fuente_6_2_C",
-      "organizaciones": [
-        "INEGI, Encuesta Nacional de Ocupación y Empleo (ENOE)."
-      ],
-      "url": "https://www.inegi.org.mx/programas/enoe/15ymas/tabulados/infolaboral.html?pxq=BISE_BISE_O3vRvROl_240322084032_c655c48c-47e6-40fd-a45c-7fec5427251f"
+    {
+      "id": "meta_2040_indicador_6_2_C",
+      "titulo": "2040",
+      "subtitulo": "2,000,000 personas"
     }
+  ],
+  "fuente": {
+    "id": "fuente_6_2_C",
+    "organizaciones": [
+      "INEGI, Encuesta Nacional de Ocupación y Empleo (ENOE)."
+    ],
+    "url": "https://www.inegi.org.mx/programas/enoe/15ymas/tabulados/infolaboral.html?pxq=BISE_BISE_O3vRvROl_240322084032_c655c48c-47e6-40fd-a45c-7fec5427251f"
   }
+}
 ]
 
 export const dataIndicador37 = [{
-    "indicador": {
-      "id": "indicador_7_1_A",
-      "nombre": "Número de recursos culturales"
+  "indicador": {
+    "id": "indicador_7_1_A",
+    "nombre": "Número de recursos culturales"
+  },
+  "alineacion_PED": {
+    "id": "alineacion_PED_objetivo_7_1_A",
+    "objetivo_texto": "7.1 Fortalecer la preservación, difusión y aprovechamiento del patrimonio cultural y artístico, promoviendo las tradiciones, riquezas y diversidad de la entidad."
+  },
+  "alineacion_plan_nacional": {
+    "id": "alineacion_PND_indicador_7_1_A",
+    "eje": "Eje 2. Desarrollo con Bienestar y Humanismo."
+  },
+  "alineacion_ODS": {
+    "id": "alineacion_ODS_indicador_7_1_A",
+    "ods": [8, 9, 10, 11, 12, 13, 14, 15, 17]
+  },
+  "descripcion": {
+    "id": "descripcion_indicador_7_1_A",
+    "texto": "Mide el número de espacios artísticos y culturales (Auditorios bibliotecas, centros culturales, Galerías, Librerías, Museos, Teatros y Universidades), en la entidad, registrados por la Secretaría de Cultura."
+  },
+  "periodicidad": {
+    "id": "periodicidad_indicador_7_1_A",
+    "valor": "Anual"
+  },
+  "sentido_indicador": {
+    "id": "sentido_indicador_7_1_A",
+    "valor": "Ascendente"
+  },
+  "linea_base": {
+    "id": "linea_base_indicador_7_1_A",
+    "titulo": "2023",
+    "subtitulo": "514 espacios"
+  },
+  "metas": [
+    {
+      "id": "meta_2028_indicador_7_1_A",
+      "titulo": "2028",
+      "subtitulo": "518 espacios"
     },
-    "alineacion_PED": {
-      "id": "alineacion_PED_objetivo_7_1_A",
-      "objetivo_texto": "7.1 Fortalecer la preservación, difusión y aprovechamiento del patrimonio cultural y artístico, promoviendo las tradiciones, riquezas y diversidad de la entidad."
-    },
-    "alineacion_plan_nacional": {
-      "id": "alineacion_PND_indicador_7_1_A",
-      "eje": "Eje 2. Desarrollo con Bienestar y Humanismo."
-    },
-    "alineacion_ODS": {
-      "id": "alineacion_ODS_indicador_7_1_A",
-      "ods": [8, 9, 10, 11, 12, 13, 14, 15, 17]
-    },
-    "descripcion": {
-      "id": "descripcion_indicador_7_1_A",
-      "texto": "Mide el número de espacios artísticos y culturales (Auditorios bibliotecas, centros culturales, Galerías, Librerías, Museos, Teatros y Universidades), en la entidad, registrados por la Secretaría de Cultura."
-    },
-    "periodicidad": {
-      "id": "periodicidad_indicador_7_1_A",
-      "valor": "Anual"
-    },
-    "sentido_indicador": {
-      "id": "sentido_indicador_7_1_A",
-      "valor": "Ascendente"
-    },
-    "linea_base": {
-      "id": "linea_base_indicador_7_1_A",
-      "titulo": "2023",
-      "subtitulo": "514 espacios"
-    },
-    "metas": [
-      {
-        "id": "meta_2028_indicador_7_1_A",
-        "titulo": "2028",
-        "subtitulo": "518 espacios"
-      },
-      {
-        "id": "meta_2040_indicador_7_1_A",
-        "titulo": "2040",
-        "subtitulo": "525 espacios"
-      }
-    ],
-    "fuente": {
-      "id": "fuente_7_1_A",
-      "organizaciones": [
-        "INEGI. (Instituto Nacional de Estadística y Geografía). México en Cifras/Tabulados/De Integración 2024."
-      ],
-      "url": "https://www.inegi.org.mx/app/areasgeograficas/#collapse-TabuladosCuadro7.4.xls"
+    {
+      "id": "meta_2040_indicador_7_1_A",
+      "titulo": "2040",
+      "subtitulo": "525 espacios"
     }
+  ],
+  "fuente": {
+    "id": "fuente_7_1_A",
+    "organizaciones": [
+      "INEGI. (Instituto Nacional de Estadística y Geografía). México en Cifras/Tabulados/De Integración 2024."
+    ],
+    "url": "https://www.inegi.org.mx/app/areasgeograficas/#collapse-TabuladosCuadro7.4.xls"
   }
+}
 ]
 
 export const dataIndicador38 = [{
-    "indicador": {
-      "id": "indicador_7_1_B",
-      "nombre": "Valor Agregado Censal Bruto de la cultura en la entidad"
+  "indicador": {
+    "id": "indicador_7_1_B",
+    "nombre": "Valor Agregado Censal Bruto de la cultura en la entidad"
+  },
+  "alineacion_PED": {
+    "id": "alineacion_PED_objetivo_7_1_B",
+    "objetivo_texto": "7.1 Fortalecer la preservación, difusión y aprovechamiento del patrimonio cultural y artístico, promoviendo las tradiciones, riquezas y diversidad de la entidad."
+  },
+  "alineacion_plan_nacional": {
+    "id": "alineacion_PND_indicador_7_1_B",
+    "eje": "Eje 2. Desarrollo con Bienestar y Humanismo."
+  },
+  "alineacion_ODS": {
+    "id": "alineacion_ODS_indicador_7_1_B",
+    "ods": [8, 9, 10, 11, 12, 13, 14, 15, 17]
+  },
+  "descripcion": {
+    "id": "descripcion_indicador_7_1_B",
+    "texto": "Mide el Valor Agregado Censal Bruto (VACB) en millones de pesos corrientes de la Cuenta Satélite de la Cultura (CSC) en la entidad."
+  },
+  "periodicidad": {
+    "id": "periodicidad_indicador_7_1_B",
+    "valor": "Anual"
+  },
+  "sentido_indicador": {
+    "id": "sentido_indicador_7_1_B",
+    "valor": "Ascendente"
+  },
+  "linea_base": {
+    "id": "linea_base_indicador_7_1_B",
+    "titulo": "2023",
+    "subtitulo": "529,928 MDP"
+  },
+  "metas": [
+    {
+      "id": "meta_2028_indicador_7_1_B",
+      "titulo": "2028",
+      "subtitulo": "550,000 MDP"
     },
-    "alineacion_PED": {
-      "id": "alineacion_PED_objetivo_7_1_B",
-      "objetivo_texto": "7.1 Fortalecer la preservación, difusión y aprovechamiento del patrimonio cultural y artístico, promoviendo las tradiciones, riquezas y diversidad de la entidad."
-    },
-    "alineacion_plan_nacional": {
-      "id": "alineacion_PND_indicador_7_1_B",
-      "eje": "Eje 2. Desarrollo con Bienestar y Humanismo."
-    },
-    "alineacion_ODS": {
-      "id": "alineacion_ODS_indicador_7_1_B",
-      "ods": [8, 9, 10, 11, 12, 13, 14, 15, 17]
-    },
-    "descripcion": {
-      "id": "descripcion_indicador_7_1_B",
-      "texto": "Mide el Valor Agregado Censal Bruto (VACB) en millones de pesos corrientes de la Cuenta Satélite de la Cultura (CSC) en la entidad."
-    },
-    "periodicidad": {
-      "id": "periodicidad_indicador_7_1_B",
-      "valor": "Anual"
-    },
-    "sentido_indicador": {
-      "id": "sentido_indicador_7_1_B",
-      "valor": "Ascendente"
-    },
-    "linea_base": {
-      "id": "linea_base_indicador_7_1_B",
-      "titulo": "2023",
-      "subtitulo": "529,928 MDP"
-    },
-    "metas": [
-      {
-        "id": "meta_2028_indicador_7_1_B",
-        "titulo": "2028",
-        "subtitulo": "550,000 MDP"
-      },
-      {
-        "id": "meta_2040_indicador_7_1_B",
-        "titulo": "2040",
-        "subtitulo": "600,000 MDP"
-      }
-    ],
-    "fuente": {
-      "id": "fuente_7_1_B",
-      "organizaciones": [
-        "INEGI. (Instituto Nacional de Estadística y Geografía)."
-      ],
-      "url": "https://www.inegi.org.mx/app/buscador/default.html?q=cuenta+sat%C3%A9lite+de+la+culturaCSM_90.xls"
+    {
+      "id": "meta_2040_indicador_7_1_B",
+      "titulo": "2040",
+      "subtitulo": "600,000 MDP"
     }
+  ],
+  "fuente": {
+    "id": "fuente_7_1_B",
+    "organizaciones": [
+      "INEGI. (Instituto Nacional de Estadística y Geografía)."
+    ],
+    "url": "https://www.inegi.org.mx/app/buscador/default.html?q=cuenta+sat%C3%A9lite+de+la+culturaCSM_90.xls"
   }
+}
 ]
 
 export const dataIndicador39 = [{
-    "indicador": {
-      "id": "indicador_7_2_A",
-      "nombre": "PIB Turístico Estatal"
+  "indicador": {
+    "id": "indicador_7_2_A",
+    "nombre": "PIB Turístico Estatal"
+  },
+  "alineacion_PED": {
+    "id": "alineacion_PED_objetivo_7_2_A",
+    "objetivo_texto": "7.2. Promover el turismo sostenible mediante el aprovechamiento responsable del patrimonio cultural, natural y atractivos convirtiendo a la entidad en un destino referente nacional e internacional."
+  },
+  "alineacion_plan_nacional": {
+    "id": "alineacion_PND_indicador_7_2_A",
+    "eje": "Eje 2. Desarrollo con Bienestar y Humanismo."
+  },
+  "alineacion_ODS": {
+    "id": "alineacion_ODS_indicador_7_2_A",
+    "ods": [8, 9, 10, 11, 12, 13, 14, 15, 17]
+  },
+  "descripcion": {
+    "id": "descripcion_indicador_7_2_A",
+    "texto": "Mide el PIB Turístico Estatal en Millones De Pesos (MDP) a precios de 2018."
+  },
+  "periodicidad": {
+    "id": "periodicidad_indicador_7_2_A",
+    "valor": "Bienal"
+  },
+  "sentido_indicador": {
+    "id": "sentido_indicador_7_2_A",
+    "valor": "Ascendente"
+  },
+  "linea_base": {
+    "id": "linea_base_indicador_7_2_A",
+    "titulo": "2023",
+    "subtitulo": "32,463 MDP"
+  },
+  "metas": [
+    {
+      "id": "meta_2028_indicador_7_2_A",
+      "titulo": "2028",
+      "subtitulo": "40,000 MDP"
     },
-    "alineacion_PED": {
-      "id": "alineacion_PED_objetivo_7_2_A",
-      "objetivo_texto": "7.2. Promover el turismo sostenible mediante el aprovechamiento responsable del patrimonio cultural, natural y atractivos convirtiendo a la entidad en un destino referente nacional e internacional."
-    },
-    "alineacion_plan_nacional": {
-      "id": "alineacion_PND_indicador_7_2_A",
-      "eje": "Eje 2. Desarrollo con Bienestar y Humanismo."
-    },
-    "alineacion_ODS": {
-      "id": "alineacion_ODS_indicador_7_2_A",
-      "ods": [8, 9, 10, 11, 12, 13, 14, 15, 17]
-    },
-    "descripcion": {
-      "id": "descripcion_indicador_7_2_A",
-      "texto": "Mide el PIB Turístico Estatal en Millones De Pesos (MDP) a precios de 2018."
-    },
-    "periodicidad": {
-      "id": "periodicidad_indicador_7_2_A",
-      "valor": "Bienal"
-    },
-    "sentido_indicador": {
-      "id": "sentido_indicador_7_2_A",
-      "valor": "Ascendente"
-    },
-    "linea_base": {
-      "id": "linea_base_indicador_7_2_A",
-      "titulo": "2023",
-      "subtitulo": "32,463 MDP"
-    },
-    "metas": [
-      {
-        "id": "meta_2028_indicador_7_2_A",
-        "titulo": "2028",
-        "subtitulo": "40,000 MDP"
-      },
-      {
-        "id": "meta_2040_indicador_7_2_A",
-        "titulo": "2040",
-        "subtitulo": "60,000 MDP"
-      }
-    ],
-    "fuente": {
-      "id": "fuente_7_2_A",
-      "organizaciones": [
-        "DATATUR. (Sistema Nacional de Información Estadística del Sector Turismo de México)."
-      ],
-      "url": "https://datatur.sectur.gob.mx/SitePages/PibTuristicoEstatalMunicipal.aspx"
+    {
+      "id": "meta_2040_indicador_7_2_A",
+      "titulo": "2040",
+      "subtitulo": "60,000 MDP"
     }
+  ],
+  "fuente": {
+    "id": "fuente_7_2_A",
+    "organizaciones": [
+      "DATATUR. (Sistema Nacional de Información Estadística del Sector Turismo de México)."
+    ],
+    "url": "https://datatur.sectur.gob.mx/SitePages/PibTuristicoEstatalMunicipal.aspx"
   }
+}
 ]
 
 export const dataIndicador40 = [{
-    "indicador": {
-      "id": "indicador_7_2_B",
-      "nombre": "Participación porcentual del turismo en la economía estatal"
+  "indicador": {
+    "id": "indicador_7_2_B",
+    "nombre": "Participación porcentual del turismo en la economía estatal"
+  },
+  "alineacion_PED": {
+    "id": "alineacion_PED_objetivo_7_2_B",
+    "objetivo_texto": "7.2. Promover el turismo sostenible mediante el aprovechamiento responsable del patrimonio cultural, natural y atractivos, convirtiendo a la entidad en un destino referente nacional e internacional."
+  },
+  "alineacion_plan_nacional": {
+    "id": "alineacion_PND_indicador_7_2_B",
+    "eje": "Eje 3. Economía Moral y Trabajo."
+  },
+  "alineacion_ODS": {
+    "id": "alineacion_ODS_indicador_7_2_B",
+    "ods": [8, 9, 10, 11, 12, 13, 14, 15, 17]
+  },
+  "descripcion": {
+    "id": "descripcion_indicador_7_2_B",
+    "texto": "Mide el porcentaje de participación que tiene el sector turístico en el PIB estatal."
+  },
+  "periodicidad": {
+    "id": "periodicidad_indicador_7_2_B",
+    "valor": "Bienal"
+  },
+  "sentido_indicador": {
+    "id": "sentido_indicador_7_2_B",
+    "valor": "Ascendente"
+  },
+  "linea_base": {
+    "id": "linea_base_indicador_7_2_B",
+    "titulo": "2023",
+    "subtitulo": "8.0%"
+  },
+  "metas": [
+    {
+      "id": "meta_2028_indicador_7_2_B",
+      "titulo": "2028",
+      "subtitulo": "8.4%"
     },
-    "alineacion_PED": {
-      "id": "alineacion_PED_objetivo_7_2_B",
-      "objetivo_texto": "7.2. Promover el turismo sostenible mediante el aprovechamiento responsable del patrimonio cultural, natural y atractivos, convirtiendo a la entidad en un destino referente nacional e internacional."
-    },
-    "alineacion_plan_nacional": {
-      "id": "alineacion_PND_indicador_7_2_B",
-      "eje": "Eje 3. Economía Moral y Trabajo."
-    },
-    "alineacion_ODS": {
-      "id": "alineacion_ODS_indicador_7_2_B",
-      "ods": [8, 9, 10, 11, 12, 13, 14, 15, 17]
-    },
-    "descripcion": {
-      "id": "descripcion_indicador_7_2_B",
-      "texto": "Mide el porcentaje de participación que tiene el sector turístico en el PIB estatal."
-    },
-    "periodicidad": {
-      "id": "periodicidad_indicador_7_2_B",
-      "valor": "Bienal"
-    },
-    "sentido_indicador": {
-      "id": "sentido_indicador_7_2_B",
-      "valor": "Ascendente"
-    },
-    "linea_base": {
-      "id": "linea_base_indicador_7_2_B",
-      "titulo": "2023",
-      "subtitulo": "8.0%"
-    },
-    "metas": [
-      {
-        "id": "meta_2028_indicador_7_2_B",
-        "titulo": "2028",
-        "subtitulo": "8.4%"
-      },
-      {
-        "id": "meta_2040_indicador_7_2_B",
-        "titulo": "2040",
-        "subtitulo": "9.5%"
-      }
-    ],
-    "fuente": {
-      "id": "fuente_7_2_B",
-      "organizaciones": [
-        "DATATUR. (Sistema Nacional de Información Estadística del Sector Turismo de México)."
-      ],
-      "url": "https://datatur.sectur.gob.mx/SitePages/PibTuristicoEstatalMunicipal.aspx"
+    {
+      "id": "meta_2040_indicador_7_2_B",
+      "titulo": "2040",
+      "subtitulo": "9.5%"
     }
+  ],
+  "fuente": {
+    "id": "fuente_7_2_B",
+    "organizaciones": [
+      "DATATUR. (Sistema Nacional de Información Estadística del Sector Turismo de México)."
+    ],
+    "url": "https://datatur.sectur.gob.mx/SitePages/PibTuristicoEstatalMunicipal.aspx"
   }
+}
 ]
 
-
 export const dataIndicador41 = [{
-    "indicador": {
-      "id": "indicador_8_1_A",
-      "nombre": "Porcentaje de población con carencia por calidad y espacios de vivienda"
+  "indicador": {
+    "id": "indicador_8_1_A",
+    "nombre": "Porcentaje de población con carencia por calidad y espacios de vivienda"
+  },
+  "alineacion_PED": {
+    "id": "alineacion_PED_objetivo_8_1_A",
+    "objetivo_texto": "8.1 Fortalecer la infraestructura pública y equipamiento urbano , promoviendo el acceso equitativo a servicios de calidad y el desarrollo de mejores ciudades y comunidades rurales."
+  },
+  "alineacion_plan_nacional": {
+    "id": "alineacion_PND_indicador_8_1_A",
+    "eje": "Eje 2. Desarrollo con Bienestar y Humanismo."
+  },
+  "alineacion_ODS": {
+    "id": "alineacion_ODS_indicador_8_1_A",
+    "ods": [7, 9, 11, 13, 15, 17]
+  },
+  "descripcion": {
+    "id": "descripcion_indicador_8_1_A",
+    "texto": "Mide el porcentaje de población con carencia por acceso a los servicios básicos en la vivienda."
+  },
+  "periodicidad": {
+    "id": "periodicidad_indicador_8_1_A",
+    "valor": "Bienal"
+  },
+  "sentido_indicador": {
+    "id": "sentido_indicador_8_1_A",
+    "valor": "Descendente"
+  },
+  "linea_base": {
+    "id": "linea_base_indicador_8_1_A",
+    "titulo": "2022",
+    "subtitulo": "6.40%"
+  },
+  "metas": [
+    {
+      "id": "meta_2028_indicador_8_1_A",
+      "titulo": "2028",
+      "subtitulo": "5.68%"
     },
-    "alineacion_PED": {
-      "id": "alineacion_PED_objetivo_8_1_A",
-      "objetivo_texto": "8.1 Fortalecer la infraestructura pública y equipamiento urbano , promoviendo el acceso equitativo a servicios de calidad y el desarrollo de mejores ciudades y comunidades rurales."
-    },
-    "alineacion_plan_nacional": {
-      "id": "alineacion_PND_indicador_8_1_A",
-      "eje": "Eje 2. Desarrollo con Bienestar y Humanismo."
-    },
-    "alineacion_ODS": {
-      "id": "alineacion_ODS_indicador_8_1_A",
-      "ods": [7, 9, 11, 13, 15, 17]
-    },
-    "descripcion": {
-      "id": "descripcion_indicador_8_1_A",
-      "texto": "Mide el porcentaje de población con carencia por acceso a los servicios básicos en la vivienda."
-    },
-    "periodicidad": {
-      "id": "periodicidad_indicador_8_1_A",
-      "valor": "Bienal"
-    },
-    "sentido_indicador": {
-      "id": "sentido_indicador_8_1_A",
-      "valor": "Descendente"
-    },
-    "linea_base": {
-      "id": "linea_base_indicador_8_1_A",
-      "titulo": "2022",
-      "subtitulo": "6.40%"
-    },
-    "metas": [
-      {
-        "id": "meta_2028_indicador_8_1_A",
-        "titulo": "2028",
-        "subtitulo": "5.68%"
-      },
-      {
-        "id": "meta_2040_indicador_8_1_A",
-        "titulo": "2040",
-        "subtitulo": "5.48%"
-      }
-    ],
-    "fuente": {
-      "id": "fuente_8_1_A",
-      "organizaciones": [
-        "CONEVAL. (Consejo Nacional de Evaluación de la Política de Desarrollo Social)."
-      ],
-      "url": "https://www.coneval.org.mx/Medicion/MP/Paginas/AE_pobreza_2022.aspx"
+    {
+      "id": "meta_2040_indicador_8_1_A",
+      "titulo": "2040",
+      "subtitulo": "5.48%"
     }
+  ],
+  "fuente": {
+    "id": "fuente_8_1_A",
+    "organizaciones": [
+      "CONEVAL. (Consejo Nacional de Evaluación de la Política de Desarrollo Social)."
+    ],
+    "url": "https://www.coneval.org.mx/Medicion/MP/Paginas/AE_pobreza_2022.aspx"
   }
+}
 ]
 
 export const dataIndicador42 = [{
-    "indicador": {
-      "id": "indicador_8_1_B",
-      "nombre": "Longitud de la red de caminos rurales revestidos por pavimentar"
+  "indicador": {
+    "id": "indicador_8_1_B",
+    "nombre": "Longitud de la red de caminos rurales revestidos por pavimentar"
+  },
+  "alineacion_PED": {
+    "id": "alineacion_PED_objetivo_8_1_B",
+    "objetivo_texto": "8.1 Fortalecer la infraestructura pública y equipamiento urbano, promoviendo el acceso equitativo a servicios de calidad y el desarrollo de mejores ciudades y comunidades rurales."
+  },
+  "alineacion_plan_nacional": {
+    "id": "alineacion_PND_indicador_8_1_B",
+    "eje": "Eje 3. Economía Moral y Trabajo."
+  },
+  "alineacion_ODS": {
+    "id": "alineacion_ODS_indicador_8_1_B",
+    "ods": [7, 9, 11, 13, 15, 17]
+  },
+  "descripcion": {
+    "id": "descripcion_indicador_8_1_B",
+    "texto": "Longitud de la red de caminos rurales revestidos por pavimentar."
+  },
+  "periodicidad": {
+    "id": "periodicidad_indicador_8_1_B",
+    "valor": "Anual"
+  },
+  "sentido_indicador": {
+    "id": "sentido_indicador_8_1_B",
+    "valor": "Descendente"
+  },
+  "linea_base": {
+    "id": "linea_base_indicador_8_1_B",
+    "titulo": "2023",
+    "subtitulo": "5,290 kilómetros"
+  },
+  "metas": [
+    {
+      "id": "meta_2028_indicador_8_1_B",
+      "titulo": "2028",
+      "subtitulo": "5,000 kilómetros"
     },
-    "alineacion_PED": {
-      "id": "alineacion_PED_objetivo_8_1_B",
-      "objetivo_texto": "8.1 Fortalecer la infraestructura pública y equipamiento urbano, promoviendo el acceso equitativo a servicios de calidad y el desarrollo de mejores ciudades y comunidades rurales."
-    },
-    "alineacion_plan_nacional": {
-      "id": "alineacion_PND_indicador_8_1_B",
-      "eje": "Eje 3. Economía Moral y Trabajo."
-    },
-    "alineacion_ODS": {
-      "id": "alineacion_ODS_indicador_8_1_B",
-      "ods": [7, 9, 11, 13, 15, 17]
-    },
-    "descripcion": {
-      "id": "descripcion_indicador_8_1_B",
-      "texto": "Longitud de la red de caminos rurales revestidos por pavimentar."
-    },
-    "periodicidad": {
-      "id": "periodicidad_indicador_8_1_B",
-      "valor": "Anual"
-    },
-    "sentido_indicador": {
-      "id": "sentido_indicador_8_1_B",
-      "valor": "Descendente"
-    },
-    "linea_base": {
-      "id": "linea_base_indicador_8_1_B",
-      "titulo": "2023",
-      "subtitulo": "5,290 kilómetros"
-    },
-    "metas": [
-      {
-        "id": "meta_2028_indicador_8_1_B",
-        "titulo": "2028",
-        "subtitulo": "5,000 kilómetros"
-      },
-      {
-        "id": "meta_2040_indicador_8_1_B",
-        "titulo": "2040",
-        "subtitulo": "4,500 kilómetros"
-      }
-    ],
-    "fuente": {
-      "id": "fuente_8_1_B",
-      "organizaciones": [
-        "INEGI. (Instituto Nacional de Estadística y Geografía)."
-      ],
-      "url": "https://www.inegi.org.mx/app/areasgeograficas/#collapse-Tabulados"
+    {
+      "id": "meta_2040_indicador_8_1_B",
+      "titulo": "2040",
+      "subtitulo": "4,500 kilómetros"
     }
+  ],
+  "fuente": {
+    "id": "fuente_8_1_B",
+    "organizaciones": [
+      "INEGI. (Instituto Nacional de Estadística y Geografía)."
+    ],
+    "url": "https://www.inegi.org.mx/app/areasgeograficas/#collapse-Tabulados"
   }
+}
 ]
 
-export const dataIndicador43 = [  {
-    "indicador": {
-      "id": "indicador_8_1_C",
-      "nombre": "Porcentaje de Población con Carencia por acceso a los servicios básicos en la vivienda"
-    },
-    "alineacion_PED": {
-      "id": "alineacion_PED_objetivo_8_1_C",
-      "objetivo_texto": "8.1. Fortalecer la infraestructura pública y equipamiento urbano, promoviendo el acceso equitativo a servicios de calidad y el desarrollo de mejores ciudades y comunidades rurales."
-    },
-    "alineacion_plan_nacional": {
-      "id": "alineacion_PND_indicador_8_1_C",
-      "eje": "Eje 2. Desarrollo con Bienestar y Humanismo."
-    },
-    "alineacion_ODS": {
-      "id": "alineacion_ODS_indicador_8_1_C",
-      "ods": [7, 9, 11, 13, 15, 17]
-    },
-    "descripcion": {
-      "id": "descripcion_indicador_8_1_C",
-      "texto": "Mide la proporción de la población con carencia por acceso a los servicios básicos de la vivienda con relación al total de la población."
-    },
-    "periodicidad": {
-      "id": "periodicidad_indicador_8_1_C",
-      "valor": "Bienal"
-    },
-    "sentido_indicador": {
-      "id": "sentido_indicador_8_1_C",
-      "valor": "Descendente"
-    },
-    "linea_base": {
-      "id": "linea_base_indicador_8_1_C",
-      "titulo": "2022",
-      "subtitulo": "24.50%"
-    },
-    "metas": [
-      {
-        "id": "meta_2028_indicador_8_1_C",
-        "titulo": "2028",
-        "subtitulo": "22.0%"
-      },
-      {
-        "id": "meta_2040_indicador_8_1_C",
-        "titulo": "2040",
-        "subtitulo": "15.0%"
-      }
-    ],
-    "fuente": {
-      "id": "fuente_8_1_C",
-      "organizaciones": [
-        "CONEVAL. (Consejo Nacional de Evaluación de la Política de Desarrollo Social). https://www.coneval.org.mx/Medicion/MP/Paginas/AE_pobreza_2022.aspx"
-      ],
-      "url": "https://www.coneval.org.mx/Medicion/MP/Paginas/AE_pobreza_2022.aspx"
-    }
+export const dataIndicador43 = [{
+  "indicador": {
+    "id": "indicador_8_1_C",
+    "nombre": "Porcentaje de Población con Carencia por acceso a los servicios básicos en la vivienda"
   },
-  
+  "alineacion_PED": {
+    "id": "alineacion_PED_objetivo_8_1_C",
+    "objetivo_texto": "8.1. Fortalecer la infraestructura pública y equipamiento urbano, promoviendo el acceso equitativo a servicios de calidad y el desarrollo de mejores ciudades y comunidades rurales."
+  },
+  "alineacion_plan_nacional": {
+    "id": "alineacion_PND_indicador_8_1_C",
+    "eje": "Eje 2. Desarrollo con Bienestar y Humanismo."
+  },
+  "alineacion_ODS": {
+    "id": "alineacion_ODS_indicador_8_1_C",
+    "ods": [7, 9, 11, 13, 15, 17]
+  },
+  "descripcion": {
+    "id": "descripcion_indicador_8_1_C",
+    "texto": "Mide la proporción de la población con carencia por acceso a los servicios básicos de la vivienda con relación al total de la población."
+  },
+  "periodicidad": {
+    "id": "periodicidad_indicador_8_1_C",
+    "valor": "Bienal"
+  },
+  "sentido_indicador": {
+    "id": "sentido_indicador_8_1_C",
+    "valor": "Descendente"
+  },
+  "linea_base": {
+    "id": "linea_base_indicador_8_1_C",
+    "titulo": "2022",
+    "subtitulo": "24.50%"
+  },
+  "metas": [
+    {
+      "id": "meta_2028_indicador_8_1_C",
+      "titulo": "2028",
+      "subtitulo": "22.0%"
+    },
+    {
+      "id": "meta_2040_indicador_8_1_C",
+      "titulo": "2040",
+      "subtitulo": "15.0%"
+    }
+  ],
+  "fuente": {
+    "id": "fuente_8_1_C",
+    "organizaciones": [
+      "CONEVAL. (Consejo Nacional de Evaluación de la Política de Desarrollo Social). https://www.coneval.org.mx/Medicion/MP/Paginas/AE_pobreza_2022.aspx"
+    ],
+    "url": "https://www.coneval.org.mx/Medicion/MP/Paginas/AE_pobreza_2022.aspx"
+  }
+},
+
 ]
 
-export const dataIndicador44 = [  {
-    "indicador": {
-      "id": "indicador_8_1_D",
-      "nombre": "Porcentaje de instrumentos de planeación de ordenamiento territorial y desarrollo urbano"
-    },
-    "alineacion_PED": {
-      "id": "alineacion_PED_objetivo_8_1_D",
-      "objetivo_texto": "8.1. Fortalecer la infraestructura pública y equipamiento urbano, promoviendo el acceso equitativo a servicios de calidad y el desarrollo de mejores ciudades y comunidades rurales."
-    },
-    "alineacion_plan_nacional": {
-      "id": "alineacion_PND_indicador_8_1_D",
-      "eje": "Eje 3. Economía Moral y Trabajo."
-    },
-    "alineacion_ODS": {
-      "id": "alineacion_ODS_indicador_8_1_D",
-      "ods": [7, 9, 11, 13, 15, 17]
-    },
-    "descripcion": {
-      "id": "descripcion_indicador_8_1_D",
-      "texto": "Mide el porcentaje de instrumentos estatales, regionales y metropolitanos de planeación, de ordenamiento territorial y desarrollo urbano generados con base en lo establecido por la Ley General de Asentamientos."
-    },
-    "periodicidad": {
-      "id": "periodicidad_indicador_8_1_D",
-      "valor": "Anual"
-    },
-    "sentido_indicador": {
-      "id": "sentido_indicador_8_1_D",
-      "valor": "Ascendente"
-    },
-    "linea_base": {
-      "id": "linea_base_indicador_8_1_D",
-      "titulo": "2024",
-      "subtitulo": "78.56%"
-    },
-    "metas": [
-      {
-        "id": "meta_2028_indicador_8_1_D",
-        "titulo": "2028",
-        "subtitulo": "85%"
-      },
-      {
-        "id": "meta_2040_indicador_8_1_D",
-        "titulo": "2040",
-        "subtitulo": "100%"
-      }
-    ],
-    "fuente": {
-      "id": "fuente_8_1_D",
-      "organizaciones": [
-        "Secretaría de Infraestructura Pública y Desarrollo Urbano Sostenible de Hidalgo."
-      ],
-      "url": "https://s-obraspublicas.hidalgo.gob.mx/"
-    }
+export const dataIndicador44 = [{
+  "indicador": {
+    "id": "indicador_8_1_D",
+    "nombre": "Porcentaje de instrumentos de planeación de ordenamiento territorial y desarrollo urbano"
   },
-  
+  "alineacion_PED": {
+    "id": "alineacion_PED_objetivo_8_1_D",
+    "objetivo_texto": "8.1. Fortalecer la infraestructura pública y equipamiento urbano, promoviendo el acceso equitativo a servicios de calidad y el desarrollo de mejores ciudades y comunidades rurales."
+  },
+  "alineacion_plan_nacional": {
+    "id": "alineacion_PND_indicador_8_1_D",
+    "eje": "Eje 3. Economía Moral y Trabajo."
+  },
+  "alineacion_ODS": {
+    "id": "alineacion_ODS_indicador_8_1_D",
+    "ods": [7, 9, 11, 13, 15, 17]
+  },
+  "descripcion": {
+    "id": "descripcion_indicador_8_1_D",
+    "texto": "Mide el porcentaje de instrumentos estatales, regionales y metropolitanos de planeación, de ordenamiento territorial y desarrollo urbano generados con base en lo establecido por la Ley General de Asentamientos."
+  },
+  "periodicidad": {
+    "id": "periodicidad_indicador_8_1_D",
+    "valor": "Anual"
+  },
+  "sentido_indicador": {
+    "id": "sentido_indicador_8_1_D",
+    "valor": "Ascendente"
+  },
+  "linea_base": {
+    "id": "linea_base_indicador_8_1_D",
+    "titulo": "2024",
+    "subtitulo": "78.56%"
+  },
+  "metas": [
+    {
+      "id": "meta_2028_indicador_8_1_D",
+      "titulo": "2028",
+      "subtitulo": "85%"
+    },
+    {
+      "id": "meta_2040_indicador_8_1_D",
+      "titulo": "2040",
+      "subtitulo": "100%"
+    }
+  ],
+  "fuente": {
+    "id": "fuente_8_1_D",
+    "organizaciones": [
+      "Secretaría de Infraestructura Pública y Desarrollo Urbano Sostenible de Hidalgo."
+    ],
+    "url": "https://s-obraspublicas.hidalgo.gob.mx/"
+  }
+},
+
 ]
 
-export const dataIndicador45 = [  {
-    "indicador": {
-      "id": "indicador_8_2_A",
-      "nombre": "Porcentaje de satisfacción con el servicio de transporte público"
-    },
-    "alineacion_PED": {
-      "id": "alineacion_PED_objetivo_8_2_A",
-      "objetivo_texto": "8.2. Establecer un modelo de movilidad sustentable que garantice traslados eficientes de personas y mercancías entre los asentamientos humanos a través de sistemas de transporte conforme a las características del territorio."
-    },
-    "alineacion_plan_nacional": {
-      "id": "alineacion_PND_indicador_8_2_A",
-      "eje": "Eje 3. Economía Moral y Trabajo."
-    },
-    "alineacion_ODS": {
-      "id": "alineacion_ODS_indicador_8_2_A",
-      "ods": [7, 9, 11, 13, 15, 17]
-    },
-    "descripcion": {
-      "id": "descripcion_indicador_8_2_A",
-      "texto": "Población de 18 años y más que se reporta \"satisfecha\" o \"muy satisfecha\" con el servicio de transporte público."
-    },
-    "periodicidad": {
-      "id": "periodicidad_indicador_8_2_A",
-      "valor": "Bienal"
-    },
-    "sentido_indicador": {
-      "id": "sentido_indicador_8_2_A",
-      "valor": "Ascendente"
-    },
-    "linea_base": {
-      "id": "linea_base_indicador_8_2_A",
-      "titulo": "2024",
-      "subtitulo": "43.2%"
-    },
-    "metas": [
-      {
-        "id": "meta_2028_indicador_8_2_A",
-        "titulo": "2028",
-        "subtitulo": "50.61%"
-      },
-      {
-        "id": "meta_2040_indicador_8_2_A",
-        "titulo": "2040",
-        "subtitulo": "55.91%"
-      }
-    ],
-    "fuente": {
-      "id": "fuente_8_2_A",
-      "organizaciones": [
-        "INEGI. Encuesta Nacional de Calidad e Impacto Gubernamental (ENCIG)."
-      ],
-      "url": "https://www.inegi.org.mx/contenidos/programas/encig/2023/doc/13_hidalgo.pdf"
-    }
+export const dataIndicador45 = [{
+  "indicador": {
+    "id": "indicador_8_2_A",
+    "nombre": "Porcentaje de satisfacción con el servicio de transporte público"
   },
-  
+  "alineacion_PED": {
+    "id": "alineacion_PED_objetivo_8_2_A",
+    "objetivo_texto": "8.2. Establecer un modelo de movilidad sustentable que garantice traslados eficientes de personas y mercancías entre los asentamientos humanos a través de sistemas de transporte conforme a las características del territorio."
+  },
+  "alineacion_plan_nacional": {
+    "id": "alineacion_PND_indicador_8_2_A",
+    "eje": "Eje 3. Economía Moral y Trabajo."
+  },
+  "alineacion_ODS": {
+    "id": "alineacion_ODS_indicador_8_2_A",
+    "ods": [7, 9, 11, 13, 15, 17]
+  },
+  "descripcion": {
+    "id": "descripcion_indicador_8_2_A",
+    "texto": "Población de 18 años y más que se reporta \"satisfecha\" o \"muy satisfecha\" con el servicio de transporte público."
+  },
+  "periodicidad": {
+    "id": "periodicidad_indicador_8_2_A",
+    "valor": "Bienal"
+  },
+  "sentido_indicador": {
+    "id": "sentido_indicador_8_2_A",
+    "valor": "Ascendente"
+  },
+  "linea_base": {
+    "id": "linea_base_indicador_8_2_A",
+    "titulo": "2024",
+    "subtitulo": "43.2%"
+  },
+  "metas": [
+    {
+      "id": "meta_2028_indicador_8_2_A",
+      "titulo": "2028",
+      "subtitulo": "50.61%"
+    },
+    {
+      "id": "meta_2040_indicador_8_2_A",
+      "titulo": "2040",
+      "subtitulo": "55.91%"
+    }
+  ],
+  "fuente": {
+    "id": "fuente_8_2_A",
+    "organizaciones": [
+      "INEGI. Encuesta Nacional de Calidad e Impacto Gubernamental (ENCIG)."
+    ],
+    "url": "https://www.inegi.org.mx/contenidos/programas/encig/2023/doc/13_hidalgo.pdf"
+  }
+},
+
 ]
 
-export const dataIndicador46 = [  {
-    "indicador": {
-      "id": "indicador_9_1_A",
-      "nombre": "Plantas de tratamiento en operación de aguas residuales"
-    },
-    "alineacion_PED": {
-      "id": "alineacion_PED_objetivo_9_1_A",
-      "objetivo_texto": "9.1 Fortalecer la política hídrica estatal que promueva el aprovechamiento sustentable del recurso, garantizando su acceso para todas y todos."
-    },
-    "alineacion_plan_nacional": {
-      "id": "alineacion_PND_indicador_9_1_A",
-      "eje": "Eje 4. Desarrollo Sustentable."
-    },
-    "alineacion_ODS": {
-      "id": "alineacion_ODS_indicador_9_1_A",
-      "ods": [7, 9, 11, 13, 15, 17]
-    },
-    "descripcion": {
-      "id": "descripcion_indicador_9_1_A",
-      "texto": "Mide el total de las plantas en operación de tratamiento contemplando las públicas y privadas en la entidad."
-    },
-    "periodicidad": {
-      "id": "periodicidad_indicador_9_1_A",
-      "valor": "Anual"
-    },
-    "sentido_indicador": {
-      "id": "sentido_indicador_9_1_A",
-      "valor": "Ascendente"
-    },
-    "linea_base": {
-      "id": "linea_base_indicador_9_1_A",
-      "titulo": "2024",
-      "subtitulo": "106 plantas de tratamiento"
-    },
-    "metas": [
-      {
-        "id": "meta_2028_indicador_9_1_A",
-        "titulo": "2028",
-        "subtitulo": "108 plantas de tratamiento"
-      },
-      {
-        "id": "meta_2040_indicador_9_1_A",
-        "titulo": "2040",
-        "subtitulo": "115 plantas de tratamiento"
-      }
-    ],
-    "fuente": {
-      "id": "fuente_9_1_A",
-      "organizaciones": [
-        "INEGI. (Instituto Nacional de Estadística y Geografía), México en cifras, tabulados 2024 Medio ambiente, archivo 2.11.xls."
-      ],
-      "url": "https://www.inegi.org.mx/app/areasgeograficas/#collapse-Tabulados"
-    }
+export const dataIndicador46 = [{
+  "indicador": {
+    "id": "indicador_9_1_A",
+    "nombre": "Plantas de tratamiento en operación de aguas residuales"
   },
-  
+  "alineacion_PED": {
+    "id": "alineacion_PED_objetivo_9_1_A",
+    "objetivo_texto": "9.1 Fortalecer la política hídrica estatal que promueva el aprovechamiento sustentable del recurso, garantizando su acceso para todas y todos."
+  },
+  "alineacion_plan_nacional": {
+    "id": "alineacion_PND_indicador_9_1_A",
+    "eje": "Eje 4. Desarrollo Sustentable."
+  },
+  "alineacion_ODS": {
+    "id": "alineacion_ODS_indicador_9_1_A",
+    "ods": [7, 9, 11, 13, 15, 17]
+  },
+  "descripcion": {
+    "id": "descripcion_indicador_9_1_A",
+    "texto": "Mide el total de las plantas en operación de tratamiento contemplando las públicas y privadas en la entidad."
+  },
+  "periodicidad": {
+    "id": "periodicidad_indicador_9_1_A",
+    "valor": "Anual"
+  },
+  "sentido_indicador": {
+    "id": "sentido_indicador_9_1_A",
+    "valor": "Ascendente"
+  },
+  "linea_base": {
+    "id": "linea_base_indicador_9_1_A",
+    "titulo": "2024",
+    "subtitulo": "106 plantas de tratamiento"
+  },
+  "metas": [
+    {
+      "id": "meta_2028_indicador_9_1_A",
+      "titulo": "2028",
+      "subtitulo": "108 plantas de tratamiento"
+    },
+    {
+      "id": "meta_2040_indicador_9_1_A",
+      "titulo": "2040",
+      "subtitulo": "115 plantas de tratamiento"
+    }
+  ],
+  "fuente": {
+    "id": "fuente_9_1_A",
+    "organizaciones": [
+      "INEGI. (Instituto Nacional de Estadística y Geografía), México en cifras, tabulados 2024 Medio ambiente, archivo 2.11.xls."
+    ],
+    "url": "https://www.inegi.org.mx/app/areasgeograficas/#collapse-Tabulados"
+  }
+},
+
 ]
 
-export const dataIndicador47 = [  {
-    "indicador": {
-      "id": "indicador_9_1_B",
-      "nombre": "Grado de presión del agua renovable"
-    },
-    "alineacion_PED": {
-      "id": "alineacion_PED_objetivo_9_1_B",
-      "objetivo_texto": "9.1 Fortalecer la política hídrica estatal que promueva el aprovechamiento sustentable del recurso, garantizando su acceso para todas y todos."
-    },
-    "alineacion_plan_nacional": {
-      "id": "alineacion_PND_indicador_9_1_B",
-      "eje": "Eje 4. Desarrollo Sustentable."
-    },
-    "alineacion_ODS": {
-      "id": "alineacion_ODS_indicador_9_1_B",
-      "ods": [7, 9, 11, 13, 15, 17]
-    },
-    "descripcion": {
-      "id": "descripcion_indicador_9_1_B",
-      "texto": "Mide el porcentaje de agua renovable que se utiliza para usos consuntivos (agricultura, abastecimiento público, industria, etc.) en relación con la disponibilidad total de agua."
-    },
-    "periodicidad": {
-      "id": "periodicidad_indicador_9_1_B",
-      "valor": "Anual"
-    },
-    "sentido_indicador": {
-      "id": "sentido_indicador_9_1_B",
-      "valor": "Descendente"
-    },
-    "linea_base": {
-      "id": "linea_base_indicador_9_1_B",
-      "titulo": "2022",
-      "subtitulo": "31.9% (Medio)"
-    },
-    "metas": [
-      {
-        "id": "meta_2028_indicador_9_1_B",
-        "titulo": "2028",
-        "subtitulo": "30.0%"
-      },
-      {
-        "id": "meta_2040_indicador_9_1_B",
-        "titulo": "2040",
-        "subtitulo": "25%"
-      }
-    ],
-    "fuente": {
-      "id": "fuente_9_1_B",
-      "organizaciones": [
-        "CONAGUA. (Comisión Nacional del Agua)."
-      ],
-      "url": "https://sinav30.conagua.gob.mx:8080/Fichas/estatal.html"
-    }
+export const dataIndicador47 = [{
+  "indicador": {
+    "id": "indicador_9_1_B",
+    "nombre": "Grado de presión del agua renovable"
   },
-  
+  "alineacion_PED": {
+    "id": "alineacion_PED_objetivo_9_1_B",
+    "objetivo_texto": "9.1 Fortalecer la política hídrica estatal que promueva el aprovechamiento sustentable del recurso, garantizando su acceso para todas y todos."
+  },
+  "alineacion_plan_nacional": {
+    "id": "alineacion_PND_indicador_9_1_B",
+    "eje": "Eje 4. Desarrollo Sustentable."
+  },
+  "alineacion_ODS": {
+    "id": "alineacion_ODS_indicador_9_1_B",
+    "ods": [7, 9, 11, 13, 15, 17]
+  },
+  "descripcion": {
+    "id": "descripcion_indicador_9_1_B",
+    "texto": "Mide el porcentaje de agua renovable que se utiliza para usos consuntivos (agricultura, abastecimiento público, industria, etc.) en relación con la disponibilidad total de agua."
+  },
+  "periodicidad": {
+    "id": "periodicidad_indicador_9_1_B",
+    "valor": "Anual"
+  },
+  "sentido_indicador": {
+    "id": "sentido_indicador_9_1_B",
+    "valor": "Descendente"
+  },
+  "linea_base": {
+    "id": "linea_base_indicador_9_1_B",
+    "titulo": "2022",
+    "subtitulo": "31.9% (Medio)"
+  },
+  "metas": [
+    {
+      "id": "meta_2028_indicador_9_1_B",
+      "titulo": "2028",
+      "subtitulo": "30.0%"
+    },
+    {
+      "id": "meta_2040_indicador_9_1_B",
+      "titulo": "2040",
+      "subtitulo": "25%"
+    }
+  ],
+  "fuente": {
+    "id": "fuente_9_1_B",
+    "organizaciones": [
+      "CONAGUA. (Comisión Nacional del Agua)."
+    ],
+    "url": "https://sinav30.conagua.gob.mx:8080/Fichas/estatal.html"
+  }
+},
+
 ]
 
-export const dataIndicador48 = [  {
-    "indicador": {
-      "id": "indicador_9_2_A",
-      "nombre": "Número de Instrumentos de la política climática"
-    },
-    "alineacion_PED": {
-      "id": "alineacion_PED_objetivo_9_2_A",
-      "objetivo_texto": "9.2. Impulsar estrategias integrales que contribuyan a la gestión sustentable de los recursos naturales, el equilibrio ecológico en la entidad y la transición energética, disminuyendo los impactos del cambio climático."
-    },
-    "alineacion_plan_nacional": {
-      "id": "alineacion_PND_indicador_9_2_A",
-      "eje": "Eje 4. Desarrollo Sustentable."
-    },
-    "alineacion_ODS": {
-      "id": "alineacion_ODS_indicador_9_2_A",
-      "ods": [7, 9, 11, 13, 15, 17]
-    },
-    "descripcion": {
-      "id": "descripcion_indicador_9_2_A",
-      "texto": "Mide los instrumentos normativos y de planeación en materia climática."
-    },
-    "periodicidad": {
-      "id": "periodicidad_indicador_9_2_A",
-      "valor": "Década"
-    },
-    "sentido_indicador": {
-      "id": "sentido_indicador_9_2_A",
-      "valor": "Ascendente"
-    },
-    "linea_base": {
-      "id": "linea_base_indicador_9_2_A",
-      "titulo": "2020",
-      "subtitulo": "12 Instrumentos"
-    },
-    "metas": [
-      {
-        "id": "meta_2028_indicador_9_2_A",
-        "titulo": "2028",
-        "subtitulo": "14 Instrumentos"
-      },
-      {
-        "id": "meta_2040_indicador_9_2_A",
-        "titulo": "2040",
-        "subtitulo": "17 Instrumentos"
-      }
-    ],
-    "fuente": {
-      "id": "fuente_9_2_A",
-      "organizaciones": [
-        "INECC. (Instituto Nacional de Ecología y Cambio Climático)."
-      ],
-      "url": "https://cambioclimatico.gob.mx/estadosymunicipios/EI_13.html"
-    }
+export const dataIndicador48 = [{
+  "indicador": {
+    "id": "indicador_9_2_A",
+    "nombre": "Número de Instrumentos de la política climática"
   },
-  
+  "alineacion_PED": {
+    "id": "alineacion_PED_objetivo_9_2_A",
+    "objetivo_texto": "9.2. Impulsar estrategias integrales que contribuyan a la gestión sustentable de los recursos naturales, el equilibrio ecológico en la entidad y la transición energética, disminuyendo los impactos del cambio climático."
+  },
+  "alineacion_plan_nacional": {
+    "id": "alineacion_PND_indicador_9_2_A",
+    "eje": "Eje 4. Desarrollo Sustentable."
+  },
+  "alineacion_ODS": {
+    "id": "alineacion_ODS_indicador_9_2_A",
+    "ods": [7, 9, 11, 13, 15, 17]
+  },
+  "descripcion": {
+    "id": "descripcion_indicador_9_2_A",
+    "texto": "Mide los instrumentos normativos y de planeación en materia climática."
+  },
+  "periodicidad": {
+    "id": "periodicidad_indicador_9_2_A",
+    "valor": "Década"
+  },
+  "sentido_indicador": {
+    "id": "sentido_indicador_9_2_A",
+    "valor": "Ascendente"
+  },
+  "linea_base": {
+    "id": "linea_base_indicador_9_2_A",
+    "titulo": "2020",
+    "subtitulo": "12 Instrumentos"
+  },
+  "metas": [
+    {
+      "id": "meta_2028_indicador_9_2_A",
+      "titulo": "2028",
+      "subtitulo": "14 Instrumentos"
+    },
+    {
+      "id": "meta_2040_indicador_9_2_A",
+      "titulo": "2040",
+      "subtitulo": "17 Instrumentos"
+    }
+  ],
+  "fuente": {
+    "id": "fuente_9_2_A",
+    "organizaciones": [
+      "INECC. (Instituto Nacional de Ecología y Cambio Climático)."
+    ],
+    "url": "https://cambioclimatico.gob.mx/estadosymunicipios/EI_13.html"
+  }
+},
+
 ]
 
-export const dataIndicador49 = [  {
-    "indicador": {
-      "id": "indicador_9_2_B",
-      "nombre": "Número de Centros de Verificación Vehicular"
-    },
-    "alineacion_PED": {
-      "id": "alineacion_PED_objetivo_9_2_B",
-      "objetivo_texto": "9.2. Impulsar estrategias integrales que contribuyan a la gestión sustentable de los recursos naturales, el equilibrio ecológico en la entidad y la transición energética, disminuyendo los impactos del cambio climático."
-    },
-    "alineacion_plan_nacional": {
-      "id": "alineacion_PND_indicador_9_2_B",
-      "eje": "Eje 4. Desarrollo Sustentable."
-    },
-    "alineacion_ODS": {
-      "id": "alineacion_ODS_indicador_9_2_B",
-      "ods": [7, 9, 11, 13, 15, 17]
-    },
-    "descripcion": {
-      "id": "descripcion_indicador_9_2_B",
-      "texto": "Mide el número de centros de verificación vehicular existentes en la entidad."
-    },
-    "periodicidad": {
-      "id": "periodicidad_indicador_9_2_B",
-      "valor": "Anual"
-    },
-    "sentido_indicador": {
-      "id": "sentido_indicador_9_2_B",
-      "valor": "Ascendente"
-    },
-    "linea_base": {
-      "id": "linea_base_indicador_9_2_B",
-      "titulo": "2024",
-      "subtitulo": "38 Centros"
-    },
-    "metas": [
-      {
-        "id": "meta_2028_indicador_9_2_B",
-        "titulo": "2028",
-        "subtitulo": "45 Centros"
-      },
-      {
-        "id": "meta_2040_indicador_9_2_B",
-        "titulo": "2040",
-        "subtitulo": "55 Centros"
-      }
-    ],
-    "fuente": {
-      "id": "fuente_9_2_B",
-      "organizaciones": [
-        "INEGI. (Instituto Nacional de Estadística y Geografía)."
-      ],
-      "url": " https://www.inegi.org.mx/app/areasgeograficas/#collapse-TabuladosMedio Ambiente2.20.xls"
-    }
+export const dataIndicador49 = [{
+  "indicador": {
+    "id": "indicador_9_2_B",
+    "nombre": "Número de Centros de Verificación Vehicular"
   },
-  
+  "alineacion_PED": {
+    "id": "alineacion_PED_objetivo_9_2_B",
+    "objetivo_texto": "9.2. Impulsar estrategias integrales que contribuyan a la gestión sustentable de los recursos naturales, el equilibrio ecológico en la entidad y la transición energética, disminuyendo los impactos del cambio climático."
+  },
+  "alineacion_plan_nacional": {
+    "id": "alineacion_PND_indicador_9_2_B",
+    "eje": "Eje 4. Desarrollo Sustentable."
+  },
+  "alineacion_ODS": {
+    "id": "alineacion_ODS_indicador_9_2_B",
+    "ods": [7, 9, 11, 13, 15, 17]
+  },
+  "descripcion": {
+    "id": "descripcion_indicador_9_2_B",
+    "texto": "Mide el número de centros de verificación vehicular existentes en la entidad."
+  },
+  "periodicidad": {
+    "id": "periodicidad_indicador_9_2_B",
+    "valor": "Anual"
+  },
+  "sentido_indicador": {
+    "id": "sentido_indicador_9_2_B",
+    "valor": "Ascendente"
+  },
+  "linea_base": {
+    "id": "linea_base_indicador_9_2_B",
+    "titulo": "2024",
+    "subtitulo": "38 Centros"
+  },
+  "metas": [
+    {
+      "id": "meta_2028_indicador_9_2_B",
+      "titulo": "2028",
+      "subtitulo": "45 Centros"
+    },
+    {
+      "id": "meta_2040_indicador_9_2_B",
+      "titulo": "2040",
+      "subtitulo": "55 Centros"
+    }
+  ],
+  "fuente": {
+    "id": "fuente_9_2_B",
+    "organizaciones": [
+      "INEGI. (Instituto Nacional de Estadística y Geografía)."
+    ],
+    "url": " https://www.inegi.org.mx/app/areasgeograficas/#collapse-TabuladosMedio Ambiente2.20.xls"
+  }
+},
+
 ]
 
-export const dataIndicador50 = [  {
-    "indicador": {
-      "id": "indicador_9_3_A",
-      "nombre": "Índice trimestral de la actividad económica del estado de Hidalgo - sector primario"
-    },
-    "alineacion_PED": {
-      "id": "alineacion_PED_objetivo_9_3_A",
-      "objetivo_texto": "9.3. Consolidar al sector agropecuario como eje estratégico del desarrollo económico local y sustentable, mejorando la productividad y condiciones de vida de las y los productores."
-    },
-    "alineacion_plan_nacional": {
-      "id": "alineacion_PND_indicador_9_3_A",
-      "eje": "Eje 3. Economía Moral y Trabajo."
-    },
-    "alineacion_ODS": {
-      "id": "alineacion_ODS_indicador_9_3_A",
-      "ods": [7, 9, 11, 13, 15, 17]
-    },
-    "descripcion": {
-      "id": "descripcion_indicador_9_3_A",
-      "texto": "Indicador que muestra las variaciones del valor de la producción total del sector económico primario."
-    },
-    "periodicidad": {
-      "id": "periodicidad_indicador_9_3_A",
-      "valor": "Anual (Trimestral)"
-    },
-    "sentido_indicador": {
-      "id": "sentido_indicador_9_3_A",
-      "valor": "Ascendente"
-    },
-    "linea_base": {
-      "id": "linea_base_indicador_9_3_A",
-      "titulo": "2024",
-      "subtitulo": "27.90%"
-    },
-    "metas": [
-      {
-        "id": "meta_2028_indicador_9_3_A",
-        "titulo": "2028",
-        "subtitulo": "28%"
-      },
-      {
-        "id": "meta_2040_indicador_9_3_A",
-        "titulo": "2040",
-        "subtitulo": "28.5%"
-      }
-    ],
-    "fuente": {
-      "id": "fuente_9_3_A",
-      "organizaciones": [
-        "INEGI. (Instituto Nacional de Estadística y Geografía)."
-      ],
-      "url": "https://www.inegi.org.mx/contenidos/saladeprensa/boletines/2025/itaee/itaee2025_01_Hgo.pdf"
-    }
+export const dataIndicador50 = [{
+  "indicador": {
+    "id": "indicador_9_3_A",
+    "nombre": "Índice trimestral de la actividad económica del estado de Hidalgo - sector primario"
   },
-  
+  "alineacion_PED": {
+    "id": "alineacion_PED_objetivo_9_3_A",
+    "objetivo_texto": "9.3. Consolidar al sector agropecuario como eje estratégico del desarrollo económico local y sustentable, mejorando la productividad y condiciones de vida de las y los productores."
+  },
+  "alineacion_plan_nacional": {
+    "id": "alineacion_PND_indicador_9_3_A",
+    "eje": "Eje 3. Economía Moral y Trabajo."
+  },
+  "alineacion_ODS": {
+    "id": "alineacion_ODS_indicador_9_3_A",
+    "ods": [7, 9, 11, 13, 15, 17]
+  },
+  "descripcion": {
+    "id": "descripcion_indicador_9_3_A",
+    "texto": "Indicador que muestra las variaciones del valor de la producción total del sector económico primario."
+  },
+  "periodicidad": {
+    "id": "periodicidad_indicador_9_3_A",
+    "valor": "Anual (Trimestral)"
+  },
+  "sentido_indicador": {
+    "id": "sentido_indicador_9_3_A",
+    "valor": "Ascendente"
+  },
+  "linea_base": {
+    "id": "linea_base_indicador_9_3_A",
+    "titulo": "2024",
+    "subtitulo": "27.90%"
+  },
+  "metas": [
+    {
+      "id": "meta_2028_indicador_9_3_A",
+      "titulo": "2028",
+      "subtitulo": "28%"
+    },
+    {
+      "id": "meta_2040_indicador_9_3_A",
+      "titulo": "2040",
+      "subtitulo": "28.5%"
+    }
+  ],
+  "fuente": {
+    "id": "fuente_9_3_A",
+    "organizaciones": [
+      "INEGI. (Instituto Nacional de Estadística y Geografía)."
+    ],
+    "url": "https://www.inegi.org.mx/contenidos/saladeprensa/boletines/2025/itaee/itaee2025_01_Hgo.pdf"
+  }
+},
+
 ]
 
-export const dataIndicador51 = [  {
-    "indicador": {
-      "id": "indicador_9_3_B",
-      "nombre": "Valor anual del indicador trimestral de las actividades primarias"
-    },
-    "alineacion_PED": {
-      "id": "alineacion_PED_objetivo_9_3_B",
-      "objetivo_texto": "9.3. Consolidar al sector agropecuario como eje estratégico del desarrollo económico local y sustentable, mejorando la productividad y condiciones de vida de las y los productores."
-    },
-    "alineacion_plan_nacional": {
-      "id": "alineacion_PND_indicador_9_3_B",
-      "eje": "Eje 3. Economía Moral y Trabajo."
-    },
-    "alineacion_ODS": {
-      "id": "alineacion_ODS_indicador_9_3_B",
-      "ods": [7, 9, 11, 13, 15, 17]
-    },
-    "descripcion": {
-      "id": "descripcion_indicador_9_3_B",
-      "texto": "Mide la participación de las actividades primarias, comparando los valores de otros años, al valor base 2018= 100."
-    },
-    "periodicidad": {
-      "id": "periodicidad_indicador_9_3_B",
-      "valor": "Anual"
-    },
-    "sentido_indicador": {
-      "id": "sentido_indicador_9_3_B",
-      "valor": "Ascendente"
-    },
-    "linea_base": {
-      "id": "linea_base_indicador_9_3_B",
-      "titulo": "2023",
-      "subtitulo": "93.9"
-    },
-    "metas": [
-      {
-        "id": "meta_2028_indicador_9_3_B",
-        "titulo": "2028",
-        "subtitulo": "102"
-      },
-      {
-        "id": "meta_2040_indicador_9_3_B",
-        "titulo": "2040",
-        "subtitulo": "110"
-      }
-    ],
-    "fuente": {
-      "id": "fuente_9_3_B",
-      "organizaciones": [
-        "INEGI. (Instituto Nacional de Estadística y Geografía)."
-      ],
-      "url": "https://www.inegi.org.mx/app/indicadores/?tm=0&t=102000380020003000500020#D102000380020003000500020PIBE_r_21.xls"
-    }
+export const dataIndicador51 = [{
+  "indicador": {
+    "id": "indicador_9_3_B",
+    "nombre": "Valor anual del indicador trimestral de las actividades primarias"
   },
-  
+  "alineacion_PED": {
+    "id": "alineacion_PED_objetivo_9_3_B",
+    "objetivo_texto": "9.3. Consolidar al sector agropecuario como eje estratégico del desarrollo económico local y sustentable, mejorando la productividad y condiciones de vida de las y los productores."
+  },
+  "alineacion_plan_nacional": {
+    "id": "alineacion_PND_indicador_9_3_B",
+    "eje": "Eje 3. Economía Moral y Trabajo."
+  },
+  "alineacion_ODS": {
+    "id": "alineacion_ODS_indicador_9_3_B",
+    "ods": [7, 9, 11, 13, 15, 17]
+  },
+  "descripcion": {
+    "id": "descripcion_indicador_9_3_B",
+    "texto": "Mide la participación de las actividades primarias, comparando los valores de otros años, al valor base 2018= 100."
+  },
+  "periodicidad": {
+    "id": "periodicidad_indicador_9_3_B",
+    "valor": "Anual"
+  },
+  "sentido_indicador": {
+    "id": "sentido_indicador_9_3_B",
+    "valor": "Ascendente"
+  },
+  "linea_base": {
+    "id": "linea_base_indicador_9_3_B",
+    "titulo": "2023",
+    "subtitulo": "93.9"
+  },
+  "metas": [
+    {
+      "id": "meta_2028_indicador_9_3_B",
+      "titulo": "2028",
+      "subtitulo": "102"
+    },
+    {
+      "id": "meta_2040_indicador_9_3_B",
+      "titulo": "2040",
+      "subtitulo": "110"
+    }
+  ],
+  "fuente": {
+    "id": "fuente_9_3_B",
+    "organizaciones": [
+      "INEGI. (Instituto Nacional de Estadística y Geografía)."
+    ],
+    "url": "https://www.inegi.org.mx/app/indicadores/?tm=0&t=102000380020003000500020#D102000380020003000500020PIBE_r_21.xls"
+  }
+},
+
 ]
 
 export const dataIndicador52 = [
@@ -3195,7 +3182,6 @@ export const dataIndicador55 = [
   }
 ]
 
-
 export const dataIndicador56 = [
   {
     "indicador": {
@@ -3252,7 +3238,6 @@ export const dataIndicador56 = [
     }
   }
 ]
-
 
 export const dataIndicador57 = [
   {
@@ -3482,7 +3467,6 @@ export const dataIndicador60 = [
   }
 ]
 
-
 export const dataIndicador61 = [
   {
     "indicador": {
@@ -3539,4 +3523,3 @@ export const dataIndicador61 = [
     }
   }
 ]
-
