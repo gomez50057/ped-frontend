@@ -12,41 +12,41 @@ export default function IndicatorsReview() {
   const [feedback, setFeedback] = useState({});
 
   function handleAcuerdoChange(id, value) {
-  setFeedback(prev => {
-    // Si cambia de "no" a "sí", limpia justificación
-    if (value === "yes") {
-      return {
-        ...prev,
-        [id]: {
-          ...prev[id],
-          acuerdo: "yes",
-          comentarios: {
-            ...prev[id]?.comentarios,
-            justificacion: "" // limpia justificación
+    setFeedback(prev => {
+      // Si cambia de "no" a "sí", limpia justificación
+      if (value === "yes") {
+        return {
+          ...prev,
+          [id]: {
+            ...prev[id],
+            acuerdo: "yes",
+            comentarios: {
+              ...prev[id]?.comentarios,
+              justificacion: "" // limpia justificación
+            }
+            // NO toques metas ni metasComentario
           }
-          // NO toques metas ni metasComentario
-        }
-      };
-    } else if (value === "no") {
-      // Si es "no", limpia metas y metasComentario
-      return {
-        ...prev,
-        [id]: {
-          ...prev[id],
-          acuerdo: "no",
-          metas: "",
-          comentarios: {
-            ...prev[id]?.comentarios,
-            metasComentario: "" // limpia metasComentario
+        };
+      } else if (value === "no") {
+        // Si es "no", limpia metas y metasComentario
+        return {
+          ...prev,
+          [id]: {
+            ...prev[id],
+            acuerdo: "no",
+            metas: "",
+            comentarios: {
+              ...prev[id]?.comentarios,
+              metasComentario: "" // limpia metasComentario
+            }
           }
-        }
-      };
-    } else {
-      // En cualquier otro caso, deja igual
-      return prev;
-    }
-  });
-}
+        };
+      } else {
+        // En cualquier otro caso, deja igual
+        return prev;
+      }
+    });
+  }
 
 
 
@@ -80,127 +80,172 @@ export default function IndicatorsReview() {
 
   return (
     <div className={styles.container}>
-      {allIndicators.map((item) => {
-        const fichaId = item.indicador.id;
-        return (
-          <div key={fichaId} className={styles.indicatorCard}>
-            <div className={styles.header}>
-              <span className={styles.headerText}>
-                FICHA DEL INDICADOR {fichaId.replace('indicador_', '').replace(/_/g, '. ').toUpperCase()}
-              </span>
-            </div>
-            <div className={styles.contentGrid}>
-              {/* Columna Izquierda */}
-              <div className={styles.leftColumn}>
-                <div className={styles.fieldBlock}>
-                  <div className={styles.labelL}>Nombre del indicador:</div>
-                  <div className={styles.boldL}>{item.indicador.nombre}</div>
-                </div>
-
-                <div className={styles.fieldBlock}>
-                  <div className={styles.labelL}>Alineación al PED 2025-2028 (Objetivo)</div>
-                  <div className={styles.valueL}>
-                    <span className={styles.keyObj}>
-                      {item.alineacion_PED.objetivo_texto.split(' ')[0]}
-                    </span>
-                    {item.alineacion_PED.objetivo_texto.substring(item.alineacion_PED.objetivo_texto.indexOf(' ') + 1)}
-                  </div>
-                </div>
-
-                <div className={styles.fieldBlock}>
-                  <div className={styles.labelL}>Alineación al Plan Nacional de Desarrollo 2025 -2030 (Eje)</div>
-                  <div className={styles.valueL}>
-                    <span>{item.alineacion_plan_nacional.eje}</span>
-                  </div>
-                </div>
-
-                <div className={styles.fieldBlock}>
-                  <div className={styles.labelL}>Alineación a ODS:</div>
-                  <div className={styles.odsContainer}>
-                    {item.alineacion_ODS.ods.map((ods) => (
-                      <div key={ods} className={styles.odsItem}>
-                        <img
-                          src={`/img/dashboard/img-ods/S-WEB-Goal-${ods}.png`}
-                          alt={`ODS ${ods}`}
-                          className={styles.odsImg}
-                          onError={(e) => (e.target.style.display = 'none')}
-                        />
-                        <span className={styles.odsNumber}>{ods}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+      <div className={styles.containerReview}>
+        {allIndicators.map((item) => {
+          const fichaId = item.indicador.id;
+          return (
+            <div key={fichaId} className={styles.indicatorCard}>
+              <div className={styles.header}>
+                <span className={styles.headerText}>
+                  FICHA DEL INDICADOR {fichaId.replace('indicador_', '').replace(/_/g, '. ').toUpperCase()}
+                </span>
               </div>
+              <div className={styles.contentGrid}>
+                {/* Columna Izquierda */}
+                <div className={styles.leftColumn}>
+                  <div className={styles.fieldBlock}>
+                    <div className={styles.labelL}>Nombre del indicador:</div>
+                    <div className={styles.boldL}>{item.indicador.nombre}</div>
+                  </div>
 
-              {/* Columna Derecha */}
-              <div className={styles.rightColumn}>
-                <div className={styles.fieldBlock}>
-                  <span className={styles.label}>Descripción:</span>
-                  <span className={styles.value}>{item.descripcion.texto}</span>
-                </div>
-                <div className={styles.rowFields}>
-                  <div>
-                    <span className={styles.label}>Periodicidad:</span>
-                    <span className={styles.value}>{item.periodicidad.valor}</span>
-                  </div>
-                  <div>
-                    <span className={styles.label}>Sentido del indicador:</span>
-                    <span className={styles.value}>{item.sentido_indicador.valor}</span>
-                  </div>
-                </div>
-                <div className={styles.rowFields}>
-                  <div>
-                    <span className={styles.label}>Línea base:</span>
-                    <div className={styles.value}>
-                      <span className={styles.bold}>{item.linea_base.titulo}:</span> {item.linea_base.subtitulo}
+                  <div className={styles.fieldBlock}>
+                    <div className={styles.labelL}>Alineación al PED 2025-2028 (Objetivo)</div>
+                    <div className={styles.valueL}>
+                      <span className={styles.keyObj}>
+                        {item.alineacion_PED.objetivo_texto.split(' ')[0]}
+                      </span>
+                      {item.alineacion_PED.objetivo_texto.substring(item.alineacion_PED.objetivo_texto.indexOf(' ') + 1)}
                     </div>
                   </div>
-                  <div>
-                    <span className={styles.label}>Metas:</span>
-                    <ul className={styles.goals}>
-                      {item.metas.map((meta) => (
-                        <li key={meta.id}>
-                          <span className={styles.bold}>{meta.titulo}:</span> {meta.subtitulo}
-                        </li>
+
+                  <div className={styles.fieldBlock}>
+                    <div className={styles.labelL}>Alineación al Plan Nacional de Desarrollo 2025 -2030 (Eje)</div>
+                    <div className={styles.valueL}>
+                      <span>{item.alineacion_plan_nacional.eje}</span>
+                    </div>
+                  </div>
+
+                  <div className={styles.fieldBlock}>
+                    <div className={styles.labelL}>Alineación a ODS:</div>
+                    <div className={styles.odsContainer}>
+                      {item.alineacion_ODS.ods.map((ods) => (
+                        <div key={ods} className={styles.odsItem}>
+                          <img
+                            src={`/img/dashboard/img-ods/S-WEB-Goal-${ods}.png`}
+                            alt={`ODS ${ods}`}
+                            className={styles.odsImg}
+                            onError={(e) => (e.target.style.display = 'none')}
+                          />
+                          <span className={styles.odsNumber}>{ods}</span>
+                        </div>
                       ))}
-                    </ul>
+                    </div>
                   </div>
                 </div>
-                <div className={styles.fieldBlock}>
-                  <span className={styles.label}>Fuente:</span>
-                  <span className={styles.value}>
-                    {item.fuente.organizaciones.join(', ')}
-                    {item.fuente.url && (
-                      <>
-                        <br />
-                        <a
-                          href={item.fuente.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className={styles.link}
-                        >
-                          {item.fuente.url}
-                        </a>
-                      </>
-                    )}
-                  </span>
+
+                {/* Columna Derecha */}
+                <div className={styles.rightColumn}>
+                  <div className={styles.fieldBlock}>
+                    <span className={styles.label}>Descripción:</span>
+                    <span className={styles.value}>{item.descripcion.texto}</span>
+                  </div>
+                  <div className={styles.rowFields}>
+                    <div>
+                      <span className={styles.label}>Periodicidad:</span>
+                      <span className={styles.value}>{item.periodicidad.valor}</span>
+                    </div>
+                    <div>
+                      <span className={styles.label}>Sentido del indicador:</span>
+                      <span className={styles.value}>{item.sentido_indicador.valor}</span>
+                    </div>
+                  </div>
+                  <div className={styles.rowFields}>
+                    <div>
+                      <span className={styles.label}>Línea base:</span>
+                      <div className={styles.value}>
+                        <span className={styles.bold}>{item.linea_base.titulo}:</span> {item.linea_base.subtitulo}
+                      </div>
+                    </div>
+                    <div>
+                      <span className={styles.label}>Metas:</span>
+                      <ul className={styles.goals}>
+                        {item.metas.map((meta) => (
+                          <li key={meta.id}>
+                            <span className={styles.bold}>{meta.titulo}:</span> {meta.subtitulo}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                  <div className={styles.fieldBlock}>
+                    <span className={styles.label}>Fuente:</span>
+                    <span className={styles.value}>
+                      {item.fuente.organizaciones.join(', ')}
+                      {item.fuente.url && (
+                        <>
+                          <br />
+                          <a
+                            href={item.fuente.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={styles.link}
+                          >
+                            {item.fuente.url}
+                          </a>
+                        </>
+                      )}
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            {/* --- SECCIÓN DE FEEDBACK --- */}
-            <FeedbackSection
-              id={fichaId}
-              acuerdo={feedback[fichaId]?.acuerdo || ""}
-              metas={feedback[fichaId]?.metas || ""}
-              comentarios={feedback[fichaId]?.comentarios || {}}
-              onAcuerdoChange={handleAcuerdoChange}
-              onMetasChange={handleMetasChange}
-              onComentarioChange={handleComentarioChange}
-            />
+              <FeedbackSection
+                id={fichaId}
+                acuerdo={feedback[fichaId]?.acuerdo || ""}
+                metas={feedback[fichaId]?.metas || ""}
+                comentarios={feedback[fichaId]?.comentarios || {}}
+                onAcuerdoChange={handleAcuerdoChange}
+                onMetasChange={handleMetasChange}
+                onComentarioChange={handleComentarioChange}
+              />
+            </div>
+          );
+        })}
+      </div>
+      <div className={styles.buttonsContainer}>
+        <div className={styles.buttonsContainerfixed}>
+          <div className={styles.buttonWrapper}>
+            <button
+              type="button"
+              className={styles.slideButton}
+            >
+              Guardar avance
+            </button>
           </div>
-        );
-      })}
+          <div className={styles.envioFinalWrapper}>
+            <label className={styles.containerChecked}>
+              <input
+                type="checkbox"
+              />
+              <div className={styles.checkmark}>
+                <svg
+                  className={styles.checkboxSvg}
+                  viewBox="0 0 200 200"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <circle
+                    cx="100"
+                    cy="100"
+                    r="80"
+                    className={styles.checkboxCircle}
+                    strokeWidth="20"
+                  />
+                  <path
+                    className={styles.checkboxTick}
+                    d="M52 111.018L76.9867 136L149 64"
+                    strokeWidth="15"
+                  ></path>
+                </svg>
+              </div>
+              <p className={styles.checkboxLabel}>
+                Confirmo que estas son mis aportaciones finales. <br />
+                (<b>Aún puedes modificar hasta la fecha límite</b>)
+              </p>
+            </label>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
