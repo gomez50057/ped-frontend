@@ -12,17 +12,42 @@ export default function IndicatorsReview() {
   const [feedback, setFeedback] = useState({});
 
   function handleAcuerdoChange(id, value) {
-    setFeedback(prev => ({
-      ...prev,
-      [id]: {
-        ...prev[id],
-        acuerdo: value,
-        ...(value === "no"
-          ? { metas: "", comentarios: { ...prev[id]?.comentarios, metasComentario: "" } }
-          : {})
-      }
-    }));
-  }
+  setFeedback(prev => {
+    // Si cambia de "no" a "sí", limpia justificación
+    if (value === "yes") {
+      return {
+        ...prev,
+        [id]: {
+          ...prev[id],
+          acuerdo: "yes",
+          comentarios: {
+            ...prev[id]?.comentarios,
+            justificacion: "" // limpia justificación
+          }
+          // NO toques metas ni metasComentario
+        }
+      };
+    } else if (value === "no") {
+      // Si es "no", limpia metas y metasComentario
+      return {
+        ...prev,
+        [id]: {
+          ...prev[id],
+          acuerdo: "no",
+          metas: "",
+          comentarios: {
+            ...prev[id]?.comentarios,
+            metasComentario: "" // limpia metasComentario
+          }
+        }
+      };
+    } else {
+      // En cualquier otro caso, deja igual
+      return prev;
+    }
+  });
+}
+
 
 
   function handleMetasChange(id, value) {
