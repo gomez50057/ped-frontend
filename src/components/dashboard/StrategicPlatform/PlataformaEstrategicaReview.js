@@ -29,6 +29,9 @@ export default function PlataformaEstrategicaReview() {
   const [nuevasEstrategias, setNuevasEstrategias] = useState({});
   const [nuevasLineas, setNuevasLineas] = useState({});
   const [confirmOpen, setConfirmOpen] = useState(false);
+  const [envioFinalChecked, setEnvioFinalChecked] = useState(false);
+  const [finalConfirmOpen, setFinalConfirmOpen] = useState(false);
+  const [finalUncheckConfirmOpen, setFinalUncheckConfirmOpen] = useState(false);
 
   // --- Helpers UI y feedback ---
   const openInputModal = (title, defaultValue, callback) => {
@@ -115,6 +118,7 @@ export default function PlataformaEstrategicaReview() {
       if (!response.ok) return;
       const data = await response.json();
       const feedbackPreCargado = {};
+      let algunoMarcadoFinal = false;
       for (const fb of data) {
         feedbackPreCargado[fb.clave] = {
           acuerdo: fb.acuerdo,
@@ -122,11 +126,14 @@ export default function PlataformaEstrategicaReview() {
             comoDecir: fb.comoDecir,
             justificacion: fb.justificacion,
           },
+          envio_final: fb.envio_final ?? false
         };
+        if (fb.envio_final) algunoMarcadoFinal = true;
       }
       setFeedback(feedbackPreCargado);
+      setEnvioFinalChecked(algunoMarcadoFinal);
     } catch (err) {
-      // Manejo de error opcional
+      // manejo de error opcional
     }
   };
 
@@ -213,30 +220,32 @@ export default function PlataformaEstrategicaReview() {
       });
     }
   };
-
-  const handleGuardarComentarios = async () => {
-    // 1. Arma el arreglo listo para el backend
+  const handleGuardarComentarios = async (enviarFinal = false) => {
+    // Arma el arreglo listo para el backend
     const feedbackArr = Object.entries(feedback)
-      .filter(
-        ([, val]) =>
-          val.acuerdo ||
-          (val.comentarios && (val.comentarios.comoDecir || val.comentarios.justificacion))
+      .filter(([_, val]) =>
+        val.acuerdo ||
+        (val.comentarios && (val.comentarios.comoDecir || val.comentarios.justificacion))
       )
       .map(([clave, val]) => ({
         clave,
         acuerdo: val.acuerdo || "",
         comoDecir: val.acuerdo === "yes" ? "No Aplica" : (val.comentarios?.comoDecir || ""),
-        justificacion: val.acuerdo === "yes" ? "No Aplica" : (val.comentarios?.justificacion || "")
+        justificacion: val.acuerdo === "yes" ? "No Aplica" : (val.comentarios?.justificacion || ""),
+        envio_final: enviarFinal
       }));
 
-    if (feedbackArr.length === 0 || feedbackArr.some(
-      obj => !obj.clave || !obj.acuerdo || !obj.comoDecir || !obj.justificacion
-    )) {
+    if (
+      feedbackArr.length === 0 ||
+      feedbackArr.some(
+        obj => !obj.clave || !obj.acuerdo || !obj.comoDecir || !obj.justificacion
+      )
+    ) {
       setSnackbar({ open: true, message: 'Faltan campos requeridos.', severity: 'error' });
       return;
     }
 
-    // 2. Intenta POST masivo
+    // Intenta POST masivo
     try {
       let res = await fetchWithAuth("/api/objetivos/feedback-avance/", {
         method: "POST",
@@ -251,7 +260,7 @@ export default function PlataformaEstrategicaReview() {
           const errData = JSON.parse(errorText);
           // Aquí podrías ajustar la lógica según cómo te responde tu backend, por ejemplo error de unique o instrucciones de usar PUT
           if (
-            (res.status === 400 || res.status === 409) && // Conflict o Bad Request
+            (res.status === 400 || res.status === 409) &&
             (Array.isArray(errData) || errData.detail || errData.clave)
           ) {
             // Asumimos que si ya existen, se puede hacer PUT masivo
@@ -288,7 +297,6 @@ export default function PlataformaEstrategicaReview() {
       });
     }
   };
-
 
   // CRUD Handlers ... (sin cambios)
   const agregarElemento = (promptText, callback) => {
@@ -637,13 +645,11 @@ export default function PlataformaEstrategicaReview() {
 
     // Estrategias nuevas agregadas sobre propuestas estáticas
     for (const [propId, estrategiasNuevas] of Object.entries(nuevasEstrategias)) {
-      // Busca si ya existe el objetivo en objetivos dinámicos
       let objetivo = objetivos.find(o => o.id === propId);
       if (!objetivo) {
-        // Si no existe, crea un objetivo vacío solo con el id
         objetivo = {
           id: propId,
-          nombre: '', // Podrías buscar el nombre en staticWithId si lo necesitas
+          nombre: '',
           estrategias: []
         };
         objetivos.push(objetivo);
@@ -698,13 +704,11 @@ export default function PlataformaEstrategicaReview() {
 
   const [isSaving, setIsSaving] = useState(false);
 
-  const handleGuardarTodo = async () => {
+  const handleGuardarTodo = async (enviarFinal = false) => {
     setIsSaving(true);
     try {
-      // Primero guarda avance (await porque es async)
       await handleGuardarAvance();
-      // Después guarda comentarios (puede ser sync)
-      handleGuardarComentarios();
+      await handleGuardarComentarios(enviarFinal); // Solo esta
     } catch (err) {
       setSnackbar({ open: true, message: 'Error al guardar.', severity: 'error' });
       console.error(err);
@@ -756,6 +760,48 @@ export default function PlataformaEstrategicaReview() {
               {isSaving ? 'Guardando...' : 'Guardar avance'}
             </button>
           </div>
+
+          <div className={styles.envioFinalWrapper}>
+            <label className={styles.containerChecked}>
+              <input
+                type="checkbox"
+                checked={envioFinalChecked}
+                onChange={() => {
+                  if (!envioFinalChecked) {
+                    setFinalConfirmOpen(true);
+                  } else {
+                    setFinalUncheckConfirmOpen(true);
+                  }
+                }}
+                disabled={isSaving}
+              />
+              <div className={styles.checkmark}>
+                <svg
+                  className={styles.checkboxSvg}
+                  viewBox="0 0 200 200"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <circle
+                    cx="100"
+                    cy="100"
+                    r="80"
+                    className={styles.checkboxCircle}
+                    strokeWidth="20"
+                  />
+                  <path
+                    className={styles.checkboxTick}
+                    d="M52 111.018L76.9867 136L149 64"
+                    strokeWidth="15"
+                  ></path>
+                </svg>
+              </div>
+              <p className={styles.checkboxLabel}>
+                Confirmo que estas son mis aportaciones finales. <br />
+                (<b>Aún puedes modificar hasta la fecha límite</b>)
+              </p>
+            </label>
+          </div>
         </div>
       </div>
 
@@ -768,6 +814,37 @@ export default function PlataformaEstrategicaReview() {
           modalCallback(value);
           setModalOpen(false);
         }}
+      />
+
+      <ConfirmDialog
+        open={finalConfirmOpen}
+        onClose={() => setFinalConfirmOpen(false)}
+        onConfirm={async () => {
+          setEnvioFinalChecked(true);
+          setFinalConfirmOpen(false);
+          await handleGuardarTodo(true);
+        }}
+        title="¿Estás seguro de enviar como versión final?"
+        confirmText="Sí, confirmar envío final"
+        cancelText="Cancelar"
+      />
+
+      <ConfirmDialog
+        open={finalUncheckConfirmOpen}
+        onClose={() => setFinalUncheckConfirmOpen(false)}
+        onConfirm={async () => {
+          setEnvioFinalChecked(false);
+          setFinalUncheckConfirmOpen(false);
+          await handleGuardarComentarios(false);
+          setSnackbar({
+            open: true,
+            message: 'Entrega final desmarcada. Se considerará como entregable final el último envío con la fecha de finalización.',
+            severity: 'info',
+          });
+        }}
+        title="¿Estás seguro de quitar la entrega final?"
+        confirmText="Sí, quitar entrega final"
+        cancelText="Cancelar"
       />
 
       <ConfirmDialog

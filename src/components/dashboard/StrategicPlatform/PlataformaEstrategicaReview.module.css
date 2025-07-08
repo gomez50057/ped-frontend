@@ -189,10 +189,12 @@
 }
 
 
+.envioFinalWrapper {
+  display: flex;
+}
 
 
-
-.container {
+.containerChecked {
   position: relative;
   display: inline-block;
   width: 50px;
@@ -201,7 +203,7 @@
   cursor: pointer;
 }
 
-.container input {
+.containerChecked input {
   opacity: 0;
   width: 0;
   height: 0;
@@ -254,9 +256,11 @@
 .container input:checked+.checkmark .checkboxCircle,
 .container input:checked+.checkmark .checkboxTick {
   stroke-dashoffset: 0;
-}checkboxLabel
+}
 
 .checkboxLabel {
+  margin-top: 2rem;
+  width: 200px;
   flex: 1;
   font-size: 1rem;
   color: var(--grisOsc);

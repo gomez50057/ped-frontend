@@ -1,14 +1,14 @@
-import React from 'react';
-import ChoiceCard from '@/components/dashboard/ChoiceCard';
+"use client";
+
+import React from "react";
+import StrategicPlatform from "@/components/dashboard/Indicators/StrategicPlatform";
 import NavbarDashboard from '@/components/shared/NavbarDashboard';
 
-const DashboardPage = () => {
+export default function DashboardPlataforma() {
   return (
-    <div>
+    <main>
       <NavbarDashboard />
-      <ChoiceCard />
-    </div>
+      <StrategicPlatform />
+    </main>
   );
-};
-
-export default DashboardPage;
+}
