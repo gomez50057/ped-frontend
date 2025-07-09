@@ -23,8 +23,6 @@ const validationSchema = Yup.object({
   baseline: Yup.string(),
   goal2028: Yup.string(),
   goal2040: Yup.string(),
-  sourceOrganization: Yup.string(),
-  sourceUrl: Yup.string().url("Debe ser una URL válida"),
   sources: Yup.array().of(
     Yup.object({
       organization: Yup.string(),
@@ -38,12 +36,24 @@ export default function NewIndicatorProposalForm({ onClose, onSubmit, initialDat
   const [snackbar, setSnackbar] = useState({
     open: false,
     message: "",
-    severity: "success", // success | error | warning | info
+    severity: "success",
   });
 
   const handleCloseSnackbar = (event, reason) => {
     if (reason === "clickaway") return;
     setSnackbar(s => ({ ...s, open: false }));
+  };
+
+  const handleCancel = () => {
+    setSnackbar({
+      open: true,
+      message: "Propuesta cancelada",
+      severity: "warning",
+    });
+    // Puedes cerrar el modal después de un delay si quieres
+    setTimeout(() => {
+      onClose && onClose();
+    }, 1200);
   };
 
   return (
@@ -82,8 +92,6 @@ export default function NewIndicatorProposalForm({ onClose, onSubmit, initialDat
               baseline: initialData.baseline || "",
               goal2028: initialData.goal2028 || "",
               goal2040: initialData.goal2040 || "",
-              sourceOrganization: initialData.sourceOrganization || "",
-              sourceUrl: initialData.sourceUrl || "",
               sources: initialData.sources || [{ organization: "", url: "" }],
             }}
             validationSchema={validationSchema}
@@ -94,7 +102,10 @@ export default function NewIndicatorProposalForm({ onClose, onSubmit, initialDat
                   nationalPlanAlignment: values.nationalPlanAlignment?.value || "",
                   odsAlignment: values.odsAlignment?.map(o => o.value) || [],
                 };
-                await onSubmit(formatted); 
+                // Imprime en consola los datos enviados
+                console.log("Propuesta enviada:", formatted);
+
+                await onSubmit?.(formatted);
 
                 setSnackbar({
                   open: true,
@@ -112,8 +123,6 @@ export default function NewIndicatorProposalForm({ onClose, onSubmit, initialDat
                 });
               }
             }}
-
-
           >
             {({ setFieldValue, values, errors, touched }) => (
               <Form autoComplete="off">
@@ -266,7 +275,7 @@ export default function NewIndicatorProposalForm({ onClose, onSubmit, initialDat
                   <button
                     type="button"
                     className={styles.cancelButton}
-                    onClick={onClose}
+                    onClick={handleCancel}
                   >
                     Cancelar
                   </button>
