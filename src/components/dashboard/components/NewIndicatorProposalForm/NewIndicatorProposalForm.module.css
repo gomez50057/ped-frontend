@@ -136,11 +136,41 @@
 .flexRow {
   display: flex;
   gap: 0.5rem;
-  align-items: flex-end;
+  align-items: center;
+  margin-bottom: 0.7rem;
 }
+
 @media (max-width: 700px) {
   .flexRow {
     flex-direction: column;
     gap: 0;
   }
+}
+
+
+.addIcon {
+  color: var(--vinoClr, #A02142);
+  font-size: 2rem !important;
+  transition: color 0.15s;
+}
+
+.addIcon:hover {
+  color: var(--vinoOsc, #691B32);
+}
+
+.removeButton {
+  background: none;
+  border: none;
+  color: #a02142;
+  font-size: 2.1rem;
+  line-height: 1;
+  margin-left: 0.8rem;
+  cursor: pointer;
+  padding: 0;
+  font-weight: bold;
+  transition: color 0.2s;
+}
+
+.removeButton:hover {
+  color: #691b32;
 }

@@ -1,11 +1,12 @@
 import React from "react";
 import styles from "./NewIndicatorProposalForm.module.css";
 import { NATIONAL_PLAN_AXES, ODS_OBJECTIVES } from "@/utils/indicatorFormOptions";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import { FieldArray } from "formik";
 import Select from "react-select";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
-// Opciones para Select
 const axisOptions = NATIONAL_PLAN_AXES.map(axis => ({ value: axis, label: axis }));
 const odsOptions = ODS_OBJECTIVES.map(ods => ({ value: ods, label: ods }));
 
@@ -22,6 +23,12 @@ const validationSchema = Yup.object({
   goal2040: Yup.string(),
   sourceOrganization: Yup.string(),
   sourceUrl: Yup.string().url("Debe ser una URL válida"),
+  sources: Yup.array().of(
+    Yup.object({
+      organization: Yup.string(),
+      url: Yup.string().url("Debe ser una URL válida"),
+    })
+  ),
 });
 
 export default function NewIndicatorProposalForm({ onClose, onSubmit, initialData = {} }) {
@@ -47,15 +54,14 @@ export default function NewIndicatorProposalForm({ onClose, onSubmit, initialDat
             goal2040: initialData.goal2040 || "",
             sourceOrganization: initialData.sourceOrganization || "",
             sourceUrl: initialData.sourceUrl || "",
+            sources: initialData.sources || [{ organization: "", url: "" }],
           }}
           validationSchema={validationSchema}
           onSubmit={values => {
-            // Formatea los valores para enviar
             const formatted = {
               ...values,
               nationalPlanAlignment: values.nationalPlanAlignment?.value || "",
               odsAlignment: values.odsAlignment?.map(o => o.value) || [],
-              // sourceOrganization y sourceUrl ya están separados
             };
             onSubmit && onSubmit(formatted);
             onClose && onClose();
@@ -63,8 +69,6 @@ export default function NewIndicatorProposalForm({ onClose, onSubmit, initialDat
         >
           {({ setFieldValue, values, errors, touched }) => (
             <Form autoComplete="off">
-              {/* ...otros campos igual... */}
-
               <label className={styles.label}>
                 Nombre del indicador:
                 <Field
@@ -150,29 +154,62 @@ export default function NewIndicatorProposalForm({ onClose, onSubmit, initialDat
                 <Field name="goal2040" className={styles.input} type="text" />
               </label>
 
-              <div className={styles.sectionTitle} style={{ marginBottom: "0.3rem" }}>
+              <div className={styles.sectionTitle} style={{ marginBottom: "0.3rem", display: "flex", alignItems: "center" }}>
                 Fuente:
+                <FieldArray name="sources">
+                  {({ push, remove, form }) => (
+                    <>
+                      <AddCircleOutlineIcon
+                        className={styles.addIcon}
+                        style={{ marginLeft: 8, cursor: "pointer" }}
+                        onClick={() => push({ organization: "", url: "" })}
+                        titleAccess="Agregar otra fuente"
+                      />
+                    </>
+                  )}
+                </FieldArray>
               </div>
-              <div className={styles.flexRow}>
-                <label className={styles.label} style={{ flex: 1 }}>
-                  Organización:
-                  <Field
-                    name="sourceOrganization"
-                    className={styles.input}
-                    type="text"
-                  />
-                </label>
-                <label className={styles.label} style={{ flex: 1, marginLeft: "1.2rem" }}>
-                  URL:
-                  <Field
-                    name="sourceUrl"
-                    className={styles.input}
-                    type="text"
-                    placeholder="https://..."
-                  />
-                  <ErrorMessage name="sourceUrl" component="div" className={styles.error} />
-                </label>
-              </div>
+
+              <FieldArray name="sources">
+                {({ remove, push }) => (
+                  <>
+                    {values.sources.map((source, idx) => (
+                      <div className={styles.flexRow} key={idx}>
+                        <label className={styles.label} style={{ flex: 1 }}>
+                          Organización:
+                          <Field
+                            name={`sources[${idx}].organization`}
+                            className={styles.input}
+                            type="text"
+                          />
+                        </label>
+                        <label className={styles.label} style={{ flex: 1, marginLeft: "1.2rem" }}>
+                          URL:
+                          <Field
+                            name={`sources[${idx}].url`}
+                            className={styles.input}
+                            type="text"
+                            placeholder="https://..."
+                          />
+                          <ErrorMessage name={`sources[${idx}].url`} component="div" className={styles.error} />
+                        </label>
+                        {/* Eliminar si hay más de uno */}
+                        {values.sources.length > 1 && (
+                          <button
+                            type="button"
+                            className={styles.removeButton}
+                            onClick={() => remove(idx)}
+                            title="Eliminar esta fuente"
+                          >
+                            ×
+                          </button>
+                        )}
+                      </div>
+                    ))}
+                  </>
+                )}
+              </FieldArray>
+
 
               <div className={styles.actions}>
                 <button type="submit" className={styles.saveButton}>
