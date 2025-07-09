@@ -8,6 +8,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
+import ConfirmDialog from "@/components/dashboard/components/ConfirmDialog/ConfirmDialog";
 
 const axisOptions = NATIONAL_PLAN_AXES.map(axis => ({ value: axis, label: axis }));
 const odsOptions = ODS_OBJECTIVES.map(ods => ({ value: ods, label: ods }));
@@ -32,12 +33,13 @@ const validationSchema = Yup.object({
 });
 
 export default function NewIndicatorProposalForm({ onClose, onSubmit, initialData = {} }) {
-
   const [snackbar, setSnackbar] = useState({
     open: false,
     message: "",
     severity: "success",
   });
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [pendingValues, setPendingValues] = useState(null);
 
   const handleCloseSnackbar = (event, reason) => {
     if (reason === "clickaway") return;
@@ -50,7 +52,6 @@ export default function NewIndicatorProposalForm({ onClose, onSubmit, initialDat
       message: "Propuesta cancelada",
       severity: "warning",
     });
-    // Puedes cerrar el modal después de un delay si quieres
     setTimeout(() => {
       onClose && onClose();
     }, 1200);
@@ -58,21 +59,6 @@ export default function NewIndicatorProposalForm({ onClose, onSubmit, initialDat
 
   return (
     <>
-      <Snackbar
-        open={snackbar.open}
-        autoHideDuration={4000}
-        onClose={handleCloseSnackbar}
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
-      >
-        <Alert
-          onClose={handleCloseSnackbar}
-          severity={snackbar.severity}
-          variant="filled"
-          sx={{ width: "100%" }}
-        >
-          {snackbar.message}
-        </Alert>
-      </Snackbar>
       <div className={styles.overlay}>
         <div className={styles.formContainer}>
           <h2 className={styles.title}>Nueva propuesta de indicador</h2>
@@ -96,32 +82,8 @@ export default function NewIndicatorProposalForm({ onClose, onSubmit, initialDat
             }}
             validationSchema={validationSchema}
             onSubmit={async values => {
-              try {
-                const formatted = {
-                  ...values,
-                  nationalPlanAlignment: values.nationalPlanAlignment?.value || "",
-                  odsAlignment: values.odsAlignment?.map(o => o.value) || [],
-                };
-                // Imprime en consola los datos enviados
-                console.log("Propuesta enviada:", formatted);
-
-                await onSubmit?.(formatted);
-
-                setSnackbar({
-                  open: true,
-                  message: "Propuesta guardada correctamente",
-                  severity: "success",
-                });
-                setTimeout(() => {
-                  onClose && onClose();
-                }, 800);
-              } catch (error) {
-                setSnackbar({
-                  open: true,
-                  message: "Error al guardar la propuesta. Intenta de nuevo.",
-                  severity: "error",
-                });
-              }
+              setPendingValues(values);
+              setConfirmOpen(true);
             }}
           >
             {({ setFieldValue, values, errors, touched }) => (
@@ -284,7 +246,66 @@ export default function NewIndicatorProposalForm({ onClose, onSubmit, initialDat
             )}
           </Formik>
         </div>
+        <ConfirmDialog
+          open={confirmOpen}
+          title="¿Estás seguro de que quieres guardar esta nueva propuesta de indicador?"
+          confirmText="Sí, guardar"
+          cancelText="Cancelar"
+          onClose={() => {
+            setConfirmOpen(false);
+            setSnackbar({
+              open: true,
+              message: "Acción cancelada por el usuario",
+              severity: "warning"
+            });
+          }}
+          onConfirm={async () => {
+            setConfirmOpen(false);
+            if (pendingValues) {
+              try {
+                const formatted = {
+                  ...pendingValues,
+                  nationalPlanAlignment: pendingValues.nationalPlanAlignment?.value || "",
+                  odsAlignment: pendingValues.odsAlignment?.map(o => o.value) || [],
+                };
+                await onSubmit?.(formatted);
+                setSnackbar({
+                  open: true,
+                  message: "Propuesta guardada correctamente",
+                  severity: "success",
+                });
+                setTimeout(() => {
+                  onClose && onClose();
+                }, 800);
+              } catch (error) {
+                setSnackbar({
+                  open: true,
+                  message: "Error al guardar la propuesta. Intenta de nuevo.",
+                  severity: "error",
+                });
+              }
+            }
+          }}
+        />
       </div>
+
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={4000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      >
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity={snackbar.severity}
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
+
+
     </>
 
   );
