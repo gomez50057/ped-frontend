@@ -1,183 +1,194 @@
-import React, { useState } from "react";
+import React from "react";
 import styles from "./NewIndicatorProposalForm.module.css";
 import { NATIONAL_PLAN_AXES, ODS_OBJECTIVES } from "@/utils/indicatorFormOptions";
+import Select from "react-select";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
+
+// Opciones para Select
+const axisOptions = NATIONAL_PLAN_AXES.map(axis => ({ value: axis, label: axis }));
+const odsOptions = ODS_OBJECTIVES.map(ods => ({ value: ods, label: ods }));
+
+const validationSchema = Yup.object({
+  indicatorName: Yup.string().required("Campo obligatorio"),
+  pedAlignment: Yup.string(),
+  nationalPlanAlignment: Yup.object().required("Campo obligatorio"),
+  odsAlignment: Yup.array().min(1, "Selecciona al menos un ODS"),
+  description: Yup.string(),
+  periodicity: Yup.string(),
+  trend: Yup.string(),
+  baseline: Yup.string(),
+  goal2028: Yup.string(),
+  goal2040: Yup.string(),
+  sourceOrganization: Yup.string(),
+  sourceUrl: Yup.string().url("Debe ser una URL válida"),
+});
 
 export default function NewIndicatorProposalForm({ onClose, onSubmit, initialData = {} }) {
-  const [form, setForm] = useState({
-    indicatorName: initialData.indicatorName || "",
-    pedAlignment: initialData.pedAlignment || "",
-    nationalPlanAlignment: initialData.nationalPlanAlignment || "",
-    odsAlignment: initialData.odsAlignment || "",
-    description: initialData.description || "",
-    periodicity: initialData.periodicity || "",
-    trend: initialData.trend || "",
-    baseline: initialData.baseline || "",
-    goal2028: initialData.goal2028 || "",
-    goal2040: initialData.goal2040 || "",
-    source: initialData.source || "",
-  });
-
-  const handleChange = e => {
-    const { name, value } = e.target;
-    setForm(prev => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = e => {
-    e.preventDefault();
-    // Puedes agregar validaciones aquí antes de enviar
-    onSubmit && onSubmit(form);
-    onClose && onClose();
-  };
-
   return (
     <div className={styles.overlay}>
       <div className={styles.formContainer}>
         <h2 className={styles.title}>Nueva propuesta de indicador</h2>
-        <form onSubmit={handleSubmit} autoComplete="off">
-          <label className={styles.label}>
-            Nombre del indicador:
-            <input
-              type="text"
-              name="indicatorName"
-              className={styles.input}
-              value={form.indicatorName}
-              onChange={handleChange}
-              required
-            />
-          </label>
-          <label className={styles.label}>
-            Alineación al PED:
-            <input
-              type="text"
-              name="pedAlignment"
-              className={styles.input}
-              value={form.pedAlignment}
-              onChange={handleChange}
-            />
-          </label>
-          <label className={styles.label}>
-            Alineación al Plan Nacional de Desarrollo:
-            <select
-              name="nationalPlanAlignment"
-              className={styles.input}
-              value={form.nationalPlanAlignment}
-              onChange={handleChange}
-              required
-            >
-              <option value="">Selecciona una opción</option>
-              {NATIONAL_PLAN_AXES.map(axis => (
-                <option key={axis} value={axis}>
-                  {axis}
-                </option>
-              ))}
-            </select>
-          </label>
+        <Formik
+          initialValues={{
+            indicatorName: initialData.indicatorName || "",
+            pedAlignment: initialData.pedAlignment || "",
+            nationalPlanAlignment: initialData.nationalPlanAlignment
+              ? { value: initialData.nationalPlanAlignment, label: initialData.nationalPlanAlignment }
+              : null,
+            odsAlignment: initialData.odsAlignment
+              ? initialData.odsAlignment.map(ods => ({ value: ods, label: ods }))
+              : [],
+            description: initialData.description || "",
+            periodicity: initialData.periodicity || "",
+            trend: initialData.trend || "",
+            baseline: initialData.baseline || "",
+            goal2028: initialData.goal2028 || "",
+            goal2040: initialData.goal2040 || "",
+            sourceOrganization: initialData.sourceOrganization || "",
+            sourceUrl: initialData.sourceUrl || "",
+          }}
+          validationSchema={validationSchema}
+          onSubmit={values => {
+            // Formatea los valores para enviar
+            const formatted = {
+              ...values,
+              nationalPlanAlignment: values.nationalPlanAlignment?.value || "",
+              odsAlignment: values.odsAlignment?.map(o => o.value) || [],
+              // sourceOrganization y sourceUrl ya están separados
+            };
+            onSubmit && onSubmit(formatted);
+            onClose && onClose();
+          }}
+        >
+          {({ setFieldValue, values, errors, touched }) => (
+            <Form autoComplete="off">
+              {/* ...otros campos igual... */}
 
-          <label className={styles.label}>
-            Alineación a ODS:
-            <select
-              name="odsAlignment"
-              className={styles.input}
-              multiple
-              value={form.odsAlignment}
-              onChange={e => {
-                const selected = Array.from(e.target.selectedOptions, option => option.value);
-                setForm(prev => ({ ...prev, odsAlignment: selected }));
-              }}
-              size={5} // Muestra 5 elementos a la vez (ajusta si quieres)
-            >
-              {ODS_OBJECTIVES.map((ods, idx) => (
-                <option key={ods} value={ods}>
-                  {ods}
-                </option>
-              ))}
-            </select>
-            <small className={styles.hint}>Usa Ctrl/Cmd para seleccionar varios</small>
-          </label>
-          <label className={styles.label}>
-            Descripción:
-            <textarea
-              name="description"
-              className={styles.textarea}
-              value={form.description}
-              onChange={handleChange}
-            />
-          </label>
-          <label className={styles.label}>
-            Periodicidad:
-            <input
-              type="text"
-              name="periodicity"
-              className={styles.input}
-              value={form.periodicity}
-              onChange={handleChange}
-            />
-          </label>
-          <label className={styles.label}>
-            Sentido del indicador:
-            <input
-              type="text"
-              name="trend"
-              className={styles.input}
-              value={form.trend}
-              onChange={handleChange}
-              placeholder="Ejemplo: Ascendente"
-            />
-          </label>
-          <label className={styles.label}>
-            Línea base:
-            <input
-              type="text"
-              name="baseline"
-              className={styles.input}
-              value={form.baseline}
-              onChange={handleChange}
-              placeholder="Ejemplo: 2023: 19ª Posición"
-            />
-          </label>
-          <label className={styles.label}>
-            Meta 2028:
-            <input
-              type="text"
-              name="goal2028"
-              className={styles.input}
-              value={form.goal2028}
-              onChange={handleChange}
-            />
-          </label>
-          <label className={styles.label}>
-            Meta 2040:
-            <input
-              type="text"
-              name="goal2040"
-              className={styles.input}
-              value={form.goal2040}
-              onChange={handleChange}
-            />
-          </label>
-          <label className={styles.label}>
-            Fuente:
-            <input
-              type="text"
-              name="source"
-              className={styles.input}
-              value={form.source}
-              onChange={handleChange}
-            />
-          </label>
-          <div className={styles.actions}>
-            <button type="submit" className={styles.saveButton}>
-              Guardar propuesta
-            </button>
-            <button
-              type="button"
-              className={styles.cancelButton}
-              onClick={onClose}
-            >
-              Cancelar
-            </button>
-          </div>
-        </form>
+              <label className={styles.label}>
+                Nombre del indicador:
+                <Field
+                  name="indicatorName"
+                  className={styles.input}
+                  type="text"
+                  required
+                />
+                <ErrorMessage name="indicatorName" component="div" className={styles.error} />
+              </label>
+              <label className={styles.label}>
+                Alineación al PED:
+                <Field name="pedAlignment" className={styles.input} type="text" />
+              </label>
+              <label className={styles.label}>
+                Alineación al Plan Nacional de Desarrollo:
+                <Select
+                  name="nationalPlanAlignment"
+                  classNamePrefix="react-select"
+                  className={styles.reactSelect}
+                  value={values.nationalPlanAlignment}
+                  options={axisOptions}
+                  placeholder="Selecciona una opción"
+                  onChange={option => setFieldValue("nationalPlanAlignment", option)}
+                  isClearable
+                />
+                {errors.nationalPlanAlignment && touched.nationalPlanAlignment && (
+                  <div className={styles.error}>{errors.nationalPlanAlignment}</div>
+                )}
+              </label>
+              <label className={styles.label}>
+                Alineación a ODS:
+                <Select
+                  name="odsAlignment"
+                  classNamePrefix="react-select"
+                  className={styles.reactSelect}
+                  value={values.odsAlignment}
+                  options={odsOptions}
+                  isMulti
+                  placeholder="Selecciona uno o varios"
+                  onChange={options => setFieldValue("odsAlignment", options)}
+                />
+                {errors.odsAlignment && touched.odsAlignment && (
+                  <div className={styles.error}>{errors.odsAlignment}</div>
+                )}
+              </label>
+              <label className={styles.label}>
+                Descripción:
+                <Field
+                  name="description"
+                  className={styles.textarea}
+                  as="textarea"
+                />
+              </label>
+              <label className={styles.label}>
+                Periodicidad:
+                <Field name="periodicity" className={styles.input} type="text" />
+              </label>
+              <label className={styles.label}>
+                Sentido del indicador:
+                <Field
+                  name="trend"
+                  className={styles.input}
+                  type="text"
+                  placeholder="Ejemplo: Ascendente"
+                />
+              </label>
+              <label className={styles.label}>
+                Línea base:
+                <Field
+                  name="baseline"
+                  className={styles.input}
+                  type="text"
+                  placeholder="Ejemplo: 2023: 19ª Posición"
+                />
+              </label>
+              <label className={styles.label}>
+                Meta 2028:
+                <Field name="goal2028" className={styles.input} type="text" />
+              </label>
+              <label className={styles.label}>
+                Meta 2040:
+                <Field name="goal2040" className={styles.input} type="text" />
+              </label>
+
+              <div className={styles.sectionTitle} style={{ marginBottom: "0.3rem" }}>
+                Fuente:
+              </div>
+              <div className={styles.flexRow}>
+                <label className={styles.label} style={{ flex: 1 }}>
+                  Organización:
+                  <Field
+                    name="sourceOrganization"
+                    className={styles.input}
+                    type="text"
+                  />
+                </label>
+                <label className={styles.label} style={{ flex: 1, marginLeft: "1.2rem" }}>
+                  URL:
+                  <Field
+                    name="sourceUrl"
+                    className={styles.input}
+                    type="text"
+                    placeholder="https://..."
+                  />
+                  <ErrorMessage name="sourceUrl" component="div" className={styles.error} />
+                </label>
+              </div>
+
+              <div className={styles.actions}>
+                <button type="submit" className={styles.saveButton}>
+                  Guardar propuesta
+                </button>
+                <button
+                  type="button"
+                  className={styles.cancelButton}
+                  onClick={onClose}
+                >
+                  Cancelar
+                </button>
+              </div>
+            </Form>
+          )}
+        </Formik>
       </div>
     </div>
   );
