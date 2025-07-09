@@ -8,6 +8,8 @@ import FeedbackSection from '../components/FeedbackSection/IndicatorsFeedbackSec
 
 export default function IndicatorsReview() {
   const [feedback, setFeedback] = useState({});
+  const [isFinal, setIsFinal] = useState(false);
+  const [snackbar, setSnackbar] = useState({ open: false, message: "", severity: "info" });
 
   function groupIndicatorsByEje() {
     return EJE_GROUPS.map(eje => {
@@ -32,11 +34,10 @@ export default function IndicatorsReview() {
             acuerdo: "yes",
             comentarios: {
               ...prev[id]?.comentarios,
-              justificacion: "",
+              justificacion: "No Aplica",
               meta2028: "",
               meta2040: ""
             }
-            // NO toques metas ni metasComentario
           }
         };
       } else if (value === "no") {
@@ -48,7 +49,7 @@ export default function IndicatorsReview() {
             metas: "",
             comentarios: {
               ...prev[id]?.comentarios,
-              metasComentario: "",
+              justificacion: "",
               meta2028: "",
               meta2040: ""
             }
@@ -68,7 +69,8 @@ export default function IndicatorsReview() {
         metas: value,
         comentarios: {
           ...prev[id]?.comentarios,
-          metasComentario: value === "no" ? "" : prev[id]?.comentarios?.metasComentario || ""
+          meta2028: value === "yes" ? "No Aplica" : "",
+          meta2040: value === "yes" ? "No Aplica" : ""
         }
       }
     }));
@@ -236,6 +238,13 @@ export default function IndicatorsReview() {
             <button
               type="button"
               className={styles.slideButton}
+              onClick={() => {
+                console.log({
+                  feedback,
+                  envioFinal: isFinal,
+                });
+                setSnackbar({ open: true, message: "Avance guardado en consola", severity: "info" });
+              }}
             >
               Guardar avance
             </button>
@@ -244,6 +253,8 @@ export default function IndicatorsReview() {
             <label className={styles.containerChecked}>
               <input
                 type="checkbox"
+                checked={isFinal}
+                onChange={e => setIsFinal(e.target.checked)}
               />
               <div className={styles.checkmark}>
                 <svg

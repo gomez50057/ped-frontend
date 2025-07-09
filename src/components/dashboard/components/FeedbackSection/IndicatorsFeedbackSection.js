@@ -48,7 +48,7 @@ export default function IndicatorsFeedbackSection({
           <div className={styles.commentArea}>
             <textarea
               placeholder="Justificación..."
-              value={comentarios?.justificacion || ""}
+              value={comentarios?.justificacion === "No Aplica" ? "" : (comentarios?.justificacion || "")}
               onChange={e =>
                 onComentarioChange(id, "justificacion", e.target.value)
               }
@@ -110,7 +110,7 @@ export default function IndicatorsFeedbackSection({
                 Ingresa tu nueva meta 2028:
                 <input
                   type="text"
-                  value={comentarios?.meta2028 || ""}
+                  value={comentarios?.meta2028 === "No Aplica" ? "" : (comentarios?.meta2028 || "")}
                   onChange={e =>
                     onComentarioChange(id, "meta2028", e.target.value)
                   }
@@ -122,7 +122,7 @@ export default function IndicatorsFeedbackSection({
                 Ingresa tu nueva meta 2040:
                 <input
                   type="text"
-                  value={comentarios?.meta2040 || ""}
+                  value={comentarios?.meta2040 === "No Aplica" ? "" : (comentarios?.meta2040 || "")}
                   onChange={e =>
                     onComentarioChange(id, "meta2040", e.target.value)
                   }
