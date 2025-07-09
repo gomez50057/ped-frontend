@@ -357,6 +357,7 @@ export default function IndicatorsReview() {
                       onMetasChange={handleMetasChange}
                       onComentarioChange={handleComentarioChange}
                       onAgregarPropuesta={handleAgregarPropuesta}
+                      indicadorInfo={item.indicador}
                     />
                   </div>
                 );

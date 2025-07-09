@@ -304,9 +304,6 @@ export default function NewIndicatorProposalForm({ onClose, onSubmit, initialDat
           {snackbar.message}
         </Alert>
       </Snackbar>
-
-
     </>
-
   );
 }

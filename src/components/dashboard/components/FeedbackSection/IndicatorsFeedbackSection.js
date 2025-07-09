@@ -10,8 +10,15 @@ export default function IndicatorsFeedbackSection({
   onAcuerdoChange,
   onMetasChange,
   onComentarioChange,
+  indicadorInfo,
 }) {
   const [showProposalForm, setShowProposalForm] = useState(false);
+  const [indicadorIdSeleccionado, setIndicadorIdSeleccionado] = useState(null);
+
+  function handleSubmitPropuesta(propuesta) {
+    console.log("Propuesta enviada:\n", JSON.stringify(propuesta, null, 2));
+    setShowProposalForm(false);
+  }
 
   return (
     <div className={styles.feedbackSection}>
@@ -54,21 +61,23 @@ export default function IndicatorsFeedbackSection({
               }
             />
           </div>
+          <span>{indicadorInfo?.nombre || "Indicador sin nombre"}</span>
           <button
             type="button"
             className={styles.addProposalButton}
-            onClick={() => setShowProposalForm(true)}
+            onClick={() => {
+              setIndicadorIdSeleccionado(indicadorInfo?.id);
+              setShowProposalForm(true);
+            }}
           >
             Agregar nueva propuesta de indicador
           </button>
+
           {showProposalForm && (
             <NewIndicatorProposalForm
               onClose={() => setShowProposalForm(false)}
-              onSubmit={formData => {
-                // Aquí puedes manejar el envío de la nueva propuesta (guardar, enviar, etc.)
-                console.log("Nueva propuesta enviada:", formData);
-                setShowProposalForm(false);
-              }}
+              indicadorId={indicadorIdSeleccionado}
+              onSubmit={handleSubmitPropuesta}
             />
           )}
         </>
