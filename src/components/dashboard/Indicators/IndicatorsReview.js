@@ -121,6 +121,47 @@ export default function IndicatorsReview() {
     alert(`Agregar propuesta para el indicador: ${fichaId}`);
   }
 
+  function sanitizeFeedback(feedback) {
+    const result = {};
+    Object.entries(feedback).forEach(([key, value]) => {
+      let { acuerdo, metas, comentarios } = value;
+
+      if (acuerdo === "no") {
+        result[key] = {
+          acuerdo,
+          metas: "No Aplica",
+          comentarios: {
+            justificacion: comentarios.justificacion || "",
+            meta2028: "No Aplica",
+            meta2040: "No Aplica"
+          }
+        };
+      } else if (acuerdo === "yes" && metas === "yes") {
+        result[key] = {
+          acuerdo,
+          metas,
+          comentarios: {
+            justificacion: "No Aplica",
+            meta2028: "No Aplica",
+            meta2040: "No Aplica"
+          }
+        };
+      } else if (acuerdo === "yes" && metas === "no") {
+        result[key] = {
+          acuerdo,
+          metas,
+          comentarios: {
+            justificacion: "No Aplica",
+            meta2028: comentarios.meta2028 || "",
+            meta2040: comentarios.meta2040 || ""
+          }
+        };
+      }
+    });
+    return result;
+  }
+
+
   return (
     <div className={styles.container}>
       <div className={styles.containerReview}>
@@ -329,8 +370,9 @@ export default function IndicatorsReview() {
           setIsSaving(true);
           setConfirmOpen(false);
           setTimeout(() => {
+            const cleanedFeedback = sanitizeFeedback(feedback);
             console.log({
-              feedback,
+              feedback: cleanedFeedback,
               envioFinal: isFinal
             });
             setSnackbar({ open: true, message: "Avance guardado en consola", severity: "info" });
