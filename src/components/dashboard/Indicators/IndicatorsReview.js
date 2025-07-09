@@ -15,6 +15,7 @@ export default function IndicatorsReview() {
   const [axes, setAxes] = useState([]);
   const [loadingAxes, setLoadingAxes] = useState(true);
   const [isFinal, setIsFinal] = useState(false);
+  const [feedbackId, setFeedbackId] = useState(null); // <-- Nuevo: para decidir POST/PUT
   const [confirmFinalOpen, setConfirmFinalOpen] = useState(false);
   const [pendingFinalState, setPendingFinalState] = useState(null); // true (marcar) o false (desmarcar)
   const [confirmOpen, setConfirmOpen] = useState(false);
@@ -22,22 +23,34 @@ export default function IndicatorsReview() {
   const [snackbar, setSnackbar] = useState({ open: false, message: "", severity: "info" });
 
   useEffect(() => {
-    async function fetchAxes() {
+    async function fetchAxesAndFeedback() {
       try {
-        const res = await fetchWithAuth("/api/indicadores/user-indicator-selection/");
-        const data = await res.json();
-        if (data.length > 0 && data[0].axes) {
-          setAxes(data[0].axes);
+        // 1. Cargar ejes del usuario
+        const ejeRes = await fetchWithAuth("/api/indicadores/user-indicator-selection/");
+        const ejeData = await ejeRes.json();
+        if (Array.isArray(ejeData) && ejeData.length > 0 && ejeData[0].axes) {
+          setAxes(ejeData[0].axes);
         } else {
           setAxes([]);
         }
+
+        // 2. Cargar feedback existente del usuario
+        const fbRes = await fetchWithAuth("/api/indicadores-feedback/feedback/");
+        if (fbRes.ok) {
+          const fbData = await fbRes.json();
+          if (fbData.feedback) setFeedback(fbData.feedback);
+          if (typeof fbData.envioFinal === "boolean") setIsFinal(fbData.envioFinal);
+          if (fbData.id) setFeedbackId(fbData.id);
+        }
       } catch (err) {
+        // En caso de error, deja los estados por defecto
         setAxes([]);
+        setFeedback({});
       } finally {
         setLoadingAxes(false);
       }
     }
-    fetchAxes();
+    fetchAxesAndFeedback();
   }, []);
 
   const filteredEjeGroups = EJE_GROUPS.filter((_, idx) => axes.includes(idx + 1));
@@ -161,16 +174,65 @@ export default function IndicatorsReview() {
     return result;
   }
 
+  async function handleSaveFeedback(cleanedFeedback, envioFinal) {
+    try {
+      let res;
+      if (feedbackId) {
+        // PUT
+        res = await fetchWithAuth('/api/indicadores-feedback/feedback/', {
+          method: 'PUT',
+          body: JSON.stringify({
+            feedback: cleanedFeedback,
+            envioFinal
+          })
+        });
+      } else {
+        // POST
+        res = await fetchWithAuth('/api/indicadores-feedback/feedback/', {
+          method: 'POST',
+          body: JSON.stringify({
+            feedback: cleanedFeedback,
+            envioFinal
+          })
+        });
+      }
+      if (res.ok) {
+        setSnackbar({
+          open: true,
+          message: feedbackId ? "Avance actualizado correctamente" : "Avance guardado correctamente",
+          severity: "success"
+        });
+        if (!feedbackId) {
+          const data = await res.json();
+          if (data.id) setFeedbackId(data.id);
+        }
+      } else {
+        let msg = "Error al guardar el avance";
+        try {
+          const data = await res.json();
+          if (data.detail) msg = data.detail;
+        } catch { }
+        setSnackbar({
+          open: true,
+          message: msg,
+          severity: "error"
+        });
+      }
+    } catch (e) {
+      setSnackbar({
+        open: true,
+        message: "Error inesperado al guardar el avance",
+        severity: "error"
+      });
+    }
+  }
 
   return (
     <div className={styles.container}>
       <div className={styles.containerReview}>
         {filteredEjeGroups.map(eje => {
-          // Para cada grupo, arma los indicadores:
           const indicatorsInGroup = eje.keys.map(key => indicators[key]).filter(Boolean);
-
           if (indicatorsInGroup.length === 0) return null;
-
           return (
             <div key={eje.title} className={styles.ejeContainer}>
               <h2 className={styles.ejeTitle}>{eje.title}</h2>
@@ -296,7 +358,6 @@ export default function IndicatorsReview() {
                       onComentarioChange={handleComentarioChange}
                       onAgregarPropuesta={handleAgregarPropuesta}
                     />
-
                   </div>
                 );
               })}
@@ -366,24 +427,17 @@ export default function IndicatorsReview() {
             severity: "warning"
           });
         }}
-        onConfirm={() => {
+        onConfirm={async () => {
           setIsSaving(true);
           setConfirmOpen(false);
-          setTimeout(() => {
-            const cleanedFeedback = sanitizeFeedback(feedback);
-            console.log({
-              feedback: cleanedFeedback,
-              envioFinal: isFinal
-            });
-            setSnackbar({ open: true, message: "Avance guardado en consola", severity: "info" });
-            setIsSaving(false);
-          }, 600);
+          const cleanedFeedback = sanitizeFeedback(feedback);
+          await handleSaveFeedback(cleanedFeedback, isFinal);
+          setIsSaving(false);
         }}
         title="¿Estás seguro de que quieres guardar tu avance?"
         confirmText="Sí, guardar"
         cancelText="Cancelar"
       />
-
 
       <ConfirmDialog
         open={confirmFinalOpen}
