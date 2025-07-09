@@ -7,10 +7,15 @@ import styles from './IndicatorsReview.module.css';
 import FeedbackSection from '../components/FeedbackSection/IndicatorsFeedbackSection';
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
+import ConfirmDialog from "@/components/dashboard/components/ConfirmDialog/ConfirmDialog";
 
 export default function IndicatorsReview() {
   const [feedback, setFeedback] = useState({});
   const [isFinal, setIsFinal] = useState(false);
+  const [confirmFinalOpen, setConfirmFinalOpen] = useState(false);
+  const [pendingFinalState, setPendingFinalState] = useState(null); // true (marcar) o false (desmarcar)
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
   const [snackbar, setSnackbar] = useState({ open: false, message: "", severity: "info" });
 
   const handleCloseSnackbar = (event, reason) => {
@@ -233,22 +238,6 @@ export default function IndicatorsReview() {
                       onAgregarPropuesta={handleAgregarPropuesta}
                     />
 
-                    <Snackbar
-                      open={snackbar.open}
-                      autoHideDuration={4000}
-                      onClose={handleCloseSnackbar}
-                      anchorOrigin={{ vertical: "top", horizontal: "right" }}
-                    >
-                      <Alert
-                        onClose={handleCloseSnackbar}
-                        severity={snackbar.severity}
-                        variant="filled"
-                        sx={{ width: "100%" }}
-                      >
-                        {snackbar.message}
-                      </Alert>
-                    </Snackbar>
-                    
                   </div>
                 );
               })
@@ -262,19 +251,10 @@ export default function IndicatorsReview() {
             <button
               type="button"
               className={styles.slideButton}
-              onClick={() => {
-                console.log({
-                  feedback,
-                  envioFinal: isFinal,
-                });
-                setSnackbar({
-                  open: true,
-                  message: "Avance guardado en consola",
-                  severity: "info"
-                });
-              }}
+              onClick={() => setConfirmOpen(true)}
+              disabled={isSaving}
             >
-              Guardar avance
+              {isSaving ? 'Guardando...' : 'Guardar avance'}
             </button>
           </div>
           <div className={styles.envioFinalWrapper}>
@@ -282,7 +262,11 @@ export default function IndicatorsReview() {
               <input
                 type="checkbox"
                 checked={isFinal}
-                onChange={e => setIsFinal(e.target.checked)}
+                onChange={e => {
+                  // e.target.checked es true si quieren marcar, false si quieren desmarcar
+                  setPendingFinalState(e.target.checked);
+                  setConfirmFinalOpen(true);
+                }}
               />
               <div className={styles.checkmark}>
                 <svg
@@ -313,6 +297,60 @@ export default function IndicatorsReview() {
           </div>
         </div>
       </div>
+
+      <ConfirmDialog
+        open={confirmOpen}
+        onClose={() => {
+          setConfirmOpen(false);
+          setSnackbar({
+            open: true,
+            message: "Acción cancelada por el usuario",
+            severity: "warning"
+          });
+        }}
+        onConfirm={() => {
+          setIsSaving(true);
+          setConfirmOpen(false);
+          setTimeout(() => {
+            console.log({
+              feedback,
+              envioFinal: isFinal
+            });
+            setSnackbar({ open: true, message: "Avance guardado en consola", severity: "info" });
+            setIsSaving(false);
+          }, 600);
+        }}
+        title="¿Estás seguro de que quieres guardar tu avance?"
+        confirmText="Sí, guardar"
+        cancelText="Cancelar"
+      />
+
+
+      <ConfirmDialog
+        open={confirmFinalOpen}
+        onClose={() => setConfirmFinalOpen(false)}
+        onConfirm={() => {
+          setIsFinal(pendingFinalState);
+          setConfirmFinalOpen(false);
+        }}
+        title={
+          pendingFinalState
+            ? "¿Estás seguro de enviar como versión final?"
+            : "¿Estás seguro de quitar la entrega final?"
+        }
+        confirmText={
+          pendingFinalState
+            ? "Sí, confirmar envío final"
+            : "Sí, quitar entrega final"
+        }
+        cancelText="Cancelar"
+      />
+
+      <Snackbar open={snackbar.open} autoHideDuration={4000} onClose={handleCloseSnackbar} anchorOrigin={{ vertical: "top", horizontal: "right" }}>
+        <Alert onClose={handleCloseSnackbar} severity={snackbar.severity} variant="filled" sx={{ width: "100%" }}>
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
     </div>
   );
 }
