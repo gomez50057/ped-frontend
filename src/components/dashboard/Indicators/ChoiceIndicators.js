@@ -75,6 +75,13 @@ export default function ChoiceIndicators({ onNext }) {
     const selectedIds = Object.entries(checkedItems)
       .filter(([, checked]) => checked)
       .map(([id]) => Number(id));
+
+    if (selectedIds.length === 0) {
+      setError("Debes seleccionar al menos un eje.");
+      setSaving(false);
+      return;
+    }
+
     try {
       let response;
       if (selectionId) {
@@ -83,7 +90,7 @@ export default function ChoiceIndicators({ onNext }) {
           `/api/indicadores/user-indicator-selection/${selectionId}/`,
           {
             method: "PUT",
-            body: JSON.stringify({ axes: selectedIds })
+            body: JSON.stringify({ axes: selectedIds }),
           }
         );
       } else {
@@ -92,7 +99,7 @@ export default function ChoiceIndicators({ onNext }) {
           "/api/indicadores/user-indicator-selection/",
           {
             method: "POST",
-            body: JSON.stringify({ axes: selectedIds })
+            body: JSON.stringify({ axes: selectedIds }),
           }
         );
       }

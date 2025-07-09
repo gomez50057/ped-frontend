@@ -1,6 +1,3 @@
-"use client";
-
-import React from "react";
 import StrategicPlatform from "@/components/dashboard/StrategicPlatform/PlataformaEstrategicaContainer";
 import NavbarDashboard from '@/components/shared/NavbarDashboard';
 

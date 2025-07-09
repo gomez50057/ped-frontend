@@ -134,8 +134,9 @@ export default function IndicatorsReview() {
             <div key={eje.title} className={styles.ejeContainer}>
               <h2 className={styles.ejeTitle}>{eje.title}</h2>
               {indicatorsInGroup.map(item => {
+                const malId = item?.indicador?.id || item?.id || Math.random();
                 if (!item || !item.indicador || !item.indicador.id) {
-                  return <div style={{ color: 'red' }}>Indicador mal definido</div>;
+                  return <div key={malId} style={{ color: 'red' }}>Indicador mal definido</div>;
                 }
                 const fichaId = item.indicador.id;
                 return (
