@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styles from "./IndicatorsFeedbackSection.module.css";
 import NewIndicatorProposalForm from "../NewIndicatorProposalForm/NewIndicatorProposalForm";
+import { fetchWithAuth } from '@/utils/auth';
 
 export default function IndicatorsFeedbackSection({
   id,
@@ -15,10 +16,55 @@ export default function IndicatorsFeedbackSection({
   const [showProposalForm, setShowProposalForm] = useState(false);
   const [indicadorIdSeleccionado, setIndicadorIdSeleccionado] = useState(null);
 
-  function handleSubmitPropuesta(propuesta) {
-    console.log("Propuesta enviada:\n", JSON.stringify(propuesta, null, 2));
+  //   const [initialData, setInitialData] = useState({});
+  // const [existingId, setExistingId] = useState(null);
+  // const [loading, setLoading] = useState(true);
+
+  function formatPropuestaForAPI(propuesta) {
+    return {
+      indicator_name: propuesta.indicatorName,
+      ped_alignment: propuesta.pedAlignment,
+      national_plan_alignment: propuesta.nationalPlanAlignment,
+      ods_alignment: propuesta.odsAlignment,
+      description: propuesta.description,
+      periodicity: propuesta.periodicity,
+      trend: propuesta.trend,
+      baseline: propuesta.baseline,
+      goal_2028: propuesta.goal2028,
+      goal_2040: propuesta.goal2040,
+      sources: propuesta.sources,
+      indicador: propuesta.indicador,
+    };
+  }
+
+  async function handleSubmitPropuesta(propuesta) {
+    const body = formatPropuestaForAPI(propuesta);
+
+    try {
+      const res = await fetchWithAuth('/api/indicador/new-indicador/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        console.log("Propuesta enviada correctamente:", data);
+        // Notifica éxito al usuario (puedes usar snackbar, etc)
+      } else {
+        const errorData = await res.json();
+        console.error("Error al enviar la propuesta:", errorData);
+        // Notifica error al usuario
+      }
+    } catch (error) {
+      console.error("Error de red al enviar la propuesta:", error);
+      // Notifica error al usuario
+    }
     setShowProposalForm(false);
   }
+
 
   return (
     <div className={styles.feedbackSection}>
