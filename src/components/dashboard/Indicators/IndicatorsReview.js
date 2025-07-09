@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import * as indicators from '@/utils/indicatorsData';
 import { EJE_GROUPS } from '@/utils/indicatorsDataGroups';
+import { fetchWithAuth } from '@/utils/auth';
 import styles from './IndicatorsReview.module.css';
 import FeedbackSection from '../components/FeedbackSection/IndicatorsFeedbackSection';
 import Snackbar from "@mui/material/Snackbar";
@@ -11,6 +12,8 @@ import ConfirmDialog from "@/components/dashboard/components/ConfirmDialog/Confi
 
 export default function IndicatorsReview() {
   const [feedback, setFeedback] = useState({});
+  const [axes, setAxes] = useState([]);
+  const [loadingAxes, setLoadingAxes] = useState(true);
   const [isFinal, setIsFinal] = useState(false);
   const [confirmFinalOpen, setConfirmFinalOpen] = useState(false);
   const [pendingFinalState, setPendingFinalState] = useState(null); // true (marcar) o false (desmarcar)
@@ -18,23 +21,35 @@ export default function IndicatorsReview() {
   const [isSaving, setIsSaving] = useState(false);
   const [snackbar, setSnackbar] = useState({ open: false, message: "", severity: "info" });
 
+  useEffect(() => {
+    async function fetchAxes() {
+      try {
+        const res = await fetchWithAuth("/api/indicadores/user-indicator-selection/");
+        const data = await res.json();
+        if (data.length > 0 && data[0].axes) {
+          setAxes(data[0].axes);
+        } else {
+          setAxes([]);
+        }
+      } catch (err) {
+        setAxes([]);
+      } finally {
+        setLoadingAxes(false);
+      }
+    }
+    fetchAxes();
+  }, []);
+
+  const filteredEjeGroups = EJE_GROUPS.filter((_, idx) => axes.includes(idx + 1));
+
+  if (loadingAxes) return <div>Cargando ejes...</div>;
+  if (filteredEjeGroups.length === 0) return <div>No tienes ejes asignados para revisar.</div>;
+
+
   const handleCloseSnackbar = (event, reason) => {
     if (reason === "clickaway") return;
     setSnackbar(s => ({ ...s, open: false }));
   };
-
-  function groupIndicatorsByEje() {
-    return EJE_GROUPS.map(eje => {
-      const missing = eje.keys.filter(key => !indicators[key]);
-      if (missing.length > 0) {
-        throw new Error(`Faltan los indicadores: ${missing.join(', ')} en ${eje.title}`);
-      }
-      return {
-        ...eje,
-        indicators: eje.keys.map(key => indicators[key]),
-      };
-    });
-  }
 
   function handleAcuerdoChange(id, value) {
     setFeedback(prev => {
@@ -106,17 +121,19 @@ export default function IndicatorsReview() {
     alert(`Agregar propuesta para el indicador: ${fichaId}`);
   }
 
-
-  const grouped = groupIndicatorsByEje(indicators);
-
   return (
     <div className={styles.container}>
       <div className={styles.containerReview}>
-        {grouped.map(eje => (
-          <div key={eje.title} className={styles.ejeContainer}>
-            <h2 className={styles.ejeTitle}>{eje.title}</h2>
-            {
-              eje.indicators.map(item => {
+        {filteredEjeGroups.map(eje => {
+          // Para cada grupo, arma los indicadores:
+          const indicatorsInGroup = eje.keys.map(key => indicators[key]).filter(Boolean);
+
+          if (indicatorsInGroup.length === 0) return null;
+
+          return (
+            <div key={eje.title} className={styles.ejeContainer}>
+              <h2 className={styles.ejeTitle}>{eje.title}</h2>
+              {indicatorsInGroup.map(item => {
                 if (!item || !item.indicador || !item.indicador.id) {
                   return <div style={{ color: 'red' }}>Indicador mal definido</div>;
                 }
@@ -240,10 +257,10 @@ export default function IndicatorsReview() {
 
                   </div>
                 );
-              })
-            }
-          </div>
-        ))}
+              })}
+            </div>
+          );
+        })}
       </div>
       <div className={styles.buttonsContainer}>
         <div className={styles.buttonsContainerfixed}>
@@ -263,7 +280,6 @@ export default function IndicatorsReview() {
                 type="checkbox"
                 checked={isFinal}
                 onChange={e => {
-                  // e.target.checked es true si quieren marcar, false si quieren desmarcar
                   setPendingFinalState(e.target.checked);
                   setConfirmFinalOpen(true);
                 }}
