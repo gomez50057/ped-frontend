@@ -5,11 +5,18 @@ import * as indicators from '@/utils/indicatorsData';
 import { EJE_GROUPS } from '@/utils/indicatorsDataGroups';
 import styles from './IndicatorsReview.module.css';
 import FeedbackSection from '../components/FeedbackSection/IndicatorsFeedbackSection';
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 
 export default function IndicatorsReview() {
   const [feedback, setFeedback] = useState({});
   const [isFinal, setIsFinal] = useState(false);
   const [snackbar, setSnackbar] = useState({ open: false, message: "", severity: "info" });
+
+  const handleCloseSnackbar = (event, reason) => {
+    if (reason === "clickaway") return;
+    setSnackbar(s => ({ ...s, open: false }));
+  };
 
   function groupIndicatorsByEje() {
     return EJE_GROUPS.map(eje => {
@@ -225,6 +232,23 @@ export default function IndicatorsReview() {
                       onComentarioChange={handleComentarioChange}
                       onAgregarPropuesta={handleAgregarPropuesta}
                     />
+
+                    <Snackbar
+                      open={snackbar.open}
+                      autoHideDuration={4000}
+                      onClose={handleCloseSnackbar}
+                      anchorOrigin={{ vertical: "top", horizontal: "right" }}
+                    >
+                      <Alert
+                        onClose={handleCloseSnackbar}
+                        severity={snackbar.severity}
+                        variant="filled"
+                        sx={{ width: "100%" }}
+                      >
+                        {snackbar.message}
+                      </Alert>
+                    </Snackbar>
+                    
                   </div>
                 );
               })
@@ -243,7 +267,11 @@ export default function IndicatorsReview() {
                   feedback,
                   envioFinal: isFinal,
                 });
-                setSnackbar({ open: true, message: "Avance guardado en consola", severity: "info" });
+                setSnackbar({
+                  open: true,
+                  message: "Avance guardado en consola",
+                  severity: "info"
+                });
               }}
             >
               Guardar avance
