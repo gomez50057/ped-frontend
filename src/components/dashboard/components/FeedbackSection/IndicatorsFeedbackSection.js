@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./IndicatorsFeedbackSection.module.css";
+import NewIndicatorProposalForm from "../NewIndicatorProposalForm/NewIndicatorProposalForm";
 
 export default function IndicatorsFeedbackSection({
   id,
@@ -10,6 +11,8 @@ export default function IndicatorsFeedbackSection({
   onMetasChange,
   onComentarioChange,
 }) {
+  const [showProposalForm, setShowProposalForm] = useState(false);
+
   return (
     <div className={styles.feedbackSection}>
       {/* Pregunta sobre la estructura */}
@@ -54,16 +57,22 @@ export default function IndicatorsFeedbackSection({
           <button
             type="button"
             className={styles.addProposalButton}
-            onClick={() => {
-              // Lógica para agregar nueva propuesta (puedes conectar un modal, etc.)
-              alert("Funcionalidad para agregar nueva propuesta de indicador (implementar)");
-            }}
+            onClick={() => setShowProposalForm(true)}
           >
             Agregar nueva propuesta de indicador
           </button>
+          {showProposalForm && (
+            <NewIndicatorProposalForm
+              onClose={() => setShowProposalForm(false)}
+              onSubmit={formData => {
+                // Aquí puedes manejar el envío de la nueva propuesta (guardar, enviar, etc.)
+                console.log("Nueva propuesta enviada:", formData);
+                setShowProposalForm(false);
+              }}
+            />
+          )}
         </>
       )}
-
 
       {/* Si respondió "sí", preguntar por metas */}
       {acuerdo === "yes" && (
@@ -94,7 +103,7 @@ export default function IndicatorsFeedbackSection({
             </label>
           </div>
 
-          {/* Si también respondió "no" a las metas, mostrar campo texto */}
+          {/* Si también respondió "no" a las metas, mostrar campos para nuevas metas */}
           {metas === "no" && (
             <div className={styles.commentArea}>
               <label className={styles.inputLabel}>
@@ -123,7 +132,6 @@ export default function IndicatorsFeedbackSection({
               </label>
             </div>
           )}
-
         </div>
       )}
     </div>
