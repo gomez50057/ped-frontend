@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./FeedbackSection.module.css";
+import styles from "./IndicatorsFeedbackSection.module.css";
 
 export default function IndicatorsFeedbackSection({
   id,
@@ -18,6 +18,7 @@ export default function IndicatorsFeedbackSection({
         <label>
           <input
             type="radio"
+            className={styles.radioInput}
             name={`${id}-acuerdo`}
             value="yes"
             checked={acuerdo === "yes"}
@@ -28,6 +29,7 @@ export default function IndicatorsFeedbackSection({
         <label className={styles.radioSpacing}>
           <input
             type="radio"
+            className={styles.radioInput}
             name={`${id}-acuerdo`}
             value="no"
             checked={acuerdo === "no"}
@@ -39,16 +41,29 @@ export default function IndicatorsFeedbackSection({
 
       {/* Si respondió "no", pedir justificación */}
       {acuerdo === "no" && (
-        <div className={styles.commentArea}>
-          <textarea
-            placeholder="Justificación..."
-            value={comentarios?.justificacion || ""}
-            onChange={e =>
-              onComentarioChange(id, "justificacion", e.target.value)
-            }
-          />
-        </div>
+        <>
+          <div className={styles.commentArea}>
+            <textarea
+              placeholder="Justificación..."
+              value={comentarios?.justificacion || ""}
+              onChange={e =>
+                onComentarioChange(id, "justificacion", e.target.value)
+              }
+            />
+          </div>
+          <button
+            type="button"
+            className={styles.addProposalButton}
+            onClick={() => {
+              // Lógica para agregar nueva propuesta (puedes conectar un modal, etc.)
+              alert("Funcionalidad para agregar nueva propuesta de indicador (implementar)");
+            }}
+          >
+            Agregar nueva propuesta de indicador
+          </button>
+        </>
       )}
+
 
       {/* Si respondió "sí", preguntar por metas */}
       {acuerdo === "yes" && (
@@ -58,6 +73,7 @@ export default function IndicatorsFeedbackSection({
             <label>
               <input
                 type="radio"
+                className={styles.radioInput}
                 name={`${id}-metas`}
                 value="yes"
                 checked={metas === "yes"}
@@ -68,6 +84,7 @@ export default function IndicatorsFeedbackSection({
             <label className={styles.radioSpacing}>
               <input
                 type="radio"
+                className={styles.radioInput}
                 name={`${id}-metas`}
                 value="no"
                 checked={metas === "no"}
@@ -77,18 +94,36 @@ export default function IndicatorsFeedbackSection({
             </label>
           </div>
 
-          {/* Si también respondió "sí" a las metas, mostrar campo texto */}
+          {/* Si también respondió "no" a las metas, mostrar campo texto */}
           {metas === "no" && (
             <div className={styles.commentArea}>
-              <textarea
-                placeholder="Comentario sobre metas..."
-                value={comentarios?.metasComentario || ""}
-                onChange={e =>
-                  onComentarioChange(id, "metasComentario", e.target.value)
-                }
-              />
+              <label className={styles.inputLabel}>
+                Ingresa tu nueva meta 2028:
+                <input
+                  type="text"
+                  value={comentarios?.meta2028 || ""}
+                  onChange={e =>
+                    onComentarioChange(id, "meta2028", e.target.value)
+                  }
+                  placeholder="Nueva meta para 2028"
+                  className={styles.inputField}
+                />
+              </label>
+              <label className={styles.inputLabel}>
+                Ingresa tu nueva meta 2040:
+                <input
+                  type="text"
+                  value={comentarios?.meta2040 || ""}
+                  onChange={e =>
+                    onComentarioChange(id, "meta2040", e.target.value)
+                  }
+                  placeholder="Nueva meta para 2040"
+                  className={styles.inputField}
+                />
+              </label>
             </div>
           )}
+
         </div>
       )}
     </div>

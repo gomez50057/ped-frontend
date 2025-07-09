@@ -24,7 +24,6 @@ export default function IndicatorsReview() {
 
   function handleAcuerdoChange(id, value) {
     setFeedback(prev => {
-      // Si cambia de "no" a "sí", limpia justificación
       if (value === "yes") {
         return {
           ...prev,
@@ -33,13 +32,14 @@ export default function IndicatorsReview() {
             acuerdo: "yes",
             comentarios: {
               ...prev[id]?.comentarios,
-              justificacion: "" // limpia justificación
+              justificacion: "",
+              meta2028: "",
+              meta2040: ""
             }
             // NO toques metas ni metasComentario
           }
         };
       } else if (value === "no") {
-        // Si es "no", limpia metas y metasComentario
         return {
           ...prev,
           [id]: {
@@ -48,12 +48,13 @@ export default function IndicatorsReview() {
             metas: "",
             comentarios: {
               ...prev[id]?.comentarios,
-              metasComentario: "" // limpia metasComentario
+              metasComentario: "",
+              meta2028: "",
+              meta2040: ""
             }
           }
         };
       } else {
-        // En cualquier otro caso, deja igual
         return prev;
       }
     });
@@ -85,6 +86,12 @@ export default function IndicatorsReview() {
       }
     }));
   }
+
+  function handleAgregarPropuesta(fichaId) {
+    // Aquí pon la lógica que necesites (abrir modal, etc)
+    alert(`Agregar propuesta para el indicador: ${fichaId}`);
+  }
+
 
   const grouped = groupIndicatorsByEje(indicators);
 
@@ -214,6 +221,7 @@ export default function IndicatorsReview() {
                       onAcuerdoChange={handleAcuerdoChange}
                       onMetasChange={handleMetasChange}
                       onComentarioChange={handleComentarioChange}
+                      onAgregarPropuesta={handleAgregarPropuesta}
                     />
                   </div>
                 );
