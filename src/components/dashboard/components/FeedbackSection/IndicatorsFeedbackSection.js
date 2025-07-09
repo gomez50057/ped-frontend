@@ -16,10 +16,6 @@ export default function IndicatorsFeedbackSection({
   const [showProposalForm, setShowProposalForm] = useState(false);
   const [indicadorIdSeleccionado, setIndicadorIdSeleccionado] = useState(null);
 
-  //   const [initialData, setInitialData] = useState({});
-  // const [existingId, setExistingId] = useState(null);
-  // const [loading, setLoading] = useState(true);
-
   function formatPropuestaForAPI(propuesta) {
     return {
       indicator_name: propuesta.indicatorName,
