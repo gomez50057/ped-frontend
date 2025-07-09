@@ -87,26 +87,32 @@ export default function NewIndicatorProposalForm({ onClose, onSubmit, initialDat
               sources: initialData.sources || [{ organization: "", url: "" }],
             }}
             validationSchema={validationSchema}
-            onSubmit={values => {
-              const formatted = {
-                ...values,
-                nationalPlanAlignment: values.nationalPlanAlignment?.value || "",
-                odsAlignment: values.odsAlignment?.map(o => o.value) || [],
-              };
-              onSubmit && onSubmit(formatted);
+            onSubmit={async values => {
+              try {
+                const formatted = {
+                  ...values,
+                  nationalPlanAlignment: values.nationalPlanAlignment?.value || "",
+                  odsAlignment: values.odsAlignment?.map(o => o.value) || [],
+                };
+                await onSubmit(formatted); 
 
-              // Muestra el snackbar
-              setSnackbar({
-                open: true,
-                message: "Propuesta guardada correctamente",
-                severity: "success",
-              });
-
-              // Cierra el modal después de un delay (opcional, puedes dejar solo onClose())
-              setTimeout(() => {
-                onClose && onClose();
-              }, 600);
+                setSnackbar({
+                  open: true,
+                  message: "Propuesta guardada correctamente",
+                  severity: "success",
+                });
+                setTimeout(() => {
+                  onClose && onClose();
+                }, 800);
+              } catch (error) {
+                setSnackbar({
+                  open: true,
+                  message: "Error al guardar la propuesta. Intenta de nuevo.",
+                  severity: "error",
+                });
+              }
             }}
+
 
           >
             {({ setFieldValue, values, errors, touched }) => (
