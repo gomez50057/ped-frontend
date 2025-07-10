@@ -95,26 +95,28 @@ const SupportingDocuments = ({
       <div className={styles.containerFeatured}>
         <Tooltip />
         {featuredItems.map((item) => (
-          <div
-            key={item.label}
-            className={styles.item}
-            onClick={() => handleClick(item)}
-            tabIndex={0}
-            aria-label={item.label}
-            style={{ cursor: "pointer" }}
-            title={
-              item.useModal
-                ? "Ver opciones de descarga"
-                : item.pdf
-                  ? `Descargar PDF: ${item.label}`
-                  : ""
-            }
-          >
-            <img
-              src={`${imgFeaturedPath}${item.img}`}
-              alt={item.alt}
-              loading="lazy"
-            />
+          <div key={item.label} className={styles.cardWrapper}>
+            <div
+              className={styles.item}
+              onClick={() => handleClick(item)}
+              tabIndex={0}
+              aria-label={item.label}
+              style={{ cursor: "pointer" }}
+              title={
+                item.useModal
+                  ? "Ver opciones de descarga"
+                  : item.pdf
+                    ? `Descargar PDF: ${item.label}`
+                    : ""
+              }
+            >
+              <img
+                src={`${imgFeaturedPath}${item.img}`}
+                alt={item.alt}
+                loading="lazy"
+              />
+            </div>
+            <div className={styles.docLabel}>{item.label}</div>
           </div>
         ))}
       </div>
