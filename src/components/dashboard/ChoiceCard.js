@@ -26,7 +26,7 @@ const items = [
   {
     label: 'Documentos de Apoyo',
     bg: '/img/dashboard/bg/consulta.webp',
-    download: '/pdf/Actualización_PED_2025_2028.pdf',
+    href: '/dashboard/documentos-apoyo',
     text: 'Contiene el documento preliminar de la Actualización del Plan Estatal de Desarrollo 2025–2028 para su visualización.'
   }
 ];
