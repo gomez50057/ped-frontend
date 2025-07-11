@@ -378,6 +378,29 @@ export default function NewIndicatorProposalForm({ onClose, onSubmit, initialDat
                     body: JSON.stringify(formatted),
                   });
                 }
+                if (response.ok) {
+                  setSnackbar({
+                    open: true,
+                    message: "Propuesta guardada correctamente",
+                    severity: "success",
+                  });
+                  // Cierra el modal aquí
+                  if (onClose) onClose();
+                } else {
+                  // Si hubo error, no cerrar, muestra error
+                  let msg = "Error al guardar la propuesta";
+                  try {
+                    const errData = await response.json();
+                    if (errData && typeof errData === "object") {
+                      msg += ": " + Object.values(errData).flat().join(", ");
+                    }
+                  } catch { }
+                  setSnackbar({
+                    open: true,
+                    message: msg,
+                    severity: "error",
+                  });
+                }
               } catch (error) {
                 setSnackbar({
                   open: true,
