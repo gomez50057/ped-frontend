@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./IndicatorsFeedbackSection.module.css";
 import NewIndicatorProposalForm from "../NewIndicatorProposalForm/NewIndicatorProposalForm";
 import { fetchWithAuth } from '@/utils/auth';
@@ -16,7 +16,9 @@ export default function IndicatorsFeedbackSection({
   const [showProposalForm, setShowProposalForm] = useState(false);
   const [indicadorIdSeleccionado, setIndicadorIdSeleccionado] = useState(null);
   const [proposalIdToEdit, setProposalIdToEdit] = useState(null);
+  const [propuestaActual, setPropuestaActual] = useState(null);
   const [loadingEdit, setLoadingEdit] = useState(false);
+  const idDelIndicadorNuevo = indicadorInfo?.id || indicadorInfo?.clave || id;
 
   function formatPropuestaForAPI(propuesta) {
     return {
@@ -33,6 +35,33 @@ export default function IndicatorsFeedbackSection({
       sources: propuesta.sources,
       indicador: propuesta.indicador,
     };
+  }
+
+  useEffect(() => {
+    async function loadPropuesta() {
+      if (!idDelIndicadorNuevo) return;
+      setLoadingEdit(true);
+      try {
+        const res = await fetchWithAuth(`/api/indicador/new-indicador/${idDelIndicadorNuevo}/`);
+        if (res.ok) {
+          const data = await res.json();
+          setPropuestaActual(data);
+        } else {
+          setPropuestaActual(null);
+        }
+      } catch (err) {
+        setPropuestaActual(null);
+      } finally {
+        setLoadingEdit(false);
+      }
+    }
+    loadPropuesta();
+  }, [idDelIndicadorNuevo]);
+
+  function handleNuevaPropuesta(idNuevo) {
+    setIndicadorIdSeleccionado(idNuevo);
+    setProposalIdToEdit(null);
+    setTimeout(() => setShowProposalForm(true), 0); // Espera un tick para que React actualice el estado
   }
 
   async function handleSubmitPropuesta(propuesta) {
@@ -63,17 +92,16 @@ export default function IndicatorsFeedbackSection({
     setShowProposalForm(false);
   }
 
-  async function handleEditProposal(indicadorId) {
+  async function handleEditProposal(idExistente) {
     setLoadingEdit(true);
     try {
-      const res = await fetchWithAuth(`/api/indicador/new-indicador/${indicadorId}/`);
+      const res = await fetchWithAuth(`/api/indicador/new-indicador/${idExistente}/`);
       if (res.ok) {
         const data = await res.json();
-        setProposalIdToEdit(data.id); // Usar el id de la propuesta existente
-        setIndicadorIdSeleccionado(indicadorId);
+        setProposalIdToEdit(idExistente); // Aquí ya usas el identificador tipo "indicador_xxx"
+        setIndicadorIdSeleccionado(idExistente);
         setShowProposalForm(true);
       } else {
-        // No existe propuesta
         alert("No existe una propuesta para este indicador.");
       }
     } catch (error) {
@@ -125,38 +153,23 @@ export default function IndicatorsFeedbackSection({
             />
           </div>
           <span>{indicadorInfo?.nombre || "Indicador sin nombre"}</span>
-          <button onClick={() => {
-            setProposalIdToEdit(null);
-            setShowProposalForm(true);
-            setIndicadorIdSeleccionado(idDelIndicadorNuevo);
-          }}>Nueva propuesta</button>
-
-
-
-          <div>
-            <button
-              onClick={() => handleEditProposal(id)}
-              disabled={loadingEdit}
-            >
+          {loadingEdit ? (
+            <span>Cargando...</span>
+          ) : propuestaActual ? (
+            <button onClick={() => handleEditProposal(idDelIndicadorNuevo)}>
               Editar propuesta
             </button>
+          ) : (
+            <button onClick={() => handleNuevaPropuesta(idDelIndicadorNuevo)}>
+              Nueva propuesta
+            </button>
+          )}
 
-            {showProposalForm && (
-              <NewIndicatorProposalForm
-                onClose={() => setShowProposalForm(false)}
-                indicadorId={indicadorIdSeleccionado}
-                proposalId={proposalIdToEdit}
-                onSubmit={handleSubmitPropuesta}
-              />
-            )}
-          </div>
-
-          {/* // Al abrir el modal: */}
           {showProposalForm && (
             <NewIndicatorProposalForm
               onClose={() => setShowProposalForm(false)}
               indicadorId={indicadorIdSeleccionado}
-              proposalId={proposalIdToEdit}      // <---- IMPORTANTE
+              proposalId={proposalIdToEdit}
               onSubmit={handleSubmitPropuesta}
             />
           )}

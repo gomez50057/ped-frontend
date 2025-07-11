@@ -60,106 +60,84 @@ export default function NewIndicatorProposalForm({ onClose, onSubmit, initialDat
   });
 
   useEffect(() => {
+    let isMounted = true;
     async function fetchProposal() {
-      if (!indicadorId) return;
-      setLoading(true);
+      if (!indicadorId) {
+        if (isMounted) setLoading(false);
+        return;
+      }
+      if (isMounted) setLoading(true);
       try {
         const res = await fetchWithAuth(`/api/indicador/new-indicador/${indicadorId}/`);
         if (res.ok) {
           const data = await res.json();
-          setFormData({
-            indicatorName: data.indicator_name || "",
-            pedAlignment: data.ped_alignment || "",
-            nationalPlanAlignment: data.national_plan_alignment
-              ? { value: data.national_plan_alignment, label: data.national_plan_alignment }
-              : null,
-            odsAlignment: Array.isArray(data.ods_alignment)
-              ? data.ods_alignment.map(ods => ({ value: ods, label: ods }))
-              : [],
-            description: data.description || "",
-            periodicity: data.periodicity || "",
-            trend: data.trend || "",
-            baseline: data.baseline || "",
-            goal2028: data.goal_2028 || "",
-            goal2040: data.goal_2040 || "",
-            sources: Array.isArray(data.sources) && data.sources.length > 0
-              ? data.sources
-              : [{ organization: "", url: "" }],
-            indicador: indicadorId,
-          });
-          setHasExistingProposal(true);
+          if (isMounted) {
+            setFormData({
+              indicatorName: data.indicator_name || "",
+              pedAlignment: data.ped_alignment || "",
+              nationalPlanAlignment: data.national_plan_alignment
+                ? { value: data.national_plan_alignment, label: data.national_plan_alignment }
+                : null,
+              odsAlignment: Array.isArray(data.ods_alignment)
+                ? data.ods_alignment.map(ods => ({ value: ods, label: ods }))
+                : [],
+              description: data.description || "",
+              periodicity: data.periodicity || "",
+              trend: data.trend || "",
+              baseline: data.baseline || "",
+              goal2028: data.goal_2028 || "",
+              goal2040: data.goal_2040 || "",
+              sources: Array.isArray(data.sources) && data.sources.length > 0
+                ? data.sources
+                : [{ organization: "", url: "" }],
+              indicador: data.indicador || indicadorId || "",
+            });
+            setHasExistingProposal(true);
+          }
         } else {
-          setHasExistingProposal(false);
+          if (isMounted) {
+            setHasExistingProposal(false);
+            setFormData({
+              indicatorName: "",
+              pedAlignment: "",
+              nationalPlanAlignment: null,
+              odsAlignment: [],
+              description: "",
+              periodicity: "",
+              trend: "",
+              baseline: "",
+              goal2028: "",
+              goal2040: "",
+              sources: [{ organization: "", url: "" }],
+              indicador: indicadorId,
+            });
+          }
         }
       } catch (error) {
-        setHasExistingProposal(false);
+        if (isMounted) {
+          setHasExistingProposal(false);
+          setFormData({
+            indicatorName: "",
+            pedAlignment: "",
+            nationalPlanAlignment: null,
+            odsAlignment: [],
+            description: "",
+            periodicity: "",
+            trend: "",
+            baseline: "",
+            goal2028: "",
+            goal2040: "",
+            sources: [{ organization: "", url: "" }],
+            indicador: indicadorId,
+          });
+        }
       } finally {
-        setLoading(false);
+        if (isMounted) setLoading(false);
       }
     }
     fetchProposal();
+    return () => { isMounted = false; };
   }, [indicadorId]);
-
-  // useEffect(() => {
-  //   async function fetchProposal() {
-  //     if (!indicadorId) {
-  //       setLoading(false);
-  //       return;
-  //     }
-  //     setLoading(true);
-  //     try {
-  //       // El endpoint ya es con el ID del indicador
-  //       const res = await fetchWithAuth(`/api/indicador/new-indicador/${indicadorId}/`);
-  //       if (res.ok) {
-  //         const data = await res.json();
-  //         setProposalRecordId(data.id); // Aquí guardamos el id real del registro para PUT
-  //         setFormData({
-  //           indicatorName: data.indicator_name || "",
-  //           pedAlignment: data.ped_alignment || "",
-  //           nationalPlanAlignment: data.national_plan_alignment
-  //             ? { value: data.national_plan_alignment, label: data.national_plan_alignment }
-  //             : null,
-  //           odsAlignment: Array.isArray(data.ods_alignment)
-  //             ? data.ods_alignment.map(ods => ({ value: ods, label: ods }))
-  //             : [],
-  //           description: data.description || "",
-  //           periodicity: data.periodicity || "",
-  //           trend: data.trend || "",
-  //           baseline: data.baseline || "",
-  //           goal2028: data.goal_2028 || "",
-  //           goal2040: data.goal_2040 || "",
-  //           sources: Array.isArray(data.sources) && data.sources.length > 0
-  //             ? data.sources
-  //             : [{ organization: "", url: "" }],
-  //           indicador: indicadorId,
-  //         });
-  //       } else {
-  //         // Si no hay propuesta previa, reseteamos form y proposalRecordId
-  //         setProposalRecordId(null);
-  //         setFormData({
-  //           indicatorName: "",
-  //           pedAlignment: "",
-  //           nationalPlanAlignment: null,
-  //           odsAlignment: [],
-  //           description: "",
-  //           periodicity: "",
-  //           trend: "",
-  //           baseline: "",
-  //           goal2028: "",
-  //           goal2040: "",
-  //           sources: [{ organization: "", url: "" }],
-  //           indicador: indicadorId,
-  //         });
-  //       }
-  //     } catch (error) {
-  //       setProposalRecordId(null);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   }
-  //   fetchProposal();
-  //   // eslint-disable-next-line
-  // }, [indicadorId]);
 
   const handleCloseSnackbar = (event, reason) => {
     if (reason === "clickaway") return;
@@ -385,19 +363,15 @@ export default function NewIndicatorProposalForm({ onClose, onSubmit, initialDat
                   sources: pendingValues.sources,
                   indicador: indicadorId,
                 };
-                console.log("[DEBUG] Indicador a usar:", indicadorId);
-                console.log("[DEBUG] Payload a enviar:", formatted);
 
                 let response;
                 if (hasExistingProposal) {
-                  console.log("[DEBUG] PUT a", `/api/indicador/new-indicador/${indicadorId}/`);
                   response = await fetchWithAuth(`/api/indicador/new-indicador/${indicadorId}/`, {
                     method: "PUT",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(formatted),
                   });
                 } else {
-                  console.log("[DEBUG] POST a /api/indicador/new-indicador/");
                   response = await fetchWithAuth("/api/indicador/new-indicador/", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -405,7 +379,6 @@ export default function NewIndicatorProposalForm({ onClose, onSubmit, initialDat
                   });
                 }
               } catch (error) {
-                console.error("[DEBUG] CATCH error:", error);
                 setSnackbar({
                   open: true,
                   message: "Error al guardar la propuesta. Intenta de nuevo.",
