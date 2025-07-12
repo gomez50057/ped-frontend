@@ -1,77 +1,77 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./SupportingDocuments.module.css";
+import { fetchWithAuth } from "@/utils/auth";
 
 const Empty = () => null;
 
-const DEFAULT_FEATURED = [
+const GENERAL_FILES = [
   {
     label: "Plan Estatal de Desarrollo vigente",
     img: "PED.webp",
     alt: "Plan Estatal de Desarrollo vigente",
     pdf: "Plan Estatal de Desarrollo 2022-2028.pdf",
-    useModal: false,
   },
   {
     label: "Lineamientos",
     img: "Lineamientos-del-PED.jpg",
     alt: "Lineamientos",
     pdf: "Lineamientos del PED.pdf",
-    useModal: false,
   },
-  {
+];
+
+const BASES_FILES_BY_USER = {
+  pru: {
     label: "Bases de datos de las propuestas ciudadanas",
     img: "Bases_propuestas.jpg",
     alt: "Bases de datos de las propuestas ciudadanas",
-    useModal: true,
-    files: [
-      { label: "Descargar archivo 01", file: "archivo_01.pdf" },
-      { label: "Descargar archivo 052", file: "archivo_052.pdf" },
-    ],
+    pdf: "archivo_01.pdf",
   },
-];
+  user2: {
+    label: "Bases de datos de las propuestas ciudadanas",
+    img: "Bases_propuestas.jpg",
+    alt: "Bases de datos de las propuestas ciudadanas",
+    pdf: "archivo_052.pdf",
+  },
+};
 
 const imgFeaturedPath = "/img/dashboard/SupportingDocuments/caratulas/";
 const pdfPath = "/pdf/";
 
-const DefaultModal = ({ isOpen, onClose, files = [] }) =>
-  isOpen ? (
-    <div className={styles.modalBackdrop}>
-      <div className={styles.modal}>
-        <button className={styles.closeBtn} onClick={onClose}>×</button>
-        <h3>Bases de datos de las propuestas ciudadanas</h3>
-        <div className={styles.filesList}>
-          {files.map(({ label, file }) => (
-            <a
-              key={file}
-              href={`${pdfPath}${file}`}
-              download={file}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.downloadBtn}
-            >
-              {label}
-            </a>
-          ))}
-        </div>
-      </div>
-    </div>
-  ) : null;
-
 const SupportingDocuments = ({
   children,
-  featuredItems = DEFAULT_FEATURED,
   Tooltip = Empty,
-  Modal, // Si quieres pasar tu propio modal, sino usa DefaultModal
 }) => {
-  const [selectedModalFiles, setSelectedModalFiles] = useState(null);
+  const [currentUser, setCurrentUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  // Al montar, obtiene usuario logueado
+  useEffect(() => {
+    async function getUser() {
+      try {
+        const res = await fetchWithAuth("/api/auth/current_user/");
+        if (!res.ok) throw new Error("No autorizado");
+        const data = await res.json();
+        setCurrentUser(data.username);
+      } catch (error) {
+        setCurrentUser(null);
+      } finally {
+        setLoading(false);
+      }
+    }
+    getUser();
+  }, []);
+
+  const filesToShow = [
+    ...GENERAL_FILES,
+    ...(currentUser && BASES_FILES_BY_USER[currentUser]
+      ? [BASES_FILES_BY_USER[currentUser]]
+      : []),
+  ];
 
   const handleClick = (item) => {
-    if (item.useModal) {
-      setSelectedModalFiles(item.files || []);
-    } else if (item.pdf) {
-      // Descarga directa de PDF
+    if (item.pdf) {
       const link = document.createElement("a");
       link.href = `${pdfPath}${item.pdf}`;
       link.download = item.pdf;
@@ -82,19 +82,36 @@ const SupportingDocuments = ({
     }
   };
 
-  const closeModal = () => setSelectedModalFiles(null);
+  if (loading)
+    return (
+      <section className={styles.featured}>
+        <div className={styles.containerSubTi}>
+          <h2 className={styles.subtitulo}>Documentos Apoyo</h2>
+        </div>
+        <div style={{ padding: "3rem", textAlign: "center" }}>Cargando...</div>
+      </section>
+    );
 
-  // Usa el modal custom si se pasa, si no, el default de este archivo
-  const ModalComponent = Modal || DefaultModal;
+  if (!currentUser)
+    return (
+      <section className={styles.featured}>
+        <div className={styles.containerSubTi}>
+          <h2 className={styles.subtitulo}>Documentos Apoyo</h2>
+        </div>
+        <div style={{ padding: "3rem", textAlign: "center" }}>
+          No autorizado.
+        </div>
+      </section>
+    );
 
   return (
-    <section className={styles.featured}    >
+    <section className={styles.featured}>
       <div className={styles.containerSubTi}>
         <h2 className={styles.subtitulo}>Documentos Apoyo</h2>
       </div>
       <div className={styles.containerFeatured}>
         <Tooltip />
-        {featuredItems.map((item) => (
+        {filesToShow.map((item) => (
           <div key={item.label} className={styles.cardWrapper}>
             <div
               className={styles.item}
@@ -102,13 +119,7 @@ const SupportingDocuments = ({
               tabIndex={0}
               aria-label={item.label}
               style={{ cursor: "pointer" }}
-              title={
-                item.useModal
-                  ? "Ver opciones de descarga"
-                  : item.pdf
-                    ? `Descargar PDF: ${item.label}`
-                    : ""
-              }
+              title={`Descargar PDF: ${item.label}`}
             >
               <img
                 src={`${imgFeaturedPath}${item.img}`}
@@ -120,11 +131,6 @@ const SupportingDocuments = ({
           </div>
         ))}
       </div>
-      <ModalComponent
-        isOpen={!!selectedModalFiles}
-        onClose={closeModal}
-        files={selectedModalFiles || []}
-      />
       {children}
     </section>
   );
