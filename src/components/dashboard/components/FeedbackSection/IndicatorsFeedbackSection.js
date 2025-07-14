@@ -153,18 +153,23 @@ export default function IndicatorsFeedbackSection({
             />
           </div>
           <span>{indicadorInfo?.nombre || "Indicador sin nombre"}</span>
-          {loadingEdit ? (
-            <span>Cargando...</span>
-          ) : propuestaActual ? (
-            <button onClick={() => handleEditProposal(idDelIndicadorNuevo)}>
-              Editar propuesta
-            </button>
-          ) : (
-            <button onClick={() => handleNuevaPropuesta(idDelIndicadorNuevo)}>
-              Nueva propuesta
-            </button>
-          )}
 
+          <div className={styles.commentArea}>
+            {loadingEdit ? (
+              <button className={styles.addProposalButton} disabled>
+                <span className={styles.spinner}></span>
+                Cargando...
+              </button>
+            ) : propuestaActual ? (
+              <button className={styles.addProposalButton} onClick={() => handleEditProposal(idDelIndicadorNuevo)}>
+                Editar propuesta
+              </button>
+            ) : (
+              <button className={styles.addProposalButton} onClick={() => handleNuevaPropuesta(idDelIndicadorNuevo)}>
+                Nueva propuesta
+              </button>
+            )}
+          </div>
           {showProposalForm && (
             <NewIndicatorProposalForm
               onClose={() => setShowProposalForm(false)}
