@@ -44,3 +44,6 @@ next-env.d.ts
 # videos
 public/video/
 *.mp4
+
+# archivos 
+/public/pdf/dashboard/

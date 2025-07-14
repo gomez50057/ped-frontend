@@ -409,11 +409,8 @@ export default function IndicatorsReview() {
                   ></path>
                 </svg>
               </div>
-              <p className={styles.checkboxLabel}>
-                Confirmo que estas son mis aportaciones finales. <br />
-                (<b>Aún puedes modificar hasta la fecha límite</b>)
-              </p>
             </label>
+            <p className={styles.checkboxLabel}>Confirmo que estas son mis aportaciones finales.</p>
           </div>
         </div>
       </div>
@@ -443,9 +440,12 @@ export default function IndicatorsReview() {
       <ConfirmDialog
         open={confirmFinalOpen}
         onClose={() => setConfirmFinalOpen(false)}
-        onConfirm={() => {
-          setIsFinal(pendingFinalState);
-          setConfirmFinalOpen(false);
+        onConfirm={async () => {
+          setIsSaving(true);
+          setConfirmOpen(false);
+          const cleanedFeedback = sanitizeFeedback(feedback);
+          await handleSaveFeedback(cleanedFeedback, isFinal);
+          setIsSaving(false);
         }}
         title={
           pendingFinalState

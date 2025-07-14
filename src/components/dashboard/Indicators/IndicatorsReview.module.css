@@ -317,6 +317,10 @@
 
 .envioFinalWrapper {
   display: flex;
+  align-items: center;
+  margin-top: 5rem;
+  border: 2px solid var(--vinoOsc);
+  border-radius: 1rem;
 }
 
 .containerChecked {
@@ -384,8 +388,7 @@
 }
 
 .checkboxLabel {
-  margin-top: 2rem;
-  width: 200px;
+  width: 150px;
   flex: 1;
   font-size: 1rem;
   color: var(--grisOsc);

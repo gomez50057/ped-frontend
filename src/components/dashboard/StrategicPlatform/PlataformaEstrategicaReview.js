@@ -796,11 +796,8 @@ export default function PlataformaEstrategicaReview() {
                   ></path>
                 </svg>
               </div>
-              <p className={styles.checkboxLabel}>
-                Confirmo que estas son mis aportaciones finales. <br />
-                (<b>Aún puedes modificar hasta la fecha límite</b>)
-              </p>
             </label>
+            <p className={styles.checkboxLabel}>Confirmo que estas son mis aportaciones finales.</p>
           </div>
         </div>
       </div>

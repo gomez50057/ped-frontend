@@ -27,7 +27,7 @@ const items = [
     label: 'Documentos de Apoyo',
     bg: '/img/dashboard/bg/consulta.webp',
     href: '/dashboard/documentos-apoyo',
-    text: 'Contiene el documento preliminar de la Actualización del Plan Estatal de Desarrollo 2025–2028 para su visualización.'
+    text: 'Hemos adjuntado documentos de apoyo para ayudarte a consolidar y fortalecer tus opiniones y propuestas. Te invitamos a consultarlos para enriquecer tu participación.'
   }
 ];
 

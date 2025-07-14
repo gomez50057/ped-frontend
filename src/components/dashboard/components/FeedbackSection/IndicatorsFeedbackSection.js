@@ -114,7 +114,7 @@ export default function IndicatorsFeedbackSection({
   return (
     <div className={styles.feedbackSection}>
       {/* Pregunta sobre la estructura */}
-      <p>¿Estás de acuerdo con la estructura del texto anterior?</p>
+      <p>¿Estás de acuerdo con la estructura propuesta del indicador anterior?</p>
       <div className={styles.radioGroup}>
         <label>
           <input

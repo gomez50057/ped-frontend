@@ -12,32 +12,149 @@ const GENERAL_FILES = [
     img: "PED.webp",
     alt: "Plan Estatal de Desarrollo vigente",
     pdf: "Plan Estatal de Desarrollo 2022-2028.pdf",
+    pathType: "general",
   },
   {
     label: "Lineamientos",
     img: "Lineamientos-del-PED.jpg",
     alt: "Lineamientos",
     pdf: "Lineamientos del PED.pdf",
+    pathType: "general",
   },
 ];
 
 const BASES_FILES_BY_USER = {
-  pru: {
-    label: "Bases de datos de las propuestas ciudadanas",
+  AdminAgricultura: {
+    label: "Bases de datos de las propuestas ciudadanas de la Secretaría de Agricultura y Desarrollo Rural",
     img: "Bases_propuestas.jpg",
-    alt: "Bases de datos de las propuestas ciudadanas",
-    pdf: "archivo_01.pdf",
+    alt: "Bases de datos de las propuestas ciudadanas de la Secretaría de Agricultura y Desarrollo Rural",
+    pdf: "Secretaría de Agricultura y Desarrollo Rural/Agropecuario y campo.xlsx",
+    pathType: "user",
   },
-  user2: {
-    label: "Bases de datos de las propuestas ciudadanas",
+  AdminBienestar: {
+    label: "Bases de datos de las propuestas ciudadanas de la Secretaría de Bienestar e Inclusión Social",
     img: "Bases_propuestas.jpg",
-    alt: "Bases de datos de las propuestas ciudadanas",
-    pdf: "archivo_052.pdf",
+    alt: "Bases de datos de las propuestas ciudadanas de la Secretaría de Bienestar e Inclusión Social",
+    pdf: "Secretaría de Bienestar e Inclusión Social/Bienestar Social.xlsx",
+    pathType: "user",
+  },
+  AdminContraloria: {
+    label: "Bases de datos de las propuestas ciudadanas de la Secretaría de Contraloría",
+    img: "Bases_propuestas.jpg",
+    alt: "Bases de datos de las propuestas ciudadanas de la Secretaría de Contraloría",
+    pdf: "Secretaría de Contraloría/Transparencia y Combate a la corrupción.xlsx",
+    pathType: "user",
+  },
+  AdminCultura: {
+    label: "Bases de datos de las propuestas ciudadanas de la Secretaría de Cultura",
+    img: "Bases_propuestas.jpg",
+    alt: "Bases de datos de las propuestas ciudadanas de la Secretaría de Cultura",
+    pdf: "Secretaría de Cultura/Cultura.xlsx",
+    pathType: "user",
+  },
+  AdminDespacho: {
+    label: "Bases de datos de las propuestas ciudadanas de la Secretaría del Despacho",
+    img: "Bases_propuestas.jpg",
+    alt: "Bases de datos de las propuestas ciudadanas de la Secretaría del Despacho",
+    pdf: "Oficialia mayor/Hacienda.xlsx",
+    pathType: "user",
+  },
+  AdminEconomia: {
+    label: "Bases de datos de las propuestas ciudadanas de la Secretaría de Desarrollo Económico",
+    img: "Bases_propuestas.jpg",
+    alt: "Bases de datos de las propuestas ciudadanas de la Secretaría de Desarrollo Económico",
+    pdf: "Secretaría de Desarrollo Económico/Desarrollo Económico.xlsx",
+    pathType: "user",
+  },
+  AdminEducacion: {
+    label: "Bases de datos de las propuestas ciudadanas de la Secretaría de Educación Pública",
+    img: "Bases_propuestas.jpg",
+    alt: "Bases de datos de las propuestas ciudadanas de la Secretaría de Educación Pública",
+    pdf: "Secretaría de Educación Pública/Educación.xlsx",
+    pathType: "user",
+  },
+  AdminGobiemo: {
+    label: "Bases de datos de las propuestas ciudadanas de la Secretaría de Gobierno",
+    img: "Bases_propuestas.jpg",
+    alt: "Bases de datos de las propuestas ciudadanas de la Secretaría de Gobierno",
+    pdf: "Secretaría de Gobierno/Gobierno.xlsx",
+    pathType: "user",
+  },
+  AdminHacienda: {
+    label: "Bases de datos de las propuestas ciudadanas de la Secretaría de Hacienda",
+    img: "Bases_propuestas.jpg",
+    alt: "Bases de datos de las propuestas ciudadanas de la Secretaría de Hacienda",
+    pdf: "Secretaría de Hacienda/CONCLUSIONES DEL FORO_OFICILIA MAYOR.docx.pdf",
+    pathType: "user",
+  },
+  Adminlnfraestructura: {
+    label: "Bases de datos de las propuestas ciudadanas de la Secretaría de Infraestructura Pública y Desarrollo Urbano Sostenible",
+    img: "Bases_propuestas.jpg",
+    alt: "Bases de datos de las propuestas ciudadanas de la Secretaría de Infraestructura Pública y Desarrollo Urbano Sostenible",
+    pdf: "Secretaría de Infraestructura Pública y Desarrollo Urbano Sostenible/Infraestructura Pública y Equipamiento Urbano.xlsx",
+    pathType: "user",
+  },
+  AdminMedioAmbiente: {
+    label: "Bases de datos de las propuestas ciudadanas de la Secretaría de Medio Ambiente y Recursos naturales",
+    img: "Bases_propuestas.jpg",
+    alt: "Bases de datos de las propuestas ciudadanas de la Secretaría de Medio Ambiente y Recursos naturales",
+    pdf: "Secretaría de Medio Ambiente y Recursos naturales/Medio Ambiente.xlsx",
+    pathType: "user",
+  },
+  AdminMovilidad: {
+    label: "Bases de datos de las propuestas ciudadanas de la Secretaría de Movilidad y Transporte",
+    img: "Bases_propuestas.jpg",
+    alt: "Bases de datos de las propuestas ciudadanas de la Secretaría de Movilidad y Transporte",
+    pdf: "Secretaría de Movilidad y Transporte/Movilidad.xlsx",
+    pathType: "user",
+  },
+  AdminOficialM: {
+    label: "Bases de datos de las propuestas ciudadanas de la Oficialia mayor",
+    img: "Bases_propuestas.jpg",
+    alt: "Bases de datos de las propuestas ciudadanas de la Oficialia mayor",
+    pdf: "Oficialia mayor/Hacienda.xlsx",
+    pathType: "user",
+  },
+  AdminPJusticia: {
+    label: "Bases de datos de las propuestas ciudadanas de la Procuraduría de Justicia",
+    img: "Bases_propuestas.jpg",
+    alt: "Bases de datos de las propuestas ciudadanas de la Procuraduría de Justicia",
+    pdf: "Procuraduría de Justicia/Justicia.xlsx",
+    pathType: "user",
+  },
+  AdminSalud: {
+    label: "Bases de datos de las propuestas ciudadanas de la Secretaría de Salud",
+    img: "Bases_propuestas.jpg",
+    alt: "Bases de datos de las propuestas ciudadanas de la Secretaría de Salud",
+    pdf: "Secretaría de Salud/Salud.xlsx",
+    pathType: "user",
+  },
+  AdminSeguridad: {
+    label: "Bases de datos de las propuestas ciudadanas de la Secretaría de Seguridad Pública",
+    img: "Bases_propuestas.jpg",
+    alt: "Bases de datos de las propuestas ciudadanas de la Secretaría de Seguridad Pública",
+    pdf: "Secretaría%20de%20Seguridad%20Pública/Seguridad%20y%20Justicia%2C%20Seguridad%20Pública.xlsx",
+    pathType: "user",
+},
+  AdminTrabajo: {
+    label: "Bases de datos de las propuestas ciudadanas de la Secretaría del Trabajo y previsión Social",
+    img: "Bases_propuestas.jpg",
+    alt: "Bases de datos de las propuestas ciudadanas de la Secretaría del Trabajo y previsión Social",
+    pdf: "Secretaría del Trabajo y previsión Social/Empleo.xlsx",
+    pathType: "user",
+  },
+  AdminTurismo: {
+    label: "Bases de datos de las propuestas ciudadanas de la Secretaría de Turismo",
+    img: "Bases_propuestas.jpg",
+    alt: "Bases de datos de las propuestas ciudadanas de la Secretaría de Turismo",
+    pdf: "Secretaría de Turismo/Turismo.xlsx",
+    pathType: "user",
   },
 };
 
 const imgFeaturedPath = "/img/dashboard/SupportingDocuments/caratulas/";
 const pdfPath = "/pdf/";
+const archivosPath = "/pdf/dashboard/BD_propuestas_ciudadanas/";
 
 const SupportingDocuments = ({
   children,
@@ -72,8 +189,9 @@ const SupportingDocuments = ({
 
   const handleClick = (item) => {
     if (item.pdf) {
+      let pathBase = item.pathType === "user" ? archivosPath : pdfPath;
       const link = document.createElement("a");
-      link.href = `${pdfPath}${item.pdf}`;
+      link.href = `${pathBase}${item.pdf}`;
       link.download = item.pdf;
       link.target = "_blank";
       document.body.appendChild(link);
