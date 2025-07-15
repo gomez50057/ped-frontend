@@ -39,7 +39,7 @@ export default function IndicatorsReview() {
         if (fbRes.ok) {
           const fbData = await fbRes.json();
           if (fbData.feedback) setFeedback(fbData.feedback);
-          if (typeof fbData.envioFinal === "boolean") setIsFinal(fbData.envioFinal);
+          if (typeof fbData.envio_final === "boolean") setIsFinal(fbData.envio_final);
           if (fbData.id) setFeedbackId(fbData.id);
         }
       } catch (err) {
@@ -183,7 +183,7 @@ export default function IndicatorsReview() {
           method: 'PUT',
           body: JSON.stringify({
             feedback: cleanedFeedback,
-            envioFinal
+            envio_final: envioFinal
           })
         });
       } else {
@@ -192,7 +192,7 @@ export default function IndicatorsReview() {
           method: 'POST',
           body: JSON.stringify({
             feedback: cleanedFeedback,
-            envioFinal
+            envio_final: envioFinal
           })
         });
       }
@@ -442,9 +442,10 @@ export default function IndicatorsReview() {
         onClose={() => setConfirmFinalOpen(false)}
         onConfirm={async () => {
           setIsSaving(true);
-          setConfirmOpen(false);
+          setConfirmFinalOpen(false);
+          setIsFinal(pendingFinalState);
           const cleanedFeedback = sanitizeFeedback(feedback);
-          await handleSaveFeedback(cleanedFeedback, isFinal);
+          await handleSaveFeedback(cleanedFeedback, pendingFinalState);
           setIsSaving(false);
         }}
         title={

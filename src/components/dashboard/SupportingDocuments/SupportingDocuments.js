@@ -70,7 +70,7 @@ const BASES_FILES_BY_USER = {
     label: "Bases de datos de las propuestas ciudadanas de la Secretaría del Despacho",
     img: "Bases_propuestas.jpg",
     alt: "Bases de datos de las propuestas ciudadanas de la Secretaría del Despacho",
-    pdf: "Secretaría del Despacho/pronto.pdf",
+    pdf: "Secretaría del Despacho/Despacho.xlsx",
     pathType: "user",
   },
   AdminEconomia: {
