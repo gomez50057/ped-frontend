@@ -319,7 +319,8 @@
   display: flex;
   align-items: center;
   margin-top: 5rem;
-  border: 2px solid var(--vinoOsc);
+  background: var(--vinoGradient);
+  padding: 0 0.5rem;
   border-radius: 1rem;
 }
 
@@ -391,7 +392,7 @@
   width: 150px;
   flex: 1;
   font-size: 1rem;
-  color: var(--grisOsc);
+  color: var(--blanco);
 }
 
 /* Responsive */

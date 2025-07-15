@@ -21,6 +21,13 @@ const GENERAL_FILES = [
     pdf: "Lineamientos del PED.pdf",
     pathType: "general",
   },
+  {
+    label: "Preliminar del PED",
+    img: "preliminar-PED.jpg",
+    alt: "Preliminar del PED",
+    pdf: "Actualización_PED_2025_2028.pdf",
+    pathType: "general",
+  },
 ];
 
 const BASES_FILES_BY_USER = {
@@ -56,7 +63,7 @@ const BASES_FILES_BY_USER = {
     label: "Bases de datos de las propuestas ciudadanas de la Secretaría del Despacho",
     img: "Bases_propuestas.jpg",
     alt: "Bases de datos de las propuestas ciudadanas de la Secretaría del Despacho",
-    pdf: "Oficialia mayor/Hacienda.xlsx",
+    pdf: "Secretaría del Despacho/pronto.pdf",
     pathType: "user",
   },
   AdminEconomia: {
@@ -84,14 +91,14 @@ const BASES_FILES_BY_USER = {
     label: "Bases de datos de las propuestas ciudadanas de la Secretaría de Hacienda",
     img: "Bases_propuestas.jpg",
     alt: "Bases de datos de las propuestas ciudadanas de la Secretaría de Hacienda",
-    pdf: "Secretaría de Hacienda/CONCLUSIONES DEL FORO_OFICILIA MAYOR.docx.pdf",
+    pdf: "Secretaría de Hacienda/Hacienda.xlsx",
     pathType: "user",
   },
   Adminlnfraestructura: {
     label: "Bases de datos de las propuestas ciudadanas de la Secretaría de Infraestructura Pública y Desarrollo Urbano Sostenible",
     img: "Bases_propuestas.jpg",
     alt: "Bases de datos de las propuestas ciudadanas de la Secretaría de Infraestructura Pública y Desarrollo Urbano Sostenible",
-    pdf: "Secretaría de Infraestructura Pública y Desarrollo Urbano Sostenible/Infraestructura Pública y Equipamiento Urbano.xlsx",
+    pdf: "Secretaría de Infraestructura Pública y Desarrollo Urbano Sostenible/Infraestructura Publica y Equipamiento Urbano.xlsx",
     pathType: "user",
   },
   AdminMedioAmbiente: {
@@ -112,7 +119,7 @@ const BASES_FILES_BY_USER = {
     label: "Bases de datos de las propuestas ciudadanas de la Oficialia mayor",
     img: "Bases_propuestas.jpg",
     alt: "Bases de datos de las propuestas ciudadanas de la Oficialia mayor",
-    pdf: "Oficialia mayor/Hacienda.xlsx",
+    pdf: "Oficialia mayor/Oficialia.xlsx",
     pathType: "user",
   },
   AdminPJusticia: {
@@ -133,9 +140,9 @@ const BASES_FILES_BY_USER = {
     label: "Bases de datos de las propuestas ciudadanas de la Secretaría de Seguridad Pública",
     img: "Bases_propuestas.jpg",
     alt: "Bases de datos de las propuestas ciudadanas de la Secretaría de Seguridad Pública",
-    pdf: "Secretaría%20de%20Seguridad%20Pública/Seguridad%20y%20Justicia%2C%20Seguridad%20Pública.xlsx",
+    pdf: "Secretaría de Seguridad Pública/Seguridad y Justicia, Seguridad Publica.xlsx",
     pathType: "user",
-},
+  },
   AdminTrabajo: {
     label: "Bases de datos de las propuestas ciudadanas de la Secretaría del Trabajo y previsión Social",
     img: "Bases_propuestas.jpg",

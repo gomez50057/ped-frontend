@@ -29,8 +29,7 @@ const slides = [
     description:
       "Conoce el documento que establece el enfoque, principios y etapas metodológicas que guían el proceso de actualización del PED 2025–2028, garantizando transparencia, participación e inclusión.",
     image: "/img/slider/lineamientos_PED.jpg",
-    // href: "/pdf/Lineamientos del PED.pdf"
-    href: "/pdf/pronto.pdf"
+    href: "/pdf/Lineamientos del PED.pdf"
   },
 ];
 

@@ -45,5 +45,5 @@ next-env.d.ts
 public/video/
 *.mp4
 
-# archivos 
+# archivos por secretaria
 /public/pdf/dashboard/
