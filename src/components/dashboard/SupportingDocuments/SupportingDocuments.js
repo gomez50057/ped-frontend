@@ -23,9 +23,16 @@ const GENERAL_FILES = [
   },
   {
     label: "Preliminar del PED",
-    img: "preliminar-PED.jpg",
+    img: "Preliminar-PED.jpg",
     alt: "Preliminar del PED",
     pdf: "Actualización_PED_2025_2028.pdf",
+    pathType: "general",
+  },
+  {
+    label: "Presentación 2025",
+    img: "Presentacion-2025.jpg",
+    alt: "Presentación 2025",
+    pdf: "presentacion.pdf",
     pathType: "general",
   },
 ];
