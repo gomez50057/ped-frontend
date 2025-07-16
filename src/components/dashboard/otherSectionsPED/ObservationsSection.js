@@ -40,6 +40,11 @@ const ObservationsSection = ({ observations = [], onChange }) => {
     severity: "info",
   });
 
+
+  const [pendingFinalState, setPendingFinalState] = useState(null); // true (marcar) o false (desmarcar)
+  const [confirmFinalOpen, setConfirmFinalOpen] = useState(false);
+  const [isFinal, setIsFinal] = useState(false); // Para reflejar el estado visual del checkbox
+
   // 1. Al montar, carga las observaciones existentes
   useEffect(() => {
     const fetchObservations = async () => {
@@ -328,20 +333,6 @@ const ObservationsSection = ({ observations = [], onChange }) => {
             <div className={styles.buttonsContainerfixed}>
               <div className={styles.buttonWrapper}>
                 <button
-                  className={styles.slideButton}
-                  onClick={handleGuardarAvance}
-                  disabled={!areAllObservationsComplete(obsList)}
-                  title={
-                    !areAllObservationsComplete(obsList)
-                      ? "Completa todos los campos para guardar"
-                      : "Guardar avance"
-                  }
-                >
-                  Guardar avance
-                </button>
-              </div>
-              <div className={styles.buttonWrapper}>
-                <button
                   type="button"
                   className={styles.slideButton}
                   onClick={() => setOpenConfirm(true)}
@@ -349,11 +340,46 @@ const ObservationsSection = ({ observations = [], onChange }) => {
                   title={
                     !areAllObservationsComplete(obsList)
                       ? "Completa todos los campos para enviar"
-                      : "Enviar comentarios"
+                      : "Guardar avance"
                   }
                 >
-                  Enviar comentarios
+                  Guardar avance
                 </button>
+              </div>
+
+              <div className={styles.envioFinalWrapper}>
+                <label className={styles.containerChecked}>
+                  <input
+                    type="checkbox"
+                    checked={isFinal}
+                    onChange={e => {
+                      setPendingFinalState(e.target.checked);
+                      setConfirmFinalOpen(true);
+                    }}
+                  />
+                  <div className={styles.checkmark}>
+                    <svg
+                      className={styles.checkboxSvg}
+                      viewBox="0 0 200 200"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <circle
+                        cx="100"
+                        cy="100"
+                        r="80"
+                        className={styles.checkboxCircle}
+                        strokeWidth="20"
+                      />
+                      <path
+                        className={styles.checkboxTick}
+                        d="M52 111.018L76.9867 136L149 64"
+                        strokeWidth="15"
+                      ></path>
+                    </svg>
+                  </div>
+                </label>
+                <p className={styles.checkboxLabel}>Confirmo que estas son mis aportaciones finales</p>
               </div>
             </div>
           </div>
@@ -370,6 +396,28 @@ const ObservationsSection = ({ observations = [], onChange }) => {
         confirmText="Sí, enviar"
         cancelText="Cancelar"
       />
+
+      <ConfirmDialog
+        open={confirmFinalOpen}
+        onClose={() => setConfirmFinalOpen(false)}
+        onConfirm={() => {
+          setIsFinal(pendingFinalState);
+          setConfirmFinalOpen(false);
+          // Aquí se implementará la lógica de guardado/cambio a futuro
+        }}
+        title={
+          pendingFinalState
+            ? "¿Estás seguro de enviar como versión final?"
+            : "¿Estás seguro de quitar la entrega final?"
+        }
+        confirmText={
+          pendingFinalState
+            ? "Sí, confirmar envío final"
+            : "Sí, quitar entrega final"
+        }
+        cancelText="Cancelar"
+      />
+
 
       <Snackbar
         open={snackbar.open}
