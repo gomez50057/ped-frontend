@@ -384,8 +384,9 @@ export default function NewIndicatorProposalForm({ onClose, onSubmit, initialDat
                     message: "Propuesta guardada correctamente",
                     severity: "success",
                   });
-                  // Cierra el modal aquí
-                  if (onClose) onClose();
+                  setTimeout(() => {
+                    if (onClose) onClose();
+                  }, 1200); // 1.2 segundos es buen tiempo, ajusta a tu gusto
                 } else {
                   // Si hubo error, no cerrar, muestra error
                   let msg = "Error al guardar la propuesta";
