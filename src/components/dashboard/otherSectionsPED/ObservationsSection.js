@@ -6,9 +6,7 @@ import Alert from '@mui/material/Alert';
 import styles from "./ObservationsSection.module.css";
 import { fetchWithAuth } from '@/utils/auth';
 import { contenidoPEDOpciones } from '@/utils/utils';
-
 import ConfirmDialog from "@/components/dashboard/components/ConfirmDialog/ConfirmDialog";
-
 
 const defaultObservation = {
   sectionName: "",
@@ -34,18 +32,16 @@ const ObservationsSection = ({ observations = [], onChange }) => {
   const [openConfirm, setOpenConfirm] = useState(false);
   const [obsList, setObsList] = useState([defaultObservation]);
   const [loading, setLoading] = useState(true);
+  const [pendingFinalState, setPendingFinalState] = useState(null); // true (marcar) o false (desmarcar)
+  const [confirmFinalOpen, setConfirmFinalOpen] = useState(false);
+  const [isFinal, setIsFinal] = useState(false); // Para reflejar el estado visual del checkbox
   const [snackbar, setSnackbar] = useState({
     open: false,
     message: "",
     severity: "info",
   });
 
-
-  const [pendingFinalState, setPendingFinalState] = useState(null); // true (marcar) o false (desmarcar)
-  const [confirmFinalOpen, setConfirmFinalOpen] = useState(false);
-  const [isFinal, setIsFinal] = useState(false); // Para reflejar el estado visual del checkbox
-
-  // 1. Al montar, carga las observaciones existentes
+  // Al montar, carga las observaciones existentes
   useEffect(() => {
     const fetchObservations = async () => {
       setLoading(true);
@@ -54,6 +50,7 @@ const ObservationsSection = ({ observations = [], onChange }) => {
         if (!res.ok) throw new Error("Error al obtener las observaciones");
         const data = await res.json();
         setObsList(data.length > 0 ? data : [defaultObservation]);
+        if (data.length > 0) setIsFinal(!!data[0].envio_final);
       } catch (error) {
         setObsList([defaultObservation]);
         setSnackbar({
@@ -68,7 +65,7 @@ const ObservationsSection = ({ observations = [], onChange }) => {
     fetchObservations();
   }, []);
 
-  // 2. Handle de cambios
+  // Handle de cambios
   const handleChange = (idx, field, value) => {
     const newObs = obsList.map((obs, i) =>
       i === idx ? { ...obs, [field]: value } : obs
@@ -77,7 +74,7 @@ const ObservationsSection = ({ observations = [], onChange }) => {
     onChange && onChange(newObs);
   };
 
-  // 3. Agregar nueva observación
+  // Agregar nueva observación
   const handleAdd = () => {
     if (!isObservationComplete(obsList[obsList.length - 1])) {
       setSnackbar({
@@ -92,7 +89,7 @@ const ObservationsSection = ({ observations = [], onChange }) => {
     onChange && onChange(newObs);
   };
 
-  // 4. Eliminar observación
+  // Eliminar observación
   const handleRemove = async (idx) => {
     // Si solo hay una observación, no se permite eliminar
     if (obsList.length === 1) return;
@@ -129,27 +126,8 @@ const ObservationsSection = ({ observations = [], onChange }) => {
     onChange && onChange(newObs);
   };
 
-
-  // 5. Guardar avance local (opcional)
-  const handleGuardarAvance = () => {
-    if (!areAllObservationsComplete(obsList)) {
-      setSnackbar({
-        open: true,
-        message: "Todos los campos de todas las observaciones son obligatorios.",
-        severity: "error",
-      });
-      return;
-    }
-    setSnackbar({
-      open: true,
-      message: "¡Avance guardado!",
-      severity: "info",
-    });
-    console.log("Observaciones actuales:", obsList);
-  };
-
-  // 6. Guardar/actualizar todas las observaciones en la API
-  const handleGuardarComentarios = async () => {
+  // Guardar/actualizar todas las observaciones en la API
+  const handleGuardarComentarios = async (finalState = isFinal) => {
     if (!areAllObservationsComplete(obsList)) {
       setSnackbar({
         open: true,
@@ -160,31 +138,30 @@ const ObservationsSection = ({ observations = [], onChange }) => {
     }
 
     try {
-      // PUT o POST según si hay id
       const reqs = obsList.map(obs => {
-        // Si tiene id, actualiza con PUT
+        const body = JSON.stringify({
+          sectionName: obs.sectionName,
+          page: obs.page,
+          asIs: obs.asIs,
+          shouldBe: obs.shouldBe,
+          justification: obs.justification,
+          envio_final: finalState,
+        });
+
+        console.log(
+          `Enviando ${obs.id ? "PUT" : "POST"} a ${obs.id ? `${API_URL}${obs.id}/` : API_URL}:`,
+          JSON.parse(body)
+        );
+
         if (obs.id) {
           return fetchWithAuth(`${API_URL}${obs.id}/`, {
             method: "PUT",
-            body: JSON.stringify({
-              sectionName: obs.sectionName,
-              page: obs.page,
-              asIs: obs.asIs,
-              shouldBe: obs.shouldBe,
-              justification: obs.justification,
-            }),
+            body,
           });
         } else {
-          // Si no, crea nuevo con POST
           return fetchWithAuth(API_URL, {
             method: "POST",
-            body: JSON.stringify({
-              sectionName: obs.sectionName,
-              page: obs.page,
-              asIs: obs.asIs,
-              shouldBe: obs.shouldBe,
-              justification: obs.justification,
-            }),
+            body,
           });
         }
       });
@@ -210,6 +187,7 @@ const ObservationsSection = ({ observations = [], onChange }) => {
       if (res.ok) {
         const data = await res.json();
         setObsList(data.length > 0 ? data : [defaultObservation]);
+        if (data.length > 0) setIsFinal(!!data[0].envio_final);
       }
     } catch (error) {
       setSnackbar({
@@ -392,7 +370,7 @@ const ObservationsSection = ({ observations = [], onChange }) => {
           setOpenConfirm(false);
           await handleGuardarComentarios();
         }}
-        title="¿Estás seguro de que quieres enviar los comentarios? Esta acción no se puede deshacer."
+        title="¿Estás seguro de que quieres enviar los comentarios?"
         confirmText="Sí, enviar"
         cancelText="Cancelar"
       />
@@ -400,10 +378,10 @@ const ObservationsSection = ({ observations = [], onChange }) => {
       <ConfirmDialog
         open={confirmFinalOpen}
         onClose={() => setConfirmFinalOpen(false)}
-        onConfirm={() => {
+        onConfirm={async () => {
           setIsFinal(pendingFinalState);
           setConfirmFinalOpen(false);
-          // Aquí se implementará la lógica de guardado/cambio a futuro
+          await handleGuardarComentarios(pendingFinalState);
         }}
         title={
           pendingFinalState
@@ -417,7 +395,6 @@ const ObservationsSection = ({ observations = [], onChange }) => {
         }
         cancelText="Cancelar"
       />
-
 
       <Snackbar
         open={snackbar.open}
