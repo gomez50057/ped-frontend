@@ -148,11 +148,6 @@ const ObservationsSection = ({ observations = [], onChange }) => {
           envio_final: finalState,
         });
 
-        console.log(
-          `Enviando ${obs.id ? "PUT" : "POST"} a ${obs.id ? `${API_URL}${obs.id}/` : API_URL}:`,
-          JSON.parse(body)
-        );
-
         if (obs.id) {
           return fetchWithAuth(`${API_URL}${obs.id}/`, {
             method: "PUT",
