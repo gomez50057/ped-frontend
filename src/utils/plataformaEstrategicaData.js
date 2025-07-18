@@ -1,75 +1,92 @@
 export const dataObjetivoEG01 = [
   {
+    "clave": "1_1_EG01",
     "id": "1_1_EG01",
     "Propuesta Objetivo": "1.1 Impulsar una planeación del desarrollo basada en elementos estratégicos, prospectivos y democráticos, para el fortalecimiento del estado.",
     "Estrategias": [
       {
+        "clave": "1_1_1_EG01",
         "id": "1_1_1_EG01",
         "Estrategia": "1.1.1 Fortalecer el Sistema Estatal de Planeación Democrática, mediante la integración de enfoques estratégicos, prospectivos y participativos para un desarrollo ordenado y sostenible, con ello, garantizando la efectividad de las políticas públicas.",
         "Lineas de acción": [
           {
+            "clave": "1_1_1_1_EG01",
             "id": "1_1_1_1_EG01",
-            "Linea de acción": "1.1.1.1 Fortalecer la planeación estratégica y democrática estatal mediante mecanismos de seguimiento, análisis prospectivo e instrumentos estratégicos que impulsen el desarrollo con inclusión social, sostenibilidad y capacidad de adaptación.",
+            "Linea de acción": "1.1.1.1 Fortalecer la planeación estratégica y democrática estatal mediante mecanismos de seguimiento, análisis prospectivo e instrumentos estratégicos que impulsen el desarrollo con inclusión social, sostenibilidad y capacidad de adaptación."
           },
           {
+            "clave": "1_1_1_2_EG01",
             "id": "1_1_1_2_EG01",
-            "Linea de acción": "1.1.1.2 Impulsar esquemas efectivos de participación ciudadana, fortaleciendo la corresponsabilidad social y la construcción de políticas públicas basadas en un contexto real.",
+            "Linea de acción": "1.1.1.2 Impulsar esquemas efectivos de participación ciudadana, fortaleciendo la corresponsabilidad social y la construcción de políticas públicas basadas en un contexto real."
           },
           {
+            "clave": "1_1_1_3_EG01",
             "id": "1_1_1_3_EG01",
             "Linea de acción": "1.1.1.3 Fomentar investigaciones políticas y sociales, orientadas al diseño, implementación y evaluación de políticas, programas y acciones públicas, sirviendo de base para la toma de decisiones."
           }
         ]
       },
       {
+        "clave": "1_1_2_EG01",
         "id": "1_1_2_EG01",
         "Estrategia": "1.1.2 Consolidar el Sistema Estatal de Ordenamiento Territorial y Desarrollo Urbano, permitiendo una gestión eficiente y planificada del espacio, mejorando el acceso equitativo a oportunidades, infraestructura y servicios.",
         "Lineas de acción": [
           {
+            "clave": "1_1_2_1_EG01",
             "id": "1_1_2_1_EG01",
-            "Linea de acción": "1.1.2.1 Fortalecer los instrumentos de planeación territorial y urbana, articulando el ordenamiento ecológico y el uso sostenible del suelo, en promoción del desarrollo equitativo y ambientalmente responsable.",
+            "Linea de acción": "1.1.2.1 Fortalecer los instrumentos de planeación territorial y urbana, articulando el ordenamiento ecológico y el uso sostenible del suelo, en promoción del desarrollo equitativo y ambientalmente responsable."
           },
           {
+            "clave": "1_1_2_2_EG01",
             "id": "1_1_2_2_EG01",
-            "Linea de acción": "1.1.2.2 Impulsar acciones de desarrollo regional y metropolitano a través de modelos que atiendan sus vocaciones, potencialidades y necesidades, equilibrando el crecimiento económico, social.",
+            "Linea de acción": "1.1.2.2 Impulsar acciones de desarrollo regional y metropolitano a través de modelos que atiendan sus vocaciones, potencialidades y necesidades, equilibrando el crecimiento económico, social."
           },
           {
+            "clave": "1_1_2_3_EG01",
             "id": "1_1_2_3_EG01",
             "Linea de acción": "1.1.2.3 Consolidar un banco estatal de proyectos estratégicos de alto impacto, con viabilidad técnica y financiera, facilitando la toma de decisiones para el impulso al desarrollo."
           }
         ]
       },
       {
+        "clave": "1_1_3_EG01",
         "id": "1_1_3_EG01",
         "Estrategia": "1.1.3 Mejorar el Sistema Estatal de Monitoreo y Evaluación a través de mecanismos de seguimiento, análisis y mejora continua de la acción gubernamental, garantizando decisiones públicas efectivas y transparentes.",
         "Lineas de acción": [
           {
+            "clave": "1_1_3_1_EG01",
             "id": "1_1_3_1_EG01",
-            "Linea de acción": "1.1.3.1 Impulsar la evaluación de programas y políticas públicas con criterios de eficacia, eficiencia, pertinencia e impacto, optimizando el diseño e implementación, para la óptima atención de las prioridades sociales.",
+            "Linea de acción": "1.1.3.1 Impulsar la evaluación de programas y políticas públicas con criterios de eficacia, eficiencia, pertinencia e impacto, optimizando el diseño e implementación, para la óptima atención de las prioridades sociales."
           },
           {
+            "clave": "1_1_3_2_EG01",
             "id": "1_1_3_2_EG01",
-            "Linea de acción": "1.1.3.2 Mejorar los indicadores de impacto, dando seguimiento puntual a los objetivos gubernamentales y midiendo los avances reales en el desempeño público.",
+            "Linea de acción": "1.1.3.2 Mejorar los indicadores de impacto, dando seguimiento puntual a los objetivos gubernamentales y midiendo los avances reales en el desempeño público."
           },
           {
+            "clave": "1_1_3_3_EG01",
             "id": "1_1_3_3_EG01",
             "Linea de acción": "1.1.3.3 Garantizar servicios y acciones eficaces y eficientes por parte de las entidades paraestatales y los organismos gubernamentales, para el impulso a las necesidades del pueblo."
           }
         ]
       },
       {
+        "clave": "1_1_4_EG01",
         "id": "1_1_4_EG01",
         "Estrategia": "1.1.4 Fortalecer las capacidades institucionales en análisis geoespacial y demográfico para la toma de decisiones basadas en evidencia, que contribuyan al desarrollo sostenible y equitativo.",
         "Lineas de acción": [
           {
+            "clave": "1_1_4_1_EG01",
             "id": "1_1_4_1_EG01",
-            "Linea de acción": "1.1.4.1 Impulsar el Sistema de Información Georreferenciada, a través de herramientas de análisis geográfico y geoprocesamiento para la integración, modelado y visualización de datos espaciales en los sistemas de planeación estatal y municipal.",
+            "Linea de acción": "1.1.4.1 Impulsar el Sistema de Información Georreferenciada, a través de herramientas de análisis geográfico y geoprocesamiento para la integración, modelado y visualización de datos espaciales en los sistemas de planeación estatal y municipal."
           },
           {
+            "clave": "1_1_4_2_EG01",
             "id": "1_1_4_2_EG01",
-            "Linea de acción": "1.1.4.2 Actualizar la cartografía temática del estado, garantizando información precisa y oportuna y sirviendo para proyectos de desarrollo urbano.",
+            "Linea de acción": "1.1.4.2 Actualizar la cartografía temática del estado, garantizando información precisa y oportuna y sirviendo para proyectos de desarrollo urbano."
           },
           {
+            "clave": "1_1_4_3_EG01",
             "id": "1_1_4_3_EG01",
             "Linea de acción": "1.1.4.3 Impulsar políticas de seguimiento y atención frente a las dinámicas poblacionales de la entidad, para el fomento a programas y acciones encaminadas al desarrollo integral de toda la población."
           }
@@ -78,32 +95,39 @@ export const dataObjetivoEG01 = [
     ]
   },
   {
+    "clave": "1_2_EG01",
     "id": "1_2_EG01",
     "Propuesta Objetivo": "1.2 Promover la concertación y el diálogo, como mecanismos de fortalecimiento político e institucional de la entidad, promoviendo la armonía y paz social.",
     "Estrategias": [
       {
+        "clave": "1_2_1_EG01",
         "id": "1_2_1_EG01",
         "Estrategia": "1.2.1 Fortalecer las capacidades institucionales para la coordinación y el diálogo, consolidando una gestión pública eficaz y un desarrollo democrático y armónico en todos los órdenes públicos y sectores de atención.",
         "Lineas de acción": [
           {
+            "clave": "1_2_1_1_EG01",
             "id": "1_2_1_1_EG01",
-            "Linea de acción": "1.2.1.1 Fortalecer la gobernabilidad democrática en el estado, asegurando estabilidad política y orden público, a través del fomento al desarrollo político participativo y respetuoso de los derechos humanos.",
+            "Linea de acción": "1.2.1.1 Fortalecer la gobernabilidad democrática en el estado, asegurando estabilidad política y orden público, a través del fomento al desarrollo político participativo y respetuoso de los derechos humanos."
           },
           {
+            "clave": "1_2_1_2_EG01",
             "id": "1_2_1_2_EG01",
             "Linea de acción": "1.2.1.2 Fortalecer el desarrollo estatal mediante procesos institucionalizados de concertación con actores sociales y políticos, promoviendo la coordinación interinstitucional entre los tres órdenes de gobierno."
           }
         ]
       },
       {
+        "clave": "1_2_2_EG01",
         "id": "1_2_2_EG01",
         "Estrategia": "1.2.2 Asegurar el cumplimiento de la normativa vigente y reglas de operación, garantizando una acción apegada a derecho, efectiva y honesta, de las políticas públicas.",
         "Lineas de acción": [
           {
+            "clave": "1_2_2_1_EG01",
             "id": "1_2_2_1_EG01",
-            "Linea de acción": "1.2.2.1 Brindar acompañamiento técnico y normativo a las instancias ejecutoras de programas públicos, asegurando que cumplan criterios de eficiencia y transparencia.",
+            "Linea de acción": "1.2.2.1 Brindar acompañamiento técnico y normativo a las instancias ejecutoras de programas públicos, asegurando que cumplan criterios de eficiencia y transparencia."
           },
           {
+            "clave": "1_2_2_2_EG01",
             "id": "1_2_2_2_EG01",
             "Linea de acción": "1.2.2.2 Impulsar la coordinación y enlace con el ámbito legislativo en el seguimiento al marco normativo y jurídico, garantizando su implementación efectiva."
           }
@@ -112,30 +136,37 @@ export const dataObjetivoEG01 = [
     ]
   },
   {
+    "clave": "1_3_EG01",
     "id": "1_3_EG01",
     "Propuesta Objetivo": "1.3 Impulsar el desarrollo municipal, regional y metropolitano reduciendo las desigualdades y potenciando sus vocaciones en beneficio de sus habitantes.",
     "Estrategias": [
       {
+        "clave": "1_3_1_EG01",
         "id": "1_3_1_EG01",
         "Estrategia": "1.3.1 Impulsar el desarrollo municipal, fortaleciendo las capacidades institucionales locales mejorando la toma de decisiones y promoviendo un desarrollo equilibrado y sostenible en los municipios.",
         "Lineas de acción": [
           {
+            "clave": "1_3_1_1_EG01",
             "id": "1_3_1_1_EG01",
-            "Linea de acción": "1.3.1.1 Fortalecer la planeación municipal mediante asistencia técnica y acompañamiento metodológico participativo, garantizando la alineación con los instrumentos de planeación estatal y nacional.",
+            "Linea de acción": "1.3.1.1 Fortalecer la planeación municipal mediante asistencia técnica y acompañamiento metodológico participativo, garantizando la alineación con los instrumentos de planeación estatal y nacional."
           },
           {
+            "clave": "1_3_1_2_EG01",
             "id": "1_3_1_2_EG01",
-            "Linea de acción": "1.3.1.2 Impulsar el fortalecimiento institucional, técnico y financiero de los municipios, mejorando su capacidad de gestión y brindando servicios públicos de calidad a las y los hidalguenses.",
+            "Linea de acción": "1.3.1.2 Impulsar el fortalecimiento institucional, técnico y financiero de los municipios, mejorando su capacidad de gestión y brindando servicios públicos de calidad a las y los hidalguenses."
           },
           {
+            "clave": "1_3_1_3_EG01",
             "id": "1_3_1_3_EG01",
-            "Linea de acción": "1.3.1.3 Fomentar la cooperación institucional en atención a la intermunicipalidad y conurbación, atendiendo integralmente los retos compartidos.",
+            "Linea de acción": "1.3.1.3 Fomentar la cooperación institucional en atención a la intermunicipalidad y conurbación, atendiendo integralmente los retos compartidos."
           },
           {
+            "clave": "1_3_1_4_EG01",
             "id": "1_3_1_4_EG01",
-            "Linea de acción": "1.3.1.4 Establecer esquemas de vinculación municipal, que promuevan el intercambio de buenas prácticas, conocimientos técnicos y coordinación operativa.",
+            "Linea de acción": "1.3.1.4 Establecer esquemas de vinculación municipal, que promuevan el intercambio de buenas prácticas, conocimientos técnicos y coordinación operativa."
           },
           {
+            "clave": "1_3_1_5_EG01",
             "id": "1_3_1_5_EG01",
             "Linea de acción": "1.3.1.5 Consolidar comisiones metropolitanas y regionales, como espacios de diálogo y toma de decisiones que articulen proyectos estratégicos, normativas comunes y acciones conjuntas para el desarrollo que combatan las desigualdades en los territorios."
           }
@@ -144,60 +175,74 @@ export const dataObjetivoEG01 = [
     ]
   },
   {
+    "clave": "1_4_EG01",
     "id": "1_4_EG01",
     "Propuesta Objetivo": "1.4 Consolidar el modelo de atención ciudadana sensible y cercano a la población, a través de estrategias de vinculación permanente y comunicación efectiva para la atención de sus necesidades.",
     "Estrategias": [
       {
+        "clave": "1_4_1_EG01",
         "id": "1_4_1_EG01",
         "Estrategia": "1.4.1 Fortalecer la comunicación y difusión de información oficial con la población, garantizando el derecho a la información y fomentando la participación ciudadana en la solución de problemáticas sociales.",
         "Lineas de acción": [
           {
+            "clave": "1_4_1_1_EG01",
             "id": "1_4_1_1_EG01",
-            "Linea de acción": "1.4.1.1 Fortalecer la atención ciudadana de calidad a través del diálogo social y el monitoreo de percepción, mejorando la confianza y la gestión pública en la entidad.",
+            "Linea de acción": "1.4.1.1 Fortalecer la atención ciudadana de calidad a través del diálogo social y el monitoreo de percepción, mejorando la confianza y la gestión pública en la entidad."
           },
           {
+            "clave": "1_4_1_2_EG01",
             "id": "1_4_1_2_EG01",
             "Linea de acción": "1.4.1.2 Fortalecer la comunicación gubernamental mediante una relación respetuosa con los medios de prensa y la difusión clara y oportuna de información oficial, promoviendo la transparencia, la libertad de expresión y la confianza ciudadana."
           }
         ]
       },
       {
+        "clave": "1_4_2_EG01",
         "id": "1_4_2_EG01",
         "Estrategia": "1.4.2 Impulsar la modernización administrativa, promoviendo entornos de diálogo y respeto que fortalezcan la atención ciudadana, así como la eficiencia institucional.",
         "Lineas de acción": [
           {
+            "clave": "1_4_2_1_EG01",
             "id": "1_4_2_1_EG01",
-            "Linea de acción": "1.4.2.1 Fortalecer el sistema de archivo gubernamental, mediante tecnologías digitales para el almacenamiento y gestión eficiente de la documentación, asegurando el acceso y consulta rápida y transparente.",
+            "Linea de acción": "1.4.2.1 Fortalecer el sistema de archivo gubernamental, mediante tecnologías digitales para el almacenamiento y gestión eficiente de la documentación, asegurando el acceso y consulta rápida y transparente."
           },
           {
+            "clave": "1_4_2_2_EG01",
             "id": "1_4_2_2_EG01",
-            "Linea de acción": "1.4.2.2 Optimizar la prestación de servicios estatales, mejorando continuamente la atención ciudadana y reduciendo los tiempos de respuesta.",
+            "Linea de acción": "1.4.2.2 Optimizar la prestación de servicios estatales, mejorando continuamente la atención ciudadana y reduciendo los tiempos de respuesta."
           },
           {
+            "clave": "1_4_2_3_EG01",
             "id": "1_4_2_3_EG01",
-            "Linea de acción": "1.4.2.3 Fortalecer la función registral estatal mediante la implementación de sistemas digitales, agilizando los trámites relacionados con la propiedad y registro de bienes.",
+            "Linea de acción": "1.4.2.3 Fortalecer la función registral estatal mediante la implementación de sistemas digitales, agilizando los trámites relacionados con la propiedad y registro de bienes."
           },
           {
+            "clave": "1_4_2_4_EG01",
             "id": "1_4_2_4_EG01",
-            "Linea de acción": "1.4.2.4 Impulsar acciones de regularización de la tenencia de la tierra, con una perspectiva interinstitucional en apego a la normativa y con prioridad hacia las comunidades vulnerables.",
+            "Linea de acción": "1.4.2.4 Impulsar acciones de regularización de la tenencia de la tierra, con una perspectiva interinstitucional en apego a la normativa y con prioridad hacia las comunidades vulnerables."
           },
           {
+            "clave": "1_4_2_5_EG01",
             "id": "1_4_2_5_EG01",
-            "Linea de acción": "1.4.2.5 Promover una atención efectiva en la regulación de lotificaciones, relotificaciones y predios para un crecimiento urbano planeado y sostenible, con apego a la norma y los instrumentos de planeación aplicables.",
+            "Linea de acción": "1.4.2.5 Promover una atención efectiva en la regulación de lotificaciones, relotificaciones y predios para un crecimiento urbano planeado y sostenible, con apego a la norma y los instrumentos de planeación aplicables."
           },
           {
+            "clave": "1_4_2_6_EG01",
             "id": "1_4_2_6_EG01",
-            "Linea de acción": "1.4.2.6 Promover una simplificación para la obtención de concesiones, permisos y licencias gubernamentales mediante la implementación de ventanillas únicas digitales que faciliten el acceso a la información y la gestión de trámites.",
+            "Linea de acción": "1.4.2.6 Promover una simplificación para la obtención de concesiones, permisos y licencias gubernamentales mediante la implementación de ventanillas únicas digitales que faciliten el acceso a la información y la gestión de trámites."
           },
           {
+            "clave": "1_4_2_7_EG01",
             "id": "1_4_2_7_EG01",
-            "Linea de acción": "1.4.2.7 Efectuar los procesos de verificación vehicular promoviendo la importancia del cuidado del medio ambiente y el cumplimiento de las normativas.",
+            "Linea de acción": "1.4.2.7 Efectuar los procesos de verificación vehicular promoviendo la importancia del cuidado del medio ambiente y el cumplimiento de las normativas."
           },
           {
+            "clave": "1_4_2_8_EG01",
             "id": "1_4_2_8_EG01",
-            "Linea de acción": "1.4.2.8 Fortalecer los procesos de registros vehiculares y su regularización, garantizando un estricto apego a las normas aplicables, propiciando mayor confianza y conveniencia hacia la población.",
+            "Linea de acción": "1.4.2.8 Fortalecer los procesos de registros vehiculares y su regularización, garantizando un estricto apego a las normas aplicables, propiciando mayor confianza y conveniencia hacia la población."
           },
           {
+            "clave": "1_4_2_9_EG01",
             "id": "1_4_2_9_EG01",
             "Linea de acción": " 1.4.2.9 Brindar una atención especializada para la atención a asociaciones y grupos religiosos, contribuyendo al bienestar colectivo, en apego a la normativa."
           }
@@ -209,124 +254,153 @@ export const dataObjetivoEG01 = [
 
 export const dataObjetivoEG02 = [
   {
+    "clave": "2_1_EG02",
     "id": "2_1_EG02",
     "Propuesta Objetivo": "2.1 Implementar una política hacendaria con base en un manejo responsable de las finanzas públicas, orientada a la atención de las necesidades prioritarias para el desarrollo de la entidad.",
     "Estrategias": [
       {
+        "clave": "2_1_1_EG02",
         "id": "2_1_1_EG02",
         "Estrategia": "2.1.1 Fortalecer la gestión financiera, construyendo una política hacendaria sólida, así como un sistema tributario justo y eficiente, promoviendo el desarrollo económico y la sostenibilidad de la entidad.",
         "Lineas de acción": [
           {
+            "clave": "2_1_1_1_EG02",
             "id": "2_1_1_1_EG02",
-            "Linea de acción": "2.1.1.1 Impulsar estrategias integrales que incrementen los ingresos propios del Estado, garantizando la sostenibilidad financiera y la mejora en la prestación de servicios públicos.",
+            "Linea de acción": "2.1.1.1 Impulsar estrategias integrales que incrementen los ingresos propios del Estado, garantizando la sostenibilidad financiera y la mejora en la prestación de servicios públicos."
           },
           {
+            "clave": "2_1_1_2_EG02",
             "id": "2_1_1_2_EG02",
-            "Linea de acción": "2.1.1.2 Establecer mecanismos de coordinación fiscal con la federación y los municipios, asegurando la recaudación eficiente de impuestos compartidos, que incrementen la participación del Estado en los ingresos nacionales y mejoren la equidad distributiva.",
+            "Linea de acción": "2.1.1.2 Establecer mecanismos de coordinación fiscal con la federación y los municipios, asegurando la recaudación eficiente de impuestos compartidos, que incrementen la participación del Estado en los ingresos nacionales y mejoren la equidad distributiva."
           },
           {
+            "clave": "2_1_1_3_EG02",
             "id": "2_1_1_3_EG02",
-            "Linea de acción": "2.1.1.3 Implementar tecnologías para la simplificación de los procesos de recaudación fiscal, incrementando los recursos y la eficiencia administrativa en la entidad.",
+            "Linea de acción": "2.1.1.3 Implementar tecnologías para la simplificación de los procesos de recaudación fiscal, incrementando los recursos y la eficiencia administrativa en la entidad."
           },
           {
+            "clave": "2_1_1_4_EG02",
             "id": "2_1_1_4_EG02",
-            "Linea de acción": "2.1.1.4 Actualizar el marco jurídico fiscal estatal para armonizarlo con la legislación federal, respondiendo a las necesidades actuales de financiamiento, asegurando la legalidad, transparencia y justicia tributaria en el Estado.",
+            "Linea de acción": "2.1.1.4 Actualizar el marco jurídico fiscal estatal para armonizarlo con la legislación federal, respondiendo a las necesidades actuales de financiamiento, asegurando la legalidad, transparencia y justicia tributaria en el Estado."
           },
           {
+            "clave": "2_1_1_5_EG02",
             "id": "2_1_1_5_EG02",
-            "Linea de acción": "2.1.1.5 Implementar esquemas de estímulos fiscales que impulsen la inversión, la generación de empleo y el desarrollo de sectores estratégicos.",
+            "Linea de acción": "2.1.1.5 Implementar esquemas de estímulos fiscales que impulsen la inversión, la generación de empleo y el desarrollo de sectores estratégicos."
           },
           {
+            "clave": "2_1_1_6_EG02",
             "id": "2_1_1_6_EG02",
-            "Linea de acción": "2.1.1.6 Mantener actualizado el padrón fiscal estatal, contando con una base de datos que mejore la planeación, recaudación y fiscalización.",
+            "Linea de acción": "2.1.1.6 Mantener actualizado el padrón fiscal estatal, contando con una base de datos que mejore la planeación, recaudación y fiscalización."
           },
           {
+            "clave": "2_1_1_7_EG02",
             "id": "2_1_1_7_EG02",
-            "Linea de acción": "2.1.1.7 Otorgar subsidios fiscales focalizados y temporales a grupos vulnerables o actividades prioritarias, promoviendo la equidad social, mitigando desigualdades y apoyando la recuperación económica.",
+            "Linea de acción": "2.1.1.7 Otorgar subsidios fiscales focalizados y temporales a grupos vulnerables o actividades prioritarias, promoviendo la equidad social, mitigando desigualdades y apoyando la recuperación económica."
           },
           {
+            "clave": "2_1_1_8_EG02",
             "id": "2_1_1_8_EG02",
-            "Linea de acción": "2.1.1.8 Fortalecer los procesos de elaboración, análisis y control del presupuesto público estatal, integrando mecanismos participativos y de evaluación técnica.",
+            "Linea de acción": "2.1.1.8 Fortalecer los procesos de elaboración, análisis y control del presupuesto público estatal, integrando mecanismos participativos y de evaluación técnica."
           },
           {
+            "clave": "2_1_1_9_EG02",
             "id": "2_1_1_9_EG02",
-            "Linea de acción": "2.1.1.9 Fortalecer el Presupuesto Basado en Resultados (PbR) y el Sistema de Evaluación del Desempeño (SED), en las distintas etapas del ciclo presupuestario.",
+            "Linea de acción": "2.1.1.9 Fortalecer el Presupuesto Basado en Resultados (PbR) y el Sistema de Evaluación del Desempeño (SED), en las distintas etapas del ciclo presupuestario."
           },
           {
+            "clave": "2_1_1_10_EG02",
             "id": "2_1_1_10_EG02",
-            "Linea de acción": "2.1.1.10 Realizar programas presupuestarios, mejorando el impacto del gasto y priorizando acciones que generen valor público.",
+            "Linea de acción": "2.1.1.10 Realizar programas presupuestarios, mejorando el impacto del gasto y priorizando acciones que generen valor público."
           },
           {
+            "clave": "2_1_1_11_EG02",
             "id": "2_1_1_11_EG02",
-            "Linea de acción": "2.1.1.11 Optimizar la programación del gasto público mediante calendarios realistas y metas claras en todas las dependencias logrando una planeación fiscal sostenible, mejorando la eficiencia operativa del gobierno y evitando subejercicios presupuestales.",
+            "Linea de acción": "2.1.1.11 Optimizar la programación del gasto público mediante calendarios realistas y metas claras en todas las dependencias logrando una planeación fiscal sostenible, mejorando la eficiencia operativa del gobierno y evitando subejercicios presupuestales."
           },
           {
+            "clave": "2_1_1_12_EG02",
             "id": "2_1_1_12_EG02",
-            "Linea de acción": "2.1.1.12 Supervisar el ejercicio fiscal interno y externo de todas las dependencias y organismos descentralizados, reforzando mecanismos de control y rendición de cuentas, garantizando que el presupuesto se ejerza correctamente.",
+            "Linea de acción": "2.1.1.12 Supervisar el ejercicio fiscal interno y externo de todas las dependencias y organismos descentralizados, reforzando mecanismos de control y rendición de cuentas, garantizando que el presupuesto se ejerza correctamente."
           },
           {
+            "clave": "2_1_1_13_EG02",
             "id": "2_1_1_13_EG02",
-            "Linea de acción": "2.1.1.13 Fortalecer la política hacendaria estatal mediante una planeación fiscal responsable, manteniendo la estabilidad financiera del estado y mejorando la calidad del gasto.",
+            "Linea de acción": "2.1.1.13 Fortalecer la política hacendaria estatal mediante una planeación fiscal responsable, manteniendo la estabilidad financiera del estado y mejorando la calidad del gasto."
           },
           {
+            "clave": "2_1_1_14_EG02",
             "id": "2_1_1_14_EG02",
-            "Linea de acción": "2.1.1.14 Consolidar la coordinación fiscal con la Federación y los municipios, promoviendo la eficiencia recaudatoria y mejorando la distribución de las participaciones y aportaciones.",
+            "Linea de acción": "2.1.1.14 Consolidar la coordinación fiscal con la Federación y los municipios, promoviendo la eficiencia recaudatoria y mejorando la distribución de las participaciones y aportaciones."
           },
           {
+            "clave": "2_1_1_15_EG02",
             "id": "2_1_1_15_EG02",
             "Linea de acción": "2.1.1.15 Implementar un sistema integral de gestión financiera pública basado en la eficiencia operativa, la transparencia y una fiscalización oportuna, que garantice el uso correcto y responsable de los recursos públicos."
           }
         ]
       },
       {
+        "clave": "2_1_2_EG02",
         "id": "2_1_2_EG02",
         "Estrategia": "2.1.2 Establecer una política de egresos responsable, reduciendo el gasto innecesario y enfocando la inversión pública en acciones que promuevan la equidad, la inclusión y el desarrollo sostenible en todo el estado.",
         "Lineas de acción": [
           {
+            "clave": "2_1_2_1_EG02",
             "id": "2_1_2_1_EG02",
-            "Linea de acción": "2.1.2.1 Optimizar la planeación y ejecución del presupuesto de egresos, priorizando proyectos y acciones con alto impacto social, económico y ambiental, asegurando el uso eficiente de los recursos y el desarrollo equitativo en todas las regiones.",
+            "Linea de acción": "2.1.2.1 Optimizar la planeación y ejecución del presupuesto de egresos, priorizando proyectos y acciones con alto impacto social, económico y ambiental, asegurando el uso eficiente de los recursos y el desarrollo equitativo en todas las regiones."
           },
           {
+            "clave": "2_1_2_2_EG02",
             "id": "2_1_2_2_EG02",
-            "Linea de acción": "2.1.2.2 Fortalecer la administración y aprovechamiento de bienes y servicios públicos no tributarios, asegurando su correcta aplicación y vigilancia.",
+            "Linea de acción": "2.1.2.2 Fortalecer la administración y aprovechamiento de bienes y servicios públicos no tributarios, asegurando su correcta aplicación y vigilancia."
           },
           {
+            "clave": "2_1_2_3_EG02",
             "id": "2_1_2_3_EG02",
             "Linea de acción": "2.1.2.3 Asegurar que la inversión pública y privada, sea detonadora de los sectores estratégicos de la entidad, asegurando la rentabilidad de los proyectos para la optimización de recursos y bienestar social."
           }
         ]
       },
       {
+        "clave": "2_1_3_EG02",
         "id": "2_1_3_EG02",
         "Estrategia": "2.1.3 Fortalecer las finanzas públicas en el estado, mediante la modernización, regulación y aprovechamiento eficiente del territorio, impulsando su desarrollo ordenado.",
         "Lineas de acción": [
           {
+            "clave": "2_1_3_1_EG02",
             "id": "2_1_3_1_EG02",
-            "Linea de acción": "2.1.3.1 Establecer un sistema de inventario actualizado y digitalizado del patrimonio mobiliario e inmobiliario público estatal, garantizando su correcta administración y valorización para fines de toma de decisiones y planeación.",
+            "Linea de acción": "2.1.3.1 Establecer un sistema de inventario actualizado y digitalizado del patrimonio mobiliario e inmobiliario público estatal, garantizando su correcta administración y valorización para fines de toma de decisiones y planeación."
           },
           {
+            "clave": "2_1_3_2_EG02",
             "id": "2_1_3_2_EG02",
-            "Linea de acción": "2.1.3.2 Implementar un programa de regularización y registro de predios estatales, con énfasis en la correcta asignación y uso estratégico de tierras para el desarrollo urbano y rural.",
+            "Linea de acción": "2.1.3.2 Implementar un programa de regularización y registro de predios estatales, con énfasis en la correcta asignación y uso estratégico de tierras para el desarrollo urbano y rural."
           },
           {
+            "clave": "2_1_3_3_EG02",
             "id": "2_1_3_3_EG02",
             "Linea de acción": "2.1.3.3 Coordinar los procesos de desarrollo del catastro, así como su constante actualización, permitiendo el correcto seguimiento de los predios en la entidad."
           }
         ]
       },
       {
+        "clave": "2_1_4_EG02",
         "id": "2_1_4_EG02",
         "Estrategia": "2.1.4 Desarrollar un marco de gestión financiera integral, garantizando la sostenibilidad fiscal en el uso de recursos y la estabilidad económica del estado, asegurando que el estado pueda cumplir con sus compromisos financieros.",
         "Lineas de acción": [
           {
+            "clave": "2_1_4_1_EG02",
             "id": "2_1_4_1_EG02",
-            "Linea de acción": "2.1.4.1 Optimizar la administración de los fondos del estado, promoviendo su uso eficiente para la financiación de proyectos estratégicos que contribuyan al desarrollo económico y social del estado.",
+            "Linea de acción": "2.1.4.1 Optimizar la administración de los fondos del estado, promoviendo su uso eficiente para la financiación de proyectos estratégicos que contribuyan al desarrollo económico y social del estado."
           },
           {
+            "clave": "2_1_4_2_EG02",
             "id": "2_1_4_2_EG02",
-            "Linea de acción": "2.1.4.2 Desarrollar políticas fiscales que permitan la gestión adecuada de la deuda pública a través de la refinanciación y reestructuración de créditos, asegurando la estabilidad financiera del estado.",
+            "Linea de acción": "2.1.4.2 Desarrollar políticas fiscales que permitan la gestión adecuada de la deuda pública a través de la refinanciación y reestructuración de créditos, asegurando la estabilidad financiera del estado."
           },
           {
+            "clave": "2_1_4_3_EG02",
             "id": "2_1_4_3_EG02",
             "Linea de acción": "2.1.4.3 Publicar la cuenta anual de hacienda pública permitiendo la rendición de cuentas ante la ciudadanía y los organismos fiscalizadores, fortaleciendo la confianza pública en la gestión financiera del estado."
           }
@@ -335,45 +409,54 @@ export const dataObjetivoEG02 = [
     ]
   },
   {
+    "clave": "2_2_EG02",
     "id": "2_2_EG02",
     "Propuesta Objetivo": "2.2 Gestionar el talento humano y patrimonio gubernamental asegurando el ejercicio austero, eficaz y disciplinado del gasto público.",
     "Estrategias": [
       {
+        "clave": "2_2_1_EG02",
         "id": "2_2_1_EG02",
         "Estrategia": "2.2.1 Impulsar el sistema de capacitación y profesionalización de las y los servidores públicos, con base en las habilidades, conocimientos y competencias necesarias, asegurando una atención honesta y orientada a resultados.",
         "Lineas de acción": [
-
           {
+            "clave": "2_2_1_1_EG02",
             "id": "2_2_1_1_EG02",
-            "Linea de acción": "2.2.1.1 Erradicar el nepotismo, las plazas innecesarias o con duplicidad en la administración pública estatal.",
+            "Linea de acción": "2.2.1.1 Erradicar el nepotismo, las plazas innecesarias o con duplicidad en la administración pública estatal."
           },
           {
+            "clave": "2_2_1_2_EG02",
             "id": "2_2_1_2_EG02",
-            "Linea de acción": "2.2.1.2 Capacitar permanentemente a las y los servidores públicos, buscando su desarrollo laboral, profesional y bienestar psicosocial.",
+            "Linea de acción": "2.2.1.2 Capacitar permanentemente a las y los servidores públicos, buscando su desarrollo laboral, profesional y bienestar psicosocial."
           },
           {
+            "clave": "2_2_1_3_EG02",
             "id": "2_2_1_3_EG02",
             "Linea de acción": "2.2.1.3 Profesionalizar el servicio público con base en la ética, la responsabilidad y un alto compromiso en el ejercicio de sus funciones."
           }
         ]
       },
       {
+        "clave": "2_2_2_EG02",
         "id": "2_2_2_EG02",
         "Estrategia": "2.2.2 Desarrollar un esquema integral de inversión que priorice los proyectos basados en su impacto económico, social y ambiental, asegurando que su desarrollo eficiente, efectivo y sostenible, contribuya al desarrollo integral del estado.",
         "Lineas de acción": [
           {
+            "clave": "2_2_2_1_EG02",
             "id": "2_2_2_1_EG02",
-            "Linea de acción": "2.2.2.1 Efectuar validaciones a los expedientes para todos los estudios y proyectos de gasto público, asegurando la aprobación de aquellos técnicamente sólidos, financieramente viables y ambientalmente responsables, con pleno apego a los marcos normativos y de planeación.",
+            "Linea de acción": "2.2.2.1 Efectuar validaciones a los expedientes para todos los estudios y proyectos de gasto público, asegurando la aprobación de aquellos técnicamente sólidos, financieramente viables y ambientalmente responsables, con pleno apego a los marcos normativos y de planeación."
           },
           {
+            "clave": "2_2_2_2_EG02",
             "id": "2_2_2_2_EG02",
-            "Linea de acción": "2.2.2.2 Fortalecer el sistema de compras públicas del gobierno estatal, implementando procesos transparentes que promuevan la competencia leal entre las y los proveedores, favoreciendo la obtención de bienes y servicios de alta calidad y bajo principios de austeridad.",
+            "Linea de acción": "2.2.2.2 Fortalecer el sistema de compras públicas del gobierno estatal, implementando procesos transparentes que promuevan la competencia leal entre las y los proveedores, favoreciendo la obtención de bienes y servicios de alta calidad y bajo principios de austeridad."
           },
           {
+            "clave": "2_2_2_3_EG02",
             "id": "2_2_2_3_EG02",
-            "Linea de acción": "2.2.2.3 Actualizar periódicamente catálogos de precios unitarios y precios unitarios extraordinarios para la obra pública, que garanticen costos competitivos y coherentes con el mercado, evitando sobrecostos y asegurando la austeridad.",
+            "Linea de acción": "2.2.2.3 Actualizar periódicamente catálogos de precios unitarios y precios unitarios extraordinarios para la obra pública, que garanticen costos competitivos y coherentes con el mercado, evitando sobrecostos y asegurando la austeridad."
           },
           {
+            "clave": "2_2_2_4_EG02",
             "id": "2_2_2_4_EG02",
             "Linea de acción": "2.2.2.4 Optimizar la asignación y ejecución del gasto público, asegurando que los recursos públicos sean destinados de manera eficaz, mejorando los servicios y programas que benefician a la población."
           }
@@ -385,160 +468,198 @@ export const dataObjetivoEG02 = [
 
 export const dataObjetivoEG03 = [
   {
+    "clave": "3_1_EG03",
     "id": "3_1_EG03",
     "Propuesta Objetivo": "3.1 Impulsar una política integral de seguridad y prevención del delito que atienda sus causas estructurales y contextuales, fortalezca las capacidades institucionales y promueva la recuperación del tejido social y la paz comunitaria.",
     "Estrategias": [
       {
+        "clave": "3_1_1_EG03",
         "id": "3_1_1_EG03",
         "Estrategia": "3.1.1 Construir un estado seguro y armonioso con el fortalecimiento de la convivencia y el compromiso colectivo, logrando un entorno tranquilo y de bienestar.",
         "Lineas de acción": [
           {
+            "clave": "3_1_1_1_EG03",
             "id": "3_1_1_1_EG03",
-            "Linea de acción": "3.1.1.1 Promover acciones que atiendan las causas estructurales que permitan la construcción de la paz y mejoren la cohesión social en el estado.",
+            "Linea de acción": "3.1.1.1 Promover acciones que atiendan las causas estructurales que permitan la construcción de la paz y mejoren la cohesión social en el estado."
           },
           {
+            "clave": "3_1_1_2_EG03",
             "id": "3_1_1_2_EG03",
-            "Linea de acción": "3.1.1.2 Fomentar la regeneración ética de la sociedad, promoviendo actividades culturales, sociales, educativas, deportivas y de atención especializada, preservando un entorno de paz.",
+            "Linea de acción": "3.1.1.2 Fomentar la regeneración ética de la sociedad, promoviendo actividades culturales, sociales, educativas, deportivas y de atención especializada, preservando un entorno de paz."
           },
           {
+            "clave": "3_1_1_3_EG03",
             "id": "3_1_1_3_EG03",
-            "Linea de acción": "3.1.1.3 Promover el desarme voluntario en el estado mediante ferias de paz que reduzcan en los hogares la existencia de armas, municiones y explosivos, con ello reduciendo la violencia.",
+            "Linea de acción": "3.1.1.3 Promover el desarme voluntario en el estado mediante ferias de paz que reduzcan en los hogares la existencia de armas, municiones y explosivos, con ello reduciendo la violencia."
           },
           {
+            "clave": "3_1_1_4_EG03",
             "id": "3_1_1_4_EG03",
-            "Linea de acción": "3.1.1.4 Impulsar la prevención social de la violencia en coordinación y cooperación conjunta con la federación y los estados vecinos, garantizando el bienestar de las y los ciudadanos.",
+            "Linea de acción": "3.1.1.4 Impulsar la prevención social de la violencia en coordinación y cooperación conjunta con la federación y los estados vecinos, garantizando el bienestar de las y los ciudadanos."
           },
           {
+            "clave": "3_1_1_5_EG03",
             "id": "3_1_1_5_EG03",
-            "Linea de acción": "3.1.1.5 Brindar el acompañamiento oportuno a las víctimas de vulneración de sus derechos humanos, logrando una respuesta favorable en los procedimientos aplicables.",
+            "Linea de acción": "3.1.1.5 Brindar el acompañamiento oportuno a las víctimas de vulneración de sus derechos humanos, logrando una respuesta favorable en los procedimientos aplicables."
           },
           {
+            "clave": "3_1_1_6_EG03",
             "id": "3_1_1_6_EG03",
             "Linea de acción": "3.1.1.6 Potenciar los programas de reinserción social que permitan una efectiva rehabilitación y reintegración a la sociedad, disminuyendo la reincidencia en actos ilícitos y una reconstrucción social."
           }
         ]
       },
       {
+        "clave": "3_1_2_EG03",
         "id": "3_1_2_EG03",
         "Estrategia": "3.1.2 Fortalecer los mecanismos de control y operación estratégica institucional, que garanticen entornos seguros y coordinados, incrementando con ello la confianza ciudadana.",
         "Lineas de acción": [
           {
+            "clave": "3_1_2_1_EG03",
             "id": "3_1_2_1_EG03",
-            "Linea de acción": "3.1.2.1 Verificar el cumplimiento de los procedimientos y estándares en los procesos dentro de la organización policial que garanticen una atención efectiva y apegada a derecho, aumentando la confianza de la ciudadanía.",
+            "Linea de acción": "3.1.2.1 Verificar el cumplimiento de los procedimientos y estándares en los procesos dentro de la organización policial que garanticen una atención efectiva y apegada a derecho, aumentando la confianza de la ciudadanía."
           },
           {
+            "clave": "3_1_2_2_EG03",
             "id": "3_1_2_2_EG03",
-            "Linea de acción": "3.1.2.2 Garantizar la congruencia en los protocolos y reglamentos de las áreas encargadas de la seguridad pública, asegurando su alineación con marcos normativos vigentes nacionales e internacionales.",
+            "Linea de acción": "3.1.2.2 Garantizar la congruencia en los protocolos y reglamentos de las áreas encargadas de la seguridad pública, asegurando su alineación con marcos normativos vigentes nacionales e internacionales."
           },
           {
+            "clave": "3_1_2_3_EG03",
             "id": "3_1_2_3_EG03",
-            "Linea de acción": "3.1.2.3 Garantizar la profesionalización del personal en seguridad, impulsando mejores prácticas y la igualdad de oportunidades de las y los elementos.",
+            "Linea de acción": "3.1.2.3 Garantizar la profesionalización del personal en seguridad, impulsando mejores prácticas y la igualdad de oportunidades de las y los elementos."
           },
           {
+            "clave": "3_1_2_4_EG03",
             "id": "3_1_2_4_EG03",
-            "Linea de acción": "3.1.2.4 Contar con cuerpos de seguridad pública confiables y cercanos al pueblo, mejorando los procesos de reclutamiento y capacitación bajo un esquema de pertinencia y vocación de servicio.",
+            "Linea de acción": "3.1.2.4 Contar con cuerpos de seguridad pública confiables y cercanos al pueblo, mejorando los procesos de reclutamiento y capacitación bajo un esquema de pertinencia y vocación de servicio."
           },
           {
+            "clave": "3_1_2_5_EG03",
             "id": "3_1_2_5_EG03",
-            "Linea de acción": "3.1.2.5 Mejorar la infraestructura y el equipamiento que permita a las y los elementos de seguridad, el combate efectivo de los diferentes tipos de delitos, logrando que la población se sienta más segura.",
+            "Linea de acción": "3.1.2.5 Mejorar la infraestructura y el equipamiento que permita a las y los elementos de seguridad, el combate efectivo de los diferentes tipos de delitos, logrando que la población se sienta más segura."
           },
           {
+            "clave": "3_1_2_6_EG03",
             "id": "3_1_2_6_EG03",
-            "Linea de acción": "3.1.2.6 Fortalecer el funcionamiento del C5i mediante una sólida coordinación interinstitucional, brindando una atención oportuna a la ciudadanía, garantizando un mayor nivel de seguridad en el estado.",
+            "Linea de acción": "3.1.2.6 Fortalecer el funcionamiento del C5i mediante una sólida coordinación interinstitucional, brindando una atención oportuna a la ciudadanía, garantizando un mayor nivel de seguridad en el estado."
           },
           {
+            "clave": "3_1_2_7_EG03",
             "id": "3_1_2_7_EG03",
-            "Linea de acción": "3.1.2.7 Impulsar la colaboración en materia de seguridad con los tres órganos de gobierno y con estados circunvecinos, asegurando una acción integral y coordinada.",
+            "Linea de acción": "3.1.2.7 Impulsar la colaboración en materia de seguridad con los tres órganos de gobierno y con estados circunvecinos, asegurando una acción integral y coordinada."
           },
           {
+            "clave": "3_1_2_8_EG03",
             "id": "3_1_2_8_EG03",
-            "Linea de acción": "3.1.2.8 Robustecer las medidas y estrategias implementadas en seguridad pública institucional, brindando protección a la integridad del personal, bienes e información, asegurando la continuidad de los procesos y servicios.",
+            "Linea de acción": "3.1.2.8 Robustecer las medidas y estrategias implementadas en seguridad pública institucional, brindando protección a la integridad del personal, bienes e información, asegurando la continuidad de los procesos y servicios."
           },
           {
+            "clave": "3_1_2_9_EG03",
             "id": "3_1_2_9_EG03",
-            "Linea de acción": "3.1.2.9 Coordinar la prestación de servicios de seguridad privada como auxiliares en las tareas de seguridad, fortaleciendo la atención en el estado.",
+            "Linea de acción": "3.1.2.9 Coordinar la prestación de servicios de seguridad privada como auxiliares en las tareas de seguridad, fortaleciendo la atención en el estado."
           },
           {
+            "clave": "3_1_2_10_EG03",
             "id": "3_1_2_10_EG03",
             "Linea de acción": "3.1.2.10 Reforzar los mecanismos de investigación y persecución de delitos, mejorando su efectividad y con ello la promoción a la cultura de la denuncia, impulsando la confianza y legalidad de las instituciones."
           }
         ]
       },
       {
+        "clave": "3_1_3_EG03",
         "id": "3_1_3_EG03",
         "Estrategia": "3.1.3 Reforzar las acciones coordinadas para prevenir, detectar y responder de forma efectiva a conductas que atentan contra la legalidad, seguridad y el bienestar de la población, logrando una respuesta institucional eficaz frente a los actos ilícitos.",
         "Lineas de acción": [
           {
+            "clave": "3_1_3_1_EG03",
             "id": "3_1_3_1_EG03",
-            "Linea de acción": "3.1.3.1 Fortalecer la estrategia institucional de seguridad, contemplando una red de inteligencia y operatividad, priorizando las zonas con mayores retos.",
+            "Linea de acción": "3.1.3.1 Fortalecer la estrategia institucional de seguridad, contemplando una red de inteligencia y operatividad, priorizando las zonas con mayores retos."
           },
           {
+            "clave": "3_1_3_2_EG03",
             "id": "3_1_3_2_EG03",
-            "Linea de acción": "3.1.3.2 Mejorar los protocolos para prevenir e investigar el delito de trata de personas en el estado, reduciendo efectivamente el mismo y brindando tranquilidad a la población.",
+            "Linea de acción": "3.1.3.2 Mejorar los protocolos para prevenir e investigar el delito de trata de personas en el estado, reduciendo efectivamente el mismo y brindando tranquilidad a la población."
           },
           {
+            "clave": "3_1_3_3_EG03",
             "id": "3_1_3_3_EG03",
-            "Linea de acción": "3.1.3.3 Coadyuvar con las instancias correspondientes en el debido proceso a la portación legal de armas de fuego, bajo una perspectiva de paz social y seguridad.",
+            "Linea de acción": "3.1.3.3 Coadyuvar con las instancias correspondientes en el debido proceso a la portación legal de armas de fuego, bajo una perspectiva de paz social y seguridad."
           },
           {
+            "clave": "3_1_3_4_EG03",
             "id": "3_1_3_4_EG03",
-            "Linea de acción": "3.1.3.4 Reducir los homicidios dolosos mediante la prevención focalizada en zonas de alta incidencia en el estado, logrando reestablecer la confianza ciudadana.",
+            "Linea de acción": "3.1.3.4 Reducir los homicidios dolosos mediante la prevención focalizada en zonas de alta incidencia en el estado, logrando reestablecer la confianza ciudadana."
           },
           {
+            "clave": "3_1_3_5_EG03",
             "id": "3_1_3_5_EG03",
-            "Linea de acción": "3.1.3.5 Fortalecer los operativos policiales en zonas identificadas como puntos críticos de narcomenudeo, desarticulando considerablemente los espacios de venta en el estado.",
+            "Linea de acción": "3.1.3.5 Fortalecer los operativos policiales en zonas identificadas como puntos críticos de narcomenudeo, desarticulando considerablemente los espacios de venta en el estado."
           },
           {
+            "clave": "3_1_3_6_EG03",
             "id": "3_1_3_6_EG03",
-            "Linea de acción": "3.1.3.6 Potenciar los espacios de atención integral para que respondan de manera más efectiva ante denuncias o situaciones de violencia de género.",
+            "Linea de acción": "3.1.3.6 Potenciar los espacios de atención integral para que respondan de manera más efectiva ante denuncias o situaciones de violencia de género."
           },
           {
+            "clave": "3_1_3_7_EG03",
             "id": "3_1_3_7_EG03",
-            "Linea de acción": "3.1.3.7 Establecer un sistema robusto y transparente de capacitación para la prevención y sanción a actos de tortura, erradicando su práctica.",
+            "Linea de acción": "3.1.3.7 Establecer un sistema robusto y transparente de capacitación para la prevención y sanción a actos de tortura, erradicando su práctica."
           },
           {
+            "clave": "3_1_3_8_EG03",
             "id": "3_1_3_8_EG03",
-            "Linea de acción": "3.1.3.8 Coadyuvar a la prevención de delitos electorales mediante la vigilancia efectiva en los procesos, logrando que sean transparentes y en apego a derecho.",
+            "Linea de acción": "3.1.3.8 Coadyuvar a la prevención de delitos electorales mediante la vigilancia efectiva en los procesos, logrando que sean transparentes y en apego a derecho."
           },
           {
+            "clave": "3_1_3_9_EG03",
             "id": "3_1_3_9_EG03",
-            "Linea de acción": "3.1.3.9 Fortalecer las acciones que prevengan, investiguen y sancionen oportunamente los delitos contra animales, erradicando la impunidad y promoviendo una cultura de respeto y responsabilidad.",
+            "Linea de acción": "3.1.3.9 Fortalecer las acciones que prevengan, investiguen y sancionen oportunamente los delitos contra animales, erradicando la impunidad y promoviendo una cultura de respeto y responsabilidad."
           },
           {
+            "clave": "3_1_3_10_EG03",
             "id": "3_1_3_10_EG03",
-            "Linea de acción": "3.1.3.10 Combatir de manera efectiva los delitos fiscales, promoviendo una cultura de legalidad y responsabilidad tributaria.",
+            "Linea de acción": "3.1.3.10 Combatir de manera efectiva los delitos fiscales, promoviendo una cultura de legalidad y responsabilidad tributaria."
           },
           {
+            "clave": "3_1_3_11_EG03",
             "id": "3_1_3_11_EG03",
-            "Linea de acción": "3.1.3.11 Fomentar la denuncia de actos de corrupción con la mejora a los procesos de investigación y protección a las personas denunciantes, garantizando la honestidad y sanciones a las personas responsables.",
+            "Linea de acción": "3.1.3.11 Fomentar la denuncia de actos de corrupción con la mejora a los procesos de investigación y protección a las personas denunciantes, garantizando la honestidad y sanciones a las personas responsables."
           },
           {
+            "clave": "3_1_3_12_EG03",
             "id": "3_1_3_12_EG03",
-            "Linea de acción": "3.1.3.12 Combatir eficazmente el secuestro desmantelando redes criminales y fortaleciendo la seguridad en zonas de alto riesgo, asegurando la tranquilidad de las familias hidalguenses.",
+            "Linea de acción": "3.1.3.12 Combatir eficazmente el secuestro desmantelando redes criminales y fortaleciendo la seguridad en zonas de alto riesgo, asegurando la tranquilidad de las familias hidalguenses."
           },
           {
+            "clave": "3_1_3_13_EG03",
             "id": "3_1_3_13_EG03",
-            "Linea de acción": "3.1.3.13 Emplear tecnologías, procesos y herramientas que permitan el fortalecimiento en la prevención y atención de los ciberdelitos en el estado, combatiendo oportunamente estos actos.",
+            "Linea de acción": "3.1.3.13 Emplear tecnologías, procesos y herramientas que permitan el fortalecimiento en la prevención y atención de los ciberdelitos en el estado, combatiendo oportunamente estos actos."
           },
           {
+            "clave": "3_1_3_14_EG03",
             "id": "3_1_3_14_EG03",
             "Linea de acción": "3.1.3.14 Impulsar una mejora en la red de vigilancia y patrullaje en las distintas zonas del estado, garantizando la tranquilidad de la población."
           }
         ]
       },
       {
+        "clave": "3_1_4_EG03",
         "id": "3_1_4_EG03",
         "Estrategia": "3.1.4 Brindar respuestas oportunas que reconozcan y respeten la dignidad de la población, fortaleciendo la confianza y el acceso efectivo a mecanismos de apoyo ante situaciones de vulnerabilidad.",
         "Lineas de acción": [
           {
+            "clave": "3_1_4_1_EG03",
             "id": "3_1_4_1_EG03",
-            "Linea de acción": "3.1.4.1 Garantizar una atención profesional, sensible y oportuna en el primer contacto con personas afectadas por hechos violentos, facilitando el acceso inmediato a servicios de protección, salud y justicia.",
+            "Linea de acción": "3.1.4.1 Garantizar una atención profesional, sensible y oportuna en el primer contacto con personas afectadas por hechos violentos, facilitando el acceso inmediato a servicios de protección, salud y justicia."
           },
           {
+            "clave": "3_1_4_2_EG03",
             "id": "3_1_4_2_EG03",
-            "Linea de acción": "3.1.4.2 Mejorar los procedimientos, acciones y principios fundamentales que aseguren una atención integral a las víctimas de algún acto violento, impulsando su seguridad, tranquilidad y defensa de sus derechos.",
+            "Linea de acción": "3.1.4.2 Mejorar los procedimientos, acciones y principios fundamentales que aseguren una atención integral a las víctimas de algún acto violento, impulsando su seguridad, tranquilidad y defensa de sus derechos."
           },
           {
+            "clave": "3_1_4_3_EG03",
             "id": "3_1_4_3_EG03",
             "Linea de acción": "3.1.4.3 Fortalecer las acciones de búsqueda para la localización e identificación de personas, acelerando el tiempo de respuesta que garantice una correcta salvaguarda y protección de la víctima."
           }
@@ -547,96 +668,119 @@ export const dataObjetivoEG03 = [
     ]
   },
   {
+    "clave": "3_2_EG03",
     "id": "3_2_EG03",
     "Propuesta Objetivo": "3.2 Garantizar el acceso a la justicia bajo el principio del debido proceso promoviendo un clima de legalidad, confianza y certidumbre en las instituciones.",
     "Estrategias": [
       {
+        "clave": "3_2_1_EG03",
         "id": "3_2_1_EG03",
         "Estrategia": "3.2.1 Reforzar los mecanismos de justicia con acciones que garanticen el acceso, la equidad, transparencia y eficiencia en la resolución de casos.",
         "Lineas de acción": [
           {
+            "clave": "3_2_1_1_EG03",
             "id": "3_2_1_1_EG03",
-            "Linea de acción": "3.2.1.1 Fortalecer el Poder Judicial asegurando la efectividad e igualdad ante la ley para todas y todos.",
+            "Linea de acción": "3.2.1.1 Fortalecer el Poder Judicial asegurando la efectividad e igualdad ante la ley para todas y todos."
           },
           {
+            "clave": "3_2_1_2_EG03",
             "id": "3_2_1_2_EG03",
-            "Linea de acción": "3.2.1.2 Impulsar los juzgados en los distritos judiciales para que atiendan efectivamente los asuntos en materia Civil, Familiar, Penal y de Jurisdicción Concurrente, logrando que la impartición de justicia sea expedita.",
+            "Linea de acción": "3.2.1.2 Impulsar los juzgados en los distritos judiciales para que atiendan efectivamente los asuntos en materia Civil, Familiar, Penal y de Jurisdicción Concurrente, logrando que la impartición de justicia sea expedita."
           },
           {
+            "clave": "3_2_1_3_EG03",
             "id": "3_2_1_3_EG03",
-            "Linea de acción": "3.2.1.3 Consolidar los procesos de operación del sistema penal para que sean más rápidos y efectivos, bajo una perspectiva de honestidad y apego a la norma.",
+            "Linea de acción": "3.2.1.3 Consolidar los procesos de operación del sistema penal para que sean más rápidos y efectivos, bajo una perspectiva de honestidad y apego a la norma."
           },
           {
+            "clave": "3_2_1_4_EG03",
             "id": "3_2_1_4_EG03",
-            "Linea de acción": "3.2.1.4 Fortalecer los ministerios públicos mediante acciones integrales, asegurando la efectividad, el respeto a los derechos de las víctimas y el cumplimiento normativo.",
+            "Linea de acción": "3.2.1.4 Fortalecer los ministerios públicos mediante acciones integrales, asegurando la efectividad, el respeto a los derechos de las víctimas y el cumplimiento normativo."
           },
           {
+            "clave": "3_2_1_5_EG03",
             "id": "3_2_1_5_EG03",
-            "Linea de acción": "3.2.1.5 Impulsar el desarrollo integral de los peritos, fortaleciendo su acción con base en la honestidad y apego a las leyes.",
+            "Linea de acción": "3.2.1.5 Impulsar el desarrollo integral de los peritos, fortaleciendo su acción con base en la honestidad y apego a las leyes."
           },
           {
+            "clave": "3_2_1_6_EG03",
             "id": "3_2_1_6_EG03",
-            "Linea de acción": "3.2.1.6 Mejorar los procesos de recopilación, análisis y difusión de información que fortalezca la inteligencia patrimonial y económica, logrando la prevención y el combate de delitos como el lavado de dinero y la defraudación fiscal.",
+            "Linea de acción": "3.2.1.6 Mejorar los procesos de recopilación, análisis y difusión de información que fortalezca la inteligencia patrimonial y económica, logrando la prevención y el combate de delitos como el lavado de dinero y la defraudación fiscal."
           },
           {
+            "clave": "3_2_1_7_EG03",
             "id": "3_2_1_7_EG03",
-            "Linea de acción": "3.2.1.7 Fortalecer el servicio de consultoría jurídica, mejorando la asesoría en materia legal, bajo estrictos estándares de honestidad y seguimiento normativo.",
+            "Linea de acción": "3.2.1.7 Fortalecer el servicio de consultoría jurídica, mejorando la asesoría en materia legal, bajo estrictos estándares de honestidad y seguimiento normativo."
           },
           {
+            "clave": "3_2_1_8_EG03",
             "id": "3_2_1_8_EG03",
-            "Linea de acción": "3.2.1.8 Eficientar los mecanismos legales y administrativos para la defensa, regularización y ejercicio pleno del derecho de dominio, garantizando la resolución de conflictos y la seguridad jurídica en el estado.",
+            "Linea de acción": "3.2.1.8 Eficientar los mecanismos legales y administrativos para la defensa, regularización y ejercicio pleno del derecho de dominio, garantizando la resolución de conflictos y la seguridad jurídica en el estado."
           },
           {
+            "clave": "3_2_1_9_EG03",
             "id": "3_2_1_9_EG03",
-            "Linea de acción": "3.2.1.9 Asegurar que los servicios de representación legal sean oportunos y de calidad, contribuyendo al ejercicio efectivo de los derechos ante instancias administrativas y judiciales del estado.",
+            "Linea de acción": "3.2.1.9 Asegurar que los servicios de representación legal sean oportunos y de calidad, contribuyendo al ejercicio efectivo de los derechos ante instancias administrativas y judiciales del estado."
           },
           {
+            "clave": "3_2_1_10_EG03",
             "id": "3_2_1_10_EG03",
             "Linea de acción": "3.2.1.10 Ampliar el acceso a la defensa jurídica especialmente a sectores vulnerables mediante la orientación y asesoría legal, garantizando así el acceso a la justicia y la protección de sus derechos."
           }
         ]
       },
       {
+        "clave": "3_2_2_EG03",
         "id": "3_2_2_EG03",
         "Estrategia": "3.2.2 Optimizar los procesos legales en las diferentes áreas encargadas de la procuración de justicia mediante un enfoque claro, transparente y eficaz, asegurando la correcta tramitación y resolución de los casos.",
         "Lineas de acción": [
           {
+            "clave": "3_2_2_1_EG03",
             "id": "3_2_2_1_EG03",
-            "Linea de acción": "3.2.2.1 Fortalecer el desempeño de los procesos sustantivos, garantizando el cumplimiento con los objetivos institucionales, beneficiando con ello a toda la población.",
+            "Linea de acción": "3.2.2.1 Fortalecer el desempeño de los procesos sustantivos, garantizando el cumplimiento con los objetivos institucionales, beneficiando con ello a toda la población."
           },
           {
+            "clave": "3_2_2_2_EG03",
             "id": "3_2_2_2_EG03",
-            "Linea de acción": "3.2.2.2 Optimizar el proceso judicial y administrativo mediante la implementación de mecanismos ágiles y transparentes, garantizando el respeto al debido proceso.",
+            "Linea de acción": "3.2.2.2 Optimizar el proceso judicial y administrativo mediante la implementación de mecanismos ágiles y transparentes, garantizando el respeto al debido proceso."
           },
           {
+            "clave": "3_2_2_3_EG03",
             "id": "3_2_2_3_EG03",
-            "Linea de acción": "3.2.2.3 Eficientar los procedimientos administrativos y legales de los trámites registrales, asegurando la certeza jurídica de los derechos y la situación legal de la ciudadanía.",
+            "Linea de acción": "3.2.2.3 Eficientar los procedimientos administrativos y legales de los trámites registrales, asegurando la certeza jurídica de los derechos y la situación legal de la ciudadanía."
           },
           {
+            "clave": "3_2_2_4_EG03",
             "id": "3_2_2_4_EG03",
-            "Linea de acción": "3.2.2.4 Proteger los derechos individuales contra alguna arbitrariedad administrativa mediante amparos, fortaleciendo el Estado de Derecho y el compromiso con la transparencia.",
+            "Linea de acción": "3.2.2.4 Proteger los derechos individuales contra alguna arbitrariedad administrativa mediante amparos, fortaleciendo el Estado de Derecho y el compromiso con la transparencia."
           },
           {
+            "clave": "3_2_2_5_EG03",
             "id": "3_2_2_5_EG03",
-            "Linea de acción": "3.2.2.5 Desarrollar marcos normativos e institucionales que reconozcan la coexistencia del pluralismo jurídico, asegurando el respeto y trabajo mutuo entre la justicia estatal y las formas propias de justicia comunitaria.",
+            "Linea de acción": "3.2.2.5 Desarrollar marcos normativos e institucionales que reconozcan la coexistencia del pluralismo jurídico, asegurando el respeto y trabajo mutuo entre la justicia estatal y las formas propias de justicia comunitaria."
           },
           {
+            "clave": "3_2_2_6_EG03",
             "id": "3_2_2_6_EG03",
-            "Linea de acción": "3.2.2.6 Fortalecer la emisión y notificación, y ejecución oportuna de los mandamientos judiciales fortaleciendo la confianza ciudadana en la administración de justicia en el estado.",
+            "Linea de acción": "3.2.2.6 Fortalecer la emisión y notificación, y ejecución oportuna de los mandamientos judiciales fortaleciendo la confianza ciudadana en la administración de justicia en el estado."
           },
           {
+            "clave": "3_2_2_7_EG03",
             "id": "3_2_2_7_EG03",
-            "Linea de acción": "3.2.2.7 Asegurar la identidad jurídica de toda persona, entidad, asociación o empresa para que adquieran derechos y obligaciones permitiendo la realización de actividades conforme a sus objetivos, siempre con base en el marco normativo aplicable.",
+            "Linea de acción": "3.2.2.7 Asegurar la identidad jurídica de toda persona, entidad, asociación o empresa para que adquieran derechos y obligaciones permitiendo la realización de actividades conforme a sus objetivos, siempre con base en el marco normativo aplicable."
           },
           {
+            "clave": "3_2_2_8_EG03",
             "id": "3_2_2_8_EG03",
-            "Linea de acción": "3.2.2.8 Garantizar la justicia social a través de un sistema legal inclusivo y accesible que garantice la igualdad de derechos y oportunidades para todas y todos, logrando reducir la desigualdad.",
+            "Linea de acción": "3.2.2.8 Garantizar la justicia social a través de un sistema legal inclusivo y accesible que garantice la igualdad de derechos y oportunidades para todas y todos, logrando reducir la desigualdad."
           },
           {
+            "clave": "3_2_2_9_EG03",
             "id": "3_2_2_9_EG03",
-            "Linea de acción": "3.2.2.9 Fortalecer la justicia restaurativa como herramienta clave en el sistema judicial, asegurando que los procesos restaurativos sean accesibles, inclusivos y eficaces en la reparación del daño y la reintegración social.",
+            "Linea de acción": "3.2.2.9 Fortalecer la justicia restaurativa como herramienta clave en el sistema judicial, asegurando que los procesos restaurativos sean accesibles, inclusivos y eficaces en la reparación del daño y la reintegración social."
           },
           {
+            "clave": "3_2_2_10_EG03",
             "id": "3_2_2_10_EG03",
             "Linea de acción": "3.2.2.10 Incentivar la vinculación legal entre la ciudadanía, como mecanismo de solución de conflictos, siempre bajo los criterios normativos aplicables."
           }
@@ -645,18 +789,22 @@ export const dataObjetivoEG03 = [
     ]
   },
   {
+    "clave": "3_3_EG03",
     "id": "3_3_EG03",
     "Propuesta Objetivo": "3.3 Promover la gestión integral de riesgos, abordando las amenazas del entorno para la prevención, mitigación y respuesta inmediata, fomentando entornos resilientes.",
     "Estrategias": [
       {
+        "clave": "3_3_1_EG03",
         "id": "3_3_1_EG03",
         "Estrategia": "3.3.1 Reforzar la resiliencia en la entidad, mediante acciones coordinadas que reduzcan vulnerabilidades y fortalezcan la capacidad de respuesta ante situaciones críticas, protegiendo oportunamente la integridad de la ciudadanía y sus entornos.",
         "Lineas de acción": [
           {
+            "clave": "3_3_1_1_EG03",
             "id": "3_3_1_1_EG03",
-            "Linea de acción": "3.3.1.1 Fortalecer la Gestión Integral de Riesgos a través de la coordinación del estado con los municipios y la federación para identificar, analizar, evaluar y controlar riesgos, reduciendo la vulnerabilidad de la población y asegurar una rápida recuperación.",
+            "Linea de acción": "3.3.1.1 Fortalecer la Gestión Integral de Riesgos a través de la coordinación del estado con los municipios y la federación para identificar, analizar, evaluar y controlar riesgos, reduciendo la vulnerabilidad de la población y asegurar una rápida recuperación."
           },
           {
+            "clave": "3_3_1_2_EG03",
             "id": "3_3_1_2_EG03",
             "Linea de acción": "3.3.1.2 Consolidar los programas y acciones de respuesta integral a emergencias, asegurando la coordinación interinstitucional, y la protección de la población y de los bienes vulnerables ante situaciones de crisis."
           }

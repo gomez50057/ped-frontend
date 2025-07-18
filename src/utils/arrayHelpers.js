@@ -1,8 +1,10 @@
 export const updateById = (array, id, updateFn) =>
   array.map(item => item.id === id ? updateFn(item) : item);
 
-export const removeById = (array, id) =>
-  array.filter(item => item.id !== id);
+export function removeById(arr, id) {
+  if (!Array.isArray(arr)) return [];
+  return arr.filter(item => item.id !== id);
+}
 
 export const pushToArrayById = (array, id, key, newItem) =>
   updateById(array, id, item => ({
