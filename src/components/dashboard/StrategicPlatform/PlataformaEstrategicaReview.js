@@ -16,6 +16,10 @@ export default function PlataformaEstrategicaReview() {
   const staticWithId = useStaticWithId();
   const { feedback, setAcuerdo, setComentario, setFeedback } = useFeedback();
 
+  // NUEVO: estados para dinámicos
+  const [nuevasEstrategias, setNuevasEstrategias] = useState({}); // { propId: [{...}] }
+  const [nuevasLineas, setNuevasLineas] = useState({}); // { propId: { estrId: [{...}] } }
+
   const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [finalConfirmOpen, setFinalConfirmOpen] = useState(false);
@@ -50,121 +54,118 @@ export default function PlataformaEstrategicaReview() {
     cargarFeedbackUsuario();
   }, [setFeedback]);
 
-  // Handler de guardado de feedback
-  const handleGuardarComentarios = async (enviarFinal = false) => {
-    const feedbackArr = Object.entries(feedback)
-      .filter(([_, val]) =>
-        val.acuerdo ||
-        (val.comentarios && (val.comentarios.comoDecir || val.comentarios.justificacion))
-      )
-      .map(([clave, val]) => ({
-        clave,
-        acuerdo: val.acuerdo || "",
-        comoDecir: val.acuerdo === "yes" ? "No Aplica" : (val.comentarios?.comoDecir || ""),
-        justificacion: val.acuerdo === "yes" ? "No Aplica" : (val.comentarios?.justificacion || ""),
-        envio_final: enviarFinal
-      }));
+  // ------- FUNCIONES AGREGAR --------
+  const generarId = () => `temp_${Date.now()}_${Math.floor(Math.random() * 1000)}`;
 
-    if (
-      feedbackArr.length === 0 ||
-      feedbackArr.some(
-        obj => !obj.clave || !obj.acuerdo || !obj.comoDecir || !obj.justificacion
-      )
-    ) {
-      setSnackbar({ open: true, message: 'Faltan campos requeridos.', severity: 'error' });
-      return;
-    }
-
-    try {
-      setIsSaving(true);
-      let res = await fetchWithAuth("/api/objetivos/feedback-avance/", {
-        method: "POST",
-        body: JSON.stringify(feedbackArr)
-      });
-      if (!res.ok) {
-        let errorText = await res.text();
-        let needPut = false;
-        try {
-          const errData = JSON.parse(errorText);
-          if (
-            (res.status === 400 || res.status === 409) &&
-            (Array.isArray(errData) || errData.detail || errData.clave)
-          ) {
-            needPut = true;
-          }
-        } catch { }
-        if (needPut) {
-          res = await fetchWithAuth("/api/objetivos/feedback-avance/", {
-            method: "PUT",
-            body: JSON.stringify(feedbackArr)
-          });
-        }
-        if (!res.ok) {
-          setSnackbar({
-            open: true,
-            message: "Error al enviar comentarios: " + (await res.text()),
-            severity: "error"
-          });
-          return;
-        }
-      }
-      setSnackbar({
-        open: true,
-        message: '¡Comentarios enviados!',
-        severity: 'success'
-      });
-    } catch (error) {
-      setSnackbar({
-        open: true,
-        message: "Error al enviar comentarios: " + (error.message || error),
-        severity: "error"
-      });
-    } finally {
-      setIsSaving(false);
-    }
+  const handleAgregarEstrategia = (propId) => {
+    const nombre = prompt('Nombre de la nueva Estrategia:');
+    if (!nombre || !nombre.trim()) return;
+    const nuevaEstrategia = {
+      pk: generarId(),
+      nombre,
+      lineas: []
+    };
+    setNuevasEstrategias(prev => ({
+      ...prev,
+      [propId]: [...(prev[propId] || []), nuevaEstrategia]
+    }));
   };
 
-  // Render helpers (solo estáticos)
+  const handleAgregarLinea = (propId, estrId) => {
+    const text = prompt('Texto de la nueva Línea de Acción:');
+    if (!text || !text.trim()) return;
+    const nuevaLinea = {
+      pk: generarId(),
+      text
+    };
+    setNuevasLineas(prev => ({
+      ...prev,
+      [propId]: {
+        ...(prev[propId] || {}),
+        [estrId]: [...((prev[propId] || {})[estrId] || []), nuevaLinea]
+      }
+    }));
+  };
+
+  // ------- RENDER HELPERS --------
   const handleAcuerdoChange = (id, valor) => setAcuerdo(id, valor);
   const handleComentarioChange = (id, campo, valor) => setComentario(id, campo, valor);
 
-  const renderLineas = (prefix, lineas = []) =>
-    lineas.map((l, idx) => {
-      const fid = `${prefix}-linea-${l.id}`;
-      return (
-        <li key={l.pk || l.clave || `${l.id}-${idx}`} className={styles.lineaAccion}>
-          <p>{l.text}</p>
-          <FeedbackSection
-            id={fid}
-            acuerdo={feedback[fid]?.acuerdo}
-            comentarios={feedback[fid]?.comentarios}
-            onAcuerdoChange={handleAcuerdoChange}
-            onComentarioChange={handleComentarioChange}
-          />
+  const renderLineas = (prefix, propId, estrId, lineasEstaticas = []) => {
+    const lineasNuevas = ((nuevasLineas[propId] || {})[estrId]) || [];
+    return (
+      <ul>
+        {/* Líneas estáticas */}
+        {lineasEstaticas.map((l, idx) => {
+          const fid = `${prefix}-linea-${l.id}`;
+          return (
+            <li key={l.pk || l.clave || `${l.id}-${idx}`} className={styles.lineaAccion}>
+              <p>{l.text}</p>
+              <FeedbackSection
+                id={fid}
+                acuerdo={feedback[fid]?.acuerdo}
+                comentarios={feedback[fid]?.comentarios}
+                onAcuerdoChange={handleAcuerdoChange}
+                onComentarioChange={handleComentarioChange}
+              />
+            </li>
+          );
+        })}
+        {/* Líneas nuevas */}
+        {lineasNuevas.map((l, idx) => (
+          <li key={l.pk || idx} className={styles.lineaAccion} style={{ color: "#0055a7" }}>
+            <p>{l.text}</p>
+          </li>
+        ))}
+        {/* Botón agregar línea */}
+        <li>
+          <button className={styles.addButton} onClick={() => handleAgregarLinea(propId, estrId)}>
+            Agregar Línea de Acción
+          </button>
         </li>
-      );
-    });
+      </ul>
+    );
+  };
 
-  const renderEstrategias = (propId, prefix, estrategias = []) =>
-    estrategias.map((estr, idx) => {
-      const fid = `${prefix}-estrategia-${estr.id}`;
-      const lineas = estr.lineas || [];
-      return (
-        <div key={estr.pk || estr.clave || estr.id || idx} className={styles.estrategia}>
-          <h4>{estr.nombre || estr.Estrategia}</h4>
-          <FeedbackSection
-            id={fid}
-            acuerdo={feedback[fid]?.acuerdo}
-            comentarios={feedback[fid]?.comentarios}
-            onAcuerdoChange={handleAcuerdoChange}
-            onComentarioChange={handleComentarioChange}
-          />
-          <ul>
-            {renderLineas(fid, lineas)}
-          </ul>
-        </div>
-      );
-    });
+  const renderEstrategias = (propId, prefix, estrategiasEstaticas = []) => {
+    const estrategiasNuevas = nuevasEstrategias[propId] || [];
+    return (
+      <>
+        {/* Estrategias estáticas */}
+        {estrategiasEstaticas.map((estr, idx) => {
+          const fid = `${prefix}-estrategia-${estr.id}`;
+          const lineas = estr.lineas || [];
+          return (
+            <div key={estr.pk || estr.clave || estr.id || idx} className={styles.estrategia}>
+              <h4>{estr.nombre || estr.Estrategia}</h4>
+              <FeedbackSection
+                id={fid}
+                acuerdo={feedback[fid]?.acuerdo}
+                comentarios={feedback[fid]?.comentarios}
+                onAcuerdoChange={handleAcuerdoChange}
+                onComentarioChange={handleComentarioChange}
+              />
+              {renderLineas(fid, propId, estr.pk || estr.id, lineas)}
+            </div>
+          );
+        })}
+        {/* Estrategias nuevas */}
+        {estrategiasNuevas.map((estr, idx) => {
+          const fid = `${prefix}-estrategia-${estr.pk}`;
+          return (
+            <div key={estr.pk || idx} className={styles.estrategia} style={{ background: "#f7f7f7" }}>
+              <h4>{estr.nombre}</h4>
+              {renderLineas(fid, propId, estr.pk, estr.lineas)}
+            </div>
+          );
+        })}
+        {/* Botón agregar estrategia */}
+        <button className={styles.addButton} onClick={() => handleAgregarEstrategia(propId)}>
+          Agregar Estrategia
+        </button>
+      </>
+    );
+  };
 
   const renderPropuestasEstaticas = (eje, propuestas) =>
     propuestas.map(prop => {
@@ -267,7 +268,8 @@ export default function PlataformaEstrategicaReview() {
         onClose={() => setConfirmOpen(false)}
         onConfirm={async () => {
           setConfirmOpen(false);
-          await handleGuardarComentarios();
+          // Aquí iría tu función para guardar feedback
+          // await handleGuardarComentarios();
         }}
         title="¿Estás seguro de que quieres guardar tu avance?"
         confirmText="Sí, guardar"
@@ -280,7 +282,7 @@ export default function PlataformaEstrategicaReview() {
         onConfirm={async () => {
           setEnvioFinalChecked(true);
           setFinalConfirmOpen(false);
-          await handleGuardarComentarios(true);
+          // await handleGuardarComentarios(true);
         }}
         title="¿Estás seguro de enviar como versión final?"
         confirmText="Sí, confirmar envío final"
@@ -293,7 +295,7 @@ export default function PlataformaEstrategicaReview() {
         onConfirm={async () => {
           setEnvioFinalChecked(false);
           setFinalUncheckConfirmOpen(false);
-          await handleGuardarComentarios(false);
+          // await handleGuardarComentarios(false);
           setSnackbar({
             open: true,
             message: 'Entrega final desmarcada. Se considerará como entregable final el último envío con la fecha de finalización.',
