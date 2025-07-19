@@ -10,6 +10,7 @@ import { fetchWithAuth } from '@/utils/auth';
 import { useSelectedAxes } from '@/hooks/StrategicPlatform/useSelectedAxes';
 import { useStaticWithId } from '@/hooks/StrategicPlatform/useStaticWithId';
 import ConfirmDialog from "@/components/dashboard/components/ConfirmDialog/ConfirmDialog";
+import { prepararObjetivoParaEnvio, transformarParaBackend } from '@/utils/objetivosHelper'
 
 export default function PlataformaEstrategicaReview() {
   const { selectedCodes, loading } = useSelectedAxes();
@@ -49,7 +50,7 @@ export default function PlataformaEstrategicaReview() {
         }
         setFeedback(feedbackPreCargado);
         setEnvioFinalChecked(algunoMarcadoFinal);
-      } catch (err) {}
+      } catch (err) { }
     };
     cargarFeedbackUsuario();
   }, [setFeedback]);
@@ -86,6 +87,125 @@ export default function PlataformaEstrategicaReview() {
       }
     }));
   };
+
+  function extraerNuevosObjetivos(staticWithId, nuevasEstrategias, nuevasLineas) {
+    // Solo tomaremos las propuestas ESTÁTICAS de staticWithId (por eje)
+    // y les añadiremos las estrategias y líneas nuevas por cada prop.
+
+    // Estructura esperada:
+    // [
+    //   { clave: '1_1_EG01', estrategias: [ { nombre, lineas: [{text}]} ] }
+    // ]
+
+    // Recorremos cada propuesta estática y le agregamos lo nuevo:
+    const resultado = [];
+
+    staticWithId.forEach(eje => {
+      (eje.propuestas || []).forEach(prop => {
+        const propId = prop.id || prop.clave || prop.pk;
+
+        // NUEVAS ESTRATEGIAS
+        const nuevasEstras = (nuevasEstrategias[propId] || []).map(estr => ({
+          nombre: estr.nombre,
+          lineas: (estr.lineas || []).map(l => ({
+            text: l.text
+          }))
+        }));
+
+        // NUEVAS LINEAS EN ESTRATEGIAS ESTÁTICAS
+        const nuevasLineasPorEstrategia = [];
+        if (nuevasLineas[propId]) {
+          Object.entries(nuevasLineas[propId]).forEach(([estrId, lineasArr]) => {
+            if (lineasArr.length > 0) {
+              nuevasLineasPorEstrategia.push({
+                estrategia_clave: estrId,
+                lineas: lineasArr.map(l => ({ text: l.text }))
+              });
+            }
+          });
+        }
+
+        if (nuevasEstras.length > 0 || nuevasLineasPorEstrategia.length > 0) {
+          resultado.push({
+            clave: prop.clave || prop.id,
+            nuevas_estrategias: nuevasEstras,
+            nuevas_lineas: nuevasLineasPorEstrategia
+          });
+        }
+      });
+    });
+
+    return resultado;
+  }
+
+  const handleGuardarNuevos = async () => {
+    const nuevos = extraerNuevosObjetivos(staticWithId, nuevasEstrategias, nuevasLineas);
+    if (nuevos.length === 0) {
+      setSnackbar({ open: true, message: "No hay cambios nuevos que enviar.", severity: "info" });
+      return;
+    }
+    setIsSaving(true);
+
+    // Aquí usas **directamente** el helper
+    const nuevosPreparados = nuevos.map(o =>
+      transformarParaBackend(prepararObjetivoParaEnvio(o))
+    );
+
+    console.log("Nuevos preparados a enviar:", nuevosPreparados);
+
+    try {
+      let res = await fetchWithAuth('/api/objetivos/mis-objetivos/', {
+        method: "POST",
+        body: JSON.stringify(nuevosPreparados)
+      });
+
+      if (!res.ok) {
+        let errorText = await res.text();
+        let needPut = false;
+
+        try {
+          const errData = JSON.parse(errorText);
+          if (errData.detail && errData.detail.includes("usa PUT")) {
+            needPut = true;
+          }
+        } catch { }
+
+        if (needPut) {
+          const payload = { objetivos: nuevosPreparados };
+          const resPut = await fetchWithAuth('/api/objetivos/mis-objetivos/', {
+            method: "PUT",
+            body: JSON.stringify(payload),
+          });
+
+          if (!resPut.ok) {
+            setSnackbar({
+              open: true,
+              message: "Error al actualizar: " + (await resPut.text()),
+              severity: "error",
+            });
+            setIsSaving(false);
+            return;
+          }
+        } else {
+          setSnackbar({ open: true, message: "Error al guardar: " + errorText, severity: "error" });
+          setIsSaving(false);
+          return;
+        }
+      }
+
+      setSnackbar({ open: true, message: "¡Cambios guardados!", severity: "success" });
+      setNuevasEstrategias({});
+      setNuevasLineas({});
+    } catch (err) {
+      setSnackbar({ open: true, message: "Error: " + err.message, severity: "error" });
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+
+
+
 
   // ------- RENDER HELPERS --------
   const handleAcuerdoChange = (id, valor) => setAcuerdo(id, valor);
@@ -222,6 +342,18 @@ export default function PlataformaEstrategicaReview() {
               {isSaving ? 'Guardando...' : 'Guardar avance'}
             </button>
           </div>
+
+          <div className={styles.buttonWrapper}>
+            <button
+              type="button"
+              className={styles.slideButton}
+              onClick={handleGuardarNuevos}
+              disabled={isSaving}
+            >
+              {isSaving ? 'Guardando...' : 'Guardar cambios agregados'}
+            </button>
+          </div>
+
           <div className={styles.envioFinalWrapper}>
             <label className={styles.containerChecked}>
               <input
