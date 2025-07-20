@@ -138,6 +138,7 @@ export default function PlataformaEstrategicaReview() {
   }
 
   const handleGuardarNuevos = async () => {
+    // 1) Extraemos y validamos cambios
     const nuevos = extraerNuevosObjetivos(staticWithId, nuevasEstrategias, nuevasLineas);
     if (nuevos.length === 0) {
       setSnackbar({ open: true, message: "No hay cambios nuevos que enviar.", severity: "info" });
@@ -145,58 +146,49 @@ export default function PlataformaEstrategicaReview() {
     }
     setIsSaving(true);
 
-    // Aquí usas **directamente** el helper
-    const nuevosPreparados = nuevos.map(o =>
+    // 2) Preparamos el payload
+    const objetivosPreparados = nuevos.map(o =>
       transformarParaBackend(prepararObjetivoParaEnvio(o))
     );
 
-    console.log("Nuevos preparados a enviar:", nuevosPreparados);
-
     try {
+      // 3) Intentamos crear (POST)
       let res = await fetchWithAuth('/api/objetivos/mis-objetivos/', {
-        method: "POST",
-        body: JSON.stringify(nuevosPreparados)
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ objetivos: objetivosPreparados })
       });
 
       if (!res.ok) {
-        let errorText = await res.text();
+        const errorText = await res.text();
         let needPut = false;
-
         try {
           const errData = JSON.parse(errorText);
-          if (errData.detail && errData.detail.includes("usa PUT")) {
-            needPut = true;
-          }
+          if (errData.detail?.includes("usa PUT")) needPut = true;
         } catch { }
 
         if (needPut) {
-          const payload = { objetivos: nuevosPreparados };
-          const resPut = await fetchWithAuth('/api/objetivos/mis-objetivos/', {
-            method: "PUT",
-            body: JSON.stringify(payload),
+          // 4) Si el servidor pide PUT, reenviamos con el mismo wrapper
+          res = await fetchWithAuth('/api/objetivos/mis-objetivos/', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ objetivos: objetivosPreparados })
           });
-
-          if (!resPut.ok) {
-            setSnackbar({
-              open: true,
-              message: "Error al actualizar: " + (await resPut.text()),
-              severity: "error",
-            });
-            setIsSaving(false);
-            return;
+          if (!res.ok) {
+            const errBody = await res.text();
+            throw new Error(`Error al actualizar: ${errBody}`);
           }
         } else {
-          setSnackbar({ open: true, message: "Error al guardar: " + errorText, severity: "error" });
-          setIsSaving(false);
-          return;
+          throw new Error(`Error al guardar: ${errorText}`);
         }
       }
 
+      // 5) Éxito
       setSnackbar({ open: true, message: "¡Cambios guardados!", severity: "success" });
       setNuevasEstrategias({});
       setNuevasLineas({});
     } catch (err) {
-      setSnackbar({ open: true, message: "Error: " + err.message, severity: "error" });
+      setSnackbar({ open: true, message: err.message, severity: 'error' });
     } finally {
       setIsSaving(false);
     }
