@@ -11,6 +11,8 @@ import { useSelectedAxes } from '@/hooks/StrategicPlatform/useSelectedAxes';
 import { useStaticWithId } from '@/hooks/StrategicPlatform/useStaticWithId';
 import ConfirmDialog from "@/components/dashboard/components/ConfirmDialog/ConfirmDialog";
 import { prepararObjetivoParaEnvio, transformarParaBackend } from '@/utils/objetivosHelper'
+import { generarClaveDinamico } from '@/utils/objetivosHelper';
+import EditDeleteButtons from '@/components/dashboard/components/EditDeleteButtons/EditDeleteButtons';
 
 export default function PlataformaEstrategicaReview() {
   const { selectedCodes, loading } = useSelectedAxes();
@@ -60,12 +62,9 @@ export default function PlataformaEstrategicaReview() {
 
   const handleAgregarEstrategia = (propId) => {
     const nombre = prompt('Nombre de la nueva Estrategia:');
-    if (!nombre || !nombre.trim()) return;
-    const nuevaEstrategia = {
-      pk: generarId(),
-      nombre,
-      lineas: []
-    };
+    if (!nombre?.trim()) return;
+    const clave = generarClaveDinamico();            // → “dinamico_1”, “dinamico_2”, …
+    const nuevaEstrategia = { clave, nombre, lineas: [] };
     setNuevasEstrategias(prev => ({
       ...prev,
       [propId]: [...(prev[propId] || []), nuevaEstrategia]
@@ -204,8 +203,43 @@ export default function PlataformaEstrategicaReview() {
   };
 
 
+  const handleEditEstrategia = (propId, estrategiaEditada) => {
+    setNuevasEstrategias(prev => ({
+      ...prev,
+      [propId]: prev[propId].map(e =>
+        e.clave === estrategiaEditada.clave ? estrategiaEditada : e
+      )
+    }));
+  };
+  const handleDeleteEstrategia = (propId, claveDinamica) => {
+    setNuevasEstrategias(prev => ({
+      ...prev,
+      [propId]: prev[propId].filter(e => e.clave !== claveDinamica)
+    }));
+  };
 
+  // 2) Dentro de PlataformaEstrategicaReview, añade estos handlers:
+  const handleEditLinea = (propId, estrId, lineaEditada) => {
+    setNuevasLineas(prev => ({
+      ...prev,
+      [propId]: {
+        ...prev[propId],
+        [estrId]: prev[propId][estrId].map(l =>
+          l.pk === lineaEditada.pk ? lineaEditada : l
+        )
+      }
+    }));
+  };
 
+  const handleDeleteLinea = (propId, estrId, lineaPk) => {
+    setNuevasLineas(prev => ({
+      ...prev,
+      [propId]: {
+        ...prev[propId],
+        [estrId]: prev[propId][estrId].filter(l => l.pk !== lineaPk)
+      }
+    }));
+  };
 
   // ------- RENDER HELPERS --------
   const handleAcuerdoChange = (id, valor) => setAcuerdo(id, valor);
@@ -232,14 +266,29 @@ export default function PlataformaEstrategicaReview() {
           );
         })}
         {/* Líneas nuevas */}
-        {lineasNuevas.map((l, idx) => (
-          <li key={l.pk || idx} className={styles.lineaAccion} style={{ color: "#0055a7" }}>
-            <p>{l.text}</p>
-          </li>
-        ))}
+        {lineasNuevas.map((l, idx) => {
+          // detectamos si es línea dinámica
+          const isDinamico = l.pk.startsWith('dinamico_') || l.pk.startsWith('temp_');
+          return (
+            <li key={l.pk} className={styles.lineaAccion} style={{ color: "#0055a7" }}>
+              <p>{l.text}</p>
+
+              {isDinamico && (
+                <EditDeleteButtons
+                  onEdit={() => {
+                    const nuevaText = prompt('Editar Línea:', l.text) || l.text;
+                    handleEditLinea(propId, estrId, { ...l, text: nuevaText });
+                  }}
+                  onDelete={() => handleDeleteLinea(propId, estrId, l.pk)}
+                />
+              )}
+            </li>
+          );
+        })}
         {/* Botón agregar línea */}
         <li>
-          <button className={styles.addButton} onClick={() => handleAgregarLinea(propId, estrId)}>
+          <button className={styles.addButton}
+            onClick={() => handleAgregarLinea(propId, estrId)}>
             Agregar Línea de Acción
           </button>
         </li>
@@ -270,12 +319,28 @@ export default function PlataformaEstrategicaReview() {
           );
         })}
         {/* Estrategias nuevas */}
-        {estrategiasNuevas.map((estr, idx) => {
-          const fid = `${prefix}-estrategia-${estr.pk}`;
+        {estrategiasNuevas.map(estr => {
+          // detectamos si esta estrategia es dinámica
+          const isDinamico = estr.clave.startsWith('dinamico_');
           return (
-            <div key={estr.pk || idx} className={styles.estrategia} style={{ background: "#f7f7f7" }}>
+            <div key={estr.clave} className={styles.estrategia}>
               <h4>{estr.nombre}</h4>
-              {renderLineas(fid, propId, estr.pk, estr.lineas)}
+
+              {isDinamico && (
+                <EditDeleteButtons
+                  isDinamico
+                  estrategia={estr}
+                  onEdit={(preparada) => handleEditEstrategia(propId, preparada)}
+                  onDelete={() => handleDeleteEstrategia(propId, estr.clave)}
+                />
+              )}
+
+              {renderLineas(
+                `${prefix}-estrategia-${estr.clave}`,
+                propId,
+                estr.clave,
+                estr.lineas
+              )}
             </div>
           );
         })}
