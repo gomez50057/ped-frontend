@@ -1,13 +1,20 @@
 // src/utils/objetivosHelper.js
 
-// Importa tus datos de objetivos (cada uno trae su array .Estrategias)
-import { dataObjetivoEG01 } from '@/utils/plataformaEstrategicaData';
-// Si tienes más archivos de dataObjetivoEGxx, los agregas aquí:
-// import { dataObjetivoEG02 } from '@/utils/plataformaEstrategicaData';
+import { dataObjetivoEG01, dataObjetivoET02, dataObjetivoEG03, dataObjetivoEG04, dataObjetivoEG05, dataObjetivoEG06, dataObjetivoEG07, dataObjetivoEG08, dataObjetivoEG09, dataObjetivoET01, dataObjetivoEG02, dataObjetivoET03 } from '@/utils/plataformaEstrategicaData';
 
 const ALL_OBJETIVOS = [
   ...dataObjetivoEG01,
-  // ...dataObjetivoEG02,
+  ...dataObjetivoEG02,
+  ...dataObjetivoEG03,
+  ...dataObjetivoEG04,
+  ...dataObjetivoEG05,
+  ...dataObjetivoEG06,
+  ...dataObjetivoEG07,
+  ...dataObjetivoEG08,
+  ...dataObjetivoEG09,
+  ...dataObjetivoET01,
+  ...dataObjetivoET02,  
+  ...dataObjetivoET03,
 ];
 
 // Aplastamos todas las Estrategias de cada objetivo

@@ -18,11 +18,8 @@ export default function PlataformaEstrategicaReview() {
   const { selectedCodes, loading } = useSelectedAxes();
   const staticWithId = useStaticWithId();
   const { feedback, setAcuerdo, setComentario, setFeedback } = useFeedback();
-
-  // NUEVO: estados para dinámicos
-  const [nuevasEstrategias, setNuevasEstrategias] = useState({}); // { propId: [{...}] }
-  const [nuevasLineas, setNuevasLineas] = useState({}); // { propId: { estrId: [{...}] } }
-
+  const [nuevasEstrategias, setNuevasEstrategias] = useState({});
+  const [nuevasLineas, setNuevasLineas] = useState({});
   const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [finalConfirmOpen, setFinalConfirmOpen] = useState(false);
@@ -119,65 +116,6 @@ export default function PlataformaEstrategicaReview() {
     cargarMisObjetivos();
   }, []);
 
-  //  // --- PRELOAD: traer dinámicos ya guardados ---
-  //  useEffect(() => {
-  //    const cargarMisObjetivos = async () => {
-  //      try {
-  //        const res = await fetchWithAuth('/api/objetivos/mis-objetivos/');
-  //        if (!res.ok) return;
-  //        const { objetivos: saved } = await res.json();
-
-  //        const initEstr = {};
-  //        const initLine = {};
-
-  //        saved.forEach(o => {
-  //          const propId = o.clave;
-  //          o.estrategias.forEach(est => {
-  //            if (est.clave.startsWith('dinamico_')) {
-  //              // 1) Estrategia completamente nueva
-  //              initEstr[propId] = initEstr[propId] || [];
-  //              initEstr[propId].push({
-  //                clave: est.clave,
-  //                nombre: est.nombre,
-  //                lineas: [] 
-  //              });
-  //              // 1.a) Si trae líneas propias
-  //              if (est.lineas?.length) {
-  //                initLine[propId] = initLine[propId] || {};
-  //                initLine[propId][est.clave] = est.lineas.map(l => ({
-  //                  clave: l.clave,
-  //                  text:   l.text,
-  //                  pk:     l.clave
-  //                }));
-  //              }
-  //            } else {
-  //              // 2) Estrategia estática: sólo cargamos líneas dinámicas
-  //              est.lineas?.forEach(l => {
-  //                if (l.clave.startsWith('dinamico_')) {
-  //                  initLine[propId] = initLine[propId] || {};
-  //                  initLine[propId][est.clave] = initLine[propId][est.clave] || [];
-  //                  initLine[propId][est.clave].push({
-  //                    clave: l.clave,
-  //                    text:   l.text,
-  //                    pk:     l.clave
-  //                  });
-  //                }
-  //              });
-  //            }
-  //          });
-  //        });
-
-  //        setNuevasEstrategias(initEstr);
-  //        setNuevasLineas(initLine);
-  //      } catch (e) {
-  //        console.error('Error al precargar dinámicos:', e);
-  //      }
-  //    };
-  //    cargarMisObjetivos();
-  //  }, []);  
-
-  // se ejecuta una sola vez al montar
-
   // ------- FUNCIONES AGREGAR --------
   const generarId = () => `temp_${Date.now()}_${Math.floor(Math.random() * 1000)}`;
 
@@ -257,6 +195,114 @@ export default function PlataformaEstrategicaReview() {
     return resultado;
   }
 
+  const handleEditEstrategia = (propId, estrategiaEditada) => {
+    setNuevasEstrategias(prev => ({
+      ...prev,
+      [propId]: prev[propId].map(e =>
+        e.clave === estrategiaEditada.clave ? estrategiaEditada : e
+      )
+    }));
+  };
+  const handleDeleteEstrategia = (propId, claveDinamica) => {
+    setNuevasEstrategias(prev => ({
+      ...prev,
+      [propId]: prev[propId].filter(e => e.clave !== claveDinamica)
+    }));
+  };
+
+  const handleEditLinea = (propId, estrId, lineaEditada) => {
+    setNuevasLineas(prev => ({
+      ...prev,
+      [propId]: {
+        ...prev[propId],
+        [estrId]: prev[propId][estrId].map(l =>
+          l.pk === lineaEditada.pk ? lineaEditada : l
+        )
+      }
+    }));
+  };
+  const handleDeleteLinea = (propId, estrId, lineaPk) => {
+    setNuevasLineas(prev => ({
+      ...prev,
+      [propId]: {
+        ...prev[propId],
+        [estrId]: prev[propId][estrId].filter(l => l.pk !== lineaPk)
+      }
+    }));
+  };
+
+  const handleGuardarComentarios = async (enviarFinal = false) => {
+    const feedbackArr = Object.entries(feedback)
+      .filter(([_, val]) =>
+        val.acuerdo ||
+        (val.comentarios && (val.comentarios.comoDecir || val.comentarios.justificacion))
+      )
+      .map(([clave, val]) => ({
+        clave,
+        acuerdo: val.acuerdo || "",
+        comoDecir: val.acuerdo === "yes" ? "No Aplica" : (val.comentarios?.comoDecir || ""),
+        justificacion: val.acuerdo === "yes" ? "No Aplica" : (val.comentarios?.justificacion || ""),
+        envio_final: enviarFinal
+      }));
+
+    if (
+      feedbackArr.length === 0 ||
+      feedbackArr.some(
+        obj => !obj.clave || !obj.acuerdo || !obj.comoDecir || !obj.justificacion
+      )
+    ) {
+      setSnackbar({ open: true, message: 'Faltan campos requeridos.', severity: 'error' });
+      return;
+    }
+
+    try {
+      setIsSaving(true);
+      let res = await fetchWithAuth("/api/objetivos/feedback-avance/", {
+        method: "POST",
+        body: JSON.stringify(feedbackArr)
+      });
+      if (!res.ok) {
+        let errorText = await res.text();
+        let needPut = false;
+        try {
+          const errData = JSON.parse(errorText);
+          if (
+            (res.status === 400 || res.status === 409) &&
+            (Array.isArray(errData) || errData.detail || errData.clave)
+          ) {
+            needPut = true;
+          }
+        } catch { }
+        if (needPut) {
+          res = await fetchWithAuth("/api/objetivos/feedback-avance/", {
+            method: "PUT",
+            body: JSON.stringify(feedbackArr)
+          });
+        }
+        if (!res.ok) {
+          setSnackbar({
+            open: true,
+            message: "Error al enviar comentarios: " + (await res.text()),
+            severity: "error"
+          });
+          return;
+        }
+      }
+      setSnackbar({
+        open: true,
+        message: '¡Comentarios enviados!',
+        severity: 'success'
+      });
+    } catch (error) {
+      setSnackbar({
+        open: true,
+        message: "Error al enviar comentarios: " + (error.message || error),
+        severity: "error"
+      });
+    } finally {
+      setIsSaving(false);
+    }
+  };
   const handleGuardarNuevos = async () => {
     // 1) Extraemos y validamos cambios
     const nuevos = extraerNuevosObjetivos(staticWithId, nuevasEstrategias, nuevasLineas);
@@ -316,43 +362,40 @@ export default function PlataformaEstrategicaReview() {
     }
   };
 
+  // Ajusta handleFull para aceptar envío final
+  const handleFull = async (enviarFinal = false) => {
+    setIsSaving(true);
 
-  const handleEditEstrategia = (propId, estrategiaEditada) => {
-    setNuevasEstrategias(prev => ({
-      ...prev,
-      [propId]: prev[propId].map(e =>
-        e.clave === estrategiaEditada.clave ? estrategiaEditada : e
-      )
-    }));
-  };
-  const handleDeleteEstrategia = (propId, claveDinamica) => {
-    setNuevasEstrategias(prev => ({
-      ...prev,
-      [propId]: prev[propId].filter(e => e.clave !== claveDinamica)
-    }));
-  };
+    let feedbackOk = true, nuevosOk = true;
+    let feedbackErr = '', nuevosErr = '';
 
-  // 2) Dentro de PlataformaEstrategicaReview, añade estos handlers:
-  const handleEditLinea = (propId, estrId, lineaEditada) => {
-    setNuevasLineas(prev => ({
-      ...prev,
-      [propId]: {
-        ...prev[propId],
-        [estrId]: prev[propId][estrId].map(l =>
-          l.pk === lineaEditada.pk ? lineaEditada : l
-        )
-      }
-    }));
-  };
+    // 1) Guardar comentarios (con envío final si corresponde)
+    try {
+      await handleGuardarComentarios(enviarFinal);
+    } catch (e) {
+      feedbackOk = false;
+      feedbackErr = e.message || 'Error desconocido';
+    }
 
-  const handleDeleteLinea = (propId, estrId, lineaPk) => {
-    setNuevasLineas(prev => ({
-      ...prev,
-      [propId]: {
-        ...prev[propId],
-        [estrId]: prev[propId][estrId].filter(l => l.pk !== lineaPk)
-      }
-    }));
+    // 2) Guardar dinámicos
+    try {
+      await handleGuardarNuevos();
+    } catch (e) {
+      nuevosOk = false;
+      nuevosErr = e.message || 'Error desconocido';
+    }
+
+    // 3) Mensaje consolidado
+    if (feedbackOk && nuevosOk) {
+      setSnackbar({ open: true, message: 'Feedback y cambios agregados guardados correctamente.', severity: 'success' });
+    } else if (!feedbackOk && !nuevosOk) {
+      setSnackbar({ open: true, message: `Error al guardar feedback: ${feedbackErr}. Error al guardar cambios: ${nuevosErr}`, severity: 'error' });
+    } else if (!feedbackOk) {
+      setSnackbar({ open: true, message: `Cambios agregados guardados, pero hubo errores al guardar feedback: ${feedbackErr}`, severity: 'warning' });
+    } else {
+      setSnackbar({ open: true, message: `Feedback guardado, pero hubo errores al guardar cambios agregados: ${nuevosErr}`, severity: 'warning' });
+    }
+    setIsSaving(false);
   };
 
   // ------- RENDER HELPERS --------
@@ -522,17 +565,6 @@ export default function PlataformaEstrategicaReview() {
             </button>
           </div>
 
-          <div className={styles.buttonWrapper}>
-            <button
-              type="button"
-              className={styles.slideButton}
-              onClick={handleGuardarNuevos}
-              disabled={isSaving}
-            >
-              {isSaving ? 'Guardando...' : 'Guardar cambios agregados'}
-            </button>
-          </div>
-
           <div className={styles.envioFinalWrapper}>
             <label className={styles.containerChecked}>
               <input
@@ -579,10 +611,9 @@ export default function PlataformaEstrategicaReview() {
         onClose={() => setConfirmOpen(false)}
         onConfirm={async () => {
           setConfirmOpen(false);
-          // Aquí iría tu función para guardar feedback
-          // await handleGuardarComentarios();
+          await handleFull();
         }}
-        title="¿Estás seguro de que quieres guardar tu avance?"
+        title="¿Estás seguro de que quieres guardar tu avance de feedback y/o cambios agregados?"
         confirmText="Sí, guardar"
         cancelText="Cancelar"
       />
@@ -593,7 +624,7 @@ export default function PlataformaEstrategicaReview() {
         onConfirm={async () => {
           setEnvioFinalChecked(true);
           setFinalConfirmOpen(false);
-          // await handleGuardarComentarios(true);
+          await handleFull(true);
         }}
         title="¿Estás seguro de enviar como versión final?"
         confirmText="Sí, confirmar envío final"
@@ -606,7 +637,7 @@ export default function PlataformaEstrategicaReview() {
         onConfirm={async () => {
           setEnvioFinalChecked(false);
           setFinalUncheckConfirmOpen(false);
-          // await handleGuardarComentarios(false);
+          await handleFull(false);
           setSnackbar({
             open: true,
             message: 'Entrega final desmarcada. Se considerará como entregable final el último envío con la fecha de finalización.',
@@ -618,8 +649,22 @@ export default function PlataformaEstrategicaReview() {
         cancelText="Cancelar"
       />
 
-      <Snackbar open={snackbar.open} autoHideDuration={4000} onClose={() => setSnackbar(prev => ({ ...prev, open: false }))} anchorOrigin={{ vertical: "top", horizontal: "right" }}>
-        <Alert onClose={() => setSnackbar(prev => ({ ...prev, open: false }))} severity={snackbar.severity} variant="filled" sx={{ width: "100%" }}>
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={8000}  // 8 segundos
+        onClose={(event, reason) => {
+          // no cerramos si el usuario hace click fuera
+          if (reason === 'clickaway') return;
+          setSnackbar(prev => ({ ...prev, open: false }));
+        }}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      >
+        <Alert
+          onClose={() => setSnackbar(prev => ({ ...prev, open: false }))}
+          severity={snackbar.severity}
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
           {snackbar.message}
         </Alert>
       </Snackbar>
