@@ -57,6 +57,127 @@ export default function PlataformaEstrategicaReview() {
     cargarFeedbackUsuario();
   }, [setFeedback]);
 
+
+  // Función para precargar los dinámicos guardados
+  const cargarMisObjetivos = async () => {
+    try {
+      const res = await fetchWithAuth('/api/objetivos/mis-objetivos/');
+      if (!res.ok) {
+        console.error('Error al cargar objetivos:', res.status);
+        return;
+      }
+      const { objetivos: saved = [] } = await res.json();
+
+      const initEstr = {};
+      const initLine = {};
+
+      saved.forEach(o => {
+        const propId = o.clave;
+        o.estrategias.forEach(est => {
+          if (est.clave.startsWith('dinamico_')) {
+            // Estrategia dinámica completa
+            initEstr[propId] = initEstr[propId] || [];
+            initEstr[propId].push({
+              clave: est.clave,
+              nombre: est.nombre,
+              lineas: []
+            });
+            // Líneas propias de esta estrategia dinámica
+            if (est.lineas && est.lineas.length) {
+              initLine[propId] = initLine[propId] || {};
+              initLine[propId][est.clave] = est.lineas.map(l => ({
+                pk: l.clave,
+                clave: l.clave,
+                text: l.text
+              }));
+            }
+          } else {
+            // Estrategia estática: cargamos sólo líneas dinámicas anexas
+            (est.lineas || []).forEach(l => {
+              if (l.clave.startsWith('dinamico_')) {
+                initLine[propId] = initLine[propId] || {};
+                initLine[propId][est.clave] = initLine[propId][est.clave] || [];
+                initLine[propId][est.clave].push({
+                  pk: l.clave,
+                  clave: l.clave,
+                  text: l.text
+                });
+              }
+            });
+          }
+        });
+      });
+
+      setNuevasEstrategias(initEstr);
+      setNuevasLineas(initLine);
+    } catch (err) {
+      console.error('Error al precargar dinámicos:', err);
+    }
+  };
+
+  useEffect(() => {
+    cargarMisObjetivos();
+  }, []);
+
+  //  // --- PRELOAD: traer dinámicos ya guardados ---
+  //  useEffect(() => {
+  //    const cargarMisObjetivos = async () => {
+  //      try {
+  //        const res = await fetchWithAuth('/api/objetivos/mis-objetivos/');
+  //        if (!res.ok) return;
+  //        const { objetivos: saved } = await res.json();
+
+  //        const initEstr = {};
+  //        const initLine = {};
+
+  //        saved.forEach(o => {
+  //          const propId = o.clave;
+  //          o.estrategias.forEach(est => {
+  //            if (est.clave.startsWith('dinamico_')) {
+  //              // 1) Estrategia completamente nueva
+  //              initEstr[propId] = initEstr[propId] || [];
+  //              initEstr[propId].push({
+  //                clave: est.clave,
+  //                nombre: est.nombre,
+  //                lineas: [] 
+  //              });
+  //              // 1.a) Si trae líneas propias
+  //              if (est.lineas?.length) {
+  //                initLine[propId] = initLine[propId] || {};
+  //                initLine[propId][est.clave] = est.lineas.map(l => ({
+  //                  clave: l.clave,
+  //                  text:   l.text,
+  //                  pk:     l.clave
+  //                }));
+  //              }
+  //            } else {
+  //              // 2) Estrategia estática: sólo cargamos líneas dinámicas
+  //              est.lineas?.forEach(l => {
+  //                if (l.clave.startsWith('dinamico_')) {
+  //                  initLine[propId] = initLine[propId] || {};
+  //                  initLine[propId][est.clave] = initLine[propId][est.clave] || [];
+  //                  initLine[propId][est.clave].push({
+  //                    clave: l.clave,
+  //                    text:   l.text,
+  //                    pk:     l.clave
+  //                  });
+  //                }
+  //              });
+  //            }
+  //          });
+  //        });
+
+  //        setNuevasEstrategias(initEstr);
+  //        setNuevasLineas(initLine);
+  //      } catch (e) {
+  //        console.error('Error al precargar dinámicos:', e);
+  //      }
+  //    };
+  //    cargarMisObjetivos();
+  //  }, []);  
+
+  // se ejecuta una sola vez al montar
+
   // ------- FUNCIONES AGREGAR --------
   const generarId = () => `temp_${Date.now()}_${Math.floor(Math.random() * 1000)}`;
 
@@ -168,7 +289,7 @@ export default function PlataformaEstrategicaReview() {
         } catch { }
 
         if (needPut) {
-          // 4) Si el servidor pide PUT, reenviamos con el mismo wrapper
+          // 4) Si el servidor pide PUT
           res = await fetchWithAuth('/api/objetivos/mis-objetivos/', {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
@@ -183,10 +304,12 @@ export default function PlataformaEstrategicaReview() {
         }
       }
 
-      // 5) Éxito
+      // 5) Éxito → recargamos los dinámicos guardados
       setSnackbar({ open: true, message: "¡Cambios guardados!", severity: "success" });
-      setNuevasEstrategias({});
-      setNuevasLineas({});
+      setNuevasEstrategias({});  // limpiamos temporales
+      setNuevasLineas({});       // limpiamos temporales
+      await cargarMisObjetivos(); // recargamos desde el servidor
+
     } catch (err) {
       setSnackbar({ open: true, message: err.message, severity: 'error' });
     } finally {
