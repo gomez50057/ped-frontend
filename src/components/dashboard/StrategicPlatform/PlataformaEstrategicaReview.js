@@ -209,42 +209,41 @@ export default function PlataformaEstrategicaReview() {
   };
 
   function extraerNuevosObjetivos(staticWithId, nuevasEstrategias, nuevasLineas) {
-    // Solo tomaremos las propuestas ESTÁTICAS de staticWithId (por eje)
-    // y les añadiremos las estrategias y líneas nuevas por cada prop.
-
-    // Estructura esperada:
-    // [
-    //   { clave: '1_1_EG01', estrategias: [ { nombre, lineas: [{text}]} ] }
-    // ]
-
-    // Recorremos cada propuesta estática y le agregamos lo nuevo:
     const resultado = [];
 
     staticWithId.forEach(eje => {
       (eje.propuestas || []).forEach(prop => {
         const propId = prop.id || prop.clave || prop.pk;
 
-        // NUEVAS ESTRATEGIAS
-        const nuevasEstras = (nuevasEstrategias[propId] || []).map(estr => ({
-          nombre: estr.nombre,
-          lineas: (estr.lineas || []).map(l => ({
-            text: l.text
-          }))
-        }));
+        // 1. cuáles claves de estrategia vienen completamente nuevas
+        const clavesDyn = (nuevasEstrategias[propId] || []).map(e => e.clave);
 
-        // NUEVAS LINEAS EN ESTRATEGIAS ESTÁTICAS
+        // 2. construir las estrategias dinámicas con sus propias líneas
+        const nuevasEstras = (nuevasEstrategias[propId] || []).map(estr => {
+          // líneas iniciales asociadas a la creación de la estrategia
+          const lineasDesdeEstr = estr.lineas || [];
+          // líneas adicionales que el usuario añadió después
+          const lineasExtra = (nuevasLineas[propId]?.[estr.clave] || []);
+          const todasLineas = [...lineasDesdeEstr, ...lineasExtra];
+
+          return {
+            nombre: estr.nombre,
+            lineas: todasLineas.map(l => ({ text: l.text }))
+          };
+        });
+
+        // 3. recopilar sólo las líneas nuevas de las estrategias estáticas
         const nuevasLineasPorEstrategia = [];
-        if (nuevasLineas[propId]) {
-          Object.entries(nuevasLineas[propId]).forEach(([estrId, lineasArr]) => {
-            if (lineasArr.length > 0) {
-              nuevasLineasPorEstrategia.push({
-                estrategia_clave: estrId,
-                lineas: lineasArr.map(l => ({ text: l.text }))
-              });
-            }
-          });
-        }
+        Object.entries(nuevasLineas[propId] || {}).forEach(([estrId, arr]) => {
+          if (!clavesDyn.includes(estrId) && arr.length > 0) {
+            nuevasLineasPorEstrategia.push({
+              estrategia_clave: estrId,
+              lineas: arr.map(l => ({ text: l.text }))
+            });
+          }
+        });
 
+        // 4. solo si hay algo que enviar
         if (nuevasEstras.length > 0 || nuevasLineasPorEstrategia.length > 0) {
           resultado.push({
             clave: prop.clave || prop.id,
