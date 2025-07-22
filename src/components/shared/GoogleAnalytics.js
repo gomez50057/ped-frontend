@@ -1,7 +1,7 @@
 'use client';
 import Script from "next/script";
 
-const GA_ID = process.env.NEXT_PUBLIC_GA_ID || "G-S6MFYD42GR";
+const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
 
 export default function GoogleAnalytics() {
   return (
