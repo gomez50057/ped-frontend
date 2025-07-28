@@ -4,7 +4,9 @@ import Navbar from "@/components/shared/Navbar";
 
 export default function ClientLayout({ children }) {
   const pathname = usePathname();
-  const hideNavbar = pathname.startsWith("/dashboard");
+  const hideNavbar = 
+    pathname.startsWith("/dashboard") ||
+    pathname.startsWith("/revision");
 
   return (
     <>
