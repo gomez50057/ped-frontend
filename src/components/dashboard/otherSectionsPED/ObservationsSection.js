@@ -49,6 +49,8 @@ const ObservationsSection = ({ observations = [], onChange }) => {
         const res = await fetchWithAuth(API_URL);
         if (!res.ok) throw new Error("Error al obtener las observaciones");
         const data = await res.json();
+        // Orden descendente por id (del más grande al más pequeño)
+        data.sort((a, b) => b.id - a.id);
         setObsList(data.length > 0 ? data : [defaultObservation]);
         if (data.length > 0) setIsFinal(!!data[0].envio_final);
       } catch (error) {
@@ -91,12 +93,9 @@ const ObservationsSection = ({ observations = [], onChange }) => {
 
   // Eliminar observación
   const handleRemove = async (idx) => {
-    // Si solo hay una observación, no se permite eliminar
     if (obsList.length === 1) return;
 
     const obsToDelete = obsList[idx];
-
-    // Si tiene id, elimina en el backend antes de actualizar la lista
     if (obsToDelete.id) {
       try {
         const res = await fetchWithAuth(`${API_URL}${obsToDelete.id}/`, {
@@ -120,7 +119,6 @@ const ObservationsSection = ({ observations = [], onChange }) => {
       }
     }
 
-    // Elimina localmente
     const newObs = obsList.filter((_, i) => i !== idx);
     setObsList(newObs);
     onChange && onChange(newObs);
@@ -178,9 +176,12 @@ const ObservationsSection = ({ observations = [], onChange }) => {
         severity: "success",
       });
 
+      // Volver a cargar y reordenar
       const res = await fetchWithAuth(API_URL);
       if (res.ok) {
         const data = await res.json();
+        // Orden descendente por id (del más grande al más pequeño)
+        data.sort((a, b) => b.id - a.id);
         setObsList(data.length > 0 ? data : [defaultObservation]);
         if (data.length > 0) setIsFinal(!!data[0].envio_final);
       }
@@ -207,7 +208,10 @@ const ObservationsSection = ({ observations = [], onChange }) => {
           <div className={styles.observationsContainer}>
             <h2 className={styles.title}>Observaciones</h2>
             {obsList.map((obs, idx) => (
-              <div className={styles.observationCard} key={obs.id ? `id-${obs.id}` : `idx-${idx}`}>
+              <div
+                className={styles.observationCard}
+                key={obs.id ? `id-${obs.id}` : `idx-${idx}`}
+              >
                 <div className={styles.formGroup}>
                   <label>Nombre del Apartado <span style={{ color: 'red' }}>*</span></label>
                   <select
