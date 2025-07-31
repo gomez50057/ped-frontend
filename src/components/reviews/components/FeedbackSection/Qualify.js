@@ -1,9 +1,37 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './FeedbackSection.module.css';
 
 export default function Qualify({ id, acuerdo, onChange, motivo, onMotivoChange }) {
+  // Estado interno para reflejar la selección
+  const [localAcuerdo, setLocalAcuerdo] = useState(acuerdo || '');
+  const [localMotivo, setLocalMotivo] = useState(motivo || '');
+
+  // Si el prop cambia (por ejemplo al cargar feedback), sincronizamos
+  useEffect(() => {
+    setLocalAcuerdo(acuerdo || '');
+  }, [acuerdo]);
+
+  useEffect(() => {
+    setLocalMotivo(motivo || '');
+  }, [motivo]);
+
+  const handleAcuerdo = (value) => {
+    setLocalAcuerdo(value);
+    onChange(value);
+    // Si selecciona “Sí”, limpiamos el motivo
+    if (value !== 'no') {
+      setLocalMotivo('');
+      onMotivoChange('');
+    }
+  };
+
+  const handleMotivoChange = (value) => {
+    setLocalMotivo(value);
+    onMotivoChange(value);
+  };
+
   return (
     <div className={styles.qualifySection}>
       <p>¿Es aceptado el cambio?</p>
@@ -13,8 +41,8 @@ export default function Qualify({ id, acuerdo, onChange, motivo, onMotivoChange 
             type="radio"
             name={`${id}-acuerdo`}
             value="si"
-            checked={acuerdo === 'si'}
-            onChange={(e) => onChange(e.target.value)}
+            checked={localAcuerdo === 'si'}
+            onChange={() => handleAcuerdo('si')}
           />
           Sí
         </label>
@@ -23,20 +51,20 @@ export default function Qualify({ id, acuerdo, onChange, motivo, onMotivoChange 
             type="radio"
             name={`${id}-acuerdo`}
             value="no"
-            checked={acuerdo === 'no'}
-            onChange={(e) => onChange(e.target.value)}
+            checked={localAcuerdo === 'no'}
+            onChange={() => handleAcuerdo('no')}
           />
           No
         </label>
       </div>
 
-      {acuerdo === 'no' && (
+      {localAcuerdo === 'no' && (
         <div className={styles.textareaContainer}>
           <label htmlFor={`${id}-motivo`}>¿Por qué no?</label>
           <textarea
             id={`${id}-motivo`}
-            value={motivo}
-            onChange={(e) => onMotivoChange(e.target.value)}
+            value={localMotivo}
+            onChange={(e) => handleMotivoChange(e.target.value)}
             className={styles.textarea}
             rows={4}
             placeholder="Escribe el motivo aquí..."

@@ -199,6 +199,19 @@ const ObservationsSection = ({ observations = [], onChange }) => {
     setSnackbar({ ...snackbar, open: false });
   };
 
+  const onGuardarClick = () => {
+    if (!areAllObservationsComplete(obsList)) {
+      setSnackbar({
+        open: true,
+        message: "No se puede guardar: hay campos obligatorios sin completar.",
+        severity: "warning",
+      });
+    } else {
+      setOpenConfirm(true);
+    }
+  };
+
+
   return (
     <div className={styles.container}>
       {loading ? (
@@ -312,18 +325,12 @@ const ObservationsSection = ({ observations = [], onChange }) => {
                 <button
                   type="button"
                   className={styles.slideButton}
-                  onClick={() => setOpenConfirm(true)}
-                  disabled={!areAllObservationsComplete(obsList)}
-                  title={
-                    !areAllObservationsComplete(obsList)
-                      ? "Completa todos los campos para enviar"
-                      : "Guardar avance"
-                  }
+                  onClick={onGuardarClick}
+                  title="Guardar avance"
                 >
                   Guardar avance
                 </button>
               </div>
-
               <div className={styles.envioFinalWrapper}>
                 <label className={styles.containerChecked}>
                   <input
@@ -400,6 +407,7 @@ const ObservationsSection = ({ observations = [], onChange }) => {
         autoHideDuration={4000}
         onClose={handleCloseSnackbar}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        sx={{ zIndex: 1500 }}
       >
         <Alert
           onClose={handleCloseSnackbar}

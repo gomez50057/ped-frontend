@@ -40,6 +40,7 @@ export default function NewIndicatorProposalForm({ onClose, onSubmit, initialDat
     severity: "success",
   });
   const [confirmOpen, setConfirmOpen] = useState(false);
+  const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
   const [pendingValues, setPendingValues] = useState(null);
   const [loading, setLoading] = useState(true);
   const [hasExistingProposal, setHasExistingProposal] = useState(false);
@@ -147,12 +148,52 @@ export default function NewIndicatorProposalForm({ onClose, onSubmit, initialDat
   const handleCancel = () => {
     setSnackbar({
       open: true,
-      message: "Propuesta cancelada",
+      message: "Has cerrado el formulario sin guardar cambios",
       severity: "warning",
     });
     setTimeout(() => {
       onClose && onClose();
     }, 1200);
+  };
+
+  // --- NUEVO: función para eliminar la propuesta ---
+  const handleDeleteProposal = async () => {
+    setDeleteConfirmOpen(false);
+    try {
+      const response = await fetchWithAuth(`/api/indicador/new-indicador/${indicadorId}/`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+      });
+      if (response.ok) {
+        setSnackbar({
+          open: true,
+          message: "Propuesta eliminada correctamente",
+          severity: "success",
+        });
+        setTimeout(() => {
+          if (onClose) onClose();
+        }, 1200);
+      } else {
+        let msg = "No se pudo eliminar la propuesta";
+        try {
+          const errData = await response.json();
+          if (errData && typeof errData === "object") {
+            msg += ": " + Object.values(errData).flat().join(", ");
+          }
+        } catch { }
+        setSnackbar({
+          open: true,
+          message: msg,
+          severity: "error",
+        });
+      }
+    } catch (error) {
+      setSnackbar({
+        open: true,
+        message: "Error al eliminar la propuesta. Intenta de nuevo.",
+        severity: "error",
+      });
+    }
   };
 
   return (
@@ -323,15 +364,25 @@ export default function NewIndicatorProposalForm({ onClose, onSubmit, initialDat
                       className={styles.cancelButton}
                       onClick={handleCancel}
                     >
-                      Cancelar
+                      Cerrar
                     </button>
+                    {hasExistingProposal && (
+                      <button
+                        type="button"
+                        className={styles.cancelButton}
+                        onClick={() => setDeleteConfirmOpen(true)}
+                      >
+                        Eliminar propuesta
+                      </button>
+                    )}
                   </div>
                 </Form>
               )}
             </Formik>
           )}
-
         </div>
+
+        {/* Confirmar guardado */}
         <ConfirmDialog
           open={confirmOpen}
           title="¿Estás seguro de que quieres guardar esta nueva propuesta de indicador?"
@@ -363,7 +414,6 @@ export default function NewIndicatorProposalForm({ onClose, onSubmit, initialDat
                   sources: pendingValues.sources,
                   indicador: indicadorId,
                 };
-
                 let response;
                 if (hasExistingProposal) {
                   response = await fetchWithAuth(`/api/indicador/new-indicador/${indicadorId}/`, {
@@ -386,9 +436,8 @@ export default function NewIndicatorProposalForm({ onClose, onSubmit, initialDat
                   });
                   setTimeout(() => {
                     if (onClose) onClose();
-                  }, 1200); // 1.2 segundos es buen tiempo, ajusta a tu gusto
+                  }, 1200);
                 } else {
-                  // Si hubo error, no cerrar, muestra error
                   let msg = "Error al guardar la propuesta";
                   try {
                     const errData = await response.json();
@@ -411,6 +460,16 @@ export default function NewIndicatorProposalForm({ onClose, onSubmit, initialDat
               }
             }
           }}
+        />
+
+        {/* Confirmar eliminación */}
+        <ConfirmDialog
+          open={deleteConfirmOpen}
+          title="¿Estás seguro de que deseas eliminar esta propuesta? Esta acción no se puede deshacer."
+          confirmText="Sí, eliminar"
+          cancelText="No"
+          onClose={() => setDeleteConfirmOpen(false)}
+          onConfirm={handleDeleteProposal}
         />
       </div>
 

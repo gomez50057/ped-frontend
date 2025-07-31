@@ -7,6 +7,7 @@ import Alert from '@mui/material/Alert';
 import { useFeedback } from '@/hooks/useFeedback';
 import styles from './PlataformaEstrategicaReview.module.css';
 import FeedbackSection from '../components/FeedbackSection/FeedbackSection';
+import Qualify from '../components/FeedbackSection/Qualify';
 import { fetchWithAuth } from '@/utils/auth';
 import { useSelectedAxes } from '@/hooks/StrategicPlatform/useSelectedAxes';
 import { useStaticWithId } from '@/hooks/StrategicPlatform/useStaticWithId';
@@ -24,8 +25,8 @@ export default function PlataformaEstrategicaReview() {
     async function loadAll() {
       try {
         const [fbRes, objRes] = await Promise.all([
-          fetchWithAuth('/api/objetivos/feedback-avance/'),
-          fetchWithAuth('/api/objetivos/mis-objetivos/')
+          fetchWithAuth('/api/objetivos/feedback-avances-full/'),
+          fetchWithAuth('/api/objetivos/objetivo-sets/')
         ]);
         if (fbRes.ok) {
           const fbData = await fbRes.json();
@@ -88,6 +89,13 @@ export default function PlataformaEstrategicaReview() {
               onAcuerdoChange={handleAcuerdo}
               onComentarioChange={handleComentario}
             />
+            <Qualify
+              id={`${prefix}-linea-${l.id}`}
+              acuerdo={''}                    // vacío para que no seleccione nada
+              onChange={() => { }}             // no-op
+              motivo={''}                     // textarea vacío
+              onMotivoChange={() => { }}       // no-op
+            />
           </li>
         ))}
         {nuevas.map(l => (
@@ -113,6 +121,13 @@ export default function PlataformaEstrategicaReview() {
               comentarios={feedback[`${prefix}-estrategia-${est.id}`]?.comentarios}
               onAcuerdoChange={handleAcuerdo}
               onComentarioChange={handleComentario}
+            />
+            <Qualify
+              id={`${prefix}-estrategia-${est.id}`}
+              acuerdo={''}
+              onChange={() => { }}
+              motivo={''}
+              onMotivoChange={() => { }}
             />
             {renderLineas(`${prefix}-estrategia-${est.id}`, pid, est.id, est.lineas || [])}
           </div>
@@ -141,6 +156,14 @@ export default function PlataformaEstrategicaReview() {
               comentarios={feedback[prefix]?.comentarios}
               onAcuerdoChange={handleAcuerdo}
               onComentarioChange={handleComentario}
+            />
+            {/* 2) Qualify meramente visual, sin lógica por ahora */}
+            <Qualify
+              id={`${prefix}-qualify`}
+              acuerdo={''}                // siempre vacío
+              onChange={() => { }}         // no-op
+              motivo={''}                 // textarea vacío
+              onMotivoChange={() => { }}   // no-op
             />
             {renderEstrategias(prop.id, prefix, prop.Estrategias)}
           </div>
