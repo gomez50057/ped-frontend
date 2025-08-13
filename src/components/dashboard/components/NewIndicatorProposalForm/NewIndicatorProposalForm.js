@@ -156,46 +156,6 @@ export default function NewIndicatorProposalForm({ onClose, onSubmit, initialDat
     }, 1200);
   };
 
-  // --- NUEVO: función para eliminar la propuesta ---
-  const handleDeleteProposal = async () => {
-    setDeleteConfirmOpen(false);
-    try {
-      const response = await fetchWithAuth(`/api/indicador/new-indicador/${indicadorId}/`, {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-      });
-      if (response.ok) {
-        setSnackbar({
-          open: true,
-          message: "Propuesta eliminada correctamente",
-          severity: "success",
-        });
-        setTimeout(() => {
-          if (onClose) onClose();
-        }, 1200);
-      } else {
-        let msg = "No se pudo eliminar la propuesta";
-        try {
-          const errData = await response.json();
-          if (errData && typeof errData === "object") {
-            msg += ": " + Object.values(errData).flat().join(", ");
-          }
-        } catch { }
-        setSnackbar({
-          open: true,
-          message: msg,
-          severity: "error",
-        });
-      }
-    } catch (error) {
-      setSnackbar({
-        open: true,
-        message: "Error al eliminar la propuesta. Intenta de nuevo.",
-        severity: "error",
-      });
-    }
-  };
-
   return (
     <>
       <div className={styles.overlay}>
@@ -434,6 +394,8 @@ export default function NewIndicatorProposalForm({ onClose, onSubmit, initialDat
                     message: "Propuesta guardada correctamente",
                     severity: "success",
                   });
+                  // Llama aquí el callback para actualizar el estado en el padre
+                  if (typeof onUpdateProposal === 'function') onUpdateProposal();
                   setTimeout(() => {
                     if (onClose) onClose();
                   }, 1200);
@@ -469,7 +431,45 @@ export default function NewIndicatorProposalForm({ onClose, onSubmit, initialDat
           confirmText="Sí, eliminar"
           cancelText="No"
           onClose={() => setDeleteConfirmOpen(false)}
-          onConfirm={handleDeleteProposal}
+          onConfirm={async () => {
+            setDeleteConfirmOpen(false);
+            try {
+              const response = await fetchWithAuth(`/api/indicador/new-indicador/${indicadorId}/`, {
+                method: "DELETE",
+                headers: { "Content-Type": "application/json" },
+              });
+              if (response.ok) {
+                setSnackbar({
+                  open: true,
+                  message: "Propuesta eliminada correctamente",
+                  severity: "success",
+                });
+                if (typeof onUpdateProposal === 'function') onUpdateProposal();
+                setTimeout(() => {
+                  if (onClose) onClose();
+                }, 1200);
+              } else {
+                let msg = "No se pudo eliminar la propuesta";
+                try {
+                  const errData = await response.json();
+                  if (errData && typeof errData === "object") {
+                    msg += ": " + Object.values(errData).flat().join(", ");
+                  }
+                } catch { }
+                setSnackbar({
+                  open: true,
+                  message: msg,
+                  severity: "error",
+                });
+              }
+            } catch (error) {
+              setSnackbar({
+                open: true,
+                message: "Error al eliminar la propuesta. Intenta de nuevo.",
+                severity: "error",
+              });
+            }
+          }}
         />
       </div>
 

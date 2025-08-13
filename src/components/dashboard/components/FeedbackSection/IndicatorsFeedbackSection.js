@@ -37,24 +37,25 @@ export default function IndicatorsFeedbackSection({
     };
   }
 
-  useEffect(() => {
-    async function loadPropuesta() {
-      if (!idDelIndicadorNuevo) return;
-      setLoadingEdit(true);
-      try {
-        const res = await fetchWithAuth(`/api/indicador/new-indicador/${idDelIndicadorNuevo}/`);
-        if (res.ok) {
-          const data = await res.json();
-          setPropuestaActual(data);
-        } else {
-          setPropuestaActual(null);
-        }
-      } catch (err) {
+  async function loadPropuesta() {
+    if (!idDelIndicadorNuevo) return;
+    setLoadingEdit(true);
+    try {
+      const res = await fetchWithAuth(`/api/indicador/new-indicador/${idDelIndicadorNuevo}/`);
+      if (res.ok) {
+        const data = await res.json();
+        setPropuestaActual(data);
+      } else {
         setPropuestaActual(null);
-      } finally {
-        setLoadingEdit(false);
       }
+    } catch (err) {
+      setPropuestaActual(null);
+    } finally {
+      setLoadingEdit(false);
     }
+  }
+
+  useEffect(() => {
     loadPropuesta();
   }, [idDelIndicadorNuevo]);
 
@@ -176,6 +177,9 @@ export default function IndicatorsFeedbackSection({
               indicadorId={indicadorIdSeleccionado}
               proposalId={proposalIdToEdit}
               onSubmit={handleSubmitPropuesta}
+              onUpdateProposal={() => {
+                loadPropuesta();
+              }}
             />
           )}
         </>
