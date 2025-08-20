@@ -7,6 +7,7 @@ import Link from "next/link";
 const imgConsultaDigital = "/img/page_links/consulta_digital/";
 const imgBibliotecaDigital = "/img/page_links/biblioteca_digital/";
 const imgBconvocatoriaIA = "/img/page_links/convocatoria_IA/";
+import PodcastSlider from "@/components/landing/PodcastSlider";
 
 const imgBasePath = "/img/page_links/";
 const videoBasePath = "/video/";
@@ -24,12 +25,6 @@ const info = [
       "Te invitamos a estar pendiente de los foros que se estarán llevando a cabo próximamente en las regiones de Hidalgo. Tu participación es fundamental para fortalecer el diálogo y construir juntos un futuro con inclusión y respeto a la diversidad. ¡Súmate a este espacio de encuentro y diálogo abierto para todas y todos!",
     href: "",
   },
-  // {
-  //   title: "Convocatoria al reto de inteligencia artificial (Reto IA)",
-  //   subtitle:
-  //     "Únete al Reto IA. Imagina el futuro de Hidalgo utilizando de manera creativa herramientas de inteligencia artificial. ¡Construyamos juntos las visiones que transformarán nuestro Estado!",
-  //   href: "/pdf/Reto IA.pdf",
-  // },
   {
     title: "Convocatoria al Reto IA: Visión Prospectiva",
     subtitle:
@@ -39,8 +34,8 @@ const info = [
   {
     title: "Consulta a pueblos y comunidades indígenas",
     subtitle:
-      "Mantente pendiente de esta sección para conocer las próximas fechas, formas de participación y toda la información relevante sobre la Consulta Pública a Pueblos y Comunidades Indígenas.",
-    href: "",
+      "Conocer las fechas, formas de participación y toda la información relevante sobre la Consulta Pública a Pueblos y Comunidades Indígenas.",
+    href: "https://cedspi.hidalgo.gob.mx/Consulta",
   },
   {
     title: "Biblioteca Digital de Planeación",
@@ -56,8 +51,8 @@ export default function PublicKnowledgeSection() {
       {info.map((item, idx) => {
         if (idx === 0) {
           return (
-            <React.Fragment key={idx} >
-              <div key={idx} className={`${styles.sectionItem} ${styles.designA}`} >
+            <React.Fragment key={idx}>
+              <div className={`${styles.sectionItem} ${styles.designA}`}>
                 <div className={styles.containerDesignA}>
                   <div className={styles.bgImgDesignA}>
                     <img src={`${imgBasePath}bg.png`} alt={item.title} />
@@ -81,28 +76,35 @@ export default function PublicKnowledgeSection() {
             </React.Fragment>
           );
         }
+
         if (idx === 1) {
+          // ⬇️ Insertamos aquí el PodcastSlider y luego el bloque original del idx=1
           return (
-            <div key={idx} className={`${styles.sectionItem} ${styles.designB}`} style={{ position: 'relative' }}>
-              <video autoPlay loop muted playsInline className={styles.backgroundVideo}>
-                <source src={`${videoBasePath}foros_general.mp4`} type="video/mp4" />
-                Tu navegador no soporta la reproducción de video.
-              </video>
-              <div className={styles.overlayTextDesignB}>
-                <div className={styles.gradientOverlay}></div>
-                {/* <div className={styles.imgTituleDesignB}>
-                  <img src={`${imgBasePath}planeacion.png`} alt={item.title} />
-                </div> */}
-                <p>{item.subtitle}</p>
-                {/* <Link href={item.href} className={styles.buttonDesignB}>
-                  <div className={styles.ctaLink}>
-                    Conoce más ↗
-                  </div>
-                </Link> */}
+            <React.Fragment key={idx}>
+              <PodcastSlider
+                imageSrc="/img/Podcast/la-voz-de-hidalgo-portada.png"
+                overlaySrc="/img/Podcast/mic.png"
+                videos={[
+                  "https://www.youtube.com/watch?v=qi-FdqmiR8I&t",
+                ]}
+                // autoAdvanceMs={8000}
+                title="La Voz de Hidalgo • Podcast"
+              />
+
+              <div className={`${styles.sectionItem} ${styles.designB}`} style={{ position: "relative" }}>
+                <video autoPlay loop muted playsInline className={styles.backgroundVideo}>
+                  <source src={`${videoBasePath}foros_general.mp4`} type="video/mp4" />
+                  Tu navegador no soporta la reproducción de video.
+                </video>
+                <div className={styles.overlayTextDesignB}>
+                  <div className={styles.gradientOverlay}></div>
+                  <p>{item.subtitle}</p>
+                </div>
               </div>
-            </div>
+            </React.Fragment>
           );
         }
+
         if (idx === 2) {
           return (
             <div key={idx} className={`${styles.sectionItem} ${styles.designC}`}>
@@ -132,9 +134,7 @@ export default function PublicKnowledgeSection() {
                       </Link>
                     </p>
                     <Link href={item.href} target="_blank" rel="noopener noreferrer" className={styles.buttonDesignC}>
-                      <div className={styles.ctaLink}>
-                        Conoce más ↗
-                      </div>
+                      <div className={styles.ctaLink}>Conoce más ↗</div>
                     </Link>
                   </div>
                 </div>
@@ -142,29 +142,26 @@ export default function PublicKnowledgeSection() {
             </div>
           );
         }
+
         if (idx === 3) {
           return (
-            <div key={idx} className={`${styles.sectionItem} ${styles.designB}`} style={{ position: 'relative' }}>
+            <div key={idx} className={`${styles.sectionItem} ${styles.designB}`} style={{ position: "relative" }}>
               <video autoPlay loop muted playsInline className={styles.backgroundVideo}>
                 <source src={`${videoBasePath}pueblos_comunidades_indigenas.mp4`} type="video/mp4" />
-
                 Tu navegador no soporta la reproducción de video.
               </video>
               <div className={styles.overlayTextDesignB}>
                 <div className={styles.gradientOverlay}></div>
-                {/* <div className={styles.imgTituleDesignB}>
-                  <img src={`${imgBasePath}planeacion.png`} alt={item.title} />
-                </div> */}
                 <p>{item.subtitle}</p>
-                {/* <Link href={item.href} className={styles.buttonDesignB}>
-                  <div className={styles.ctaLink}>
-                    Conoce más ↗
-                  </div>
-                </Link> */}
               </div>
+              <Link href={item.href} target="_blank" rel="noopener noreferrer" className={styles.buttonDesignC}>
+                <div className={styles.ctaLink}>Conoce más ↗</div>
+              </Link>
             </div>
           );
         }
+
+        // idx === 4
         return (
           <div key={idx} className={`${styles.sectionItem} ${styles.designE}`}>
             <div className={styles.containerDesignE}>
@@ -183,9 +180,7 @@ export default function PublicKnowledgeSection() {
                 <div className={styles.overlayTextDesignE}>
                   <p>{item.subtitle}</p>
                   <Link href={item.href} target="_blank" rel="noopener noreferrer" className={styles.buttonDesignE}>
-                    <div className={styles.ctaLink}>
-                      Conoce más ↗
-                    </div>
+                    <div className={styles.ctaLink}>Conoce más ↗</div>
                   </Link>
                 </div>
               </div>
