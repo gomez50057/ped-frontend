@@ -1,0 +1,118 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  backdrop-filter: blur(8px);
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeBackground 0.4s ease-out;
+}
+
+.modal {
+  backdrop-filter: blur(20px);
+  border: 6px solid #f7f7f75d;
+  border-radius: 40px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+  padding: 2.5rem;
+  width: 460px;
+  color: #fff8f0;
+  animation: scaleFadeIn 0.5s ease forwards;
+  transform: scale(0.95);
+}
+
+.titule {
+  font-size: 2rem;
+  font-style: italic;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: var(--blanco);
+}
+
+.input {
+  width: 100%;
+  padding: 12px 14px;
+  margin-top: 14px;
+  border: none;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.25);
+  color: #fff8f0;
+  outline: none;
+  resize: vertical;
+  font-family: inherit;
+  font-size: 1rem;
+  line-height: 1.5;
+  min-height: 120px;
+  transition: background-color 0.3s ease;
+}
+
+.input:focus {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 2rem;
+}
+
+.actions button {
+  background-color: #e0e0e0;
+  border-radius: 50px;
+  box-shadow: inset 4px 4px 10px #bcbcbc, inset -4px -4px 10px #ffffff;
+  color: #4d4d4d;
+  cursor: pointer;
+  font-size: .8rem;
+  padding: 15px 40px;
+  transition: all 0.2s ease-in-out;
+  border: 2px solid rgb(206, 206, 206);
+}
+
+.actions button:hover {
+  box-shadow: inset 2px 2px 5px #bcbcbc, inset -2px -2px 5px #ffffff, 2px 2px 5px #bcbcbc, -2px -2px 5px #ffffff;
+}
+
+.actions button:focus {
+  outline: none;
+  box-shadow: inset 2px 2px 5px #bcbcbc, inset -2px -2px 5px #ffffff, 2px 2px 5px #bcbcbc, -2px -2px 5px #ffffff;
+}
+
+.actions button:disabled {
+  background-color: rgba(255, 255, 255, 0.1);
+  box-shadow: none;
+
+  cursor: not-allowed;
+  color: #ccc;
+}
+
+/* Animaciones */
+@keyframes fadeBackground {
+  from {
+    background: rgba(0, 0, 0, 0);
+  }
+
+  to {
+    background: rgba(0, 0, 0, 0.5);
+  }
+}
+
+@keyframes scaleFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

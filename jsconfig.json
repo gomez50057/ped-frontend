@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./src/*"],
+      "@dashboard-components/*": ["./src/dashboard/components/*"]
+    }
+  }
+}

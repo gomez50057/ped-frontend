@@ -1,0 +1,12 @@
+.qualifySection{
+  padding-left: 2rem;
+  padding-top: 1rem;
+}
+
+.qualifySection p{
+  font-size: 2rem;
+  margin: 0;
+  font-weight: 500;
+  font-style: italic;
+  color: var(--doradoOsc);
+}

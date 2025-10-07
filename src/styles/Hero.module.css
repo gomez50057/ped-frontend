@@ -1,0 +1,155 @@
+#header {
+  position: relative;
+}
+
+.contentHeader {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  position: relative;
+}
+
+/* Texto sobre el header */
+.headerTxt {
+  position: absolute;
+  top: 49vh;
+  left: 0;
+  transform: translate(0%, -50%);
+  width: 78vw;
+  height: auto;
+  opacity: 0;
+  transition: opacity 1s ease-in;
+  z-index: 200;
+  margin: 0;
+  padding: 0;
+}
+
+/* Imagen dentro de headerTxt */
+.headerTxt img {
+  width: 100%;
+  height: auto;
+}
+
+/* Tren */
+.contentTren {
+  position: absolute;
+  bottom: 25vh;
+  left: 0;
+  width: 100vw;
+  height: 200px;
+  z-index: 100;
+}
+
+/* Imagen de header (de fondo) */
+.headerImg {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100vw;
+  height: auto;
+  opacity: 0;
+  transition: opacity 1s ease-in;
+  will-change: opacity, transform;
+}
+
+.headerImg img {
+  width: 100%;
+  height: auto;
+}
+
+/* Flotante animado */
+.floatingImg {
+  display: block;
+  animation: floatingAnimation 10s infinite alternate ease-in-out, shadowAnimation 8s infinite alternate ease-in-out;
+  will-change: transform, filter;
+}
+
+/* Clases para mostrar animación */
+.fadeIn {
+  opacity: 1 !important;
+}
+
+/* Animaciones */
+@keyframes floatingAnimation {
+  0% {
+    transform: translateY(0);
+  }
+
+  100% {
+    transform: translateY(-30px);
+  }
+}
+
+@keyframes shadowAnimation {
+  0% {
+    filter: drop-shadow(10px 10px 15px rgba(0, 0, 0, 0.2));
+  }
+
+  100% {
+    filter: drop-shadow(10px 10px 15px rgba(0, 0, 0, 0.35));
+  }
+}
+
+/* Para pantallas menores a 768px ("lg") */
+@media (max-width: 768px) {
+  .contentHeader {
+    width: 100vw;
+    height: auto;
+    margin: 0;
+  }
+
+  .headerTxt {
+    position: relative;
+    top: 15vh;
+    left: 0;
+    transform: none;
+    width: 75vw;
+    height: auto;
+  }
+
+  .contentTren {
+    position: absolute;
+    top: 15vh;
+    left: 0;
+    width: 100vw;
+    height: 50px;
+    z-index: 100;
+  }
+
+  /* Animaciones */
+  @keyframes floatingAnimation {
+    0% {
+      transform: translateY(0);
+    }
+
+    100% {
+      transform: translateY(-8px);
+    }
+  }
+
+
+}
+
+@media (max-width: 576px) {
+  .headerImg {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+  }
+
+  .headerImg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .headerTxt {
+    position: relative;
+    top: 65vh;
+    left: 0;
+    transform: none;
+    width: 100vw;
+    height: auto;
+    padding: 0 1rem;
+  }
+}

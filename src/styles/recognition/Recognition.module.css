@@ -1,0 +1,225 @@
+.section {
+  display: grid;
+  gap: 1.25rem;
+  padding: 1.25rem;
+  width: min(1200px, 92vw);
+  margin: 0 auto;
+}
+
+.title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 0;
+  color: #222;
+}
+
+.controls {
+  display: grid;
+  gap: 0.75rem;
+  background: #f8f8f9;
+  border: 1px solid #e7e7ea;
+  border-radius: 14px;
+  padding: 1rem 1.25rem;
+}
+
+.sliderRow {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.sliderLabel {
+  font-size: 0.95rem;
+  color: #333;
+  white-space: nowrap;
+}
+
+.slider {
+  width: 100%;
+  accent-color: var(--vinoOsc);
+}
+
+.sliderValue {
+  font-variant-numeric: tabular-nums;
+  min-width: 54px;
+  text-align: right;
+  color: #444;
+}
+
+.helper {
+  margin: 0;
+  color: #555;
+  font-size: 0.9rem;
+}
+
+/* Lienzo del certificado: mantiene relación 11/8.5 (carta horizontal) */
+.canvas {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 11 / 8.5;
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+  border: 2px solid rgba(0, 0, 0, 0.05);
+  box-shadow:
+    0 10px 25px rgba(0, 0, 0, 0.08),
+    0 2px 8px rgba(0, 0, 0, 0.05) inset;
+  /* habilita cqi dentro */
+  container-type: size;
+}
+
+/* Sutil oscurecido para mejorar contraste del texto */
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg,
+      rgba(0, 0, 0, 0.08) 0%,
+      rgba(0, 0, 0, 0.04) 35%,
+      rgba(0, 0, 0, 0.08) 100%);
+  pointer-events: none;
+}
+
+/* Texto del nombre: centrado en el eje X y centro en Y */
+.name {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 90%;
+  text-align: center;
+  line-height: 1.1;
+  font-weight: 700;
+  color: var(--vinoClr);
+  word-break: break-word;
+}
+
+/* Texto de la fecha: centrado en el eje X y por debajo del centro en Y */
+.date {
+  position: absolute;
+  left: 50%;
+  bottom: 7%;
+  transform: translate(-50%, -7%);
+  width: 90%;
+  max-width: 90%;
+  text-align: center;
+  margin: 0;
+  line-height: 1.1;
+  font-weight: 300;
+  color: var(--VinoNegro);
+  word-break: break-word;
+  font-size: clamp(5px, 1.7cqi, 22px);
+}
+
+/* Indicador de bloqueo (no clickeable) */
+.lockBadge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: 18px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 4px 8px;
+  border-radius: 999px;
+  pointer-events: none;
+  user-select: none;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+.downloadBtn {
+  appearance: none;
+  border: none;
+  background: var(--vinoClr, --vinoOsc);
+  color: #fff;
+  padding: 0.6rem 1rem;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform .06s ease, filter .15s ease;
+}
+
+.downloadBtn:hover {
+  filter: brightness(1.05);
+}
+
+.downloadBtn:active {
+  transform: translateY(1px);
+}
+
+.downloadBtn:disabled {
+  opacity: .6;
+  cursor: not-allowed;
+}
+
+.instructions {
+  background: #fff;
+  border: 1px dashed rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
+  color: #333;
+  line-height: 1.45;
+}
+
+.instructions p {
+  margin: 0.25rem 0;
+  font-size: 0.95rem;
+}
+
+.containerNoticeCard {
+  width: 100vw;
+  height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.noticeCard {
+  padding: 16px 18px;
+  max-width: 860px;
+  width: calc(100% - 32px);
+  border: 1px solid rgba(105, 27, 50, 0.2);
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 8px 24px rgba(16, 24, 40, 0.06);
+}
+
+
+.noticeTitle {
+  margin: 0 0 6px;
+  font-weight: 700;
+  color: var(--vinoClr, #691b32);
+  font-size: clamp(18px, 1.6cqi, 24px);
+}
+
+.noticeBody {
+  margin: 0 0 6px;
+  color: #333;
+}
+
+.noticeHelp {
+  margin: 0;
+  color: #555;
+  font-size: 0.95rem;
+}
+
+
+
+@media (max-width: 768px) {
+  .section {
+    padding: 0.75rem;
+  }
+
+  .controls {
+    padding: 0.75rem 0.9rem;
+  }
+
+  .name {
+    max-width: 88%;
+  }
+}
