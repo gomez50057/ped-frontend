@@ -82,6 +82,11 @@ export default function MassiveBase({
   // ====== Personas ======
   const [people, setPeople] = useState([]); // [{name,email}]
   const [uploadError, setUploadError] = useState("");
+  const [manualError, setManualError] = useState("");
+
+  // Campos para alta manual
+  const [manualName, setManualName] = useState("");
+  const [manualEmail, setManualEmail] = useState("");
 
   // Sincronizaciones masivas
   const [syncAllDates, setSyncAllDates] = useState(false);
@@ -266,6 +271,44 @@ export default function MassiveBase({
     }
   };
 
+  /* ==================== Alta manual (Nombre + Correo) ==================== */
+  const emailRegex =
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/i;
+
+  const handleAddManual = () => {
+    setManualError("");
+    const name = manualName.trim();
+    const email = manualEmail.trim();
+
+    if (!name) {
+      setManualError("Escribe el nombre.");
+      return;
+    }
+    if (!email) {
+      setManualError("Escribe el correo.");
+      return;
+    }
+    if (!emailRegex.test(email)) {
+      setManualError("El correo no es válido.");
+      return;
+    }
+
+    const key = `${name.toLowerCase()}|${email.toLowerCase()}`;
+    const exists = people.some(
+      (p) => `${p.name.toLowerCase()}|${(p.email || "").toLowerCase()}` === key
+    );
+    if (exists) {
+      setManualError("Ese nombre/correo ya está en la lista.");
+      return;
+    }
+
+    const next = [...people, { name, email }];
+    setPeople(next);
+    setIndex(next.length - 1); // seleccionar el recién agregado
+    setManualName("");
+    setManualEmail("");
+  };
+
   /* ==================== Exportación ==================== */
   const exportAsPdf = async (nameToPrint) => {
     const node = canvasRef.current;
@@ -325,7 +368,7 @@ export default function MassiveBase({
     }
   };
 
-  // Para envío por correo (mantengo API de tu botón existente)
+  // Para envío por correo (API existente)
   const generatePdfBlobForIndex = async (i) => {
     if (!people[i]) return null;
     const prev = index;
@@ -384,7 +427,7 @@ export default function MassiveBase({
           Previa del reconocimiento (lote)
         </h2>
 
-        {/* Carga de Excel/CSV */}
+        {/* ============ Carga por archivo ============ */}
         <div className={styles.sliderRow} style={{ gridTemplateColumns: "auto 1fr auto auto" }}>
           <label htmlFor="xlsxInput" className={styles.sliderLabel}>
             Lista (Excel/CSV):
@@ -407,7 +450,45 @@ export default function MassiveBase({
           <span className={styles.sliderValue}>{total} registros</span>
         </div>
 
-        {/* Persona actual */}
+        {/* ============ Alta manual ============ */}
+        <div className={styles.sliderRow} style={{ gridTemplateColumns: "auto 1fr auto 1fr auto" }}>
+          <label className={styles.sliderLabel} htmlFor="manualName">Alta manual:</label>
+          <input
+            id="manualName"
+            type="text"
+            placeholder="Nombre completo"
+            className={styles.slider}
+            value={manualName}
+            onChange={(e) => setManualName(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && handleAddManual()}
+          />
+          <span style={{ alignSelf: "center", opacity: 0.6, padding: "0 .25rem" }}>Correo:</span>
+          <input
+            id="manualEmail"
+            type="email"
+            placeholder="correo@ejemplo.com"
+            className={styles.slider}
+            value={manualEmail}
+            onChange={(e) => setManualEmail(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && handleAddManual()}
+          />
+          <button
+            type="button"
+            className={styles.downloadBtn}
+            onClick={handleAddManual}
+            title="Agregar a la lista"
+          >
+            Agregar
+          </button>
+        </div>
+
+        {(uploadError || manualError) && (
+          <div className={styles.noticeCard} role="alert">
+            <p className={styles.noticeBody}>{uploadError || manualError}</p>
+          </div>
+        )}
+
+        {/* Selector de persona actual */}
         <div className={styles.sliderRow} style={{ gridTemplateColumns: "auto 1fr auto auto" }}>
           <label htmlFor="nameSelect" className={styles.sliderLabel}>Nombre:</label>
           <select
@@ -418,7 +499,7 @@ export default function MassiveBase({
           >
             {people.map((p, i) => (
               <option key={`${p.email || p.name}-${i}`} value={i}>
-                {p.name}
+                {p.name} {p.email ? `— ${p.email}` : ""}
               </option>
             ))}
           </select>
@@ -618,7 +699,7 @@ export default function MassiveBase({
         </div>
 
         <div id="batch-font-help" className={styles.instructions} role="note">
-          <p>1) Carga tu lista y, para cada reconocimiento, elige <strong>Plantilla</strong>, <strong>Lugar</strong> y <strong>Fecha</strong>.</p>
+          <p>1) Carga tu lista (Excel/CSV) o usa <strong>Alta manual</strong>. Luego, para cada reconocimiento, elige <strong>Plantilla</strong>, <strong>Lugar</strong> y <strong>Fecha</strong>.</p>
           <p>2) Ajusta el tamaño hasta que el nombre sea <strong>legible</strong> y no se sobreponga.</p>
           <p>3) Usa <strong>Descargar PDF</strong> (actual) o <strong>Descargar todos</strong>.</p>
         </div>
@@ -651,12 +732,6 @@ export default function MassiveBase({
             disabled={!ready || isDownloading}
           />
         </div>
-
-        {uploadError && (
-          <div className={styles.noticeCard} role="alert">
-            <p className={styles.noticeBody}>{uploadError}</p>
-          </div>
-        )}
       </div>
 
       {/* Canvas */}
