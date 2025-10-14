@@ -4,8 +4,7 @@ import { useMemo, useRef, useState, useEffect } from "react";
 import styles from "@/styles/recognition/Recognition.module.css";
 import SendPdfButtonsMassive from "@/components/recognition/SendPdfButtonsMassive";
 
-
-/* ==================== Utils de fecha ==================== */
+/* ==================== Utils ==================== */
 const pad2 = (n) => String(n).padStart(2, "0");
 const isISODate = (s) => typeof s === "string" && /^\d{4}-\d{2}-\d{2}$/.test(s);
 
@@ -38,30 +37,57 @@ function normalizeDateOptions({ options, baseYM, tz }) {
   return out.filter(({ iso }) => (seen.has(iso) ? false : seen.add(iso)));
 }
 
+/* Normaliza opciones de fondo a {label, src} */
+function normalizeBgOptions(backgroundOptions = [], backgroundBasePath = "") {
+  const list = [];
+  for (const item of backgroundOptions) {
+    if (!item) continue;
+    if (typeof item === "string") {
+      const label = item.replace(/\.[a-z0-9]+$/i, "");
+      const src = backgroundBasePath ? backgroundBasePath + item : item;
+      list.push({ label, src });
+    } else if (Array.isArray(item) && item.length >= 2) {
+      const [label, fileOrSrc] = item;
+      const src = backgroundBasePath ? backgroundBasePath + fileOrSrc : fileOrSrc;
+      list.push({ label: String(label), src });
+    } else if (typeof item === "object" && item.src) {
+      const label = item.label || item.src.replace(/\.[a-z0-9]+$/i, "");
+      const src = backgroundBasePath ? backgroundBasePath + item.src : item.src;
+      list.push({ label: String(label), src });
+    }
+  }
+  const seen = new Set();
+  return list.filter(({ src }) => (seen.has(src) ? false : seen.add(src)));
+}
+
 export default function MassiveBase({
+  backgroundOptions = [],
+  backgroundBasePath = "",
+  /* Fallback si no hay opciones */
   backgroundSrc = "",
   minFontPx = 8,
   maxFontPx = 96,
   defaultFontPx = 56,
   aspectRatio = 11 / 8.5,
 
-  /* Fecha (puedes pasar días o ISO completas) */
-  dateOptions = [],            // [17,18] o ["2025-10-17","2025-10-18"]
-  dateBaseYM,                  // "yyyy-mm" si usas días
+  /* Fecha */
+  dateOptions = [],
+  dateBaseYM,
   tz = "America/Mexico_City",
 
   /* Lugar */
-  municipioOptions = [],       // lista de municipios válidos para elegir
-  locationPrefix,              // si lo pasas (string no vacío), se usa igual para todos
+  municipioOptions = [],
+  locationPrefix,
 }) {
-  // =========== Personas desde Excel ===========
-  const [people, setPeople] = useState([]); // [{ name, email }]
+  // ====== Personas ======
+  const [people, setPeople] = useState([]); // [{name,email}]
   const [uploadError, setUploadError] = useState("");
 
-  // === Modo sincronizar fechas a todos ===
+  // Sincronizaciones masivas
   const [syncAllDates, setSyncAllDates] = useState(false);
+  const [syncAllBackgrounds, setSyncAllBackgrounds] = useState(false);
 
-  // Índice actual y mapa de tamaños por persona
+  // Índice y mapas
   const [index, setIndex] = useState(0);
   const [fontMap, setFontMap] = useState(() => []);
   const [isDownloading, setIsDownloading] = useState(false);
@@ -71,10 +97,36 @@ export default function MassiveBase({
   const total = people.length;
   const currentFont = fontMap[index] ?? defaultFontPx;
 
-  // Fondo/canvas
+  // === Opciones de fondo normalizadas ===
+  const bgOptions = useMemo(() => {
+    const normalized = normalizeBgOptions(backgroundOptions, backgroundBasePath);
+    if (!normalized.length && backgroundSrc) {
+      return [{ label: "Fondo por defecto", src: backgroundSrc }];
+    }
+    return normalized;
+  }, [backgroundOptions, backgroundBasePath, backgroundSrc]);
+
+  // Mapa de fondo por persona (src)
+  const [backgroundMap, setBackgroundMap] = useState([]);
+  useEffect(() => {
+    const def = bgOptions[0]?.src || backgroundSrc || "";
+    setBackgroundMap((prev) => {
+      const next = Array(people.length).fill(def);
+      for (let i = 0; i < Math.min(prev.length, next.length); i++) {
+        const keep = prev[i] && (prev[i] === def || bgOptions.some((o) => o.src === prev[i]));
+        next[i] = keep ? prev[i] : def;
+      }
+      const same = prev.length === next.length && prev.every((v, i) => v === next[i]);
+      return same ? prev : next;
+    });
+  }, [people.length, bgOptions, backgroundSrc]);
+
+  const currentBgSrc = backgroundMap[index] || (bgOptions[0]?.src || backgroundSrc || "");
+
+  // Estilo canvas: usa el fondo seleccionado por persona
   const bgStyle = useMemo(
-    () => ({ backgroundImage: `url(${backgroundSrc})`, aspectRatio }),
-    [backgroundSrc, aspectRatio]
+    () => ({ backgroundImage: `url(${currentBgSrc})`, aspectRatio }),
+    [currentBgSrc, aspectRatio]
   );
 
   const sanitize = (s = "") =>
@@ -94,16 +146,13 @@ export default function MassiveBase({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [people.length, defaultFontPx]);
 
-  /* ==================== FECHA por persona ==================== */
+  /* ==================== FECHA ==================== */
   const options = useMemo(
     () => normalizeDateOptions({ options: dateOptions, baseYM: dateBaseYM, tz }),
     [dateOptions, dateBaseYM, tz]
   );
   const allowed = useMemo(() => new Set(options.map((o) => o.iso)), [options]);
-
-  // Fecha seleccionada por persona (sin bloqueos)
   const [dateISOMap, setDateISOMap] = useState([]);
-
   useEffect(() => {
     const def = options[0]?.iso || "";
     setDateISOMap((prev) => {
@@ -122,15 +171,13 @@ export default function MassiveBase({
     return o?.label || "";
   }, [options, currentDateISO]);
 
-  // Fecha actual a todos si está activado
   const applyCurrentDateToAll = () => {
     if (!currentDateISO) return;
     setDateISOMap((prev) => (prev.length ? Array(prev.length).fill(currentDateISO) : prev));
   };
 
-  /* ==================== LUGAR por persona ==================== */
-  const [municipioMap, setMunicipioMap] = useState([]); // municipio por persona
-
+  /* ==================== LUGAR ==================== */
+  const [municipioMap, setMunicipioMap] = useState([]);
   useEffect(() => {
     const def = municipioOptions?.[0] || "";
     setMunicipioMap((prev) => {
@@ -142,13 +189,10 @@ export default function MassiveBase({
       return same ? prev : next;
     });
   }, [people.length, municipioOptions]);
-
   const currentMunicipio = municipioMap[index] || "";
 
-  // Prefijo de lugar compuesto (por persona o global si pasas locationPrefix)
   const composedLocationPrefix = useMemo(() => {
     if (typeof locationPrefix === "string" && locationPrefix.trim()) {
-      // Override global: si se provee, se usa igual para todos
       return locationPrefix.trim().replace(/[,.]\s*$/, ", ") + (/, $/.test(locationPrefix) ? "" : "");
     }
     return currentMunicipio ? `${currentMunicipio}, Hgo., ` : "";
@@ -172,7 +216,6 @@ export default function MassiveBase({
         throw new Error("La hoja está vacía o no tiene encabezados.");
       }
 
-      // Normaliza encabezados (acentos, mayúsculas, espacios)
       const normalize = (s) =>
         String(s)
           .normalize("NFD")
@@ -191,7 +234,6 @@ export default function MassiveBase({
         if (!emailKey && /^(correo|correoelectronico|email|e?mail|e-mail)$/.test(n)) emailKey = k;
       }
 
-      // Fallback a primera/segunda columna si no detecta encabezados
       if (!nameKey) nameKey = firstRowKeys[0];
       if (!emailKey) emailKey = firstRowKeys[1] ?? firstRowKeys[0];
 
@@ -204,7 +246,6 @@ export default function MassiveBase({
 
       if (!parsed.length) throw new Error("No se encontraron nombres válidos en el archivo.");
 
-      // Dedup por (name,email)
       const seen = new Set();
       const unique = parsed.filter((p) => {
         const key = `${p.name.toLowerCase()}|${p.email.toLowerCase()}`;
@@ -215,7 +256,7 @@ export default function MassiveBase({
 
       setPeople(unique);
       setIndex(0);
-      e.target.value = ""; // permitir reimportar el mismo archivo
+      e.target.value = "";
     } catch (err) {
       console.error(err);
       setUploadError(
@@ -225,11 +266,10 @@ export default function MassiveBase({
     }
   };
 
-  /* ==================== Exportaciones ==================== */
+  /* ==================== Exportación ==================== */
   const exportAsPdf = async (nameToPrint) => {
     const node = canvasRef.current;
     if (!node) return;
-
     const { toPng } = await import("html-to-image");
     const { jsPDF } = await import("jspdf");
 
@@ -285,10 +325,9 @@ export default function MassiveBase({
     }
   };
 
-  // Cambia temporalmente el índice visible, espera un frame, rasteriza y devuelve Blob.
+  // Para envío por correo (mantengo API de tu botón existente)
   const generatePdfBlobForIndex = async (i) => {
     if (!people[i]) return null;
-
     const prev = index;
     try {
       setIndex(i);
@@ -302,7 +341,6 @@ export default function MassiveBase({
       const { toJpeg } = await import("html-to-image");
       const { jsPDF } = await import("jspdf");
 
-      // Generación compacta (calidad buena, peso razonable)
       const targetW = Math.min(2200, Math.round(rect.width));
       const targetH = Math.round(targetW * (rect.height / rect.width));
 
@@ -329,7 +367,6 @@ export default function MassiveBase({
       console.error("generatePdfBlobForIndex error:", e);
       return null;
     } finally {
-      // vuelve al índice anterior en UI
       if (prev !== i) {
         setIndex(prev);
         await nextFrame();
@@ -337,7 +374,6 @@ export default function MassiveBase({
     }
   };
 
-  // Render del canvas: persona, fecha y lugar (por persona)
   const ready =
     Boolean(currentName) && Boolean(currentDateISO) && Boolean(composedLocationPrefix);
 
@@ -371,7 +407,7 @@ export default function MassiveBase({
           <span className={styles.sliderValue}>{total} registros</span>
         </div>
 
-        {/* Selector de persona actual */}
+        {/* Persona actual */}
         <div className={styles.sliderRow} style={{ gridTemplateColumns: "auto 1fr auto auto" }}>
           <label htmlFor="nameSelect" className={styles.sliderLabel}>Nombre:</label>
           <select
@@ -406,7 +442,70 @@ export default function MassiveBase({
           </button>
         </div>
 
-        {/* Lugar por persona */}
+        {/* Fondo por reconocimiento */}
+        {bgOptions.length === 0 ? (
+          <div className={styles.noticeCard} role="alert">
+            <p className={styles.noticeBody}>
+              No hay <code>backgroundOptions</code>. Se usará <code>backgroundSrc</code> si está definido.
+            </p>
+          </div>
+        ) : (
+          <>
+            <div className={styles.sliderRow} style={{ gridTemplateColumns: "auto 1fr auto" }}>
+              <label htmlFor="bgSelectPer" className={styles.sliderLabel}>Plantilla (fondo):</label>
+              <select
+                id="bgSelectPer"
+                className={styles.slider}
+                value={currentBgSrc}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  setBackgroundMap((prev) => {
+                    if (syncAllBackgrounds) {
+                      return prev.length ? Array(prev.length).fill(value) : prev;
+                    }
+                    const next = [...prev];
+                    next[index] = value;
+                    return next;
+                  });
+                }}
+              >
+                {bgOptions.map(({ label, src }) => (
+                  <option key={src} value={src}>{label}</option>
+                ))}
+              </select>
+              <span className={styles.sliderValue}>
+                {bgOptions.find((o) => o.src === currentBgSrc)?.label || "—"}
+              </span>
+            </div>
+
+            <div className={styles.sliderRow} style={{ gridTemplateColumns: "1fr auto" }}>
+              <label className={styles.sliderLabel} style={{ gridColumn: "1 / span 1" }}>
+                <input
+                  type="checkbox"
+                  checked={syncAllBackgrounds}
+                  onChange={(e) => setSyncAllBackgrounds(e.target.checked)}
+                  style={{ marginRight: 8 }}
+                />
+                Al cambiar la plantilla aquí, aplicarla a todos
+              </label>
+              <button
+                type="button"
+                className={styles.downloadBtn}
+                onClick={() =>
+                  setBackgroundMap((prev) =>
+                    prev.length ? Array(prev.length).fill(currentBgSrc) : prev
+                  )
+                }
+                disabled={!currentBgSrc || total === 0}
+                title="Clonar la plantilla actual a todos los reconocimientos"
+              >
+                Aplicar la plantilla actual a todos
+              </button>
+            </div>
+          </>
+        )}
+
+        {/* Lugar */}
         {municipioOptions.length === 0 ? (
           <div className={styles.noticeCard} role="alert">
             <p className={styles.noticeBody}>
@@ -436,7 +535,7 @@ export default function MassiveBase({
           </div>
         )}
 
-        {/* Fecha por persona */}
+        {/* Fecha */}
         {options.length === 0 ? (
           <div className={styles.noticeCard} role="alert">
             <p className={styles.noticeBody}>
@@ -454,10 +553,8 @@ export default function MassiveBase({
                 setDateISOMap((prev) => {
                   const value = e.target.value;
                   if (syncAllDates) {
-                    // Si está activo, se aplica a todos
                     return prev.length ? Array(prev.length).fill(value) : prev;
                   }
-                  // Comportamiento normal: sólo el actual
                   const next = [...prev];
                   next[index] = value;
                   return next;
@@ -471,8 +568,8 @@ export default function MassiveBase({
             <span className={styles.sliderValue}>{selectedLabel || "—"}</span>
           </div>
         )}
-        
-        {/* === Controles de fecha masiva === */}
+
+        {/* Controles masivos: fecha */}
         <div className={styles.sliderRow} style={{ gridTemplateColumns: "1fr auto" }}>
           <label className={styles.sliderLabel} style={{ gridColumn: "1 / span 1" }}>
             <input
@@ -483,7 +580,6 @@ export default function MassiveBase({
             />
             Al cambiar la fecha aquí, aplicarla a todos
           </label>
-
           <button
             type="button"
             className={styles.downloadBtn}
@@ -495,8 +591,7 @@ export default function MassiveBase({
           </button>
         </div>
 
-
-        {/* Slider de tamaño de letra (por persona) */}
+        {/* Tamaño de letra */}
         <div className={styles.sliderRow}>
           <label htmlFor="fontSize" className={styles.sliderLabel}>Tamaño de letra:</label>
           <input
@@ -523,9 +618,9 @@ export default function MassiveBase({
         </div>
 
         <div id="batch-font-help" className={styles.instructions} role="note">
-          <p>1) Carga tu lista y, para cada reconocimiento, elige <strong>Lugar</strong> y <strong>Fecha</strong> en sus desplegables.</p>
-          <p>2) Ajusta el tamaño hasta que el nombre sea <strong>legible</strong>, idealmente en <strong>una sola línea</strong> y <strong>sin sobreponerse</strong>.</p>
-          <p>3) Usa <strong>Descargar PDF</strong> para el actual, o <strong>Descargar todos</strong>.</p>
+          <p>1) Carga tu lista y, para cada reconocimiento, elige <strong>Plantilla</strong>, <strong>Lugar</strong> y <strong>Fecha</strong>.</p>
+          <p>2) Ajusta el tamaño hasta que el nombre sea <strong>legible</strong> y no se sobreponga.</p>
+          <p>3) Usa <strong>Descargar PDF</strong> (actual) o <strong>Descargar todos</strong>.</p>
         </div>
 
         <div className={styles.actions}>
@@ -534,7 +629,7 @@ export default function MassiveBase({
             className={styles.downloadBtn}
             onClick={handleDownloadCurrent}
             disabled={isDownloading || !ready}
-            title={!ready ? "Selecciona lugar y fecha para habilitar la descarga" : "Descargar PDF"}
+            title={!ready ? "Selecciona plantilla, lugar y fecha para habilitar la descarga" : "Descargar PDF"}
           >
             {isDownloading ? "Generando..." : "Descargar PDF (actual)"}
           </button>
@@ -564,6 +659,7 @@ export default function MassiveBase({
         )}
       </div>
 
+      {/* Canvas */}
       {ready && (
         <div
           ref={canvasRef}
