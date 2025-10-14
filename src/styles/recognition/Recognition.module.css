@@ -1,13 +1,16 @@
 .section {
+  --gap-row: 0.75rem;
+  --btn-minh: 40px;
+
   display: grid;
   gap: 1.25rem;
   padding: 1.25rem;
-  width: min(1200px, 92vw);
+  width: min(1200px, 96vw);
   margin: 0 auto;
 }
 
 .title {
-  font-size: 1.125rem;
+  font-size: clamp(1rem, 1.4cqi, 1.375rem);
   font-weight: 600;
   margin: 0;
   color: #222;
@@ -15,18 +18,19 @@
 
 .controls {
   display: grid;
-  gap: 0.75rem;
+  gap: 0.9rem;
   background: #f8f8f9;
   border: 1px solid #e7e7ea;
   border-radius: 14px;
   padding: 1rem 1.25rem;
 }
 
+/* ===== Fila de controles (desktop/tablet) ===== */
 .sliderRow {
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: minmax(140px, auto) 1fr auto;
   align-items: center;
-  gap: 0.75rem;
+  gap: var(--gap-row);
 }
 
 .sliderLabel {
@@ -37,7 +41,8 @@
 
 .slider {
   width: 100%;
-  accent-color: var(--vinoOsc);
+  accent-color: var(--vinoClrOsc);
+  min-height: 38px;
 }
 
 .sliderValue {
@@ -53,7 +58,7 @@
   font-size: 0.9rem;
 }
 
-/* Lienzo del certificado: mantiene relación 11/8.5 (carta horizontal) */
+/* ================= Canvas ================= */
 .canvas {
   position: relative;
   width: 100%;
@@ -61,26 +66,19 @@
   background-size: cover;
   background-position: center;
   overflow: hidden;
-  border: 2px solid rgba(0, 0, 0, 0.05);
-  box-shadow:
-    0 10px 25px rgba(0, 0, 0, 0.08),
-    0 2px 8px rgba(0, 0, 0, 0.05) inset;
-  /* habilita cqi dentro */
+  border: 2px solid rgba(0, 0, 0, .05);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, .08), 0 2px 8px rgba(0, 0, 0, .05) inset;
+  border-radius: 10px;
   container-type: size;
 }
 
-/* Sutil oscurecido para mejorar contraste del texto */
 .overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg,
-      rgba(0, 0, 0, 0.08) 0%,
-      rgba(0, 0, 0, 0.04) 35%,
-      rgba(0, 0, 0, 0.08) 100%);
+  background: linear-gradient(180deg, rgba(0, 0, 0, .08) 0%, rgba(0, 0, 0, .04) 35%, rgba(0, 0, 0, .08) 100%);
   pointer-events: none;
 }
 
-/* Texto del nombre: centrado en el eje X y centro en Y */
 .name {
   position: absolute;
   left: 50%;
@@ -95,7 +93,6 @@
   word-break: break-word;
 }
 
-/* Texto de la fecha: centrado en el eje X y por debajo del centro en Y */
 .date {
   position: absolute;
   left: 50%;
@@ -107,41 +104,43 @@
   margin: 0;
   line-height: 1.1;
   font-weight: 300;
-  color: var(--VinoNegro);
+  color: var(--vinoOsc);
   word-break: break-word;
   font-size: clamp(5px, 1.7cqi, 22px);
 }
 
-/* Indicador de bloqueo (no clickeable) */
 .lockBadge {
   position: absolute;
   top: 12px;
   right: 12px;
   font-size: 18px;
-  background: rgba(255, 255, 255, 0.9);
-  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, .9);
+  border: 1px solid rgba(0, 0, 0, .08);
   padding: 4px 8px;
   border-radius: 999px;
   pointer-events: none;
   user-select: none;
 }
 
+/* ================= Botones / Acciones ================= */
 .actions {
   display: flex;
   justify-content: flex-end;
-  gap: 0.75rem;
+  gap: var(--gap-row);
+  flex-wrap: wrap;
 }
 
 .downloadBtn {
   appearance: none;
   border: none;
-  background: var(--vinoClr, --vinoOsc);
+  background: var(--vinoClr);
   color: #fff;
   padding: 0.6rem 1rem;
   border-radius: 10px;
   font-weight: 600;
   cursor: pointer;
   transition: transform .06s ease, filter .15s ease;
+  min-height: var(--btn-minh);
 }
 
 .downloadBtn:hover {
@@ -157,9 +156,10 @@
   cursor: not-allowed;
 }
 
+/* ================= Tarjetas ================= */
 .instructions {
   background: #fff;
-  border: 1px dashed rgba(0, 0, 0, 0.15);
+  border: 1px dashed rgba(0, 0, 0, .15);
   border-radius: 10px;
   padding: 0.75rem 1rem;
   color: #333;
@@ -183,17 +183,16 @@
   padding: 16px 18px;
   max-width: 860px;
   width: calc(100% - 32px);
-  border: 1px solid rgba(105, 27, 50, 0.2);
+  border: 1px solid rgba(105, 27, 50, .2);
   border-radius: 14px;
   background: #fff;
-  box-shadow: 0 8px 24px rgba(16, 24, 40, 0.06);
+  box-shadow: 0 8px 24px rgba(16, 24, 40, .06);
 }
-
 
 .noticeTitle {
   margin: 0 0 6px;
   font-weight: 700;
-  color: var(--vinoClr, #691b32);
+  color: var(--vinoClr);
   font-size: clamp(18px, 1.6cqi, 24px);
 }
 
@@ -209,17 +208,122 @@
 }
 
 
+/* Tablet */
+@media (max-width: 992px) {
+  .section {
+    padding: 1rem;
+  }
 
+  .controls {
+    padding: 0.9rem 1rem;
+  }
+
+  .sliderRow {
+    grid-template-columns: minmax(120px, auto) 1fr auto;
+  }
+
+  .name {
+    max-width: 90%;
+  }
+}
+
+/* Móvil (vertical total) */
 @media (max-width: 768px) {
   .section {
     padding: 0.75rem;
   }
 
   .controls {
-    padding: 0.75rem 0.9rem;
+    padding: 0.8rem 0.9rem;
+  }
+
+  /* Forzar UNA columna aunque el JSX tenga estilos inline */
+  .sliderRow {
+    grid-template-columns: 1fr !important;
+    align-items: stretch;
+    gap: 0.55rem;
+  }
+
+  .sliderLabel {
+    white-space: normal;
+    margin-bottom: 0.15rem;
+  }
+
+  .sliderValue {
+    width: 100%;
+    min-width: 0;
+    text-align: left;
+    opacity: .85;
+    justify-self: stretch;
+  }
+
+  /* Controles 100% de ancho */
+  .slider,
+  .downloadBtn {
+    width: 100%;
+    min-height: var(--btn-minh);
+    justify-self: stretch;
+  }
+
+  /* Nativos (CSS Modules safe) */
+  .controls :global(select),
+  .controls :global(input[type="text"]),
+  .controls :global(input[type="email"]),
+  .controls :global(input[type="file"]),
+  .controls :global(input[type="range"]) {
+    width: 100%;
+    min-height: var(--btn-minh);
+  }
+
+  /* Botones dentro de filas */
+  .sliderRow button {
+    width: 100%;
+    justify-self: stretch;
+  }
+
+  /* Acciones en columna */
+  .actions {
+    justify-content: stretch;
+    gap: 0.6rem;
+  }
+
+  .actions .downloadBtn {
+    flex: 1 1 100%;
+  }
+
+  /* Canvas limitado en alto */
+  .canvas {
+    max-height: 72vh;
+    margin-inline: auto;
   }
 
   .name {
     max-width: 88%;
+  }
+}
+
+/* Móvil chico */
+@media (max-width: 420px) {
+  .title {
+    font-size: 1rem;
+  }
+
+  .sliderRow {
+    gap: 0.6rem;
+  }
+
+  .downloadBtn {
+    padding: 0.55rem 0.85rem;
+  }
+
+  .canvas {
+    max-height: 68vh;
+  }
+}
+
+/* Accesibilidad */
+@media (prefers-reduced-motion: reduce) {
+  .downloadBtn {
+    transition: none;
   }
 }
