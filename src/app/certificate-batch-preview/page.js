@@ -20,12 +20,25 @@ export default function PageReconocimientoMassive() {
           ["Universidad Tecnológica de Tula-Tepeji", "UTTT.jpg"],
           ["Universidad Tecnológica del Valle del Mezquital", "UTVM.jpg"],
         ]}
-        dateOptions={["2025-09-29", "2025-09-30", "2025-10-01"]}
+        dateOptions={[
+          "2025-10-15",
+          "2025-10-16",
+          "2025-10-17",
+          "2025-10-20",
+          "2025-10-21",
+          "2025-10-22",
+          "2025-10-23",
+          "2025-10-24",
+          "2025-10-27",
+          "2025-10-28",
+          "2025-10-29",
+          "2025-10-30",
+          "2025-10-31"
+        ]}
         municipioOptions={municipiosDeHidalgo}
-        // Fecha fija en el certificado:
-        // dateOptions={[17, 18]}         
-        // dateBaseYM="2025-10"           
-
+      // Fecha fija en el certificado:
+      // dateOptions={[17, 18]}         
+      // dateBaseYM="2025-10"    
       />
     </main>
   );
