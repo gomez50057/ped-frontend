@@ -91,6 +91,7 @@ export default function MassiveBase({
   // Sincronizaciones masivas
   const [syncAllDates, setSyncAllDates] = useState(false);
   const [syncAllBackgrounds, setSyncAllBackgrounds] = useState(false);
+  const [syncAllMunicipios, setSyncAllMunicipios] = useState(false); // NEW
 
   // Índice y mapas
   const [index, setIndex] = useState(0);
@@ -272,8 +273,7 @@ export default function MassiveBase({
   };
 
   /* ==================== Alta manual (Nombre + Correo) ==================== */
-  const emailRegex =
-    /^[^\s@]+@[^\s@]+\.[^\s@]+$/i;
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/i;
 
   const handleAddManual = () => {
     setManualError("");
@@ -594,26 +594,58 @@ export default function MassiveBase({
             </p>
           </div>
         ) : (
-          <div className={styles.sliderRow} style={{ gridTemplateColumns: "auto 1fr auto" }}>
-            <label htmlFor="munSelectPer" className={styles.sliderLabel}>Lugar (por reconocimiento):</label>
-            <select
-              id="munSelectPer"
-              className={styles.slider}
-              value={currentMunicipio}
-              onChange={(e) =>
-                setMunicipioMap((prev) => {
-                  const next = [...prev];
-                  next[index] = e.target.value;
-                  return next;
-                })
-              }
-            >
-              {municipioOptions.map((m) => (
-                <option key={m} value={m}>{m}</option>
-              ))}
-            </select>
-            <span className={styles.sliderValue}>{currentMunicipio || "—"}</span>
-          </div>
+          <>
+            <div className={styles.sliderRow} style={{ gridTemplateColumns: "auto 1fr auto" }}>
+              <label htmlFor="munSelectPer" className={styles.sliderLabel}>Lugar (por reconocimiento):</label>
+              <select
+                id="munSelectPer"
+                className={styles.slider}
+                value={currentMunicipio}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  setMunicipioMap((prev) => {
+                    if (syncAllMunicipios) { // NEW
+                      return prev.length ? Array(prev.length).fill(value) : prev;
+                    }
+                    const next = [...prev];
+                    next[index] = value;
+                    return next;
+                  });
+                }}
+              >
+                {municipioOptions.map((m) => (
+                  <option key={m} value={m}>{m}</option>
+                ))}
+              </select>
+              <span className={styles.sliderValue}>{currentMunicipio || "—"}</span>
+            </div>
+
+            {/* Controles masivos: lugar */}
+            <div className={styles.sliderRow} style={{ gridTemplateColumns: "1fr auto" }}>
+              <label className={styles.sliderLabel} style={{ gridColumn: "1 / span 1" }}>
+                <input
+                  type="checkbox"
+                  checked={syncAllMunicipios}
+                  onChange={(e) => setSyncAllMunicipios(e.target.checked)}
+                  style={{ marginRight: 8 }}
+                />
+                Al cambiar el lugar aquí, aplicarla a todos
+              </label>
+              <button
+                type="button"
+                className={styles.downloadBtn}
+                onClick={() =>
+                  setMunicipioMap((prev) =>
+                    prev.length ? Array(prev.length).fill(currentMunicipio) : prev
+                  )
+                }
+                disabled={!currentMunicipio || total === 0}
+                title="Clonar el lugar actual a todos los reconocimientos"
+              >
+                Aplicar el lugar actual a todos
+              </button>
+            </div>
+          </>
         )}
 
         {/* Fecha */}
