@@ -8,6 +8,7 @@ const imgConsultaDigital = "/img/page_links/consulta_digital/";
 const imgBibliotecaDigital = "/img/page_links/biblioteca_digital/";
 const imgBconvocatoriaIA = "/img/page_links/convocatoria_IA/";
 import PodcastSlider from "@/components/landing/PodcastSlider";
+import ForosRegionalesSlider from "@/components/landing/ForosRegionalesSlider";
 
 const imgBasePath = "/img/page_links/";
 const videoBasePath = "/video/";
@@ -43,15 +44,39 @@ const info = [
       "Accede a nuestra biblioteca digital, una plataforma en donde podrás consultar y descargar distintos instrumentos de planeación de una manera sencilla y dinámica.",
     href: "https://bibliotecadigitaluplaph.hidalgo.gob.mx/",
   },
+  {
+    title: "Foros Regionales",
+    subtitle: "",
+    href: "",
+  },
+];
+
+const forosItems = [
+  { id: "Reg01Tula", name: "Region 01: Tula", img: "Reg01Tula.png" },
+  { id: "Reg06Tizayuca", name: "Region 06: Tizayuca", img: "Reg06Tizayuca.png" },
+  { id: "Reg07Actopan", name: "Region 07: Actopan", img: "Reg07Actopan.png" },
+  { id: "Reg11Huichapan", name: "Region 11: Huichapan", img: "Reg11Huichapan.png" },
+  { id: "Reg10Apan", name: "Region 10: Apan", img: "Reg10Apan.png" },
+  { id: "Reg02Tulancingo", name: "Region 02: Tulancingo", img: "Reg02Tulancingo.png" },
+  { id: "Reg12Jacala", name: "Region 12 Jacala", img: "Reg12Jacala.png" },
+  { id: "Reg09Zacualtipan", name: "Region 09: Zacualtipan", img: "Reg09Zacualtipan.png" },
+  { id: "Reg04Huejutla", name: "Region 04: Huejutla", img: "Reg04Huejutla.png" },
+  { id: "Reg08Ixmiquilpan", name: "Region 08: Ixmiquilpan", img: "Reg08Ixmiquilpan.png" },
+  { id: "Reg03Pachuca", name: "Region 03: Pachuca", img: "Reg03Pachuca.png" },
+  { id: "Reg05MR", name: "Region 05: Mineral de la Reforma", img: "Reg05MR.png" },
 ];
 
 export default function PublicKnowledgeSection() {
+  const renderOrder = [0, 5, 1, 2, 3, 4];
+
   return (
     <section className={styles.sectionStack}>
-      {info.map((item, idx) => {
-        if (idx === 0) {
+      {renderOrder.map((originalIdx) => {
+        const item = info[originalIdx];
+
+        if (originalIdx === 0) {
           return (
-            <React.Fragment key={idx}>
+            <React.Fragment key={originalIdx}>
               <div className={`${styles.sectionItem} ${styles.designA}`}>
                 <div className={styles.containerDesignA}>
                   <div className={styles.bgImgDesignA}>
@@ -77,9 +102,9 @@ export default function PublicKnowledgeSection() {
           );
         }
 
-        if (idx === 1) {
+        if (originalIdx === 1) {
           return (
-            <React.Fragment key={idx}>
+            <React.Fragment key={originalIdx}>
               <PodcastSlider
                 imageSrc="/img/Podcast/la-voz-de-hidalgo-portada.png"
                 overlaySrc="/img/Podcast/mic.png"
@@ -91,7 +116,6 @@ export default function PublicKnowledgeSection() {
                   "https://youtu.be/yPSDhApY5sU?si=-J9WfVbRc5CZkrFJ",
                   "https://www.youtube.com/watch?v=ewvWBVDHjoc",
                 ]}
-                // autoAdvanceMs={8000}
                 title="La Voz de Hidalgo • Podcast"
               />
 
@@ -109,9 +133,9 @@ export default function PublicKnowledgeSection() {
           );
         }
 
-        if (idx === 2) {
+        if (originalIdx === 2) {
           return (
-            <div key={idx} className={`${styles.sectionItem} ${styles.designC}`}>
+            <div key={originalIdx} className={`${styles.sectionItem} ${styles.designC}`}>
               <div className={styles.containerDesignC}>
                 <div className={styles.bgImgDesignC}>
                   <img src={`${imgBasePath}bg.png`} alt={item.title} />
@@ -147,9 +171,9 @@ export default function PublicKnowledgeSection() {
           );
         }
 
-        if (idx === 3) {
+        if (originalIdx === 3) {
           return (
-            <div key={idx} className={`${styles.sectionItem} ${styles.designB}`} style={{ position: "relative" }}>
+            <div key={originalIdx} className={`${styles.sectionItem} ${styles.designB}`} style={{ position: "relative" }}>
               <video autoPlay loop muted playsInline className={styles.backgroundVideo}>
                 <source src={`${videoBasePath}pueblos_comunidades_indigenas.mp4`} type="video/mp4" />
                 Tu navegador no soporta la reproducción de video.
@@ -165,32 +189,39 @@ export default function PublicKnowledgeSection() {
           );
         }
 
-        // idx === 4
-        return (
-          <div key={idx} className={`${styles.sectionItem} ${styles.designE}`}>
-            <div className={styles.containerDesignE}>
-              <div className={styles.bgImgDesignE}>
-                <img src={`${imgBasePath}bg.png`} alt={item.title} />
-              </div>
-              <div className={styles.imgRepresentationDesignE}>
-                <img src={`${imgBibliotecaDigital}personas.png`} alt={item.title} />
-              </div>
-              <div className={styles.imgeWrapperDesignE}>
-                <Link href={item.href} target="_blank" rel="noopener noreferrer">
-                  <div className={styles.imgBotonDesignE}>
-                    <img src={`${imgBibliotecaDigital}boton.png`} alt={item.title} />
-                  </div>
-                </Link>
-                <div className={styles.overlayTextDesignE}>
-                  <p>{item.subtitle}</p>
-                  <Link href={item.href} target="_blank" rel="noopener noreferrer" className={styles.buttonDesignE}>
-                    <div className={styles.ctaLink}>Conoce más ↗</div>
+        if (originalIdx === 4) {
+          return (
+            <div key={originalIdx} className={`${styles.sectionItem} ${styles.designE}`}>
+              <div className={styles.containerDesignE}>
+                <div className={styles.bgImgDesignE}>
+                  <img src={`${imgBasePath}bg.png`} alt={item.title} />
+                </div>
+                <div className={styles.imgRepresentationDesignE}>
+                  <img src={`${imgBibliotecaDigital}personas.png`} alt={item.title} />
+                </div>
+                <div className={styles.imgeWrapperDesignE}>
+                  <Link href={item.href} target="_blank" rel="noopener noreferrer">
+                    <div className={styles.imgBotonDesignE}>
+                      <img src={`${imgBibliotecaDigital}boton.png`} alt={item.title} />
+                    </div>
                   </Link>
+                  <div className={styles.overlayTextDesignE}>
+                    <p>{item.subtitle}</p>
+                    <Link href={item.href} target="_blank" rel="noopener noreferrer" className={styles.buttonDesignE}>
+                      <div className={styles.ctaLink}>Conoce más ↗</div>
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        );
+          );
+        }
+
+        if (originalIdx === 5) {
+          return <ForosRegionalesSlider key="foros-regionales" items={forosItems} />;
+        }
+
+        return null;
       })}
     </section>
   );

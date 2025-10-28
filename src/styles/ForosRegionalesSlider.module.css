@@ -1,0 +1,485 @@
+/* ------ Base + tokens ------ */
+.wrap {
+  --vino: var(--vinoOsc, #691B32);
+  --vinoSoft: rgba(105, 27, 50, .06);
+  --vinoBrd: rgba(105, 27, 50, .12);
+  --brd: rgba(0, 0, 0, .08);
+
+  position: relative;
+  padding: clamp(12px, 2vw, 24px) 0;
+  /* padding-left: max(clamp(12px, 2vw, 24px), env(safe-area-inset-left));
+  padding-right: max(clamp(12px, 2vw, 24px), env(safe-area-inset-right)); */
+}
+
+/* ------ Títulos ------ */
+.contentTitule {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-bottom: clamp(24px, 4vw, 48px);
+  padding: 0 clamp(16px, 4vw, 48px);
+}
+
+.tituleBack {
+  position: absolute;
+  /* top: -85%;
+  left: 50%;
+  transform: translateX(-50%); */
+  font-size: clamp(1.5rem, 8vw, 18rem);
+  font-weight: 800;
+  color: rgba(0, 0, 0, .04);
+  user-select: none;
+  pointer-events: none;
+  z-index: 0;
+  width: min(100%, 1600px);
+  margin-inline: auto;
+}
+
+.titleFrond {
+  font-size: clamp(1.5rem, 4vw, 5rem);
+  font-weight: 800;
+  color: var(--grisOsc);
+  user-select: none;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ------ Flechas / navegación ------ */
+.navBtn {
+  position: absolute;
+  top: 40%;
+  z-index: 10;
+  width: clamp(40px, 4.5vw, 56px);
+  height: clamp(40px, 4.5vw, 56px);
+  border-radius: 999px;
+  border: 1px solid var(--brd);
+  background: var(--blanco);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .16);
+  transform: translateY(-50%);
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.navBtn::before {
+  content: "";
+  display: block;
+  width: clamp(12px, 1.6vw, 16px);
+  height: clamp(12px, 1.6vw, 16px);
+  border: 2px solid var(--vino);
+  border-top: none;
+  border-right: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-40%, -50%) rotate(45deg);
+}
+
+.prev {
+  left: clamp(8px, 6vw, 10%);
+}
+
+.next {
+  right: clamp(8px, 6vw, 10%);
+}
+
+.next::before {
+  transform: translate(-60%, -50%) rotate(-135deg);
+}
+
+/* ------ Carrusel ------ */
+.swiper {
+  width: min(1460px, 100%);
+  margin: 0 auto;
+}
+
+.slide {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: clamp(360px, 62vh, 720px);
+  overflow: hidden;
+}
+
+/* ------ Tarjeta ------ */
+.card {
+  container-type: inline-size;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(16px, 3vw, 48px);
+  width: 100%;
+  background: #fff;
+  border-radius: 28px;
+  border: 1px solid var(--brd);
+  padding: clamp(16px, 2.5vw, 36px);
+  box-shadow: 0 22px 60px rgba(0, 0, 0, .10);
+  opacity: 1;
+  transform: translateY(6px) scale(.995);
+  transition: opacity .35s ease, transform .35s ease;
+}
+
+.swiper-slide-active .card {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* ------ Media (imagen) ------ */
+.media {
+  flex: 0 0 auto;
+}
+
+.mediaImg {
+  inline-size: clamp(260px, 36vw, 640px);
+  block-size: auto;
+  display: block;
+  border-radius: 20px;
+  transform-origin: center;
+  animation: kenburns 7s ease-in-out forwards paused;
+  max-width: 100%;
+  height: auto;
+}
+
+@keyframes kenburns {
+  0% {
+    transform: scale(1);
+    filter: contrast(1) saturate(1);
+  }
+
+  100% {
+    transform: scale(1.06);
+    filter: contrast(1.04) saturate(1.06);
+  }
+}
+
+.swiper-slide-active .mediaImg {
+  animation-play-state: running;
+}
+
+/* ------ Contenido ------ */
+.content {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(12px, 2vw, 18px);
+  color: var(--grisOsc);
+  opacity: 1;
+  transform: translateX(24px);
+  transition: opacity .45s ease, transform .45s ease;
+}
+
+.contentLeft {
+  transform: translateX(24px);
+}
+
+.contentRight {
+  transform: translateX(-24px);
+}
+
+.swiper-slide-active .content {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ------ Tipografía ------ */
+.kicker {
+  font-weight: 700;
+  color: var(--doradoOsc);
+  letter-spacing: .02em;
+}
+
+.kicker span {
+  font-weight: 700;
+  color: var(--vinoOsc);
+  letter-spacing: .02em;
+}
+
+.title {
+  margin: 0;
+  font-weight: 400;
+  line-height: 1.12;
+  font-size: clamp(1.4rem, 3vw, 2.2rem);
+  color: var(--vinoOsc);
+}
+
+.desc {
+  margin: 0;
+  font-size: clamp(.98rem, 1.4vw, 1.1rem);
+  line-height: 1.55;
+}
+
+/* ------ Acciones / CTA ------ */
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.cta {
+  position: relative;
+  margin: auto;
+  padding: 12px 18px;
+  min-height: 44px;
+  transition: all 0.2s ease;
+  border: none;
+  background: none;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.cta:before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  border-radius: 50px;
+  background: var(--vinoGradient);
+  width: 60px;
+  height: 60px;
+  transition: all 0.3s ease;
+}
+
+.cta span {
+  position: relative;
+  font-size: clamp(18px, 2.2vw, 25px);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--doradoOsc);
+}
+
+.cta svg {
+  position: relative;
+  top: 0;
+  margin-left: 10px;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke: var(--doradoOsc);
+  stroke-width: 2;
+  transform: translateX(-5px);
+  transition: all 0.3s ease;
+}
+
+.cta:hover:before {
+  width: 100%;
+  background: var(--vinoGradient);
+}
+
+.cta:hover span,
+.cta:hover svg {
+  color: var(--blanco);
+  stroke: var(--blanco);
+}
+
+.cta:hover svg {
+  transform: translateX(0);
+}
+
+.cta:active {
+  transform: scale(0.96);
+}
+
+.cta:focus-visible {
+  outline: 3px solid rgba(105, 27, 50, .35);
+  outline-offset: 2px;
+}
+
+.ctaDisabled {
+  cursor: not-allowed;
+  opacity: .7;
+  box-shadow: none;
+}
+
+.extIcon {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+/* ------ Meta ------ */
+.meta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px 12px;
+  width: fit-content;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: var(--vinoSoft);
+  border: 1px solid var(--vinoBrd);
+  color: var(--grisOsc, #707271);
+}
+
+.metaMuted {
+  opacity: .8;
+}
+
+.visitText {
+  margin: 0.75rem 0 1rem;
+}
+
+.ctaAlt {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 2px solid var(--vinoClr);
+  color: var(--vinoClr);
+}
+
+.ctaAlt:hover {
+  opacity: .85;
+}
+
+@media (max-width: 1024px) {
+
+  .card,
+  .reverse {
+    flex-direction: column;
+  }
+
+  .mediaImg {
+    inline-size: min(84vw, 640px);
+    max-width: 100%;
+  }
+
+  .content {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .slide {
+    min-height: clamp(320px, 58vh, 640px);
+  }
+
+  .card {
+    border-radius: 22px;
+    padding: clamp(14px, 4vw, 24px);
+    gap: clamp(12px, 4vw, 24px);
+  }
+
+  .desc {
+    line-height: 1.6;
+  }
+}
+
+@media (max-width: 480px) {
+  .titleFrond {
+    font-size: clamp(1.35rem, 8vw, 2rem);
+  }
+
+  .tituleBack {
+    font-size: clamp(1.1rem, 12vw, 5rem);
+  }
+
+  .card {
+    padding: clamp(12px, 5vw, 20px);
+  }
+
+  .mediaImg {
+    inline-size: 100%;
+    border-radius: 16px;
+  }
+
+  .actions {
+    gap: 8px;
+  }
+
+  .cta {
+    padding: 10px 16px;
+  }
+
+  .cta:before {
+    width: 54px;
+    height: 54px;
+  }
+}
+
+/* Very large desktops: limita expansión para legibilidad */
+@media (min-width: 1600px) {
+  .swiper {
+    width: min(100%);
+  }
+
+  .card {
+    padding: clamp(24px, 1.8vw, 40px);
+  }
+}
+
+/* Orientación paisaje en móviles: reduce altura mínima */
+@media (orientation: landscape) and (max-width: 920px) {
+  .slide {
+    min-height: 70svh;
+  }
+}
+
+/* ------ Container Queries (si el contenedor de .card es estrecho) ------ */
+@container (max-width: 720px) {
+  .card {
+    flex-direction: column;
+  }
+
+  .content {
+    width: 100%;
+  }
+
+  .mediaImg {
+    inline-size: 100%;
+  }
+}
+
+/* ------ Accesibilidad: reduce animaciones si el usuario lo pide ------ */
+@media (prefers-reduced-motion: reduce) {
+  .mediaImg {
+    animation: none !important;
+  }
+
+  .card,
+  .content {
+    transition: none !important;
+  }
+}
+
+@media (max-width: 1024px) {
+
+  .card,
+  .card.reverse {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .media,
+  .content {
+    width: 100%;
+  }
+
+  .mediaImg {
+    inline-size: 100%;
+    max-width: 100%;
+    height: auto;
+    border-radius: 16px;
+  }
+}
+
+@container (max-width: 720px) {
+
+  .card,
+  .card.reverse {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .media,
+  .content {
+    width: 100%;
+  }
+
+  .mediaImg {
+    inline-size: 100%;
+  }
+}

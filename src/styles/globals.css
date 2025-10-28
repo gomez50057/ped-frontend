@@ -65,20 +65,23 @@ h3 span {
 }
 
 h1 .spanDoarado,
-h2 .spanDoarado {
+h2 .spanDoarado,
+h3 .spanDoarado {
   color: var(--doradoOsc);
   font-style: italic;
 }
 
 
 h1 .spanDoaradoClr,
-h2 .spanDoaradoClr {
+h2 .spanDoaradoClr,
+h3 .spanDoaradoClr {
   color: var(--doradoClr);
   font-style: italic;
 }
 
 h1 .spanVino,
-h2 .spanvino {
+h2 .spanvino, 
+h3 .spanVino {
   color: var(--vinoOsc);
   font-style: italic;
 }
