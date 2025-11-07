@@ -19,9 +19,11 @@ export default function PageReconocimientoMassive() {
           ["Universidad Tecnologica Sierra Hidalguense", "UTSH.jpg"],
           ["Universidad Tecnológica de Tula-Tepeji", "UTTT.jpg"],
           ["Universidad Tecnológica del Valle del Mezquital", "UTVM.jpg"],
+          ["Universidad Tecnológica Minera de Zimapán", "UTMZ.jpg"],
           ["Universidad Tecnológica de la Zona Metropolitana del Valle de México", "UTVAM.jpg"],
         ]}
         dateOptions={[
+          "2025-09-29",
           "2025-10-15",
           "2025-10-16",
           "2025-10-17",
