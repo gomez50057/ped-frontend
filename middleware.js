@@ -1,36 +1,51 @@
 // middleware.js
 import { NextResponse } from 'next/server';
-import jwt from 'jsonwebtoken';
+import { jwtVerify } from 'jose';
 
-export function middleware(req) {
-  const { pathname } = req.nextUrl;
-  const token = req.cookies.get('access_token')?.value;
+// Usa tu misma variable de entorno:
+const SECRET = new TextEncoder().encode(process.env.SIMPLE_JWT_SIGNING_KEY);
 
-  // Rutas públicas
-  if (pathname === '/login' || pathname.startsWith('/_next/')) {
-    return NextResponse.next();
-  }
-
-  // Comprueba token
-  if (!token) {
-    return NextResponse.redirect(new URL('/login', req.url));
-  }
+async function verifyToken(token) {
   try {
-    jwt.verify(token, process.env.SIMPLE_JWT_SIGNING_KEY);
-    return NextResponse.next();
+    // Ajusta el alg si firmas distinto; por defecto HS256
+    const { payload } = await jwtVerify(token, SECRET, { algorithms: ['HS256'] });
+    return payload;
   } catch {
-    const res = NextResponse.redirect(new URL('/login', req.url));
-    res.clearCookie('access_token');
-    res.clearCookie('refresh_token');
-    return res;
+    return null;
   }
 }
 
-// El patrón con ":path*" coincide con "/dashboard", "/dashboard/" y subrutas:
-//  - /dashboard            → path* = ""
-//  - /dashboard/           → path* = ""
-//  - /dashboard/foo        → path* = "foo"
-//  - /dashboard/foo/bar    → path* = "foo/bar"
+export async function middleware(req) {
+  const { pathname, search } = req.nextUrl;
+  const token = req.cookies.get('access_token')?.value;
+
+  // (el matcher limita a /dashboard, así que no hace falta filtrar aquí)
+  if (!token) {
+    const url = req.nextUrl.clone();
+    url.pathname = '/login';
+    url.searchParams.set('from', pathname + (search || ''));
+    const res = NextResponse.redirect(url);
+    // Borra cookies (mismo path que usas al setearlas)
+    res.cookies.set('access_token', '', { path: '/', maxAge: 0 });
+    res.cookies.set('refresh_token', '', { path: '/', maxAge: 0 });
+    return res;
+  }
+
+  const valid = await verifyToken(token);
+  if (!valid) {
+    const url = req.nextUrl.clone();
+    url.pathname = '/login';
+    url.searchParams.set('from', pathname + (search || ''));
+    const res = NextResponse.redirect(url);
+    res.cookies.set('access_token', '', { path: '/', maxAge: 0 });
+    res.cookies.set('refresh_token', '', { path: '/', maxAge: 0 });
+    return res;
+  }
+
+  return NextResponse.next();
+}
+
+// Mantén tu patrón actual
 export const config = {
   matcher: ['/dashboard/:path*'],
 };
