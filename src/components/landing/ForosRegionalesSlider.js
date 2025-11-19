@@ -26,8 +26,8 @@ const PARTICIPA_INFO = {
   Reg12Jacala: { fecha: "14-noviembre-2025", hora: "11:00 hrs.", lugar: "Universidad Tecnológica Minera de Zimapán" },
   Reg09Zacualtipan: { fecha: "18-noviembre-2025", hora: "11:00 hrs.", lugar: "Universidad Tecnologica de la Sierra Hidalguense" },
   Reg04Huejutla: { fecha: "19-noviembre-2025", hora: "11:00 hrs.", lugar: "Universidad Tecnológica de la Huasteca Hidalguense" },
-  Reg03Pachuca: { fecha: "21-noviembre-2025", hora: "10:00 hrs.", lugar: "Universidad Politécnica de Pachuca" },
-  Reg05MR: { fecha: "21-noviembre-2025", hora: "10:00 hrs.", lugar: "Universidad Politécnica de Pachuca" },
+  Reg03Pachuca: { fecha: "21-noviembre-2025", hora: "09:00 hrs.", lugar: "Universidad Politécnica de Pachuca" },
+  Reg05MR: { fecha: "21-noviembre-2025", hora: "09:00 hrs.", lugar: "Universidad Politécnica de Pachuca" },
   Reg08Ixmiquilpan: { fecha: "24-noviembre-2025", hora: "11:00 hrs.", lugar: "Universidad Tecnológica del Valle del Mezquital" },
 };
 
