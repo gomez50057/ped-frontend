@@ -18,21 +18,109 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 // Relación alto/ancho aproximada del PED (A4 vertical)
 const ASPECT_RATIO = 1.414; // alto = ancho * 1.414
 
+// Parámetros de la lupa
+const LENS_SIZE = 200;     // diámetro en px
+const LENS_ZOOM = 2;       // factor de zoom
+
 const BookPage = React.forwardRef(function BookPage(
-  { pageNumber, pageWidth },
-  ref
+  { pageNumber, pageWidth, enableMagnifier = false },
+  forwardedRef
 ) {
+  const localRef = useRef(null);
+  const [lensPos, setLensPos] = useState({ x: 0, y: 0 });
+  const [showLens, setShowLens] = useState(false);
+
+  const setRefs = (node) => {
+    localRef.current = node;
+    if (typeof forwardedRef === "function") {
+      forwardedRef(node);
+    } else if (forwardedRef) {
+      forwardedRef.current = node;
+    }
+  };
+
+  const handleMove = (e) => {
+    if (!enableMagnifier || !localRef.current) return;
+
+    const rect = localRef.current.getBoundingClientRect();
+    let x = e.clientX - rect.left;
+    let y = e.clientY - rect.top;
+
+    // 🔒 Opcional: limitar para que no se "salga" demasiado
+    const minX = (LENS_SIZE / 2) / LENS_ZOOM;
+    const maxX = rect.width - minX;
+    const minY = (LENS_SIZE / 2) / LENS_ZOOM;
+    const maxY = rect.height - minY;
+
+    x = Math.max(minX, Math.min(maxX, x));
+    y = Math.max(minY, Math.min(maxY, y));
+
+    setLensPos({ x, y });
+  };
+
+  const handleEnter = () => {
+    if (!enableMagnifier) return;
+    setShowLens(true);
+  };
+
+  const handleLeave = () => {
+    if (!enableMagnifier) return;
+    setShowLens(false);
+  };
+
+  // Offset para que el punto (x,y) quede justo al centro de la lupa
+  const offsetLeft = LENS_SIZE / 2 - lensPos.x * LENS_ZOOM;
+  const offsetTop = LENS_SIZE / 2 - lensPos.y * LENS_ZOOM;
+
   return (
-    <div ref={ref} className={styles.page}>
+    <div
+      ref={setRefs}
+      className={styles.page}
+      onMouseMove={handleMove}
+      onMouseEnter={handleEnter}
+      onMouseLeave={handleLeave}
+    >
+      {/* Página “normal” */}
       <PdfPage
         pageNumber={pageNumber}
         width={pageWidth}
         renderTextLayer={false}
         renderAnnotationLayer={false}
       />
+
+      {/* Lupa */}
+      {enableMagnifier && showLens && (
+        <div
+          className={styles.magnifier}
+          style={{
+            width: `${LENS_SIZE}px`,
+            height: `${LENS_SIZE}px`,
+            left: `${lensPos.x - LENS_SIZE / 2}px`,
+            top: `${lensPos.y - LENS_SIZE / 2}px`,
+          }}
+        >
+          <div
+            className={styles.magnifierInner}
+            style={{
+              transform: `scale(${LENS_ZOOM})`,
+              transformOrigin: "top left",
+              left: `${offsetLeft}px`,
+              top: `${offsetTop}px`,
+            }}
+          >
+            <PdfPage
+              pageNumber={pageNumber}
+              width={pageWidth}
+              renderTextLayer={false}
+              renderAnnotationLayer={false}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 });
+
 
 export default function PdfFlipbookClient() {
   const [numPages, setNumPages] = useState(null);
@@ -45,26 +133,28 @@ export default function PdfFlipbookClient() {
   const [currentInteriorIndex, setCurrentInteriorIndex] = useState(0); // índice 0-based de páginas interiores
   const [bookStartIndex, setBookStartIndex] = useState(0); // para decidir desde dónde abre el flipbook
 
+  // 🔍 Lupa ON/OFF
+  const [magnifierEnabled, setMagnifierEnabled] = useState(false);
+
+  // 🎧 Sonido
+  const [isMuted, setIsMuted] = useState(false);
+
   const bookRef = useRef(null);
 
   // sonidos de pasar página (3 variantes)
-  const flipSoundsRef = useRef([]);       // Array<Audio>
-  const flipSoundIndexRef = useRef(0);    // para ir rotando
+  const flipSoundsRef = useRef([]); // Array<Audio>
+  const flipSoundIndexRef = useRef(0); // para ir rotando
   const lastStateRef = useRef("read");
 
   // Pre-cargar sonidos solo en cliente
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    const sources = [
-      "/audio/flip1.mp3",
-      "/audio/flip2.mp3",
-      "/audio/flip3.mp3",
-    ];
+    const sources = ["/audio/flip1.mp3", "/audio/flip2.mp3", "/audio/flip3.mp3"];
 
     const audios = sources.map((src) => {
       const a = new Audio(src);
-      a.volume = 0.5; // Volumen
+      a.volume = 0.5; // Volumen base
       return a;
     });
 
@@ -79,11 +169,12 @@ export default function PdfFlipbookClient() {
   const playFlipSound = () => {
     const arr = flipSoundsRef.current;
     if (!arr || arr.length === 0) return;
+    if (isMuted) return; // respeta mute
 
     const idx = flipSoundIndexRef.current % arr.length;
     const audio = arr[idx];
 
-    flipSoundIndexRef.current = (idx + 1) % arr.length; // siguiente para la próxima vez
+    flipSoundIndexRef.current = (idx + 1) % arr.length;
 
     try {
       audio.currentTime = 0;
@@ -93,7 +184,11 @@ export default function PdfFlipbookClient() {
     }
   };
 
-  // Calcula tamaño de página según viewport
+  const toggleMute = () => {
+    setIsMuted((prev) => !prev);
+  };
+
+  // Calcula tamaño de página según viewport (base)
   useEffect(() => {
     function handleResize() {
       if (typeof window === "undefined") return;
@@ -271,6 +366,32 @@ export default function PdfFlipbookClient() {
       <h1 className={styles.title}>Catálogo PED – Flipbook</h1>
 
       <div className={styles.viewer}>
+        {/* Barra de controles: Lupa + Sonido */}
+        <div className={styles.controlsBar}>
+          <div className={styles.controlsGroup}>
+            <button
+              type="button"
+              className={`${styles.iconButton} ${magnifierEnabled ? styles.iconButtonActive : ""
+                }`}
+              onClick={() => setMagnifierEnabled((v) => !v)}
+              aria-pressed={magnifierEnabled}
+            >
+              {magnifierEnabled ? "🔍 Lupa ON" : "🔍 Lupa OFF"}
+            </button>
+          </div>
+
+          <button
+            type="button"
+            className={`${styles.iconButton} ${isMuted ? styles.iconButtonMuted : ""
+              }`}
+            onClick={toggleMute}
+            aria-pressed={isMuted}
+            aria-label={isMuted ? "Activar sonido" : "Silenciar sonido"}
+          >
+            {isMuted ? "🔇 Sonido" : "🔊 Sonido"}
+          </button>
+        </div>
+
         <Document
           file="/pdf/Actualización_PED_2025_2028.pdf"
           onLoadSuccess={onDocumentLoadSuccess}
@@ -290,11 +411,10 @@ export default function PdfFlipbookClient() {
               style={{ width: pageWidth, height: pageHeight }}
             >
               <div className={styles.singleCoverInner}>
-                <PdfPage
+                <BookPage
                   pageNumber={1}
-                  width={pageWidth}
-                  renderTextLayer={false}
-                  renderAnnotationLayer={false}
+                  pageWidth={pageWidth}
+                  enableMagnifier={magnifierEnabled}
                 />
               </div>
             </div>
@@ -305,11 +425,10 @@ export default function PdfFlipbookClient() {
               style={{ width: pageWidth, height: pageHeight }}
             >
               <div className={styles.singleCoverInner}>
-                <PdfPage
+                <BookPage
                   pageNumber={1}
-                  width={pageWidth}
-                  renderTextLayer={false}
-                  renderAnnotationLayer={false}
+                  pageWidth={pageWidth}
+                  enableMagnifier={magnifierEnabled}
                 />
                 <button
                   type="button"
@@ -327,11 +446,10 @@ export default function PdfFlipbookClient() {
               style={{ width: pageWidth, height: pageHeight }}
             >
               <div className={styles.singleCoverInner}>
-                <PdfPage
+                <BookPage
                   pageNumber={totalPages}
-                  width={pageWidth}
-                  renderTextLayer={false}
-                  renderAnnotationLayer={false}
+                  pageWidth={pageWidth}
+                  enableMagnifier={magnifierEnabled}
                 />
                 {/* Flecha para volver al interior */}
                 <button
@@ -380,6 +498,7 @@ export default function PdfFlipbookClient() {
                     key={index + 2}
                     pageNumber={index + 2} // páginas 2..numPages-1 del PDF
                     pageWidth={pageWidth}
+                    enableMagnifier={magnifierEnabled}
                   />
                 ))}
               </HTMLFlipBook>
@@ -414,11 +533,10 @@ export default function PdfFlipbookClient() {
               style={{ width: pageWidth, height: pageHeight }}
             >
               <div className={styles.singleCoverInner}>
-                <PdfPage
+                <BookPage
                   pageNumber={1}
-                  width={pageWidth}
-                  renderTextLayer={false}
-                  renderAnnotationLayer={false}
+                  pageWidth={pageWidth}
+                  enableMagnifier={magnifierEnabled}
                 />
               </div>
             </div>

@@ -8,8 +8,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  /* centra título + libro */
-  gap: 2rem;
+  gap: 2rem; /* centra título + libro */
   background: radial-gradient(circle at top left, #f0f0f3 0, #e2e2e6 40%, #d6d6db 100%);
 }
 
@@ -25,9 +24,12 @@
 .viewer {
   width: 100%;
   display: flex;
+  flex-direction: column; /* barra de controles arriba, libro abajo */
   justify-content: center;
   align-items: center;
   padding-inline: 0.5rem;
+  gap: 0.75rem;
+  overflow-x: auto; /* si el libro se hace ancho en laptop */
 }
 
 /* ========= “LIBRO” (WRAPPER + FLIPBOOK) ========= */
@@ -35,8 +37,7 @@
 .bookWrapper {
   position: relative;
   margin: 0 auto;
-  max-width: 1600px;
-  /* límite duro para monitores gigantes */
+  max-width: 1600px;  /* límite duro para monitores gigantes */
   perspective: 1800px;
 }
 
@@ -44,8 +45,7 @@
   width: 100%;
   height: 100%;
   border-radius: 12px;
-  background: #fdfbf7;
-  /* color papel */
+  background: #fdfbf7; /* color papel */
   box-shadow:
     0 40px 60px rgba(0, 0, 0, 0.35),
     0 0 0 1px rgba(0, 0, 0, 0.04);
@@ -56,7 +56,7 @@
 }
 
 /* Hover “levanta” un poco el libro (solo desktop) */
-@media (hover: hover) and (pointer: fine) {
+@media (hover: hover) and  (pointer: fine) {
   .bookWrapper:hover .flipbook {
     box-shadow:
       0 50px 70px rgba(0, 0, 0, 0.4),
@@ -127,12 +127,11 @@
   pointer-events: none;
 }
 
-/* ========= PÁGINAS ========= */
+/* ========= PÁGINAS + LUPA ========= */
 
 .page {
   width: 100%;
   height: 100%;
-  /* respeta el alto calculado en JS */
   background: #ffffff;
   display: flex;
   justify-content: center;
@@ -141,6 +140,16 @@
   box-shadow:
     inset 0 0 0 1px rgba(0, 0, 0, 0.03),
     inset 15px 0 15px rgba(0, 0, 0, 0.06);
+}
+
+/* Degradado suave hacia el lomo en pantallas grandes */
+@media (min-width: 1024px) {
+  .page {
+    background: radial-gradient(circle at 10% 0,
+        #ffffff 0,
+        #fdfbf7 40%,
+        #f7f3eb 100%);
+  }
 }
 
 /* Punta doblada (“dog-ear”) */
@@ -166,7 +175,6 @@
 }
 
 /* Efecto cuando está en animación de flip */
-
 .flipbookFlipping {
   box-shadow:
     0 55px 80px rgba(0, 0, 0, 0.5),
@@ -174,24 +182,26 @@
   transform: translateY(-6px) rotateX(1.5deg);
 }
 
-.flipbookFlipping::before {
-  background: linear-gradient(to bottom,
-      rgba(0, 0, 0, 0.32),
-      rgba(0, 0, 0, 0.12));
-}
-
 .flipbookFlipping::after {
   opacity: 1;
 }
 
-/* Degradado suave hacia el lomo en pantallas grandes */
-@media (min-width: 1024px) {
-  .page {
-    background: radial-gradient(circle at 10% 0,
-        #ffffff 0,
-        #fdfbf7 40%,
-        #f7f3eb 100%);
-  }
+/* Lupa */
+.magnifier {
+  position: absolute;
+  pointer-events: none;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow:
+    0 10px 20px rgba(0, 0, 0, 0.35),
+    0 0 0 1px rgba(255, 255, 255, 0.9);
+  background: radial-gradient(circle at 30% 30%, #ffffff, #f2eee4);
+  z-index: 20;
+}
+
+.magnifierInner {
+  position: absolute;
+  inset: 0;
 }
 
 /* ========= ESTADOS / TEXTOS ========= */
@@ -210,32 +220,39 @@
   color: #b00020;
 }
 
-/* ========= CONTROLES DE NAVEGACIÓN ========= */
+/* ========= BOTONES (COMPARTEN BASE) ========= */
 
-.navButton {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 42px;
-  height: 42px;
+.navButton,
+.iconButton {
   border-radius: 999px;
   border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.5rem;
+  font-size: 0.8rem;
   font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
   background: radial-gradient(circle at 30% 30%, #ffffff, #e4e4ea);
   color: #444;
   box-shadow:
-    0 8px 16px rgba(0, 0, 0, 0.25),
+    0 4px 8px rgba(0, 0, 0, 0.16),
     0 0 0 1px rgba(255, 255, 255, 0.9);
-  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease,
-    background 0.2s ease;
-  z-index: 10;
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    background 0.15s ease,
+    opacity 0.15s ease;
+}
+
+/* NavButton: posición y tamaño específicos */
+.navButton {
+  position: absolute;
+  top: 50%;
+  width: 42px;
+  height: 42px;
+  font-size: 1.5rem;
 }
 
 .navButtonLeft {
@@ -246,6 +263,40 @@
   right: -1.5rem;
 }
 
+/* IconButton: pill de la barra de controles */
+.iconButton {
+  min-width: 36px;
+  height: 32px;
+  padding: 0 0.9rem;
+}
+
+/* Hover / active / disabled (compartido) */
+.navButton:hover:not(:disabled),
+.iconButton:hover:not(:disabled) {
+  background: radial-gradient(circle at 30% 30%, #ffffff, #d2d2da);
+  transform: translateY(-1px);
+  box-shadow:
+    0 6px 12px rgba(0, 0, 0, 0.22),
+    0 0 0 1px rgba(255, 255, 255, 1);
+}
+
+.navButton:active:not(:disabled),
+.iconButton:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow:
+    0 3px 6px rgba(0, 0, 0, 0.25),
+    0 0 0 1px rgba(255, 255, 255, 1);
+}
+
+.navButton:disabled,
+.iconButton:disabled {
+  opacity: 0.4;
+  cursor: default;
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.05);
+}
+
+/* Ajuste de nav en pantallas pequeñas */
 @media (max-width: 900px) {
   .navButtonLeft {
     left: -0.5rem;
@@ -254,21 +305,6 @@
   .navButtonRight {
     right: -0.5rem;
   }
-}
-
-.navButton:hover {
-  background: radial-gradient(circle at 30% 30%, #ffffff, #d2d2da);
-  transform: translateY(-50%) translateY(-1px);
-  box-shadow:
-    0 10px 20px rgba(0, 0, 0, 0.3),
-    0 0 0 1px rgba(255, 255, 255, 1);
-}
-
-.navButton:active {
-  transform: translateY(-50%);
-  box-shadow:
-    0 6px 10px rgba(0, 0, 0, 0.3),
-    0 0 0 1px rgba(255, 255, 255, 1);
 }
 
 /* Indicador de página */
@@ -290,7 +326,7 @@
   z-index: 12;
 }
 
-/* ========= PORTADA INICIAL (SOLO UNA HOJA) ========= */
+/* ========= PORTADA INICIAL / CONTRAPORTADA ========= */
 
 .singleCoverWrapper {
   position: relative;
@@ -365,12 +401,16 @@
   outline-offset: 3px;
 }
 
-
-
-
 /* ========= RESPONSIVO ========= */
 
 @media (max-width: 768px) {
+  .section {
+    padding: 2rem 1rem;
+    justify-content: flex-start; /* deja más aire arriba */
+  }
+
+  .viewer,
+  .bookWrapper,
   .singleCoverWrapper {
     max-width: 100%;
   }
@@ -381,22 +421,6 @@
     font-size: 0.8rem;
     padding: 0.45rem 1.1rem;
   }
-}
-
-@media (max-width: 768px) {
-  .section {
-    padding: 2rem 1rem;
-    justify-content: flex-start;
-    /* deja más aire arriba */
-  }
-
-  .viewer {
-    max-width: 100%;
-  }
-
-  .bookWrapper {
-    max-width: 100%;
-  }
 
   .flipbook {
     box-shadow:
@@ -405,8 +429,7 @@
   }
 
   .flipbook::before {
-    opacity: 0.35;
-    /* lomo más suave en móvil */
+    opacity: 0.35; /* lomo más suave en móvil */
   }
 
   .navButton {
@@ -418,4 +441,51 @@
   .pageIndicator {
     font-size: 0.7rem;
   }
+
+  .controlsBar {
+    padding-inline: 0.4rem;
+  }
+
+  .iconButton {
+    min-width: 32px;
+    height: 30px;
+    padding-inline: 0.7rem;
+    font-size: 0.78rem;
+  }
+}
+
+/* ====== BARRA DE CONTROLES (LUPA + SONIDO) ====== */
+
+.controlsBar {
+  width: 100%;
+  max-width: 1600px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow:
+    0 6px 12px rgba(0, 0, 0, 0.08),
+    0 0 0 1px rgba(0, 0, 0, 0.03);
+  backdrop-filter: blur(8px);
+}
+
+.controlsGroup {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* Lupa activada */
+.iconButtonActive {
+  background: radial-gradient(circle at 30% 30%, #fffdf5, #dec9a3);
+  color: #691b32;
+}
+
+/* Mute activado */
+.iconButtonMuted {
+  background: radial-gradient(circle at 30% 30%, #fff5f5, #f4d1d1);
+  color: #691b32;
 }
