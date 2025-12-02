@@ -19,8 +19,8 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 const ASPECT_RATIO = 1.414; // alto = ancho * 1.414
 
 // Parámetros de la lupa
-const LENS_SIZE = 200;     // diámetro en px
-const LENS_ZOOM = 2;       // factor de zoom
+const LENS_SIZE = 200; // diámetro en px
+const LENS_ZOOM = 2; // factor de zoom
 
 const BookPage = React.forwardRef(function BookPage(
   { pageNumber, pageWidth, enableMagnifier = false },
@@ -46,10 +46,10 @@ const BookPage = React.forwardRef(function BookPage(
     let x = e.clientX - rect.left;
     let y = e.clientY - rect.top;
 
-    // 🔒 Opcional: limitar para que no se "salga" demasiado
-    const minX = (LENS_SIZE / 2) / LENS_ZOOM;
+    // Limitar para que la lupa no se “salga” demasiado
+    const minX = LENS_SIZE / 2 / LENS_ZOOM;
     const maxX = rect.width - minX;
-    const minY = (LENS_SIZE / 2) / LENS_ZOOM;
+    const minY = LENS_SIZE / 2 / LENS_ZOOM;
     const maxY = rect.height - minY;
 
     x = Math.max(minX, Math.min(maxX, x));
@@ -120,7 +120,6 @@ const BookPage = React.forwardRef(function BookPage(
     </div>
   );
 });
-
 
 export default function PdfFlipbookClient() {
   const [numPages, setNumPages] = useState(null);
@@ -361,6 +360,23 @@ export default function PdfFlipbookClient() {
 
   const hasLoaded = !!numPages;
 
+  // ===== Cantidad de hojas a cada lado del lomo (solo para efecto visual) =====
+  // Ejemplo: totalPages = 204, currentDisplayPage = 200 (spread 200–201):
+  //   leftStackCount  = 200
+  //   rightStackCount = 204 - 200 - 1 = 3  (202, 203, 204)
+  let leftStackCount = 0;
+  let rightStackCount = 0;
+
+  if (mode === "book" && totalPages > 0) {
+    leftStackCount = currentDisplayPage;
+    rightStackCount = Math.max(0, totalPages - currentDisplayPage - 1);
+  }
+
+  const leftStackRatio =
+    totalPages > 0 ? Math.min(1, leftStackCount / totalPages) : 0;
+  const rightStackRatio =
+    totalPages > 0 ? Math.min(1, rightStackCount / totalPages) : 0;
+
   return (
     <section className={styles.section}>
       <h1 className={styles.title}>Catálogo PED – Flipbook</h1>
@@ -469,8 +485,14 @@ export default function PdfFlipbookClient() {
           ) : hasInteriorPages > 0 ? (
             // 3) LIBRO ABIERTO: solo páginas interiores (2..N-1)
             <div
-              className={styles.bookWrapper}
-              style={{ width: wrapperWidth, height: pageHeight }}
+              className={`${styles.bookWrapper} ${isFlipping ? styles.bookWrapperFlipping : ""
+                }`}
+              style={{
+                width: wrapperWidth,
+                height: pageHeight,
+                "--stack-left": leftStackRatio,
+                "--stack-right": rightStackRatio,
+              }}
             >
               <HTMLFlipBook
                 key={bookStartIndex}

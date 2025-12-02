@@ -8,7 +8,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 2rem; /* centra título + libro */
+  gap: 2rem;
+  /* título + libro */
   background: radial-gradient(circle at top left, #f0f0f3 0, #e2e2e6 40%, #d6d6db 100%);
 }
 
@@ -24,28 +25,37 @@
 .viewer {
   width: 100%;
   display: flex;
-  flex-direction: column; /* barra de controles arriba, libro abajo */
+  flex-direction: column;
+  /* barra de controles arriba, libro abajo */
   justify-content: center;
   align-items: center;
   padding-inline: 0.5rem;
   gap: 0.75rem;
-  overflow-x: auto; /* si el libro se hace ancho en laptop */
+  overflow-x: auto;
+  /* si el libro se hace ancho en laptop */
 }
 
 /* ========= “LIBRO” (WRAPPER + FLIPBOOK) ========= */
 
 .bookWrapper {
+  /* base para el grosor del montón de hojas */
+  --stack-thickness-base: 24px;
+  --stack-thickness-min: 4px;
+  --stack-opacity-min: 0.25;
+  --stack-opacity-range: 0.55;
+
   position: relative;
   margin: 0 auto;
-  max-width: 1600px;  /* límite duro para monitores gigantes */
+  max-width: 1600px;
   perspective: 1800px;
+  z-index: 0;
 }
 
 .flipbook {
   width: 100%;
   height: 100%;
   border-radius: 12px;
-  background: #fdfbf7; /* color papel */
+  background: #fdfbf7;
   box-shadow:
     0 40px 60px rgba(0, 0, 0, 0.35),
     0 0 0 1px rgba(0, 0, 0, 0.04);
@@ -53,10 +63,88 @@
   position: relative;
   transform-origin: center center;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
+  z-index: 1;
+}
+
+/* ===== PILA DE HOJAS LATERALES (LIBRO ABIERTO) ===== */
+
+.bookWrapper::before,
+.bookWrapper::after {
+  content: "";
+  position: absolute;
+  top: 10px;
+  bottom: 10px;
+  border-radius: 12px;
+  z-index: 0;
+  pointer-events: none;
+
+  /* muchas rayitas finas simulando hojas */
+  background:
+    repeating-linear-gradient(to right,
+      rgba(255, 255, 255, 0.96) 0px,
+      rgba(255, 255, 255, 0.96) 2px,
+      rgba(210, 210, 215, 0.9) 2px,
+      rgba(210, 210, 215, 0.9) 3px);
+
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.10),
+    0 18px 26px rgba(0, 0, 0, 0.25);
+}
+
+/* lado izquierdo: grosor depende de --stack-left (0..1) */
+.bookWrapper::before {
+  left: 0;
+  width: calc(var(--stack-thickness-min) + var(--stack-thickness-base) * var(--stack-left, 0.7));
+  opacity: calc(var(--stack-opacity-min) + var(--stack-opacity-range) * var(--stack-left, 0.7));
+  transform: translateX(-55%) skewY(3deg);
+}
+
+/* lado derecho: grosor depende de --stack-right (0..1) */
+.bookWrapper::after {
+  right: 0;
+  width: calc(var(--stack-thickness-min) + var(--stack-thickness-base) * var(--stack-right, 0.3));
+  opacity: calc(var(--stack-opacity-min) + var(--stack-opacity-range) * var(--stack-right, 0.3));
+  transform: translateX(55%) skewY(-3deg);
+}
+
+/* un poco más compacto en pantallas chicas */
+@media (max-width: 900px) {
+
+  .bookWrapper::before,
+  .bookWrapper::after {
+    top: 8px;
+    bottom: 8px;
+    box-shadow:
+      0 0 0 1px rgba(0, 0, 0, 0.08),
+      0 12px 18px rgba(0, 0, 0, 0.22);
+  }
+
+  .bookWrapper::before {
+    transform: translateX(-45%) skewY(2deg);
+  }
+
+  .bookWrapper::after {
+    transform: translateX(45%) skewY(-2deg);
+  }
+}
+
+/* Cuando está en animación de cambio de hoja:
+   el montón se afina y se aligera */
+.bookWrapperFlipping {
+  --stack-thickness-base: 10px;
+  --stack-opacity-range: 0.35;
+}
+
+.bookWrapperFlipping::before,
+.bookWrapperFlipping::after {
+  box-shadow:
+    0 2px 6px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(0, 0, 0, 0.04);
+  transform: translateX(0) skewY(0deg);
 }
 
 /* Hover “levanta” un poco el libro (solo desktop) */
-@media (hover: hover) and  (pointer: fine) {
+@media (hover: hover) and (pointer: fine) {
   .bookWrapper:hover .flipbook {
     box-shadow:
       0 50px 70px rgba(0, 0, 0, 0.4),
@@ -95,7 +183,7 @@
     transform 0.25s ease-out;
 }
 
-/* Un pelín más de relieve cuando el libro está quieto y el usuario se acerca (hover desktop) */
+/* Un pelín más de relieve en hover */
 @media (hover: hover) and (pointer: fine) {
   .bookWrapper:hover .flipbook::before {
     box-shadow:
@@ -253,6 +341,7 @@
   width: 42px;
   height: 42px;
   font-size: 1.5rem;
+  z-index: 50;
 }
 
 .navButtonLeft {
@@ -338,6 +427,43 @@
   border-radius: 12px;
   overflow: hidden;
   background: #fdfbf7;
+  z-index: 0;
+}
+
+/* Hojas “detrás” cuando el libro está cerrado */
+.singleCoverWrapper::before,
+.singleCoverWrapper::after {
+  content: "";
+  position: absolute;
+  top: 10px;
+  bottom: 10px;
+  width: 16px;
+  border-radius: 6px;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    linear-gradient(to bottom,
+      #f7f2e9 0%,
+      #f1ebdf 50%,
+      #e8dfd0 100%),
+    repeating-linear-gradient(to bottom,
+      rgba(180, 170, 150, 0.9) 0px,
+      rgba(180, 170, 150, 0.9) 1px,
+      rgba(240, 235, 225, 0.95) 2px,
+      rgba(240, 235, 225, 0.95) 3px);
+  box-shadow:
+    0 4px 8px rgba(0, 0, 0, 0.35),
+    0 0 0 1px rgba(0, 0, 0, 0.05);
+}
+
+.singleCoverWrapper::before {
+  left: -10px;
+  transform: skewY(1deg);
+}
+
+.singleCoverWrapper::after {
+  right: -10px;
+  transform: skewY(-1deg);
 }
 
 .singleCoverInner {
@@ -406,7 +532,8 @@
 @media (max-width: 768px) {
   .section {
     padding: 2rem 1rem;
-    justify-content: flex-start; /* deja más aire arriba */
+    justify-content: flex-start;
+    /* deja más aire arriba */
   }
 
   .viewer,
@@ -429,7 +556,8 @@
   }
 
   .flipbook::before {
-    opacity: 0.35; /* lomo más suave en móvil */
+    opacity: 0.35;
+    /* lomo más suave en móvil */
   }
 
   .navButton {
