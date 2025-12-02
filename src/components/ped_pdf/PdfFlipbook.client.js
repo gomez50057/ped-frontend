@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import HTMLFlipBook from "react-pageflip";
 import { Document, Page as PdfPage, pdfjs } from "react-pdf";
 
@@ -40,49 +40,102 @@ export default function PdfFlipbookClient() {
   const [pageHeight, setPageHeight] = useState(0);
   const [isLaptop, setIsLaptop] = useState(false);
 
-useEffect(() => {
-  function handleResize() {
-    if (typeof window === "undefined") return;
+  const [isFlipping, setIsFlipping] = useState(false);
+  const [currentLeaf, setCurrentLeaf] = useState(0); // índice interno del flipbook (0-based)
+  const [hasOpened, setHasOpened] = useState(false); // ⬅️ ¿ya abrimos el libro?
 
-    const w = window.innerWidth;
-    const h = window.innerHeight;       // 👈 alto del viewport
-    const laptop = w >= 1024;
-    setIsLaptop(laptop);
+  const bookRef = useRef(null);
 
-    let newPageWidth;
+  // Calcula tamaño de página según viewport
+  useEffect(() => {
+    function handleResize() {
+      if (typeof window === "undefined") return;
 
-    if (laptop) {
-      // En laptop/desktop: el LIBRO (2 páginas) usa ~80% del ancho
-      newPageWidth = (w * 0.8) / 2;
-    } else {
-      // En móvil/tablet: una página usa ~90% del ancho
-      newPageWidth = w * 0.9;
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      const laptop = w >= 1024;
+      setIsLaptop(laptop);
+
+      let newPageWidth;
+
+      if (laptop) {
+        // En laptop/desktop: el LIBRO (2 páginas) usaría ~80% del ancho
+        newPageWidth = (w * 0.8) / 2;
+      } else {
+        // En móvil/tablet: una página usa ~90% del ancho
+        newPageWidth = w * 0.9;
+      }
+
+      // No dejar que la página sea gigantesca en pantallas enormes
+      newPageWidth = Math.min(newPageWidth, 700);
+
+      // Altura base por relación de aspecto
+      const rawPageHeight = newPageWidth * ASPECT_RATIO;
+
+      // Máximo: 96% de la altura de la ventana
+      const maxPageHeight = h * 0.96;
+      const newPageHeight = Math.min(rawPageHeight, maxPageHeight);
+
+      setPageWidth(newPageWidth);
+      setPageHeight(newPageHeight);
     }
 
-    // No dejar que la página sea gigantesca en monitores enormes
-    newPageWidth = Math.min(newPageWidth, 700);
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
-    // Altura base por relación de aspecto
-    const rawPageHeight = newPageWidth * ASPECT_RATIO;
+  // Navegación con teclado SOLO cuando el libro ya está abierto
+  useEffect(() => {
+    if (!hasOpened || !numPages) return;
 
-    // 🔥 Máximo: 96% de la altura de la ventana
-    const maxPageHeight = h * 0.96;
-    const newPageHeight = Math.min(rawPageHeight, maxPageHeight);
+    function handleKeyDown(e) {
+      if (!bookRef.current) return;
+      const api = bookRef.current.pageFlip?.();
+      if (!api) return;
 
-    setPageWidth(newPageWidth);
-    setPageHeight(newPageHeight);
-  }
+      if (e.key === "ArrowRight") {
+        api.flipNext();
+      } else if (e.key === "ArrowLeft") {
+        api.flipPrev();
+      }
+    }
 
-  handleResize();
-  window.addEventListener("resize", handleResize);
-  return () => window.removeEventListener("resize", handleResize);
-}, []);
-
-
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [hasOpened, numPages]);
 
   function onDocumentLoadSuccess({ numPages }) {
     setNumPages(numPages);
+    setCurrentLeaf(0);
   }
+
+  // Evento al cambiar de hoja en el flipbook interior
+  function handleFlip(e) {
+    // e.data es el índice de la "hoja" interna (0-based)
+    setCurrentLeaf(e.data);
+  }
+
+  function handleChangeState(e) {
+    const state = e.data; // "user_fold" | "fold_corner" | "flipping" | "read"
+    if (state === "flipping" || state === "user_fold") {
+      setIsFlipping(true);
+    } else {
+      setIsFlipping(false);
+    }
+  }
+
+  const handlePrev = () => {
+    if (!bookRef.current) return;
+    const api = bookRef.current.pageFlip?.();
+    api?.flipPrev();
+  };
+
+  const handleNext = () => {
+    if (!bookRef.current) return;
+    const api = bookRef.current.pageFlip?.();
+    api?.flipNext();
+  };
 
   // Mientras no tenemos tamaño calculado
   if (!pageWidth || !pageHeight) {
@@ -94,10 +147,16 @@ useEffect(() => {
     );
   }
 
-  // Truco:
-  // - En laptop: wrapper = 2 * pageWidth  → 2 páginas visibles
-  // - En móvil:  wrapper = 1 * pageWidth  → 1 página visible
+  // Para el libro abierto: 2 páginas en laptop, 1 en móvil
   const wrapperWidth = isLaptop ? pageWidth * 2 : pageWidth;
+
+  // Páginas interiores (saltamos la portada = página 1 del PDF)
+  const totalInteriorPages = Math.max((numPages || 0) - 1, 0);
+
+  // Página mostrada para el indicador
+  const currentDisplayPage = hasOpened
+    ? Math.min(currentLeaf + 2, numPages || 1) // +2 porque empezamos en la página 2 del PDF
+    : 1;
 
   return (
     <section className={styles.section}>
@@ -116,29 +175,101 @@ useEffect(() => {
         >
           {!numPages ? (
             <p className={styles.status}>Preparando páginas…</p>
-          ) : (
+          ) : !hasOpened ? (
+            // 🔥 1) VISTA INICIAL: SOLO PORTADA CENTRADA
+            <div
+              className={styles.singleCoverWrapper}
+              style={{ width: pageWidth, height: pageHeight }}
+            >
+              <div className={styles.singleCoverInner}>
+                <PdfPage
+                  pageNumber={1}
+                  width={pageWidth}
+                  renderTextLayer={false}
+                  renderAnnotationLayer={false}
+                />
+                <button
+                  type="button"
+                  className={styles.openButton}
+                  onClick={() => setHasOpened(true)}
+                >
+                  Abrir catálogo
+                </button>
+              </div>
+            </div>
+          ) : totalInteriorPages > 0 ? (
+            // 🔥 2) LIBRO ABIERTO: 2 HOJAS EN LAPTOP
             <div
               className={styles.bookWrapper}
               style={{ width: wrapperWidth, height: pageHeight }}
             >
               <HTMLFlipBook
-                width={pageWidth}          // ancho de UNA página
+                ref={bookRef}
+                width={pageWidth} // ancho de UNA página
                 height={pageHeight}
                 size="fixed"
-                showCover={true}          // ✅ portada sola
-                usePortrait={true}        // cambia a modo 1 página cuando el libro es “alto”
-                maxShadowOpacity={0.3}
+                showCover={false}      // interior: ya no hay portada
+                usePortrait={true}
+                flippingTime={1200}
+                drawShadow={true}
+                maxShadowOpacity={0.7}
+                showPageCorners={true}
+                swipeDistance={20}
+                useMouseEvents={true}
                 mobileScrollSupport={true}
-                className={styles.flipbook}
+                startPage={0}          // empezamos en la página 2 del PDF (índice 0 del interior)
+                className={`${styles.flipbook} ${
+                  isFlipping ? styles.flipbookFlipping : ""
+                }`}
+                onFlip={handleFlip}
+                onChangeState={handleChangeState}
               >
-                {Array.from({ length: numPages }, (_, index) => (
+                {Array.from({ length: totalInteriorPages }, (_, index) => (
                   <BookPage
-                    key={index + 1}
-                    pageNumber={index + 1}
+                    key={index + 2}
+                    pageNumber={index + 2} // páginas 2..numPages del PDF
                     pageWidth={pageWidth}
                   />
                 ))}
               </HTMLFlipBook>
+
+              {/* Controles de navegación */}
+              <button
+                type="button"
+                className={`${styles.navButton} ${styles.navButtonLeft}`}
+                onClick={handlePrev}
+                aria-label="Página anterior"
+              >
+                ‹
+              </button>
+              <button
+                type="button"
+                className={`${styles.navButton} ${styles.navButtonRight}`}
+                onClick={handleNext}
+                aria-label="Página siguiente"
+              >
+                ›
+              </button>
+
+              {/* Indicador de página */}
+              <div className={styles.pageIndicator}>
+                Página {currentDisplayPage} de {numPages}
+              </div>
+            </div>
+          ) : (
+            // Caso extremo: PDF de solo 1 página
+            <div
+              className={styles.singleCoverWrapper}
+              style={{ width: pageWidth, height: pageHeight }}
+            >
+              <div className={styles.singleCoverInner}>
+                <PdfPage
+                  pageNumber={1}
+                  width={pageWidth}
+                  renderTextLayer={false}
+                  renderAnnotationLayer={false}
+                />
+              </div>
             </div>
           )}
         </Document>
