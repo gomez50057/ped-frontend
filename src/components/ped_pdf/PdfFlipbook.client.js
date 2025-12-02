@@ -41,8 +41,9 @@ export default function PdfFlipbookClient() {
   const [isLaptop, setIsLaptop] = useState(false);
 
   const [isFlipping, setIsFlipping] = useState(false);
-  const [currentLeaf, setCurrentLeaf] = useState(0); // índice interno del flipbook (0-based)
-  const [hasOpened, setHasOpened] = useState(false); // ⬅️ ¿ya abrimos el libro?
+  const [mode, setMode] = useState("cover"); // "cover" | "book" | "backCover"
+  const [currentInteriorIndex, setCurrentInteriorIndex] = useState(0); // índice 0-based de páginas interiores
+  const [bookStartIndex, setBookStartIndex] = useState(0); // para decidir desde dónde abre el flipbook
 
   const bookRef = useRef(null);
 
@@ -85,35 +86,38 @@ export default function PdfFlipbookClient() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Navegación con teclado SOLO cuando el libro ya está abierto
+  function onDocumentLoadSuccess({ numPages }) {
+    setNumPages(numPages);
+    setCurrentInteriorIndex(0);
+    setBookStartIndex(0);
+    setMode("cover"); // siempre arrancamos en portada
+  }
+
+  const totalPages = numPages || 0;
+  const hasInteriorPages = totalPages > 2 ? totalPages - 2 : 0; // quitamos portada (1) y contra (N)
+
+  // Navegación con teclado (cuando NO estamos en portada)
   useEffect(() => {
-    if (!hasOpened || !numPages) return;
+    if (!numPages) return;
+    if (mode === "cover" && hasInteriorPages <= 0) return;
 
     function handleKeyDown(e) {
-      if (!bookRef.current) return;
-      const api = bookRef.current.pageFlip?.();
-      if (!api) return;
-
       if (e.key === "ArrowRight") {
-        api.flipNext();
+        handleNext();
       } else if (e.key === "ArrowLeft") {
-        api.flipPrev();
+        handlePrev();
       }
     }
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [hasOpened, numPages]);
-
-  function onDocumentLoadSuccess({ numPages }) {
-    setNumPages(numPages);
-    setCurrentLeaf(0);
-  }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mode, numPages, currentInteriorIndex, hasInteriorPages]);
 
   // Evento al cambiar de hoja en el flipbook interior
   function handleFlip(e) {
-    // e.data es el índice de la "hoja" interna (0-based)
-    setCurrentLeaf(e.data);
+    // e.data es el índice 0-based dentro del flipbook interior
+    setCurrentInteriorIndex(e.data);
   }
 
   function handleChangeState(e) {
@@ -126,15 +130,55 @@ export default function PdfFlipbookClient() {
   }
 
   const handlePrev = () => {
-    if (!bookRef.current) return;
-    const api = bookRef.current.pageFlip?.();
-    api?.flipPrev();
+    if (mode === "book") {
+      if (!bookRef.current) return;
+      const api = bookRef.current.pageFlip?.();
+      if (!api) return;
+
+      if (currentInteriorIndex === 0) {
+        // Estamos en la primera página interior → regresar a portada sola
+        setMode("cover");
+      } else {
+        api.flipPrev();
+      }
+    } else if (mode === "backCover") {
+      // De contra-portada regresamos al libro (última interior)
+      if (hasInteriorPages > 0) {
+        setBookStartIndex(hasInteriorPages - 1);
+        setMode("book");
+      } else {
+        // Si no hay interiores, volvemos a portada
+        setMode("cover");
+      }
+    }
+    // En "cover" no hacemos nada con prev
   };
 
   const handleNext = () => {
-    if (!bookRef.current) return;
-    const api = bookRef.current.pageFlip?.();
-    api?.flipNext();
+    if (mode === "cover") {
+      // De portada → abrir libro en primera interior (página 2)
+      if (hasInteriorPages > 0) {
+        setBookStartIndex(0);
+        setMode("book");
+      } else if (totalPages > 1) {
+        // PDF de 2 páginas sin interiores: ir directo a contra-portada
+        setMode("backCover");
+      }
+    } else if (mode === "book") {
+      if (!bookRef.current) return;
+      const api = bookRef.current.pageFlip?.();
+      if (!api) return;
+
+      if (currentInteriorIndex === hasInteriorPages - 1) {
+        // Última interior → contra-portada sola
+        setMode("backCover");
+      } else {
+        api.flipNext();
+      }
+    } else if (mode === "backCover") {
+      // De contra-portada hacia "adelante" no hay nada; podrías cerrarlo o ignorar.
+      // Aquí lo dejamos sin acción.
+    }
   };
 
   // Mientras no tenemos tamaño calculado
@@ -150,13 +194,17 @@ export default function PdfFlipbookClient() {
   // Para el libro abierto: 2 páginas en laptop, 1 en móvil
   const wrapperWidth = isLaptop ? pageWidth * 2 : pageWidth;
 
-  // Páginas interiores (saltamos la portada = página 1 del PDF)
-  const totalInteriorPages = Math.max((numPages || 0) - 1, 0);
+  // Página mostrada para el indicador, según el modo
+  let currentDisplayPage = 1;
+  if (mode === "cover") {
+    currentDisplayPage = 1;
+  } else if (mode === "book") {
+    currentDisplayPage = currentInteriorIndex + 2; // interiores empiezan en la página 2 del PDF
+  } else if (mode === "backCover") {
+    currentDisplayPage = totalPages || 1;
+  }
 
-  // Página mostrada para el indicador
-  const currentDisplayPage = hasOpened
-    ? Math.min(currentLeaf + 2, numPages || 1) // +2 porque empezamos en la página 2 del PDF
-    : 1;
+  const hasLoaded = !!numPages;
 
   return (
     <section className={styles.section}>
@@ -173,10 +221,25 @@ export default function PdfFlipbookClient() {
             </p>
           }
         >
-          {!numPages ? (
+          {!hasLoaded ? (
             <p className={styles.status}>Preparando páginas…</p>
-          ) : !hasOpened ? (
-            // 🔥 1) VISTA INICIAL: SOLO PORTADA CENTRADA
+          ) : totalPages === 1 ? (
+            // PDF de 1 sola página: siempre portada centrada
+            <div
+              className={styles.singleCoverWrapper}
+              style={{ width: pageWidth, height: pageHeight }}
+            >
+              <div className={styles.singleCoverInner}>
+                <PdfPage
+                  pageNumber={1}
+                  width={pageWidth}
+                  renderTextLayer={false}
+                  renderAnnotationLayer={false}
+                />
+              </div>
+            </div>
+          ) : mode === "cover" ? (
+            // 1) PORTADA SOLA SIEMPRE en el centro (hoja única)
             <div
               className={styles.singleCoverWrapper}
               style={{ width: pageWidth, height: pageHeight }}
@@ -191,24 +254,53 @@ export default function PdfFlipbookClient() {
                 <button
                   type="button"
                   className={styles.openButton}
-                  onClick={() => setHasOpened(true)}
+                  onClick={handleNext}
                 >
                   Abrir catálogo
                 </button>
               </div>
             </div>
-          ) : totalInteriorPages > 0 ? (
-            // 🔥 2) LIBRO ABIERTO: 2 HOJAS EN LAPTOP
+          ) : mode === "backCover" ? (
+            // 2) CONTRA-PORTADA SOLA en el centro (hoja única)
+            <div
+              className={styles.singleCoverWrapper}
+              style={{ width: pageWidth, height: pageHeight }}
+            >
+              <div className={styles.singleCoverInner}>
+                <PdfPage
+                  pageNumber={totalPages}
+                  width={pageWidth}
+                  renderTextLayer={false}
+                  renderAnnotationLayer={false}
+                />
+                {/* Flecha para volver al interior */}
+                <button
+                  type="button"
+                  className={`${styles.navButton} ${styles.navButtonLeft}`}
+                  onClick={handlePrev}
+                  aria-label="Volver al interior"
+                >
+                  ‹
+                </button>
+              </div>
+              {/* Indicador de página también aquí */}
+              <div className={styles.pageIndicator}>
+                Página {currentDisplayPage} de {totalPages}
+              </div>
+            </div>
+          ) : hasInteriorPages > 0 ? (
+            // 3) LIBRO ABIERTO: solo páginas interiores (2..N-1)
             <div
               className={styles.bookWrapper}
               style={{ width: wrapperWidth, height: pageHeight }}
             >
               <HTMLFlipBook
+                key={bookStartIndex}
                 ref={bookRef}
-                width={pageWidth} // ancho de UNA página
+                width={pageWidth}
                 height={pageHeight}
                 size="fixed"
-                showCover={false}      // interior: ya no hay portada
+                showCover={false}
                 usePortrait={true}
                 flippingTime={1200}
                 drawShadow={true}
@@ -217,28 +309,27 @@ export default function PdfFlipbookClient() {
                 swipeDistance={20}
                 useMouseEvents={true}
                 mobileScrollSupport={true}
-                startPage={0}          // empezamos en la página 2 del PDF (índice 0 del interior)
-                className={`${styles.flipbook} ${
-                  isFlipping ? styles.flipbookFlipping : ""
-                }`}
+                startPage={bookStartIndex}
+                className={`${styles.flipbook} ${isFlipping ? styles.flipbookFlipping : ""
+                  }`}
                 onFlip={handleFlip}
                 onChangeState={handleChangeState}
               >
-                {Array.from({ length: totalInteriorPages }, (_, index) => (
+                {Array.from({ length: hasInteriorPages }, (_, index) => (
                   <BookPage
                     key={index + 2}
-                    pageNumber={index + 2} // páginas 2..numPages del PDF
+                    pageNumber={index + 2} // páginas 2..numPages-1 del PDF
                     pageWidth={pageWidth}
                   />
                 ))}
               </HTMLFlipBook>
 
-              {/* Controles de navegación */}
+              {/* Controles de navegación dentro del libro */}
               <button
                 type="button"
                 className={`${styles.navButton} ${styles.navButtonLeft}`}
                 onClick={handlePrev}
-                aria-label="Página anterior"
+                aria-label="Página anterior / Portada"
               >
                 ‹
               </button>
@@ -246,18 +337,18 @@ export default function PdfFlipbookClient() {
                 type="button"
                 className={`${styles.navButton} ${styles.navButtonRight}`}
                 onClick={handleNext}
-                aria-label="Página siguiente"
+                aria-label="Página siguiente / Contra-portada"
               >
                 ›
               </button>
 
               {/* Indicador de página */}
               <div className={styles.pageIndicator}>
-                Página {currentDisplayPage} de {numPages}
+                Página {currentDisplayPage} de {totalPages}
               </div>
             </div>
           ) : (
-            // Caso extremo: PDF de solo 1 página
+            // Caso raro: hay más de 1 página pero sin interiores (ej. 2 páginas)
             <div
               className={styles.singleCoverWrapper}
               style={{ width: pageWidth, height: pageHeight }}
