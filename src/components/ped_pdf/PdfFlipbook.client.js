@@ -47,6 +47,52 @@ export default function PdfFlipbookClient() {
 
   const bookRef = useRef(null);
 
+  // sonidos de pasar página (3 variantes)
+  const flipSoundsRef = useRef([]);       // Array<Audio>
+  const flipSoundIndexRef = useRef(0);    // para ir rotando
+  const lastStateRef = useRef("read");
+
+  // Pre-cargar sonidos solo en cliente
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const sources = [
+      "/audio/flip1.mp3",
+      "/audio/flip2.mp3",
+      "/audio/flip3.mp3",
+    ];
+
+    const audios = sources.map((src) => {
+      const a = new Audio(src);
+      a.volume = 0.5; // Volumen
+      return a;
+    });
+
+    flipSoundsRef.current = audios;
+
+    return () => {
+      audios.forEach((a) => a.pause());
+      flipSoundsRef.current = [];
+    };
+  }, []);
+
+  const playFlipSound = () => {
+    const arr = flipSoundsRef.current;
+    if (!arr || arr.length === 0) return;
+
+    const idx = flipSoundIndexRef.current % arr.length;
+    const audio = arr[idx];
+
+    flipSoundIndexRef.current = (idx + 1) % arr.length; // siguiente para la próxima vez
+
+    try {
+      audio.currentTime = 0;
+      void audio.play();
+    } catch {
+      // ignoramos errores de autoplay
+    }
+  };
+
   // Calcula tamaño de página según viewport
   useEffect(() => {
     function handleResize() {
@@ -122,6 +168,13 @@ export default function PdfFlipbookClient() {
 
   function handleChangeState(e) {
     const state = e.data; // "user_fold" | "fold_corner" | "flipping" | "read"
+
+    // 🔊 reproducimos sonido cuando entra en estado "flipping"
+    if (state === "flipping" && lastStateRef.current !== "flipping") {
+      playFlipSound();
+    }
+    lastStateRef.current = state;
+
     if (state === "flipping" || state === "user_fold") {
       setIsFlipping(true);
     } else {
@@ -138,17 +191,21 @@ export default function PdfFlipbookClient() {
       if (currentInteriorIndex === 0) {
         // Estamos en la primera página interior → regresar a portada sola
         setMode("cover");
+        playFlipSound(); // sonido al regresar a la portada
       } else {
         api.flipPrev();
+        // el sonido lo dispara handleChangeState cuando entra a "flipping"
       }
     } else if (mode === "backCover") {
       // De contra-portada regresamos al libro (última interior)
       if (hasInteriorPages > 0) {
         setBookStartIndex(hasInteriorPages - 1);
         setMode("book");
+        playFlipSound(); // sonido al re-abrir el libro desde la contra-portada
       } else {
         // Si no hay interiores, volvemos a portada
         setMode("cover");
+        playFlipSound();
       }
     }
     // En "cover" no hacemos nada con prev
@@ -160,9 +217,11 @@ export default function PdfFlipbookClient() {
       if (hasInteriorPages > 0) {
         setBookStartIndex(0);
         setMode("book");
+        playFlipSound(); // sonido al abrir el libro desde portada
       } else if (totalPages > 1) {
         // PDF de 2 páginas sin interiores: ir directo a contra-portada
         setMode("backCover");
+        playFlipSound();
       }
     } else if (mode === "book") {
       if (!bookRef.current) return;
@@ -172,12 +231,13 @@ export default function PdfFlipbookClient() {
       if (currentInteriorIndex === hasInteriorPages - 1) {
         // Última interior → contra-portada sola
         setMode("backCover");
+        playFlipSound(); // sonido al ir a la contra-portada
       } else {
         api.flipNext();
+        // el sonido lo dispara handleChangeState
       }
     } else if (mode === "backCover") {
-      // De contra-portada hacia "adelante" no hay nada; podrías cerrarlo o ignorar.
-      // Aquí lo dejamos sin acción.
+      // De contra-portada hacia adelante: sin acción
     }
   };
 
