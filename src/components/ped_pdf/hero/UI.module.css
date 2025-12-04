@@ -1,0 +1,208 @@
+.containerBase {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  background: radial-gradient(circle at top,
+      #ffffff 0%,
+      #f7f7f7 40%,
+      #e6e6e9 100%);
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+/* ===== Layout inferior: barra de páginas ===== */
+
+.uiRoot {
+  position: relative;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+  padding: 0.75rem 0 1.5rem 0;
+  margin-top: auto;
+}
+
+/* ===== Navegación de páginas ===== */
+
+.controlsOuter {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  pointer-events: auto;
+  /* los botones sí son clickeables */
+  overflow: hidden;
+}
+
+.controlsScroller {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  max-width: 100%;
+  padding: 0 2rem;
+  overflow-x: auto;
+}
+
+/* Botones de páginas */
+
+.pageButton {
+  border-radius: 999px;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  background: rgba(0, 0, 0, 0.75);
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.pageButton:hover {
+  border-color: #a02142;
+  background: rgba(0, 0, 0, 0.9);
+}
+
+.pageButtonActive {
+  background: #ffffff;
+  color: #000000;
+  border-color: #a02142;
+}
+
+/* ===== Tira de texto (ticker) ===== */
+
+.tickerRoot {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  transform: rotate(-1.5deg);
+  pointer-events: none;
+  user-select: none;
+  /* Para estar encima del libro */
+  /* z-index: 5; */
+}
+
+.tickerInner {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Fila base */
+.tickerRow {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 2rem;
+  padding-inline: 2rem;
+  white-space: nowrap;
+  animation: ticker 45s linear infinite;
+}
+
+/* Clon que entra desde la derecha */
+.tickerRowClone {
+  position: absolute;
+  top: 0;
+  left: 0;
+  animation-name: tickerAlt;
+}
+
+/* ===== Tipografías de la cinta (vino + dorado en degradado) ===== */
+
+.tickerTitle,
+.tickerSubtitle,
+.tickerMedium,
+.tickerLight,
+.tickerHuge {
+  font-weight: 400;
+  background-image: linear-gradient(120deg,
+      #dec9a3 0%,
+      #bc955b 30%,
+      #a02142 65%,
+      #691b32 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.tickerTitle {
+  font-size: clamp(2.4rem, 6vw, 5.5rem);
+  font-weight: 700;
+}
+
+.tickerSubtitle {
+  font-size: clamp(1.6rem, 4vw, 3.5rem);
+  font-style: italic;
+  font-weight: 300;
+}
+
+.tickerMedium {
+  font-size: clamp(1.4rem, 3.5vw, 3rem);
+  font-weight: 500;
+}
+
+.tickerLight {
+  font-size: clamp(1.4rem, 3.2vw, 2.8rem);
+  font-weight: 200;
+  font-style: italic;
+}
+
+.tickerHuge {
+  font-size: clamp(2.6rem, 7vw, 5rem);
+  font-weight: 700;
+}
+
+.bold {
+  font-weight: 800;
+}
+
+/* Texto con contorno tipo “marco” dorado */
+.outline {
+  color: transparent;
+  -webkit-text-stroke: 1px #dec9a3;
+  font-style: italic;
+  font-size: clamp(2.6rem, 8vw, 6rem);
+
+}
+
+/* ===== Animación ===== */
+
+@keyframes ticker {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes tickerAlt {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/* ===== Responsivo ===== */
+
+@media (max-width: 768px) {
+  .controlsScroller {
+    padding: 0.75rem 1.5rem 1.25rem;
+    gap: 0.75rem;
+  }
+
+  .pageButton {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.8rem;
+  }
+
+  .tickerRoot {
+    transform: rotate(-1deg);
+  }
+}

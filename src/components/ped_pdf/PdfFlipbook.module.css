@@ -13,26 +13,14 @@
   background: radial-gradient(circle at top left, #f0f0f3 0, #e2e2e6 40%, #d6d6db 100%);
 }
 
-.title {
-  font-size: clamp(1.8rem, 2.4vw, 2.4rem);
-  font-weight: 600;
-  color: #691b32;
-  text-align: center;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
 .viewer {
   width: 100%;
   display: flex;
-  flex-direction: column;
-  /* barra de controles arriba, libro abajo */
   justify-content: center;
-  align-items: center;
+  align-items: start;
   padding-inline: 0.5rem;
   gap: 0.75rem;
   overflow-x: auto;
-  /* si el libro se hace ancho en laptop */
 }
 
 /* ========= “LIBRO” (WRAPPER + FLIPBOOK) ========= */
@@ -428,6 +416,8 @@
   overflow: hidden;
   background: #fdfbf7;
   z-index: 0;
+
+
 }
 
 /* Hojas “detrás” cuando el libro está cerrado */
@@ -585,19 +575,14 @@
 /* ====== BARRA DE CONTROLES (LUPA + SONIDO) ====== */
 
 .controlsBar {
-  width: 100%;
-  max-width: 1600px;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-evenly;
+  padding: 2rem 0 0 1.25rem;
   gap: 0.75rem;
-  padding: 0.25rem 0.6rem;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.9);
-  box-shadow:
-    0 6px 12px rgba(0, 0, 0, 0.08),
-    0 0 0 1px rgba(0, 0, 0, 0.03);
-  backdrop-filter: blur(8px);
+  z-index: 100;
 }
 
 .controlsGroup {

@@ -379,37 +379,9 @@ export default function PdfFlipbookClient() {
 
   return (
     <section className={styles.section}>
-      <h1 className={styles.title}>Catálogo PED – Flipbook</h1>
-
       <div className={styles.viewer}>
-        {/* Barra de controles: Lupa + Sonido */}
-        <div className={styles.controlsBar}>
-          <div className={styles.controlsGroup}>
-            <button
-              type="button"
-              className={`${styles.iconButton} ${magnifierEnabled ? styles.iconButtonActive : ""
-                }`}
-              onClick={() => setMagnifierEnabled((v) => !v)}
-              aria-pressed={magnifierEnabled}
-            >
-              {magnifierEnabled ? "🔍 Lupa ON" : "🔍 Lupa OFF"}
-            </button>
-          </div>
-
-          <button
-            type="button"
-            className={`${styles.iconButton} ${isMuted ? styles.iconButtonMuted : ""
-              }`}
-            onClick={toggleMute}
-            aria-pressed={isMuted}
-            aria-label={isMuted ? "Activar sonido" : "Silenciar sonido"}
-          >
-            {isMuted ? "🔇 Sonido" : "🔊 Sonido"}
-          </button>
-        </div>
-
         <Document
-          file="/pdf/Actualización_PED_2025_2028.pdf"
+          file="/pdf/Actualizacion_PED_2025_2028.pdf"
           onLoadSuccess={onDocumentLoadSuccess}
           loading={<p className={styles.status}>Cargando PED…</p>}
           error={
@@ -564,6 +536,32 @@ export default function PdfFlipbookClient() {
             </div>
           )}
         </Document>
+
+        {/* Barra de controles: Lupa + Sonido */}
+        <div className={styles.controlsBar}>
+          <div className={styles.controlsGroup}>
+            <button
+              type="button"
+              className={`${styles.iconButton} ${magnifierEnabled ? styles.iconButtonActive : ""
+                }`}
+              onClick={() => setMagnifierEnabled((v) => !v)}
+              aria-pressed={magnifierEnabled}
+            >
+              {magnifierEnabled ? "🔍 Lupa ON" : "🔍 Lupa OFF"}
+            </button>
+          </div>
+
+          <button
+            type="button"
+            className={`${styles.iconButton} ${isMuted ? styles.iconButtonMuted : ""
+              }`}
+            onClick={toggleMute}
+            aria-pressed={isMuted}
+            aria-label={isMuted ? "Activar sonido" : "Silenciar sonido"}
+          >
+            {isMuted ? "🔇 Sonido" : "🔊 Sonido"}
+          </button>
+        </div>
       </div>
     </section>
   );
