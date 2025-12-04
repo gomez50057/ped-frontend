@@ -52,20 +52,18 @@ pages.push({
 export const UI = ({ showOnlyEnds = false }) => {
   const [page, setPage] = useAtom(pageAtom);
 
-  // referencia al audio
   const audioRef = useRef(null);
 
-  // Crear el audio solo una vez cuando el componente se monta en el cliente
+  // Cargar audio una sola vez en cliente
   useEffect(() => {
     if (typeof window === "undefined") return;
     audioRef.current = new Audio("/audio/page-flip-01a.mp3");
   }, []);
 
-  // función para reproducir el audio SOLO cuando el usuario hace click
+  // Sonido de pasar página
   const playFlipSound = useCallback(() => {
     const audio = audioRef.current;
     if (!audio) return;
-
     try {
       audio.currentTime = 0;
       audio.play().catch(() => { });
@@ -80,7 +78,7 @@ export const UI = ({ showOnlyEnds = false }) => {
     playFlipSound();
   };
 
-  // Scroll suave (más lento y con easing)
+  // Scroll suave con easing
   const animateScrollTo = (targetY, duration = 1400) => {
     if (typeof window === "undefined") return;
 
@@ -88,8 +86,8 @@ export const UI = ({ showOnlyEnds = false }) => {
     const distance = targetY - startY;
     let startTime = null;
 
-    // easing suave (easeInOutQuad)
-    const easeInOutQuad = (t) => (t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t);
+    const easeInOutQuad = (t) =>
+      t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
 
     const step = (timestamp) => {
       if (!startTime) startTime = timestamp;
@@ -107,8 +105,7 @@ export const UI = ({ showOnlyEnds = false }) => {
     window.requestAnimationFrame(step);
   };
 
-
-  // Scroll suave hasta el flipbook (PdfFlipbook.viewer)
+  // Scroll hasta el visor PDF (PdfFlipbook)
   const handleScrollToDocument = useCallback(() => {
     if (typeof window === "undefined") return;
 
@@ -117,168 +114,163 @@ export const UI = ({ showOnlyEnds = false }) => {
       document.querySelector('[data-ped-viewer="true"]') ||
       document.querySelector(".viewer");
 
-    if (target) {
-      const rect = target.getBoundingClientRect();
-      const headerOffset = 10; // margen para que no quede pegado arriba
-      const targetY = rect.top + window.scrollY - headerOffset;
+    if (!target) return;
 
-      animateScrollTo(targetY, 1400); // más lento y suave
-    }
+    const rect = target.getBoundingClientRect();
+    const headerOffset = 10;
+    const targetY = rect.top + window.scrollY - headerOffset;
+
+    animateScrollTo(targetY, 1400);
   }, []);
 
   return (
     <>
-      {/* Barra inferior con botones de páginas */}
-        <div className={styles.uiRoot} aria-label="Navegación del libro PED">
-          <nav
-            className={styles.controlsOuter}
-            aria-label="Páginas del libro del Plan Estatal de Desarrollo"
-          >
-            <div className={styles.controlsScroller}>
-              <button
-                type="button"
-                className={styles.readmoreBtn}
-                onClick={handleScrollToDocument}
-              >
-                <span className={styles.readmoreText}>
-                  Leer el documento
-                </span>
+      {/* Barra inferior: botón + navegación de páginas */}
+      <div className={styles.uiRoot} aria-label="Navegación del libro PED">
+        <nav
+          className={styles.controlsOuter}
+          aria-label="Páginas del libro del Plan Estatal de Desarrollo"
+        >
+          <div className={styles.controlsScroller}>
+            {/* Botón "Leer el documento" */}
+            <button
+              type="button"
+              className={styles.readmoreBtn}
+              onClick={handleScrollToDocument}
+            >
+              <span className={styles.readmoreText}>Leer el documento</span>
 
-                <span className={styles.bookWrapper}>
-                  {/* Libro “base” */}
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 126 75"
-                    className={styles.bookIcon}
-                  >
-                    <rect
-                      strokeWidth={3}
-                      stroke="#fff"
-                      rx="7.5"
-                      height={70}
-                      width={121}
-                      y="2.5"
-                      x="2.5"
-                    />
-                    <line
-                      strokeWidth={3}
-                      stroke="#fff"
-                      y2={75}
-                      x2="63.5"
-                      x1="63.5"
-                    />
-                    <path
-                      strokeLinecap="round"
-                      strokeWidth={4}
-                      stroke="#fff"
-                      d="M25 20H50"
-                    />
-                    <path
-                      strokeLinecap="round"
-                      strokeWidth={4}
-                      stroke="#fff"
-                      d="M101 20H76"
-                    />
-                    <path
-                      strokeLinecap="round"
-                      strokeWidth={4}
-                      stroke="#fff"
-                      d="M16 30L50 30"
-                    />
-                    <path
-                      strokeLinecap="round"
-                      strokeWidth={4}
-                      stroke="#fff"
-                      d="M110 30L76 30"
-                    />
-                  </svg>
+              <span className={styles.bookWrapper}>
+                {/* Libro base */}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 126 75"
+                  className={styles.bookIcon}
+                >
+                  <rect
+                    strokeWidth={3}
+                    stroke="#fff"
+                    rx="7.5"
+                    height={70}
+                    width={121}
+                    y="2.5"
+                    x="2.5"
+                  />
+                  <line
+                    strokeWidth={3}
+                    stroke="#fff"
+                    y2={75}
+                    x2="63.5"
+                    x1="63.5"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeWidth={4}
+                    stroke="#fff"
+                    d="M25 20H50"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeWidth={4}
+                    stroke="#fff"
+                    d="M101 20H76"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeWidth={4}
+                    stroke="#fff"
+                    d="M16 30L50 30"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeWidth={4}
+                    stroke="#fff"
+                    d="M110 30L76 30"
+                  />
+                </svg>
 
-                  {/* Página que se anima */}
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 65 75"
-                    className={styles.bookPage}
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeWidth={4}
-                      stroke="#fff"
-                      d="M40 20H15"
-                    />
-                    <path
-                      strokeLinecap="round"
-                      strokeWidth={4}
-                      stroke="#fff"
-                      d="M49 30L15 30"
-                    />
-                    <path
-                      strokeWidth={3}
-                      stroke="#fff"
-                      d="M2.5 2.5H55C59.1421 2.5 62.5 5.85786 62.5 10V65C62.5 69.1421 59.1421 72.5 55 72.5H2.5V2.5Z"
-                    />
-                  </svg>
-                </span>
-              </button>
+                {/* Página animada */}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 65 75"
+                  fill="none"
+                  className={styles.bookPage}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeWidth={4}
+                    stroke="#fff"
+                    d="M40 20H15"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeWidth={4}
+                    stroke="#fff"
+                    d="M49 30L15 30"
+                  />
+                  <path
+                    strokeWidth={3}
+                    stroke="#fff"
+                    d="M2.5 2.5H55C59.1421 2.5 62.5 5.85786 62.5 10V65C62.5 69.1421 59.1421 72.5 55 72.5H2.5V2.5Z"
+                  />
+                </svg>
+              </span>
+            </button>
 
-              {showOnlyEnds ? (
-                <>
-                  {/* Solo portada */}
+            {/* Botones de páginas */}
+            {showOnlyEnds ? (
+              <>
+                <button
+                  type="button"
+                  className={`${styles.pageButton} ${page === 0 ? styles.pageButtonActive : ""
+                    }`}
+                  onClick={() => handleChangePage(0)}
+                >
+                  Portada
+                </button>
+                <button
+                  type="button"
+                  className={`${styles.pageButton} ${page === pages.length ? styles.pageButtonActive : ""
+                    }`}
+                  onClick={() => handleChangePage(pages.length)}
+                >
+                  Contraportada
+                </button>
+              </>
+            ) : (
+              <>
+                {pages.map((_, index) => (
                   <button
+                    key={index}
                     type="button"
-                    className={`${styles.pageButton} ${page === 0 ? styles.pageButtonActive : ""
+                    className={`${styles.pageButton} ${index === page ? styles.pageButtonActive : ""
                       }`}
-                    onClick={() => handleChangePage(0)}
+                    onClick={() => handleChangePage(index)}
                   >
-                    Portada
+                    {index === 0 ? "Portada" : `Página ${index}`}
                   </button>
+                ))}
 
-                  {/* Solo contraportada (página virtual = pages.length) */}
-                  <button
-                    type="button"
-                    className={`${styles.pageButton} ${page === pages.length ? styles.pageButtonActive : ""
-                      }`}
-                    onClick={() => handleChangePage(pages.length)}
-                  >
-                    Contraportada
-                  </button>
-                </>
-              ) : (
-                <>
-                  {/* Todas las páginas */}
-                  {pages.map((_, index) => (
-                    <button
-                      key={index}
-                      type="button"
-                      className={`${styles.pageButton} ${index === page ? styles.pageButtonActive : ""
-                        }`}
-                      onClick={() => handleChangePage(index)}
-                    >
-                      {index === 0 ? "Portada" : `Página ${index}`}
-                    </button>
-                  ))}
+                <button
+                  type="button"
+                  className={`${styles.pageButton} ${page === pages.length ? styles.pageButtonActive : ""
+                    }`}
+                  onClick={() => handleChangePage(pages.length)}
+                >
+                  Contraportada
+                </button>
+              </>
+            )}
+          </div>
+        </nav>
+      </div>
 
-                  <button
-                    type="button"
-                    className={`${styles.pageButton} ${page === pages.length ? styles.pageButtonActive : ""
-                      }`}
-                    onClick={() => handleChangePage(pages.length)}
-                  >
-                    Contraportada
-                  </button>
-                </>
-              )}
-            </div>
-          </nav>
-        </div>
-
-      {/* Cinta de texto horizontal */}
+      {/* Cinta de texto horizontal (ticker infinito) */}
       <div
         className={styles.tickerRoot}
         aria-label="Frases clave del Plan Estatal de Desarrollo"
       >
         <div className={styles.tickerInner}>
-          {/* Fila 1 */}
           <div className={styles.tickerRow}>
             <h1 className={`${styles.tickerTitle} ${styles.bold}`}>
               Actualización del Plan Estatal de Desarrollo 2025-2028
@@ -306,7 +298,7 @@ export const UI = ({ showOnlyEnds = false }) => {
             </h2>
           </div>
 
-          {/* Fila 2 (clon) */}
+          {/* Clon para efecto infinito */}
           <div className={`${styles.tickerRow} ${styles.tickerRowClone}`}>
             <h1 className={`${styles.tickerTitle} ${styles.bold}`}>
               Actualización del Plan Estatal de Desarrollo 2025-2028
