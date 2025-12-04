@@ -379,7 +379,7 @@ export default function PdfFlipbookClient() {
 
   return (
     <section className={styles.section}>
-      <div className={styles.viewer}>
+      <div className={styles.viewer} id="pdf-viewer" data-ped-viewer="true">
         <Document
           file="/pdf/Actualizacion_PED_2025_2028.pdf"
           onLoadSuccess={onDocumentLoadSuccess}

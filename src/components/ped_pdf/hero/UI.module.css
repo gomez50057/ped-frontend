@@ -1,17 +1,137 @@
+/* =========================================================
+   CONTENEDOR BASE
+   ========================================================= */
+
 .containerBase {
   width: 100vw;
   height: 100vh;
   position: relative;
-  overflow: hidden;
+  display: flex;
+  flex-direction: column-reverse;
+  /* Canvas arriba, UI abajo */
   background: radial-gradient(circle at top,
       #ffffff 0%,
       #f7f7f7 40%,
       #e6e6e9 100%);
-  display: flex;
-  flex-direction: column-reverse;
 }
 
-/* ===== Layout inferior: barra de páginas ===== */
+/* =========================================================
+   BOTÓN "LEER EL DOCUMENTO"
+   ========================================================= */
+
+.readmoreBtn {
+  width: fit-content;
+  height: 52px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 20px;
+
+  cursor: pointer;
+  border-radius: 999px;
+  border: 1px solid rgba(160, 33, 66, 0.9);
+
+  color: #2b161d;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+
+  box-shadow:
+    0 4px 10px rgba(0, 0, 0, 0.18),
+    0 0 0 1px rgba(255, 255, 255, 0.35);
+
+  transition:
+    transform 0.18s ease-out,
+    box-shadow 0.18s ease-out,
+    filter 0.2s ease-out,
+    background 0.25s ease-out,
+    border-color 0.2s ease-out;
+
+
+}
+
+
+.readmoreBtn:hover {
+  transform: translateY(-1px) scale(1.015);
+  filter: brightness(1.01);
+  border-color: rgba(105, 27, 50, 0.95);
+  box-shadow:
+    0 6px 14px rgba(0, 0, 0, 0.22),
+    0 0 0 1px rgba(255, 255, 255, 0.45);
+}
+
+.readmoreBtn:focus-visible {
+  outline: 2px solid #e9d4aa;
+  outline-offset: 3px;
+}
+
+.readmoreText {
+  min-width: 130px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #291417;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.45);
+}
+
+/* Icono libro + página */
+
+.bookWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  position: relative;
+  width: 42px;
+  height: 100%;
+  perspective: 600px;
+  /* efecto 3D para la página */
+}
+
+.bookIcon {
+  width: 100%;
+  height: auto;
+  fill: #5b2a45;
+  /* vino institucional */
+}
+
+.bookPage {
+  width: 52%;
+  height: auto;
+  position: absolute;
+  right: -1px;
+  transform-origin: left center;
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.25));
+}
+
+/* Animación de pasar página */
+
+@keyframes pagingBook {
+  0% {
+    transform: rotateY(0deg) skewY(0deg);
+  }
+
+  50% {
+    transform: rotateY(90deg) skewY(-18deg);
+  }
+
+  100% {
+    transform: rotateY(180deg) skewY(0deg);
+  }
+}
+
+.readmoreBtn:hover .bookPage {
+  animation: pagingBook 0.55s linear infinite;
+}
+
+/* =========================================================
+   BARRA INFERIOR: NAVEGACIÓN DE PÁGINAS
+   ========================================================= */
 
 .uiRoot {
   position: relative;
@@ -20,20 +140,16 @@
   z-index: 10;
   display: flex;
   justify-content: center;
-  pointer-events: none;
-  padding: 0.75rem 0 1.5rem 0;
+  padding: 0.75rem 0 1.5rem;
   margin-top: auto;
+  pointer-events: none;
 }
-
-/* ===== Navegación de páginas ===== */
 
 .controlsOuter {
   width: 100%;
   display: flex;
   justify-content: center;
   pointer-events: auto;
-  /* los botones sí son clickeables */
-  overflow: hidden;
 }
 
 .controlsScroller {
@@ -42,7 +158,6 @@
   gap: 1rem;
   max-width: 100%;
   padding: 0 2rem;
-  overflow-x: auto;
 }
 
 /* Botones de páginas */
@@ -56,9 +171,9 @@
   background: rgba(0, 0, 0, 0.75);
   color: #ffffff;
   cursor: pointer;
-  transition: all 0.25s ease;
   white-space: nowrap;
   flex-shrink: 0;
+  transition: all 0.25s ease;
 }
 
 .pageButton:hover {
@@ -72,7 +187,9 @@
   border-color: #a02142;
 }
 
-/* ===== Tira de texto (ticker) ===== */
+/* =========================================================
+   CINTA DE TEXTO (TICKER INFINITO)
+   ========================================================= */
 
 .tickerRoot {
   position: fixed;
@@ -82,17 +199,14 @@
   transform: rotate(-1.5deg);
   pointer-events: none;
   user-select: none;
-  /* Para estar encima del libro */
-  /* z-index: 5; */
 }
 
 .tickerInner {
   position: relative;
   width: 100%;
-  overflow: hidden;
 }
 
-/* Fila base */
+/* fila base */
 .tickerRow {
   position: relative;
   display: inline-flex;
@@ -103,7 +217,7 @@
   animation: ticker 45s linear infinite;
 }
 
-/* Clon que entra desde la derecha */
+/* clon que entra desde la derecha */
 .tickerRowClone {
   position: absolute;
   top: 0;
@@ -111,7 +225,7 @@
   animation-name: tickerAlt;
 }
 
-/* ===== Tipografías de la cinta (vino + dorado en degradado) ===== */
+/* Tipografías con degradado vino + dorado */
 
 .tickerTitle,
 .tickerSubtitle,
@@ -160,21 +274,22 @@
   font-weight: 800;
 }
 
-/* Texto con contorno tipo “marco” dorado */
+/* Texto con contorno dorado */
+
 .outline {
   color: transparent;
   -webkit-text-stroke: 1px #dec9a3;
   font-style: italic;
   font-size: clamp(2.6rem, 8vw, 6rem);
-
 }
 
-/* ===== Animación ===== */
+/* Animaciones del ticker */
 
 @keyframes ticker {
   0% {
     transform: translateX(0);
   }
+
   100% {
     transform: translateX(-100%);
   }
@@ -184,12 +299,15 @@
   0% {
     transform: translateX(100%);
   }
+
   100% {
     transform: translateX(0);
   }
 }
 
-/* ===== Responsivo ===== */
+/* =========================================================
+   RESPONSIVO
+   ========================================================= */
 
 @media (max-width: 768px) {
   .controlsScroller {
