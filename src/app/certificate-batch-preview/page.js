@@ -7,7 +7,7 @@ export default function PageReconocimientoMassive() {
       <MassiveBase
         backgroundBasePath="/img/reconocimiento/"
         backgroundOptions={[
-          ["Secretaria de edición", "EDUCACIÓN.jpg"],
+          ["Secretaria de Educación ", "EDUCACIÓN.jpg"],
           ["Instituto Tecnológico Superior del Oriente del Estado de Hidalgo", "ITESA.jpg"],
           ["Instituto Tecnológico Superior Huichapan", "ITESHU.jpg"],
           ["Instituto Tecnológico Superior del Occidente del Estado de Hidalgo", "ITSOEH.jpg"],
@@ -15,12 +15,13 @@ export default function PageReconocimientoMassive() {
           ["Universidad Autónoma del Estado de Hidalgo", "UAEH.jpg"],
           ["Universidad Politécnica de Pachuca", "UPP.jpg"],
           ["Universidad Politécnica de Tulancingo", "UPT.jpg"],
-          ["Universidad Tecnológica de Huejotzingo", "UTHH.jpg"],
+          ["Universidad Tecnológica de la Huasteca Hidalguense", "UTHH.jpg"],
           ["Universidad Tecnologica Sierra Hidalguense", "UTSH.jpg"],
           ["Universidad Tecnológica de Tula-Tepeji", "UTTT.jpg"],
           ["Universidad Tecnológica del Valle del Mezquital", "UTVM.jpg"],
           ["Universidad Tecnológica Minera de Zimapán", "UTMZ.jpg"],
           ["Universidad Tecnológica de la Zona Metropolitana del Valle de México", "UTVAM.jpg"],
+          ["Gobierno Municipal de Tepeji del Río", "TEPEJI_GOB.jpg"],
         ]}
         dateOptions={[
           "2025-09-29",
@@ -56,7 +57,8 @@ export default function PageReconocimientoMassive() {
           "2025-11-25",
           "2025-11-26",
           "2025-11-27",
-          "2025-11-28"
+          "2025-11-28",
+          "2025-12-18"
         ]}
         municipioOptions={municipiosDeHidalgo}
       // Fecha fija en el certificado:

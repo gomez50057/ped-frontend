@@ -8,6 +8,7 @@ export const municipiosDeHidalgo = [
   'Mixquiahuala de Juárez',
   'Pachuca de Soto',
   'San Agustín Tlaxiaca',
+  'Tepeji del Río de Ocampo',
   'Tizayuca',
   'Tula de Allende',
   'Tulancingo de Bravo',
