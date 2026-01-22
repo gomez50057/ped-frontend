@@ -14,7 +14,7 @@ const pictures = [
   "C7",
   "C8",
   "C9",
-  "C10"
+  "C10",
 ];
 
 export const pageAtom = atom(0);
@@ -39,6 +39,10 @@ pages.push({
   back: "book-back",
 });
 
+const MIN_PAGE = 0;
+const MAX_PAGE = pages.length; // índice especial para "Contraportada"
+const FLIP_LOCK_MS = 600; // bloqueo corto para evitar bug visual al spamear
+
 /**
  * showOnlyEnds = true  -> solo Portada / Contraportada
  * showOnlyEnds = false -> todas las páginas
@@ -47,6 +51,8 @@ export const UI = ({ showOnlyEnds = false }) => {
   const [page, setPage] = useAtom(pageAtom);
 
   const audioRef = useRef(null);
+  const prevPageRef = useRef(page);
+  const flipLockRef = useRef(false);
 
   // Cargar audio una sola vez en cliente
   useEffect(() => {
@@ -54,36 +60,66 @@ export const UI = ({ showOnlyEnds = false }) => {
     audioRef.current = new Audio("/audio/page-flip-01a.mp3");
   }, []);
 
-  // Sonido de pasar página
+  // Sonido de pasar página (se dispara en un efecto, no en cada handler)
   const playFlipSound = useCallback(() => {
     const audio = audioRef.current;
     if (!audio) return;
     try {
       audio.currentTime = 0;
-      audio.play().catch(() => { });
+      audio.play().catch(() => {
+        // ignoramos errores de autoplay
+      });
     } catch {
-      // ignoramos errores de autoplay
+      // silenciosamente
     }
   }, []);
 
-  const handleChangePage = (nextPage) => {
-    if (nextPage === page) return;
-    setPage(nextPage);
+  // Cada vez que cambie `page`, reproducir sonido
+  useEffect(() => {
+    if (prevPageRef.current === page) return; // primera vez o sin cambios
+    prevPageRef.current = page;
     playFlipSound();
-  };
+  }, [page, playFlipSound]);
+
+  // Función central para cambiar de página con clamp + throttle
+  const requestPageChange = useCallback(
+    (targetPage) => {
+      // clamp
+      const nextPage = Math.max(MIN_PAGE, Math.min(MAX_PAGE, targetPage));
+
+      if (nextPage === page) return;
+
+      // pequeño “lock” para evitar que muchos clics seguidos bugueen el efecto
+      if (flipLockRef.current) return;
+      flipLockRef.current = true;
+
+      setPage(nextPage);
+
+      // liberar el lock pasado un tiempo aproximado al flip
+      setTimeout(() => {
+        flipLockRef.current = false;
+      }, FLIP_LOCK_MS);
+    },
+    [page, setPage]
+  );
 
   // helpers para siguiente / anterior
   const handlePrev = () => {
-    const minPage = 0;
-    const prev = page - 1 < minPage ? minPage : page - 1;
-    handleChangePage(prev);
+    requestPageChange(page - 1);
   };
 
   const handleNext = () => {
-    const maxPage = pages.length; // último índice = Contraportada
-    const next = page + 1 > maxPage ? maxPage : page + 1;
-    handleChangePage(next);
+    requestPageChange(page + 1);
   };
+
+  // helper de clases para botón activo
+  const getPageButtonClass = useCallback(
+    (targetPage) =>
+      `${styles.pageButton} ${
+        page === targetPage ? styles.pageButtonActive : ""
+      }`,
+    [page]
+  );
 
   // Scroll suave con easing
   const animateScrollTo = (targetY, duration = 1400) => {
@@ -97,7 +133,7 @@ export const UI = ({ showOnlyEnds = false }) => {
       t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
 
     const step = (timestamp) => {
-      if (!startTime) startTime = timestamp;
+      if (startTime === null) startTime = timestamp;
       const elapsed = timestamp - startTime;
       const progress = Math.min(elapsed / duration, 1);
       const eased = easeInOutQuad(progress);
@@ -238,15 +274,15 @@ export const UI = ({ showOnlyEnds = false }) => {
               <>
                 <button
                   type="button"
-                  className={`${styles.pageButton} ${page === 0 ? styles.pageButtonActive : ""}`}
-                  onClick={() => handleChangePage(0)}
+                  className={getPageButtonClass(0)}
+                  onClick={() => requestPageChange(0)}
                 >
                   Portada
                 </button>
                 <button
                   type="button"
-                  className={`${styles.pageButton} ${page === pages.length ? styles.pageButtonActive : ""}`}
-                  onClick={() => handleChangePage(pages.length)}
+                  className={getPageButtonClass(MAX_PAGE)}
+                  onClick={() => requestPageChange(MAX_PAGE)}
                 >
                   Contraportada
                 </button>
@@ -257,9 +293,8 @@ export const UI = ({ showOnlyEnds = false }) => {
                   <button
                     key={index}
                     type="button"
-                    className={`${styles.pageButton} ${index === page ? styles.pageButtonActive : ""
-                      }`}
-                    onClick={() => handleChangePage(index)}
+                    className={getPageButtonClass(index)}
+                    onClick={() => requestPageChange(index)}
                   >
                     {index === 0 ? "Portada" : `Página ${index}`}
                   </button>
@@ -267,8 +302,8 @@ export const UI = ({ showOnlyEnds = false }) => {
 
                 <button
                   type="button"
-                  className={`${styles.pageButton} ${page === pages.length ? styles.pageButtonActive : ""}`}
-                  onClick={() => handleChangePage(pages.length)}
+                  className={getPageButtonClass(MAX_PAGE)}
+                  onClick={() => requestPageChange(MAX_PAGE)}
                 >
                   Contraportada
                 </button>
