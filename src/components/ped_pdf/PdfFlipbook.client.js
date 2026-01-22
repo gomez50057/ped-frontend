@@ -15,7 +15,7 @@ import styles from "./PdfFlipbook.module.css";
  * ============================================
  */
 
-// Fuente única del PDF (evita duplicar strings en Document y en Descargar)
+// Fuente única del PDF (evita duplicar strings)
 const PDF_FILE = "/pdf/Actualizacion_PED_2025_2028.pdf";
 const PDF_DOWNLOAD_NAME = "Actualizacion_PED_2025_2028.pdf";
 
@@ -37,42 +37,60 @@ const FLIP_LOCK_MS = 900;
 
 /**
  * ============================================
+ * OPTIMIZACIÓN PARA PDF PESADO (SIN “REINICIO”)
+ * ============================================
+ * 1) Render Window: renderiza solo páginas cercanas a la actual (±N).
+ * 2) Placeholder: evita pantalla blanca mientras PDF.js pinta el canvas.
+ * 3) Retry controlado + Watchdog: si una página falla o se queda “en blanco”, forzamos re-render
+ *    SOLO de esa página (sin repintar todo el libro en cada flip).
+ */
+
+const RENDER_WINDOW = 3; // actual ± 3 (ajusta 2..5 según potencia)
+
+const PAGE_MAX_RETRIES = 2;
+const PAGE_RETRY_DELAY_MS = 250;
+const PAGE_RENDER_TIMEOUT_MS = 3500;
+
+/**
+ * ============================================
  * COMPONENTE DE PÁGINA PARA FLIPBOOK
- * - Incluye lupa (limitada a laptop desde el padre)
- * - Optimiza eventos de movimiento con requestAnimationFrame
- * - Ajusta límites para que la lupa no se salga del contenedor
+ * - Soporta render window (shouldRender)
+ * - Incluye lupa (solo si enableMagnifier)
+ * - Placeholder y retry para páginas pesadas
+ * - Throttle de movimiento de lupa con requestAnimationFrame
  * ============================================
  */
 const BookPage = React.forwardRef(function BookPage(
-  { pageNumber, pageWidth, enableMagnifier = false },
+  { pageNumber, pageWidth, enableMagnifier = false, shouldRender = true },
   forwardedRef
 ) {
   const localRef = useRef(null);
 
-  // Posición del cursor dentro de la página (coordenadas locales)
+  // Lupa
   const [lensPos, setLensPos] = useState({ x: 0, y: 0 });
   const [showLens, setShowLens] = useState(false);
 
-  // Throttle con requestAnimationFrame para evitar re-render por cada pixel de movimiento
+  // Throttle pointer move
   const rafIdRef = useRef(null);
   const pendingPosRef = useRef(null);
 
+  // Retry
+  const [retryKey, setRetryKey] = useState(0);
+  const retryCountRef = useRef(0);
+
+  // Watchdog render (anti “página en blanco” colgada)
+  const renderTimeoutRef = useRef(null);
+
   const setRefs = (node) => {
     localRef.current = node;
-    if (typeof forwardedRef === "function") {
-      forwardedRef(node);
-    } else if (forwardedRef) {
-      forwardedRef.current = node;
-    }
+    if (typeof forwardedRef === "function") forwardedRef(node);
+    else if (forwardedRef) forwardedRef.current = node;
   };
 
-  // Limpieza del RAF al desmontar
   useEffect(() => {
     return () => {
-      if (rafIdRef.current) {
-        cancelAnimationFrame(rafIdRef.current);
-        rafIdRef.current = null;
-      }
+      if (rafIdRef.current) cancelAnimationFrame(rafIdRef.current);
+      if (renderTimeoutRef.current) clearTimeout(renderTimeoutRef.current);
     };
   }, []);
 
@@ -82,29 +100,18 @@ const BookPage = React.forwardRef(function BookPage(
 
     rafIdRef.current = requestAnimationFrame(() => {
       rafIdRef.current = null;
-      if (pendingPosRef.current) {
-        setLensPos(pendingPosRef.current);
-      }
+      if (pendingPosRef.current) setLensPos(pendingPosRef.current);
     });
   };
 
-  /**
-   * Nota: usamos Pointer Events para que funcione bien en distintos dispositivos.
-   * Aunque la lupa la limitamos a laptop, Pointer Events sigue siendo correcto.
-   */
   const handleMove = (e) => {
     if (!enableMagnifier || !localRef.current) return;
 
     const rect = localRef.current.getBoundingClientRect();
-
-    // Coordenadas locales dentro de la página
     let x = e.clientX - rect.left;
     let y = e.clientY - rect.top;
 
-    /**
-     * Clamp VISUAL: aseguramos que el centro de la lupa no acerque el borde fuera del contenedor.
-     * Esto evita que la lupa “se corte” en el borde de la página.
-     */
+    // Clamp visual (evita que el círculo se corte por borde)
     const minLensCenterX = LENS_SIZE / 2;
     const maxLensCenterX = rect.width - LENS_SIZE / 2;
     const minLensCenterY = LENS_SIZE / 2;
@@ -126,10 +133,52 @@ const BookPage = React.forwardRef(function BookPage(
     setShowLens(false);
   };
 
-  /**
-   * Offset para que el punto (x,y) quede en el centro de la lupa.
-   * Estamos renderizando una “copia” de la página escalada dentro de la lupa.
-   */
+  const stopRenderWatchdog = () => {
+    if (renderTimeoutRef.current) {
+      clearTimeout(renderTimeoutRef.current);
+      renderTimeoutRef.current = null;
+    }
+  };
+
+  const forceRetry = () => {
+    if (retryCountRef.current >= PAGE_MAX_RETRIES) return;
+    retryCountRef.current += 1;
+
+    stopRenderWatchdog();
+
+    setTimeout(() => {
+      setRetryKey((k) => k + 1);
+    }, PAGE_RETRY_DELAY_MS);
+  };
+
+  const startRenderWatchdog = () => {
+    stopRenderWatchdog();
+    renderTimeoutRef.current = setTimeout(() => {
+      // si no confirmó onRenderSuccess en X ms, reintenta
+      forceRetry();
+    }, PAGE_RENDER_TIMEOUT_MS);
+  };
+
+  // Arranca watchdog cuando esta página entra a renderizarse (sin repintar todo el libro)
+  useEffect(() => {
+    if (!shouldRender) return;
+    startRenderWatchdog();
+    return () => stopRenderWatchdog();
+    // Se rearma en cada retryKey/pageWidth/pageNumber
+  }, [shouldRender, pageNumber, pageWidth, retryKey]);
+
+  // Si está fuera de ventana: placeholder ligero (evita sobrecarga)
+  if (!shouldRender) {
+    return (
+      <div ref={setRefs} className={styles.page}>
+        <div className={styles.pagePlaceholder}>
+          <p className={styles.pagePlaceholderText}>Cargando…</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Offset para que (x,y) quede al centro del lente
   const offsetLeft = LENS_SIZE / 2 - lensPos.x * LENS_ZOOM;
   const offsetTop = LENS_SIZE / 2 - lensPos.y * LENS_ZOOM;
 
@@ -141,20 +190,24 @@ const BookPage = React.forwardRef(function BookPage(
       onPointerEnter={handleEnter}
       onPointerLeave={handleLeave}
     >
-      {/* Página “normal” */}
+      {/* Página normal */}
       <PdfPage
+        key={`p-${pageNumber}-${pageWidth}-${retryKey}`}
         pageNumber={pageNumber}
         width={pageWidth}
         renderTextLayer={false}
         renderAnnotationLayer={false}
-        /**
-         * devicePixelRatio=1 reduce el costo de render en algunos equipos
-         * (puedes subirlo a 1.5 si quieres más nitidez).
-         */
         devicePixelRatio={1}
+        loading={
+          <div className={styles.pagePlaceholder}>
+            <p className={styles.pagePlaceholderText}>Renderizando página…</p>
+          </div>
+        }
+        onRenderError={forceRetry}
+        onRenderSuccess={stopRenderWatchdog}
       />
 
-      {/* Lupa (solo si enableMagnifier y el puntero está dentro) */}
+      {/* Lupa */}
       {enableMagnifier && showLens && (
         <div
           className={styles.magnifier}
@@ -163,10 +216,6 @@ const BookPage = React.forwardRef(function BookPage(
             height: `${LENS_SIZE}px`,
             left: `${lensPos.x - LENS_SIZE / 2}px`,
             top: `${lensPos.y - LENS_SIZE / 2}px`,
-            /**
-             * Importante: que la lupa NO capture eventos para no interferir
-             * con la detección del movimiento.
-             */
             pointerEvents: "none",
           }}
         >
@@ -180,11 +229,13 @@ const BookPage = React.forwardRef(function BookPage(
             }}
           >
             <PdfPage
+              key={`m-${pageNumber}-${pageWidth}-${retryKey}`}
               pageNumber={pageNumber}
               width={pageWidth}
               renderTextLayer={false}
               renderAnnotationLayer={false}
               devicePixelRatio={1}
+              onRenderError={forceRetry}
             />
           </div>
         </div>
@@ -194,11 +245,6 @@ const BookPage = React.forwardRef(function BookPage(
 });
 
 export default function PdfFlipbookClient() {
-  /**
-   * ============================================
-   * STATE PRINCIPAL
-   * ============================================
-   */
   const [numPages, setNumPages] = useState(null);
   const [pageWidth, setPageWidth] = useState(0);
   const [pageHeight, setPageHeight] = useState(0);
@@ -206,10 +252,10 @@ export default function PdfFlipbookClient() {
 
   const [isFlipping, setIsFlipping] = useState(false);
   const [mode, setMode] = useState("cover"); // "cover" | "book" | "backCover"
-  const [currentInteriorIndex, setCurrentInteriorIndex] = useState(0); // índice 0-based de páginas interiores
-  const [bookStartIndex, setBookStartIndex] = useState(0); // desde dónde abre el flipbook
+  const [currentInteriorIndex, setCurrentInteriorIndex] = useState(0);
+  const [bookStartIndex, setBookStartIndex] = useState(0);
 
-  // Lupa ON/OFF (preferencia del usuario). Efectiva solo en laptop.
+  // Lupa ON/OFF (solo laptop)
   const [magnifierEnabled, setMagnifierEnabled] = useState(false);
 
   // Sonido
@@ -217,56 +263,26 @@ export default function PdfFlipbookClient() {
 
   const bookRef = useRef(null);
 
-  // sonidos de pasar página (3 variantes)
-  const flipSoundsRef = useRef([]); // Array<Audio>
-  const flipSoundIndexRef = useRef(0); // para ir rotando
+  // sonidos
+  const flipSoundsRef = useRef([]);
+  const flipSoundIndexRef = useRef(0);
   const lastStateRef = useRef("read");
 
-  // Lock para evitar spam de clics durante la animación
+  // Lock de flip
   const [isFlipLocked, setIsFlipLocked] = useState(false);
   const flipLockTimeoutRef = useRef(null);
 
-  /**
-   * ============================================
-   * UTILIDADES
-   * ============================================
-   */
-
-  const toggleMute = () => setIsMuted((prev) => !prev);
-
-  // Evita capturar flechas cuando el usuario está escribiendo en inputs (UX)
-  const isTypingTarget = (el) => {
-    if (!el) return false;
-    const tag = el.tagName?.toLowerCase();
-    return (
-      tag === "input" ||
-      tag === "textarea" ||
-      tag === "select" ||
-      el.isContentEditable
-    );
-  };
-
-  /**
-   * ============================================
-   * EFECTOS DE CICLO DE VIDA
-   * ============================================
-   */
-
-  // Limpieza del timeout al desmontar
   useEffect(() => {
     return () => {
-      if (flipLockTimeoutRef.current) {
-        clearTimeout(flipLockTimeoutRef.current);
-      }
+      if (flipLockTimeoutRef.current) clearTimeout(flipLockTimeoutRef.current);
     };
   }, []);
 
-  // Pre-cargar sonidos solo en cliente
+  // Precargar sonidos
   useEffect(() => {
     if (typeof window === "undefined") return;
 
     const sources = ["/audio/flip1.mp3", "/audio/flip2.mp3", "/audio/flip3.mp3"];
-
     const audios = sources.map((src) => {
       const a = new Audio(src);
       a.volume = 0.5;
@@ -294,11 +310,25 @@ export default function PdfFlipbookClient() {
       audio.currentTime = 0;
       void audio.play();
     } catch {
-      // Algunos navegadores bloquean autoplay sin interacción: no es crítico.
+      // ignore
     }
   };
 
-  // Calcula tamaño de página según viewport
+  const toggleMute = () => setIsMuted((prev) => !prev);
+
+  // Evita capturar flechas si escriben en inputs
+  const isTypingTarget = (el) => {
+    if (!el) return false;
+    const tag = el.tagName?.toLowerCase();
+    return (
+      tag === "input" ||
+      tag === "textarea" ||
+      tag === "select" ||
+      el.isContentEditable
+    );
+  };
+
+  // Calcular tamaños según viewport
   useEffect(() => {
     function handleResize() {
       if (typeof window === "undefined") return;
@@ -310,22 +340,12 @@ export default function PdfFlipbookClient() {
       setIsLaptop(laptop);
 
       let newPageWidth;
+      if (laptop) newPageWidth = (w * 0.8) / 2;
+      else newPageWidth = w * 0.9;
 
-      if (laptop) {
-        // En laptop/desktop: el LIBRO (2 páginas) ~80% del ancho total
-        newPageWidth = (w * 0.8) / 2;
-      } else {
-        // En móvil/tablet: una página ~90% del ancho
-        newPageWidth = w * 0.9;
-      }
-
-      // Límite superior para no “inflar” en pantallas enormes
       newPageWidth = Math.min(newPageWidth, 700);
 
-      // Altura por relación de aspecto
       const rawPageHeight = newPageWidth * ASPECT_RATIO;
-
-      // Máximo: 96% de altura de ventana
       const maxPageHeight = h * 0.96;
       const newPageHeight = Math.min(rawPageHeight, maxPageHeight);
 
@@ -342,13 +362,13 @@ export default function PdfFlipbookClient() {
     setNumPages(numPages);
     setCurrentInteriorIndex(0);
     setBookStartIndex(0);
-    setMode("cover"); // siempre arrancamos en portada
+    setMode("cover");
   }
 
   const totalPages = numPages || 0;
-  const hasInteriorPages = totalPages > 2 ? totalPages - 2 : 0; // quitamos portada (1) y contra (N)
+  const hasInteriorPages = totalPages > 2 ? totalPages - 2 : 0;
 
-  // Navegación con teclado (cuando hay contenido navegable)
+  // Teclado
   useEffect(() => {
     if (!numPages) return;
 
@@ -356,11 +376,8 @@ export default function PdfFlipbookClient() {
       if (isFlipLocked) return;
       if (isTypingTarget(document.activeElement)) return;
 
-      if (e.key === "ArrowRight") {
-        handleNext();
-      } else if (e.key === "ArrowLeft") {
-        handlePrev();
-      }
+      if (e.key === "ArrowRight") handleNext();
+      else if (e.key === "ArrowLeft") handlePrev();
     }
 
     window.addEventListener("keydown", handleKeyDown);
@@ -368,16 +385,15 @@ export default function PdfFlipbookClient() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mode, numPages, currentInteriorIndex, hasInteriorPages, isFlipLocked]);
 
-  // Evento al cambiar de hoja en el flipbook interior
   function handleFlip(e) {
-    // e.data es el índice 0-based dentro del flipbook interior
+    // IMPORTANTE: no forzamos repintado global aquí (evita “reinicios”)
     setCurrentInteriorIndex(e.data);
   }
 
   function handleChangeState(e) {
-    const state = e.data; // "user_fold" | "fold_corner" | "flipping" | "read"
+    const state = e.data;
 
-    // Sonido al entrar a estado "flipping" (no duplicar si ya estaba flipping)
+    // sonido al entrar a flipping
     if (state === "flipping" && lastStateRef.current !== "flipping") {
       playFlipSound();
     }
@@ -385,20 +401,16 @@ export default function PdfFlipbookClient() {
 
     if (state === "flipping" || state === "user_fold") {
       setIsFlipping(true);
-
-      // Bloquear interacciones mientras dura la animación
       setIsFlipLocked(true);
 
       if (typeof window !== "undefined") {
         if (flipLockTimeoutRef.current) clearTimeout(flipLockTimeoutRef.current);
-
         flipLockTimeoutRef.current = window.setTimeout(() => {
           setIsFlipLocked(false);
         }, FLIP_LOCK_MS);
       }
     } else {
       setIsFlipping(false);
-      // El lock se libera por timeout, no aquí (evita flicker)
     }
   }
 
@@ -410,15 +422,13 @@ export default function PdfFlipbookClient() {
       const api = bookRef.current.pageFlip?.();
       if (!api) return;
 
-      if (currentInteriorIndex === 0) {
-        // Primera interior → regresar a portada
+      if (currentInteriorIndex <= 0) {
         setMode("cover");
         playFlipSound();
       } else {
         api.flipPrev();
       }
     } else if (mode === "backCover") {
-      // Contra → volver al libro (última interior)
       if (hasInteriorPages > 0) {
         setBookStartIndex(hasInteriorPages - 1);
         setMode("book");
@@ -434,13 +444,11 @@ export default function PdfFlipbookClient() {
     if (isFlipLocked) return;
 
     if (mode === "cover") {
-      // Portada → abrir libro en primera interior
       if (hasInteriorPages > 0) {
         setBookStartIndex(0);
         setMode("book");
         playFlipSound();
       } else if (totalPages > 1) {
-        // PDF de 2 páginas sin interiores → contra
         setMode("backCover");
         playFlipSound();
       }
@@ -449,8 +457,7 @@ export default function PdfFlipbookClient() {
       const api = bookRef.current.pageFlip?.();
       if (!api) return;
 
-      if (currentInteriorIndex === hasInteriorPages - 1) {
-        // Última interior → contra
+      if (currentInteriorIndex >= hasInteriorPages - 1) {
         setMode("backCover");
         playFlipSound();
       } else {
@@ -459,11 +466,7 @@ export default function PdfFlipbookClient() {
     }
   };
 
-  /**
-   * ============================================
-   * EARLY RETURN (mientras se calcula tamaño)
-   * ============================================
-   */
+  // Sin tamaño calculado
   if (!pageWidth || !pageHeight) {
     return (
       <section className={styles.section}>
@@ -473,27 +476,21 @@ export default function PdfFlipbookClient() {
     );
   }
 
-  /**
-   * ============================================
-   * DERIVADOS PARA RENDER
-   * ============================================
-   */
-
-  // En laptop: el wrapper del libro será el doble; en móvil una página
+  // wrapper libro: 2 páginas en laptop, 1 en móvil
   const wrapperWidth = isLaptop ? pageWidth * 2 : pageWidth;
 
-  // Página mostrada para el indicador, según el modo
+  // indicador
   let currentDisplayPage = 1;
   if (mode === "cover") currentDisplayPage = 1;
-  else if (mode === "book") currentDisplayPage = currentInteriorIndex + 2; // interiores empiezan en la 2
+  else if (mode === "book") currentDisplayPage = currentInteriorIndex + 2;
   else if (mode === "backCover") currentDisplayPage = totalPages || 1;
 
   const hasLoaded = !!numPages;
 
-  // Limitar la lupa a laptop únicamente (requisito)
+  // Lupa solo laptop
   const magnifierEffective = magnifierEnabled && isLaptop;
 
-  // Efecto visual del grosor (solo en libro)
+  // “grosor”
   let leftStackCount = 0;
   let rightStackCount = 0;
 
@@ -514,16 +511,11 @@ export default function PdfFlipbookClient() {
           file={PDF_FILE}
           onLoadSuccess={onDocumentLoadSuccess}
           loading={<p className={styles.status}>Cargando PED…</p>}
-          error={
-            <p className={styles.statusError}>
-              No se pudo cargar el archivo PED.
-            </p>
-          }
+          error={<p className={styles.statusError}>No se pudo cargar el archivo PED.</p>}
         >
           {!hasLoaded ? (
             <p className={styles.status}>Preparando páginas…</p>
           ) : totalPages === 1 ? (
-            // PDF de 1 sola página
             <div
               className={styles.singleCoverWrapper}
               style={{ width: pageWidth, height: pageHeight }}
@@ -533,11 +525,11 @@ export default function PdfFlipbookClient() {
                   pageNumber={1}
                   pageWidth={pageWidth}
                   enableMagnifier={magnifierEffective}
+                  shouldRender={true}
                 />
               </div>
             </div>
           ) : mode === "cover" ? (
-            // 1) PORTADA (hoja única)
             <div
               className={styles.singleCoverWrapper}
               style={{ width: pageWidth, height: pageHeight }}
@@ -547,6 +539,7 @@ export default function PdfFlipbookClient() {
                   pageNumber={1}
                   pageWidth={pageWidth}
                   enableMagnifier={magnifierEffective}
+                  shouldRender={true}
                 />
                 <button
                   type="button"
@@ -560,7 +553,6 @@ export default function PdfFlipbookClient() {
               </div>
             </div>
           ) : mode === "backCover" ? (
-            // 2) CONTRA-PORTADA (hoja única)
             <div
               className={styles.singleCoverWrapper}
               style={{ width: pageWidth, height: pageHeight }}
@@ -570,6 +562,7 @@ export default function PdfFlipbookClient() {
                   pageNumber={totalPages}
                   pageWidth={pageWidth}
                   enableMagnifier={magnifierEffective}
+                  shouldRender={true}
                 />
                 <button
                   type="button"
@@ -582,12 +575,12 @@ export default function PdfFlipbookClient() {
                   ‹
                 </button>
               </div>
+
               <div className={styles.pageIndicator}>
                 Página {currentDisplayPage} de {totalPages}
               </div>
             </div>
           ) : hasInteriorPages > 0 ? (
-            // 3) LIBRO ABIERTO: interiores (2..N-1)
             <div
               className={`${styles.bookWrapper} ${isFlipping ? styles.bookWrapperFlipping : ""
                 }`}
@@ -606,11 +599,7 @@ export default function PdfFlipbookClient() {
                 height={pageHeight}
                 size="fixed"
                 showCover={false}
-                /**
-                 * Mejora clave:
-                 * - En laptop queremos “book view” (2 páginas).
-                 * - En móvil/tablet queremos “portrait” (1 página).
-                 */
+                // laptop: “book view” (2 páginas), móvil: 1 página
                 usePortrait={!isLaptop}
                 flippingTime={1200}
                 drawShadow={true}
@@ -625,17 +614,22 @@ export default function PdfFlipbookClient() {
                 onFlip={handleFlip}
                 onChangeState={handleChangeState}
               >
-                {Array.from({ length: hasInteriorPages }, (_, index) => (
-                  <BookPage
-                    key={index + 2}
-                    pageNumber={index + 2} // páginas 2..numPages-1 del PDF
-                    pageWidth={pageWidth}
-                    enableMagnifier={magnifierEffective}
-                  />
-                ))}
+                {Array.from({ length: hasInteriorPages }, (_, index) => {
+                  const shouldRender =
+                    Math.abs(index - currentInteriorIndex) <= RENDER_WINDOW;
+
+                  return (
+                    <BookPage
+                      key={index + 2}
+                      pageNumber={index + 2}
+                      pageWidth={pageWidth}
+                      enableMagnifier={magnifierEffective}
+                      shouldRender={shouldRender}
+                    />
+                  );
+                })}
               </HTMLFlipBook>
 
-              {/* Controles de navegación dentro del libro */}
               <button
                 type="button"
                 className={`${styles.navButton} ${styles.navButtonLeft}`}
@@ -662,7 +656,6 @@ export default function PdfFlipbookClient() {
               </div>
             </div>
           ) : (
-            // Caso raro: 2 páginas sin interiores
             <div
               className={styles.singleCoverWrapper}
               style={{ width: pageWidth, height: pageHeight }}
@@ -672,6 +665,7 @@ export default function PdfFlipbookClient() {
                   pageNumber={1}
                   pageWidth={pageWidth}
                   enableMagnifier={magnifierEffective}
+                  shouldRender={true}
                 />
               </div>
             </div>
@@ -687,10 +681,6 @@ export default function PdfFlipbookClient() {
                 }`}
               onClick={() => setMagnifierEnabled((v) => !v)}
               aria-pressed={magnifierEffective}
-              /**
-               * Requisito: la lupa solo funciona en laptop.
-               * Por UX, deshabilitamos el botón en pantallas no-laptop.
-               */
               disabled={!isLaptop}
               title={
                 !isLaptop
@@ -713,7 +703,6 @@ export default function PdfFlipbookClient() {
             {isMuted ? "🔇 Sonido" : "🔊 Sonido"}
           </button>
 
-          {/* Descargar PED */}
           <a
             className={styles.iconButton}
             href={PDF_FILE}

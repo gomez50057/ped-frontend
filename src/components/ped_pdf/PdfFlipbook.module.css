@@ -515,6 +515,19 @@
   outline-offset: 3px;
 }
 
+.pagePlaceholder {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  background: rgba(0, 0, 0, 0.03);
+}
+
+.pagePlaceholderText {
+  opacity: 0.75;
+  font-size: 0.95rem;
+}
+
 /* ---------------- RESPONSIVO ---------------- */
 
 @media (max-width: 768px) {
