@@ -147,8 +147,7 @@ export const UI = ({ showOnlyEnds = false }) => {
   // helper de clases para botón activo
   const getPageButtonClass = useCallback(
     (targetPage) =>
-      `${styles.pageButton} ${
-        page === targetPage ? styles.pageButtonActive : ""
+      `${styles.pageButton} ${page === targetPage ? styles.pageButtonActive : ""
       }`,
     [page]
   );
