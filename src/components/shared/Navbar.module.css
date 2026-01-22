@@ -130,6 +130,11 @@
   transition: max-height 0.3s ease-in-out;
 }
 
+.dropdown:hover .dropdownMenu {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
 /* */
 /* Dropdown Hover Desktop */
 /* */
