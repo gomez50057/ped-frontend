@@ -5,22 +5,16 @@ import { useEffect, useRef, useCallback } from "react";
 import styles from "./UI.module.css";
 
 const pictures = [
-  "DSC00680",
-  "DSC00933",
-  "DSC00966",
-  "DSC00983",
-  "DSC01011",
-  "DSC01040",
-  "DSC01064",
-  "DSC01071",
-  "DSC01103",
-  "DSC01145",
-  "DSC01420",
-  "DSC01461",
-  "DSC01489",
-  "DSC02031",
-  "DSC02064",
-  "DSC02069",
+  "C1",
+  "C2",
+  "C3",
+  "C4",
+  "C5",
+  "C6",
+  "C7",
+  "C8",
+  "C9",
+  "C10"
 ];
 
 export const pageAtom = atom(0);
@@ -76,6 +70,19 @@ export const UI = ({ showOnlyEnds = false }) => {
     if (nextPage === page) return;
     setPage(nextPage);
     playFlipSound();
+  };
+
+  // helpers para siguiente / anterior
+  const handlePrev = () => {
+    const minPage = 0;
+    const prev = page - 1 < minPage ? minPage : page - 1;
+    handleChangePage(prev);
+  };
+
+  const handleNext = () => {
+    const maxPage = pages.length; // último índice = Contraportada
+    const next = page + 1 > maxPage ? maxPage : page + 1;
+    handleChangePage(next);
   };
 
   // Scroll suave con easing
@@ -217,21 +224,28 @@ export const UI = ({ showOnlyEnds = false }) => {
               </span>
             </button>
 
+            {/* Botón Anterior */}
+            <button
+              type="button"
+              className={styles.pageButtonNav}
+              onClick={handlePrev}
+            >
+              ⟨ Anterior
+            </button>
+
             {/* Botones de páginas */}
             {showOnlyEnds ? (
               <>
                 <button
                   type="button"
-                  className={`${styles.pageButton} ${page === 0 ? styles.pageButtonActive : ""
-                    }`}
+                  className={`${styles.pageButton} ${page === 0 ? styles.pageButtonActive : ""}`}
                   onClick={() => handleChangePage(0)}
                 >
                   Portada
                 </button>
                 <button
                   type="button"
-                  className={`${styles.pageButton} ${page === pages.length ? styles.pageButtonActive : ""
-                    }`}
+                  className={`${styles.pageButton} ${page === pages.length ? styles.pageButtonActive : ""}`}
                   onClick={() => handleChangePage(pages.length)}
                 >
                   Contraportada
@@ -253,14 +267,22 @@ export const UI = ({ showOnlyEnds = false }) => {
 
                 <button
                   type="button"
-                  className={`${styles.pageButton} ${page === pages.length ? styles.pageButtonActive : ""
-                    }`}
+                  className={`${styles.pageButton} ${page === pages.length ? styles.pageButtonActive : ""}`}
                   onClick={() => handleChangePage(pages.length)}
                 >
                   Contraportada
                 </button>
               </>
             )}
+
+            {/* Botón Siguiente */}
+            <button
+              type="button"
+              className={styles.pageButtonNav}
+              onClick={handleNext}
+            >
+              Siguiente ⟩
+            </button>
           </div>
         </nav>
       </div>

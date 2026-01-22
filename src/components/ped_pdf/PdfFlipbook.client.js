@@ -339,7 +339,7 @@ export default function PdfFlipbookClient() {
   if (!pageWidth || !pageHeight) {
     return (
       <section className={styles.section}>
-        <h1 className={styles.title}>Catálogo PED – Flipbook</h1>
+        <h1 className={styles.title}>Catálogo PED</h1>
         <p className={styles.status}>Calculando tamaño del visor…</p>
       </section>
     );

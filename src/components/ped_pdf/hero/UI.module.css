@@ -148,23 +148,34 @@
 
 /* Botones de páginas */
 
-.pageButton {
+.pageButton,
+.pageButtonNav {
   border-radius: 999px;
   padding: 0.75rem 1.5rem;
   font-size: 0.95rem;
   text-transform: uppercase;
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  background: rgba(0, 0, 0, 0.75);
-  color: #ffffff;
   cursor: pointer;
   white-space: nowrap;
   flex-shrink: 0;
   transition: all 0.25s ease;
 }
 
+.pageButton {
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  background: rgba(0, 0, 0, 0.75);
+  color: #ffffff;
+}
+
+.pageButtonNav {
+  border: 1px solid #a02142;
+  background: #a02142;
+  color: #ffffff;
+}
+
 .pageButton:hover {
   border-color: #a02142;
   background: rgba(0, 0, 0, 0.9);
+  color: #ffffff;
 }
 
 .pageButtonActive {
