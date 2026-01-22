@@ -9,12 +9,6 @@ import "react-pdf/dist/Page/TextLayer.css";
 
 import styles from "./PdfFlipbook.module.css";
 
-/**
- * ============================================
- * CONFIGURACIÓN GENERAL
- * ============================================
- */
-
 // Fuente única del PDF (evita duplicar strings)
 const PDF_FILE = "/pdf/Actualizacion_PED_2025_2028.pdf";
 const PDF_DOWNLOAD_NAME = "Actualizacion_PED_2025_2028.pdf";
@@ -51,15 +45,6 @@ const PAGE_MAX_RETRIES = 2;
 const PAGE_RETRY_DELAY_MS = 250;
 const PAGE_RENDER_TIMEOUT_MS = 3500;
 
-/**
- * ============================================
- * COMPONENTE DE PÁGINA PARA FLIPBOOK
- * - Soporta render window (shouldRender)
- * - Incluye lupa (solo si enableMagnifier)
- * - Placeholder y retry para páginas pesadas
- * - Throttle de movimiento de lupa con requestAnimationFrame
- * ============================================
- */
 const BookPage = React.forwardRef(function BookPage(
   { pageNumber, pageWidth, enableMagnifier = false, shouldRender = true },
   forwardedRef
