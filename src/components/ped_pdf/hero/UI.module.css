@@ -135,6 +135,8 @@
   display: flex;
   justify-content: center;
   pointer-events: auto;
+  flex-direction: column;
+  align-items: center;
 }
 
 .controlsScroller {

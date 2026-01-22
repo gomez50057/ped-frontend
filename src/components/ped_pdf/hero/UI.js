@@ -4,18 +4,7 @@ import { atom, useAtom } from "jotai";
 import { useEffect, useRef, useCallback } from "react";
 import styles from "./UI.module.css";
 
-const pictures = [
-  "C1",
-  "C2",
-  "C3",
-  "C4",
-  "C5",
-  "C6",
-  "C7",
-  "C8",
-  "C9",
-  "C10",
-];
+const pictures = ["C1", "C2", "C3", "C4", "C5", "C6", "C7", "C8", "C9", "C10"];
 
 export const pageAtom = atom(0);
 
@@ -147,8 +136,7 @@ export const UI = ({ showOnlyEnds = false }) => {
   // helper de clases para botón activo
   const getPageButtonClass = useCallback(
     (targetPage) =>
-      `${styles.pageButton} ${page === targetPage ? styles.pageButtonActive : ""
-      }`,
+      `${styles.pageButton} ${page === targetPage ? styles.pageButtonActive : ""}`,
     [page]
   );
 
@@ -199,13 +187,28 @@ export const UI = ({ showOnlyEnds = false }) => {
 
   return (
     <>
-      {/* Barra inferior: botón + navegación de páginas */}
+      {/* Barra inferior: nota + botón + navegación de páginas */}
       <div className={styles.uiRoot} aria-label="Navegación del libro PED">
         <nav
           className={styles.controlsOuter}
           aria-label="Páginas del libro del Plan Estatal de Desarrollo"
         >
+          <div
+            className={styles.subtleNote}
+            role="note"
+            aria-live="polite"
+          >
+            <span className={styles.subtleNoteDot} aria-hidden="true" />
+            <p className={styles.subtleNoteText}>
+              Esta es una vista previa en la que se muestran los temas del PED. Para ver el PED completo, desliza hacia abajo o haz clic en el botón llamado <strong>“Leer el documento”</strong>.
+            </p>
+          </div>
           <div className={styles.controlsScroller}>
+            {/* =========================
+               NOTA SUTIL (NUEVO)
+               ========================= */}
+
+
             {/* Botón "Leer el documento" */}
             <button
               type="button"
@@ -296,6 +299,10 @@ export const UI = ({ showOnlyEnds = false }) => {
               type="button"
               className={styles.pageButtonNav}
               onClick={handlePrev}
+              disabled={isFlipLocked}
+              aria-disabled={isFlipLocked}
+              aria-label="Página anterior"
+              title={isFlipLocked ? "Espere un momento…" : "Anterior"}
             >
               ⟨ Anterior
             </button>
@@ -307,6 +314,8 @@ export const UI = ({ showOnlyEnds = false }) => {
                   type="button"
                   className={getPageButtonClass(0)}
                   onClick={() => requestPageChange(0)}
+                  disabled={isFlipLocked}
+                  aria-disabled={isFlipLocked}
                 >
                   Portada
                 </button>
@@ -314,6 +323,8 @@ export const UI = ({ showOnlyEnds = false }) => {
                   type="button"
                   className={getPageButtonClass(MAX_PAGE)}
                   onClick={() => requestPageChange(MAX_PAGE)}
+                  disabled={isFlipLocked}
+                  aria-disabled={isFlipLocked}
                 >
                   Contraportada
                 </button>
@@ -326,6 +337,8 @@ export const UI = ({ showOnlyEnds = false }) => {
                     type="button"
                     className={getPageButtonClass(index)}
                     onClick={() => requestPageChange(index)}
+                    disabled={isFlipLocked}
+                    aria-disabled={isFlipLocked}
                   >
                     {index === 0 ? "Portada" : `Página ${index}`}
                   </button>
@@ -335,6 +348,8 @@ export const UI = ({ showOnlyEnds = false }) => {
                   type="button"
                   className={getPageButtonClass(MAX_PAGE)}
                   onClick={() => requestPageChange(MAX_PAGE)}
+                  disabled={isFlipLocked}
+                  aria-disabled={isFlipLocked}
                 >
                   Contraportada
                 </button>
@@ -346,6 +361,10 @@ export const UI = ({ showOnlyEnds = false }) => {
               type="button"
               className={styles.pageButtonNav}
               onClick={handleNext}
+              disabled={isFlipLocked}
+              aria-disabled={isFlipLocked}
+              aria-label="Página siguiente"
+              title={isFlipLocked ? "Espere un momento…" : "Siguiente"}
             >
               Siguiente ⟩
             </button>
@@ -375,9 +394,7 @@ export const UI = ({ showOnlyEnds = false }) => {
             <h2 className={styles.tickerMedium}>
               Toma de decisiones con rumbo claro
             </h2>
-            <h2 className={styles.tickerLight}>
-              Escuchando a todas las personas
-            </h2>
+            <h2 className={styles.tickerLight}>Escuchando a todas las personas</h2>
             <h2 className={`${styles.tickerHuge} ${styles.bold}`}>
               Estado · Municipios · Pueblo
             </h2>
@@ -403,9 +420,7 @@ export const UI = ({ showOnlyEnds = false }) => {
             <h2 className={styles.tickerMedium}>
               Toma de decisiones con rumbo claro
             </h2>
-            <h2 className={styles.tickerLight}>
-              Escuchando a todas las personas
-            </h2>
+            <h2 className={styles.tickerLight}>Escuchando a todas las personas</h2>
             <h2 className={`${styles.tickerHuge} ${styles.bold}`}>
               Estado · Municipios · Pueblo
             </h2>
