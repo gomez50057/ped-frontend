@@ -1,4 +1,3 @@
-// components/Book.jsx
 "use client";
 
 import { useCursor, useTexture } from "@react-three/drei";
@@ -19,7 +18,7 @@ import {
   Uint16BufferAttribute,
   Vector3,
 } from "three";
-import { pageAtom, pages } from "./UI";
+import { pageControllerAtom, pages } from "./UI";
 
 const easingFactor = 0.5;
 const easingFactorFold = 0.3;
@@ -93,7 +92,16 @@ pages.forEach((page) => {
   useTexture.preload(`/img/ped_document/textures/book-cover-roughness.jpg`);
 });
 
-const Page = ({ number, front, back, page, opened, bookClosed, ...props }) => {
+// currentPage = delayedPage calculado en Book
+const Page = ({
+  number,
+  front,
+  back,
+  currentPage,
+  opened,
+  bookClosed,
+  ...props
+}) => {
   const [picture, picture2, pictureRoughness] = useTexture([
     `/img/ped_document/textures/${front}.jpg`,
     `/img/ped_document/textures/${back}.jpg`,
@@ -109,7 +117,8 @@ const Page = ({ number, front, back, page, opened, bookClosed, ...props }) => {
   const lastOpened = useRef(opened);
   const skinnedMeshRef = useRef();
 
-  const [_, setPage] = useAtom(pageAtom);
+  const [{ isFlipLocked }, setControlledPage] = useAtom(pageControllerAtom);
+
   const [highlighted, setHighlighted] = useState(false);
   useCursor(highlighted);
 
@@ -246,45 +255,53 @@ const Page = ({ number, front, back, page, opened, bookClosed, ...props }) => {
       }}
       onClick={(e) => {
         e.stopPropagation();
-        setPage(opened ? number : number + 1);
+        if (isFlipLocked) return; // ignorar clics mientras el lock está activo
+
+        // Si ya estaba abierta, vamos a esa hoja; si no, avanzamos una.
+        const targetPage = opened ? number : number + 1;
+        setControlledPage(targetPage); // usa el controlador (respeta lock y sonido)
         setHighlighted(false);
       }}
     >
       <primitive
         object={manualSkinnedMesh}
         ref={skinnedMeshRef}
-        position-z={-number * PAGE_DEPTH + page * PAGE_DEPTH}
+        position-z={-number * PAGE_DEPTH + currentPage * PAGE_DEPTH}
       />
     </group>
   );
 };
 
 export const Book = (props) => {
-  const [page] = useAtom(pageAtom);
+  const [{ page }] = useAtom(pageControllerAtom);
   const [delayedPage, setDelayedPage] = useState(page);
 
+  // Animación de "delay" para ir saltando de una en una
   useEffect(() => {
-    let timeout;
-    const goToPage = () => {
-      setDelayedPage((delayedPage) => {
-        if (page === delayedPage) {
-          return delayedPage;
-        } else {
-          timeout = setTimeout(
-            () => {
-              goToPage();
-            },
-            Math.abs(page - delayedPage) > 2 ? 50 : 150
-          );
+    let timeoutId;
 
-          if (page > delayedPage) return delayedPage + 1;
-          if (page < delayedPage) return delayedPage - 1;
+    const step = () => {
+      setDelayedPage((current) => {
+        if (current === page) {
+          return current;
         }
+
+        const direction = page > current ? 1 : -1;
+        const next = current + direction;
+        const delay = Math.abs(page - current) > 2 ? 50 : 150;
+
+        timeoutId = setTimeout(step, delay);
+        return next;
       });
     };
 
-    goToPage();
-    return () => clearTimeout(timeout);
+    step();
+
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
   }, [page]);
 
   return (
@@ -292,7 +309,7 @@ export const Book = (props) => {
       {[...pages].map((pageData, index) => (
         <Page
           key={index}
-          page={delayedPage}
+          currentPage={delayedPage}
           number={index}
           opened={delayedPage > index}
           bookClosed={delayedPage === 0 || delayedPage === pages.length}

@@ -43,16 +43,62 @@ const MIN_PAGE = 0;
 const MAX_PAGE = pages.length; // índice especial para "Contraportada"
 const FLIP_LOCK_MS = 600; // bloqueo corto para evitar bug visual al spamear
 
+// Lock global de flip (compartido con Book)
+export const flipLockAtom = atom(false);
+
+// Timeout a nivel módulo para no acumular temporizadores
+let flipLockTimeoutId = null;
+
+/**
+ * Atom controlador:
+ *  - read: { page, isFlipLocked }
+ *  - write: targetPage => hace clamp + respeta lock + activa/desactiva lock
+ */
+export const pageControllerAtom = atom(
+  (get) => ({
+    page: get(pageAtom),
+    isFlipLocked: get(flipLockAtom),
+  }),
+  (get, set, targetPage) => {
+    const currentPage = get(pageAtom);
+    const isFlipLocked = get(flipLockAtom);
+
+    const clampedTarget = Math.max(MIN_PAGE, Math.min(MAX_PAGE, targetPage));
+
+    // Si ya está bloqueado o la página es la misma, no hacemos nada
+    if (isFlipLocked) return;
+    if (clampedTarget === currentPage) return;
+
+    // Activar lock y cambiar página global
+    set(flipLockAtom, true);
+    set(pageAtom, clampedTarget);
+
+    // Liberar lock tras un tiempo aproximado al flip 3D
+    if (typeof window !== "undefined") {
+      if (flipLockTimeoutId) {
+        window.clearTimeout(flipLockTimeoutId);
+      }
+      flipLockTimeoutId = window.setTimeout(() => {
+        set(flipLockAtom, false);
+        flipLockTimeoutId = null;
+      }, FLIP_LOCK_MS);
+    } else {
+      // SSR / fallback
+      set(flipLockAtom, false);
+    }
+  }
+);
+
 /**
  * showOnlyEnds = true  -> solo Portada / Contraportada
  * showOnlyEnds = false -> todas las páginas
  */
 export const UI = ({ showOnlyEnds = false }) => {
-  const [page, setPage] = useAtom(pageAtom);
+  // Ahora usamos el atom controlador (página + lock)
+  const [{ page, isFlipLocked }, setControlledPage] = useAtom(pageControllerAtom);
 
   const audioRef = useRef(null);
   const prevPageRef = useRef(page);
-  const flipLockRef = useRef(false);
 
   // Cargar audio una sola vez en cliente
   useEffect(() => {
@@ -74,42 +120,28 @@ export const UI = ({ showOnlyEnds = false }) => {
     }
   }, []);
 
-  // Cada vez que cambie `page`, reproducir sonido
+  // Cada vez que cambie `page`, reproducir sonido (botón o clic en el libro)
   useEffect(() => {
     if (prevPageRef.current === page) return; // primera vez o sin cambios
     prevPageRef.current = page;
     playFlipSound();
   }, [page, playFlipSound]);
 
-  // Función central para cambiar de página con clamp + throttle
+  // Función central para solicitar cambio de página (usa el write del atom)
   const requestPageChange = useCallback(
     (targetPage) => {
-      // clamp
-      const nextPage = Math.max(MIN_PAGE, Math.min(MAX_PAGE, targetPage));
-
-      if (nextPage === page) return;
-
-      // pequeño “lock” para evitar que muchos clics seguidos bugueen el efecto
-      if (flipLockRef.current) return;
-      flipLockRef.current = true;
-
-      setPage(nextPage);
-
-      // liberar el lock pasado un tiempo aproximado al flip
-      setTimeout(() => {
-        flipLockRef.current = false;
-      }, FLIP_LOCK_MS);
+      setControlledPage(targetPage);
     },
-    [page, setPage]
+    [setControlledPage]
   );
 
   // helpers para siguiente / anterior
   const handlePrev = () => {
-    requestPageChange(page - 1);
+    setControlledPage(page - 1);
   };
 
   const handleNext = () => {
-    requestPageChange(page + 1);
+    setControlledPage(page + 1);
   };
 
   // helper de clases para botón activo
