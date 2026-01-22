@@ -22,6 +22,9 @@ const ASPECT_RATIO = 1.414; // alto = ancho * 1.414
 const LENS_SIZE = 200; // diámetro en px
 const LENS_ZOOM = 2; // factor de zoom
 
+// Tiempo de bloqueo de interacciones tras cada flip
+const FLIP_LOCK_MS = 900;
+
 const BookPage = React.forwardRef(function BookPage(
   { pageNumber, pageWidth, enableMagnifier = false },
   forwardedRef
@@ -132,10 +135,10 @@ export default function PdfFlipbookClient() {
   const [currentInteriorIndex, setCurrentInteriorIndex] = useState(0); // índice 0-based de páginas interiores
   const [bookStartIndex, setBookStartIndex] = useState(0); // para decidir desde dónde abre el flipbook
 
-  // 🔍 Lupa ON/OFF
+  // Lupa ON/OFF
   const [magnifierEnabled, setMagnifierEnabled] = useState(false);
 
-  // 🎧 Sonido
+  // Sonido
   const [isMuted, setIsMuted] = useState(false);
 
   const bookRef = useRef(null);
@@ -144,6 +147,19 @@ export default function PdfFlipbookClient() {
   const flipSoundsRef = useRef([]); // Array<Audio>
   const flipSoundIndexRef = useRef(0); // para ir rotando
   const lastStateRef = useRef("read");
+
+  // Lock para evitar spam de clics durante la animación
+  const [isFlipLocked, setIsFlipLocked] = useState(false);
+  const flipLockTimeoutRef = useRef(null);
+
+  // Limpieza del timeout al desmontar
+  useEffect(() => {
+    return () => {
+      if (flipLockTimeoutRef.current) {
+        clearTimeout(flipLockTimeoutRef.current);
+      }
+    };
+  }, []);
 
   // Pre-cargar sonidos solo en cliente
   useEffect(() => {
@@ -242,6 +258,8 @@ export default function PdfFlipbookClient() {
     if (mode === "cover" && hasInteriorPages <= 0) return;
 
     function handleKeyDown(e) {
+      if (isFlipLocked) return; // ignorar mientras está bloqueado
+
       if (e.key === "ArrowRight") {
         handleNext();
       } else if (e.key === "ArrowLeft") {
@@ -252,7 +270,7 @@ export default function PdfFlipbookClient() {
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mode, numPages, currentInteriorIndex, hasInteriorPages]);
+  }, [mode, numPages, currentInteriorIndex, hasInteriorPages, isFlipLocked]);
 
   // Evento al cambiar de hoja en el flipbook interior
   function handleFlip(e) {
@@ -263,7 +281,7 @@ export default function PdfFlipbookClient() {
   function handleChangeState(e) {
     const state = e.data; // "user_fold" | "fold_corner" | "flipping" | "read"
 
-    // 🔊 reproducimos sonido cuando entra en estado "flipping"
+    // reproducimos sonido cuando entra en estado "flipping"
     if (state === "flipping" && lastStateRef.current !== "flipping") {
       playFlipSound();
     }
@@ -271,12 +289,26 @@ export default function PdfFlipbookClient() {
 
     if (state === "flipping" || state === "user_fold") {
       setIsFlipping(true);
+
+      // bloquear interacciones mientras dura la animación
+      setIsFlipLocked(true);
+      if (typeof window !== "undefined") {
+        if (flipLockTimeoutRef.current) {
+          clearTimeout(flipLockTimeoutRef.current);
+        }
+        flipLockTimeoutRef.current = window.setTimeout(() => {
+          setIsFlipLocked(false);
+        }, FLIP_LOCK_MS);
+      }
     } else {
       setIsFlipping(false);
+      // el lock se libera solo por timeout, no aquí
     }
   }
 
   const handlePrev = () => {
+    if (isFlipLocked) return; // no hacer nada si está bloqueado
+
     if (mode === "book") {
       if (!bookRef.current) return;
       const api = bookRef.current.pageFlip?.();
@@ -306,6 +338,8 @@ export default function PdfFlipbookClient() {
   };
 
   const handleNext = () => {
+    if (isFlipLocked) return; // no hacer nada si está bloqueado
+
     if (mode === "cover") {
       // De portada → abrir libro en primera interior (página 2)
       if (hasInteriorPages > 0) {
@@ -361,9 +395,6 @@ export default function PdfFlipbookClient() {
   const hasLoaded = !!numPages;
 
   // ===== Cantidad de hojas a cada lado del lomo (solo para efecto visual) =====
-  // Ejemplo: totalPages = 204, currentDisplayPage = 200 (spread 200–201):
-  //   leftStackCount  = 200
-  //   rightStackCount = 204 - 200 - 1 = 3  (202, 203, 204)
   let leftStackCount = 0;
   let rightStackCount = 0;
 
@@ -422,6 +453,8 @@ export default function PdfFlipbookClient() {
                   type="button"
                   className={styles.openButton}
                   onClick={handleNext}
+                  disabled={isFlipLocked}
+                  aria-disabled={isFlipLocked}
                 >
                   Abrir catálogo
                 </button>
@@ -445,6 +478,8 @@ export default function PdfFlipbookClient() {
                   className={`${styles.navButton} ${styles.navButtonLeft}`}
                   onClick={handlePrev}
                   aria-label="Volver al interior"
+                  disabled={isFlipLocked}
+                  aria-disabled={isFlipLocked}
                 >
                   ‹
                 </button>
@@ -464,6 +499,7 @@ export default function PdfFlipbookClient() {
                 height: pageHeight,
                 "--stack-left": leftStackRatio,
                 "--stack-right": rightStackRatio,
+                pointerEvents: isFlipLocked ? "none" : "auto",
               }}
             >
               <HTMLFlipBook
@@ -503,6 +539,8 @@ export default function PdfFlipbookClient() {
                 className={`${styles.navButton} ${styles.navButtonLeft}`}
                 onClick={handlePrev}
                 aria-label="Página anterior / Portada"
+                disabled={isFlipLocked}
+                aria-disabled={isFlipLocked}
               >
                 ‹
               </button>
@@ -511,6 +549,8 @@ export default function PdfFlipbookClient() {
                 className={`${styles.navButton} ${styles.navButtonRight}`}
                 onClick={handleNext}
                 aria-label="Página siguiente / Contra-portada"
+                disabled={isFlipLocked}
+                aria-disabled={isFlipLocked}
               >
                 ›
               </button>
