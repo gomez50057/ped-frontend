@@ -1,5 +1,3 @@
-/* ========= CONTENEDOR GENERAL ========= */
-
 .section {
   width: 100%;
   min-height: 100vh;
@@ -23,7 +21,7 @@
   overflow-x: auto;
 }
 
-/* ========= “LIBRO” (WRAPPER + FLIPBOOK) ========= */
+/* ---------------- “LIBRO” (WRAPPER + FLIPBOOK) ---------------- */
 
 .bookWrapper {
   /* base para el grosor del montón de hojas */
@@ -203,7 +201,7 @@
   pointer-events: none;
 }
 
-/* ========= PÁGINAS + LUPA ========= */
+/* ---------------- PÁGINAS + LUPA ---------------- */
 
 .page {
   width: 100%;
@@ -280,7 +278,7 @@
   inset: 0;
 }
 
-/* ========= ESTADOS / TEXTOS ========= */
+/* ---------------- ESTADOS / TEXTOS ---------------- */
 
 .status,
 .statusError {
@@ -296,7 +294,7 @@
   color: #b00020;
 }
 
-/* ========= BOTONES (COMPARTEN BASE) ========= */
+/* ---------------- BOTONES (COMPARTEN BASE) ---------------- */
 
 .navButton,
 .iconButton {
@@ -403,7 +401,7 @@
   z-index: 12;
 }
 
-/* ========= PORTADA INICIAL / CONTRAPORTADA ========= */
+/* ---------------- PORTADA INICIAL / CONTRAPORTADA ---------------- */
 
 .singleCoverWrapper {
   position: relative;
@@ -517,7 +515,7 @@
   outline-offset: 3px;
 }
 
-/* ========= RESPONSIVO ========= */
+/* ---------------- RESPONSIVO ---------------- */
 
 @media (max-width: 768px) {
   .section {

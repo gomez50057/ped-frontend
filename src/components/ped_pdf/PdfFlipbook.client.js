@@ -577,13 +577,12 @@ export default function PdfFlipbookClient() {
           )}
         </Document>
 
-        {/* Barra de controles: Lupa + Sonido */}
+        {/* Barra de controles: Lupa + Sonido + Descargar */}
         <div className={styles.controlsBar}>
           <div className={styles.controlsGroup}>
             <button
               type="button"
-              className={`${styles.iconButton} ${magnifierEnabled ? styles.iconButtonActive : ""
-                }`}
+              className={`${styles.iconButton} ${magnifierEnabled ? styles.iconButtonActive : ""}`}
               onClick={() => setMagnifierEnabled((v) => !v)}
               aria-pressed={magnifierEnabled}
             >
@@ -593,14 +592,25 @@ export default function PdfFlipbookClient() {
 
           <button
             type="button"
-            className={`${styles.iconButton} ${isMuted ? styles.iconButtonMuted : ""
-              }`}
+            className={`${styles.iconButton} ${isMuted ? styles.iconButtonMuted : ""}`}
             onClick={toggleMute}
             aria-pressed={isMuted}
             aria-label={isMuted ? "Activar sonido" : "Silenciar sonido"}
           >
             {isMuted ? "🔇 Sonido" : "🔊 Sonido"}
           </button>
+
+          {/* Descargar PED */}
+          <a
+            className={styles.iconButton}
+            href="/pdf/Actualizacion_PED_2025_2028.pdf"
+            download="Actualizacion_PED_2025_2028.pdf"
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Descargar PED en PDF"
+          >
+            ⬇️ Descargar PED (PDF)
+          </a>
         </div>
       </div>
     </section>
