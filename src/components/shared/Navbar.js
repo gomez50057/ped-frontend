@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useEffect, useRef, useState, useCallback } from 'react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation'; // Hook para obtener la ruta actual
-import styles from './Navbar.module.css';
+import React, { useEffect, useRef, useState, useCallback, useMemo } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import styles from "./Navbar.module.css";
+import PlanesProgramasModal from "./PlanesProgramasModal";
 
 const LOGOS = [
   { src: "/img/Logox2.png", alt: "Gobierno del Estado de Hidalgo y Planeación" },
@@ -13,9 +14,14 @@ const LOGOS = [
 const NAV_ITEMS = [
   { label: "Inicio", href: "/" },
   {
-    label: "PED 2022-2028",
+    label: "Estatal",
     submenu: [
       { label: "Plan Estatal de Desarrollo 2022-2028", href: "https://bibliotecadigitaluplaph.hidalgo.gob.mx/Biblioteca%20Digital%20de%20Planeaci%C3%B3n/Estatal/Plan%20Estatal%20de%20Desarrollo%202022-2028.pdf" },
+    ]
+  },
+  {
+    label: "Programas Especiales y Sectoriales",
+    submenu: [
       { label: "Programa Especial de Desarrollo de Oficialía Mayor 2023-2028", href: "https://bibliotecadigitaluplaph.hidalgo.gob.mx/Biblioteca%20Digital%20de%20Planeaci%C3%B3n/Programas%20Sectoriales%20y%20Especiales/Programa%20Especial%20de%20Desarrollo%20de%20Oficial%C3%ADa%20Mayor%202023-2028.pdf" },
       { label: "Programa Especial de Desarrollo de Planeación y Prospectiva 2023-2028", href: "https://bibliotecadigitaluplaph.hidalgo.gob.mx/Biblioteca%20Digital%20de%20Planeaci%C3%B3n/Programas%20Sectoriales%20y%20Especiales/Programa%20Especial%20de%20Desarrollo%20de%20Planeaci%C3%B3n%20y%20Prospectiva%202023-2028.pdf" },
       { label: "Programa Sectorial de Desarrollo de Hacienda 2023-2028", href: "https://bibliotecadigitaluplaph.hidalgo.gob.mx/Biblioteca%20Digital%20de%20Planeaci%C3%B3n/Programas%20Sectoriales%20y%20Especiales/Programa%20Sectorial%20de%20Desarrollo%20de%20Hacienda%202023-2028.pdf" },
@@ -36,6 +42,11 @@ const NAV_ITEMS = [
       { label: "Programa Sectorial de Desarrollo de Gobierno 2023-2028", href: "https://bibliotecadigitaluplaph.hidalgo.gob.mx/Biblioteca%20Digital%20de%20Planeaci%C3%B3n/Programas%20Sectoriales%20y%20Especiales/Programa%20Sectorial%20de%20Desarrollo%20de%20Gobierno%202023-2028.pdf" },
       { label: "Programa Especial de Desarrollo de la Secretaría del Despacho de la Persona Titular del Poder Ejecutivo 2023-2028", href: "https://bibliotecadigitaluplaph.hidalgo.gob.mx/Biblioteca%20Digital%20de%20Planeaci%C3%B3n/Programas%20Sectoriales%20y%20Especiales/Programa%20Especial%20de%20Desarrollo%20de%20la%20Secretar%C3%ADa%20del%20Despacho%20de%20la%20Persona%20Titular%20del%20Poder%20Ejecutivo%202023-2028.pdf" },
       { label: "Programa Especial para el Desarrollo Integral de Recuperación Académica 2023-2028", href: "https://bibliotecadigitaluplaph.hidalgo.gob.mx/Biblioteca%20Digital%20de%20Planeaci%C3%B3n/Programas%20Sectoriales%20y%20Especiales/Programa%20Especial%20para%20el%20Desarrollo%20Integral%20de%20Recuperaci%C3%B3n%20Acad%C3%A9mica%202024-2028.pdf" },
+    ]
+  },
+  {
+    label: "Programas Institucionales",
+    submenu: [
       { label: "Programa Institucional de Desarrollo Colegio de Bachilleres del Estado de Hidalgo 2023-2028", href: "https://bibliotecadigitaluplaph.hidalgo.gob.mx/Biblioteca%20Digital%20de%20Planeaci%C3%B3n/Programas%20Institucionales/Programa%20Institucional%20de%20Desarrollo%20Colegio%20de%20Bachilleres%20del%20Estado%20de%20Hidalgo%202023-2028.pdf" },
       { label: "Programa Institucional de Desarrollo de la Agencia de Desarrollo Valle de Plata 2023-2028", href: "https://bibliotecadigitaluplaph.hidalgo.gob.mx/Biblioteca%20Digital%20de%20Planeaci%C3%B3n/Programas%20Institucionales/Programa%20Institucional%20de%20Desarrollo%20de%20la%20Agencia%20de%20Desarrollo%20Valle%20de%20Plata%202023-2028.pdf" },
       { label: "Programa Institucional de Desarrollo de la Agencia Estatal de Energía de Hidalgo 2023-2028", href: "https://bibliotecadigitaluplaph.hidalgo.gob.mx/Biblioteca%20Digital%20de%20Planeaci%C3%B3n/Programas%20Institucionales/Programa%20Institucional%20de%20Desarrollo%20de%20la%20Agencia%20Estatal%20de%20Energ%C3%ADa%20de%20Hidalgo%202023-2028.pdf" },
@@ -100,6 +111,11 @@ const NAV_ITEMS = [
       { label: "Programa Institucional de Desarrollo de la Universidad Politécnica de Francisco I Madero 2023-2028", href: "https://bibliotecadigitaluplaph.hidalgo.gob.mx/Biblioteca%20Digital%20de%20Planeaci%C3%B3n/Programas%20Institucionales/Programa%20Institucional%20de%20Desarrollo%20de%20la%20Universidad%20Polit%C3%A9cnica%20de%20Francisco%20I%20Madero%202023%20-%202028.pdf" },
       { label: "Programa Institucional de Desarrollo de la Ciudad de las Mujeres del Estado de Hidalgo 2023-2028", href: "https://bibliotecadigitaluplaph.hidalgo.gob.mx/Biblioteca%20Digital%20de%20Planeaci%C3%B3n/Programas%20Institucionales/Programa%20Institucional%20de%20Desarrollo%20de%20la%20Ciudad%20de%20las%20Mujeres%20del%20Estado%20de%20Hidalgo%202023%20-%202028.pdf" },
       { label: "Programa Institucional de Desarrollo de la Comisión Ejecutiva de Atención a Víctimas del Estado de Hidalgo 2023-2028", href: "https://bibliotecadigitaluplaph.hidalgo.gob.mx/Biblioteca%20Digital%20de%20Planeaci%C3%B3n/Programas%20Institucionales/Programa%20Institucional%20de%20Desarrollo%20de%20la%20Comisi%C3%B3n%20Ejecutiva%20de%20Atenci%C3%B3n%20a%20V%C3%ADctimas%20del%20Estado%20de%20Hidalgo%202023%20-%202028.pdf" },
+    ]
+  },
+  {
+    label: "Planes Municipales de Desarrollo",
+    submenu: [
       { label: "Plan Municipal de Desarrollo de Acaxochitlán", href: "https://bibliotecadigitaluplaph.hidalgo.gob.mx/Biblioteca%20Digital%20de%20Planeaci%C3%B3n/INSTRUMENTOS%20POR%20MUNICIPIOS/ACAXOCHITL%C3%81N/Plan%20Municipal%20de%20Desarrollo%20de%20Acaxochitl%C3%A1n%202024-2027.pdf" },
       { label: "Plan Municipal de Desarrollo de Actopan", href: "https://bibliotecadigitaluplaph.hidalgo.gob.mx/Biblioteca%20Digital%20de%20Planeaci%C3%B3n/INSTRUMENTOS%20POR%20MUNICIPIOS/ACTOPAN/Plan%20Municipal%20de%20Desarrollo%20de%20Actopan%202024-2027.pdf" },
       { label: "Plan Municipal de Desarrollo de Agua Blanca de Iturbide", href: "https://bibliotecadigitaluplaph.hidalgo.gob.mx/Biblioteca%20Digital%20de%20Planeaci%C3%B3n/INSTRUMENTOS%20POR%20MUNICIPIOS/AGUA%20BLANCA%20DE%20ITURBIDE/Plan%20Municipal%20de%20Desarrollo%20de%20Agua%20Blanca%20de%20Iturbide%202024-2027.pdf" },
@@ -186,26 +202,44 @@ const NAV_ITEMS = [
     ]
   },
   { label: "Plataforma estratégica", href: "/login" },
-  // {
-  //   label: "Tecnificación y nivelación parcelaria",
-  //   href: "https://bancodeproyectos.hidalgo.gob.mx/planhidrico/login/",
-  //   external: true,
-  // },
 ];
 
-/**
- * Navbar: Componente principal que representa la barra de navegación.
- */
-const Navbar = () => {
-  const [isVisible, setIsVisible] = useState(true); // Controla la visibilidad del navbar en scroll
-  const [menuOpen, setMenuOpen] = useState(false); // Controla el estado del menú en mobile
-  const [submenuOpen, setSubmenuOpen] = useState(false); // Controla el submenu en mobile
-  const lastScrollPos = useRef(0); // Referencia para guardar el último scroll
-  const pathname = usePathname(); // Hook para detectar cambios de ruta
+const DOC_GROUP_LABELS = new Set([
+  "Estatal",
+  "Programas Especiales y Sectoriales",
+  "Programas Institucionales",
+  "Planes Municipales de Desarrollo",
+]);
 
-  /**
-   * Hook: Controla la visibilidad de la navbar en base al scroll del usuario.
-   */
+export default function Navbar() {
+  const [isVisible, setIsVisible] = useState(true);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  // Modal state
+  const [planesModalOpen, setPlanesModalOpen] = useState(false);
+
+  const lastScrollPos = useRef(0);
+  const pathname = usePathname();
+
+  const docGroups = useMemo(() => {
+    return NAV_ITEMS.filter((i) => DOC_GROUP_LABELS.has(i.label) && Array.isArray(i.submenu));
+  }, []);
+
+  const topNavItems = useMemo(() => {
+    // Solo los items normales (sin los 4 grupos)
+    return NAV_ITEMS.filter((i) => !DOC_GROUP_LABELS.has(i.label));
+  }, []);
+
+  const navbarItems = useMemo(() => {
+    // Inserta "Planes y Programas" después de Inicio (si existe)
+    const items = [...topNavItems];
+    const idxInicio = items.findIndex((i) => i.label === "Inicio");
+    const insertAt = idxInicio >= 0 ? idxInicio + 1 : 0;
+
+    items.splice(insertAt, 0, { label: "Planes y Programas", action: "OPEN_PLANES_MODAL" });
+    return items;
+  }, [topNavItems]);
+
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollPos = window.pageYOffset;
@@ -217,65 +251,40 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  /**
-   * Hook: Cierra el menú y el submenu al cambiar de página.
-   */
+  // Cierra menú/modal al cambiar ruta
   useEffect(() => {
     setMenuOpen(false);
-    setSubmenuOpen(false);
+    setPlanesModalOpen(false);
   }, [pathname]);
 
-  /**
-   * toggleMenu: Alterna el menú principal en mobile.
-   */
-  const toggleMenu = useCallback(() => setMenuOpen(prev => !prev), []);
-
-  /**
-   * toggleSubmenu: Alterna el submenu en mobile.
-   */
-  const toggleSubmenu = useCallback(() => setSubmenuOpen(prev => !prev), []);
-
-  /**
-   * handleLinkClick: Cierra el menú y submenu en mobile después de hacer clic en un enlace.
-   */
-  const handleLinkClick = () => {
+  const toggleMenu = useCallback(() => setMenuOpen((prev) => !prev), []);
+  const closeAll = useCallback(() => {
     setMenuOpen(false);
-    setSubmenuOpen(false);
-  };
+    setPlanesModalOpen(false);
+  }, []);
 
-  /**
-   * renderNavItems: Renderiza el menú de navegación para desktop y mobile.
-   * @param {boolean} isMobile - Determina si el renderizado es para mobile o desktop.
-   */
+  const openPlanesModal = useCallback(() => {
+    setMenuOpen(false); // por si está en mobile
+    setPlanesModalOpen(true);
+  }, []);
+
   const renderNavItems = (isMobile = false) => (
     <ul className={isMobile ? styles.navbarOpcMobile : styles.navbarOpcDesktop}>
-      {NAV_ITEMS.map((item, index) => (
-        <li
-          key={index}
-          className={`
-            ${item.submenu ? styles.dropdown : ""} 
-            ${isMobile && item.label === "Materiales de apoyo" && submenuOpen ? styles.dropdownOpen : ""}
-          `}
-        >
-          {item.submenu ? (
-            <>
-              <span className={styles.dropdownToggle} onClick={isMobile ? toggleSubmenu : undefined}>{item.label}</span>
-              <ul className={`${styles.dropdownMenu} ${isMobile && submenuOpen ? styles.menuOpen : ""}`}>
-                {item.submenu.map((subItem, subIndex) => (
-                  <li key={subIndex}>
-                    <Link href={subItem.href} onClick={isMobile ? handleLinkClick : undefined}>
-                      {subItem.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </>
+      {navbarItems.map((item) => (
+        <li key={item.label} className={styles.navItem}>
+          {item.action === "OPEN_PLANES_MODAL" ? (
+            <button
+              type="button"
+              className={styles.navButton}
+              onClick={openPlanesModal}
+            >
+              {item.label}
+            </button>
           ) : (
             <Link
               href={item.href}
-              onClick={isMobile ? handleLinkClick : undefined}
-              target={item.external ? "_blank" : "_self"}
-              rel={item.external ? "noopener noreferrer" : undefined}
+              onClick={isMobile ? closeAll : undefined}
+              className={pathname === item.href ? styles.activeLink : undefined}
             >
               {item.label}
             </Link>
@@ -287,39 +296,39 @@ const Navbar = () => {
 
   return (
     <>
-      {/* Navbar principal */}
       <nav
         className={`${styles.Navbar} 
           ${isVisible ? styles.active : styles.hidden} 
-          ${lastScrollPos.current > 100 ? styles.scrolled : ''}
+          ${lastScrollPos.current > 100 ? styles.scrolled : ""}
         `}
       >
         <div className={styles.NavbarList}>
-          {/* Logos de la navbar */}
           <div className={styles.NavbarImg}>
-            {LOGOS.map((logo, index) => (
-              <img key={index} src={logo.src} alt={logo.alt} />
+            {LOGOS.map((logo) => (
+              <img key={logo.src} src={logo.src} alt={logo.alt} />
             ))}
           </div>
 
-          {/* Menú de navegación */}
           <div className={styles.NavbarInicio}>
-            {/* Botón hamburguesa visible solo en mobile */}
-            <div className={styles.NavbarCirculo} onClick={toggleMenu}>
+            <div className={styles.NavbarCirculo} onClick={toggleMenu} role="button" tabIndex={0}>
               <img src="/img/estrella.webp" alt="Menú" />
             </div>
-            {/* Menú horizontal para desktop */}
+
             {renderNavItems(false)}
           </div>
         </div>
       </nav>
 
-      {/* Menú desplegable para mobile */}
-      <div className={`${styles.NavbarMenuContainer} ${menuOpen ? styles.menuOpen : ''}`}>
+      <div className={`${styles.NavbarMenuContainer} ${menuOpen ? styles.menuOpen : ""}`}>
         {renderNavItems(true)}
       </div>
+
+      {/* Modal Planes y Programas */}
+      <PlanesProgramasModal
+        open={planesModalOpen}
+        onClose={() => setPlanesModalOpen(false)}
+        groups={docGroups}
+      />
     </>
   );
-};
-
-export default Navbar;
+}
