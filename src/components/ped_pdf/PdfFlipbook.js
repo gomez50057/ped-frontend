@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 const PdfFlipbookClient = dynamic(
   () => import("./PdfFlipbook.client"),
   {
-    ssr: false, // ⬅️ clave: solo en el navegador
+    ssr: false, // clave: solo en el navegador
     loading: () => (
       <p style={{ textAlign: "center", marginTop: "2rem" }}>
         Cargando visor PED…
