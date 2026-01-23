@@ -200,7 +200,7 @@ export const UI = ({ showOnlyEnds = false }) => {
           >
             <span className={styles.subtleNoteDot} aria-hidden="true" />
             <p className={styles.subtleNoteText}>
-              Esta es una vista previa en la que se muestran los temas del PED. Para ver el PED completo, desliza hacia abajo o haz clic en el botón llamado <strong>“Leer el documento”</strong>.
+              Esta es una vista previa en la que se muestran los temas del PED. Para ver el PED completo, desliza hacia abajo o haz clic en el botón <strong>“LEER EL DOCUMENTO”</strong>.
             </p>
           </div>
           <div className={styles.controlsScroller}>

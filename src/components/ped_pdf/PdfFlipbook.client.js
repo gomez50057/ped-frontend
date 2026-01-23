@@ -455,7 +455,7 @@ export default function PdfFlipbookClient() {
   if (!pageWidth || !pageHeight) {
     return (
       <section className={styles.section}>
-        <h1 className={styles.title}>Catálogo PED</h1>
+        <h1 className={styles.title}>Actualización del Plan Estatal de Desarrollo (PED) 2025-2028 </h1>
         <p className={styles.status}>Calculando tamaño del visor…</p>
       </section>
     );
@@ -533,7 +533,7 @@ export default function PdfFlipbookClient() {
                   disabled={isFlipLocked}
                   aria-disabled={isFlipLocked}
                 >
-                  Abrir catálogo
+                  Abrir el PED
                 </button>
               </div>
             </div>
