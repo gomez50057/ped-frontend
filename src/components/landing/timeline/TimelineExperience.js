@@ -13,6 +13,7 @@ import Groups3Icon from "@mui/icons-material/Groups3";
 import ForumIcon from "@mui/icons-material/Forum";
 import SouthIcon from "@mui/icons-material/South";
 import styles from "./TimelineExperience.module.css";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -564,13 +565,40 @@ export default function TimelineExperience() {
 
       <div className={styles.legend}>
         <div className={styles.legendPill}>
-          <span>Digital / Tecnología</span>
-          <span>Medios</span>
-          <span>Infancias</span>
-          <span>Pueblos originarios</span>
-          <span>Foros y diálogos</span>
-          <span>Juventudes</span>
-          <span>2025 — Hidalgo</span>
+          <span className={styles.legendItem}>
+            <LanguageIcon className={styles.legendIcon} />
+            <span>Digital / Tecnología</span>
+          </span>
+
+          <span className={styles.legendItem}>
+            <MicIcon className={styles.legendIcon} />
+            <span>Medios</span>
+          </span>
+
+          <span className={styles.legendItem}>
+            <ChildCareIcon className={styles.legendIcon} />
+            <span>Infancias</span>
+          </span>
+
+          <span className={styles.legendItem}>
+            <Diversity3Icon className={styles.legendIcon} />
+            <span>Pueblos originarios</span>
+          </span>
+
+          <span className={styles.legendItem}>
+            <Groups3Icon className={styles.legendIcon} />
+            <span>Foros y diálogos</span>
+          </span>
+
+          <span className={styles.legendItem}>
+            <SchoolIcon className={styles.legendIcon} />
+            <span>Juventudes</span>
+          </span>
+
+          <span className={styles.legendItem}>
+            <CalendarMonthIcon className={styles.legendIcon} />
+            <span>2025 — Hidalgo</span>
+          </span>
         </div>
 
         <p className={styles.legendText}>
