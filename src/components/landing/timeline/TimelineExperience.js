@@ -139,9 +139,8 @@ function EventCard({ event, position, colorClass }) {
 
   return (
     <article
-      className={`${styles.card} ${
-        position === "top" ? styles.topCard : styles.bottomCard
-      } ${styles[colorClass]}`}
+      className={`${styles.card} ${position === "top" ? styles.topCard : styles.bottomCard
+        } ${styles[colorClass]}`}
     >
       <div className={styles.cardGlow} />
 
@@ -176,27 +175,23 @@ export default function TimelineExperience() {
     const ctx = gsap.context(() => {
       mm.add("(min-width: 901px)", () => {
         const panels = gsap.utils.toArray(`.${styles.monthPanel}`);
-        const rails = gsap.utils.toArray(`.${styles.progressRail}`);
         const badges = gsap.utils.toArray(`.${styles.monthBadge}`);
 
         gsap.set(trackRef.current, { x: 0 });
 
-        const getScrollAmount = () => {
+        const getHorizontalDistance = () => {
           const track = trackRef.current;
           if (!track) return 0;
-          return -(track.scrollWidth - window.innerWidth);
+          return Math.max(track.scrollWidth - window.innerWidth, 0);
         };
 
-        const totalEnd = () =>
-          trackRef.current?.scrollWidth - window.innerWidth + window.innerHeight * 0.45;
-
         const horizontalTween = gsap.to(trackRef.current, {
-          x: getScrollAmount,
+          x: () => -getHorizontalDistance(),
           ease: "none",
           scrollTrigger: {
             trigger: pinWrapRef.current,
             start: "top top",
-            end: () => `+=${totalEnd()}`,
+            end: () => `+=${getHorizontalDistance()}`,
             pin: true,
             scrub: 1,
             invalidateOnRefresh: true,
@@ -225,28 +220,47 @@ export default function TimelineExperience() {
 
         gsap.fromTo(
           `.${styles.progressFill}`,
-          { scaleX: 0, transformOrigin: "left center" },
+          {
+            scaleX: 0,
+            transformOrigin: "left center",
+          },
           {
             scaleX: 1,
             ease: "none",
             scrollTrigger: {
               trigger: pinWrapRef.current,
               start: "top top",
-              end: () => `+=${totalEnd()}`,
-              scrub: true,
+              end: () => `+=${getHorizontalDistance()}`,
+              scrub: 0.15,
+              invalidateOnRefresh: true,
             },
           }
         );
 
-        gsap.to(`.${styles.progressPulse}`, {
-          xPercent: 250,
-          ease: "none",
-          scrollTrigger: {
-            trigger: pinWrapRef.current,
-            start: "top top",
-            end: () => `+=${totalEnd()}`,
-            scrub: true,
+        gsap.fromTo(
+          `.${styles.progressPulse}`,
+          {
+            xPercent: -120,
           },
+          {
+            xPercent: 520,
+            ease: "none",
+            scrollTrigger: {
+              trigger: pinWrapRef.current,
+              start: "top top",
+              end: () => `+=${getHorizontalDistance()}`,
+              scrub: 0.15,
+              invalidateOnRefresh: true,
+            },
+          }
+        );
+
+        gsap.to(`.${styles.progressRail}`, {
+          filter: "drop-shadow(0 0 12px rgba(255,255,255,0.18))",
+          repeat: -1,
+          yoyo: true,
+          duration: 1.8,
+          ease: "sine.inOut",
         });
 
         panels.forEach((panel) => {
@@ -392,15 +406,6 @@ export default function TimelineExperience() {
           }
         });
 
-        gsap.to(rails, {
-          filter: "drop-shadow(0 0 12px rgba(255,255,255,0.25))",
-          repeat: -1,
-          yoyo: true,
-          duration: 1.8,
-          stagger: 0.15,
-          ease: "sine.inOut",
-        });
-
         gsap.to(badges, {
           y: -4,
           repeat: -1,
@@ -462,8 +467,16 @@ export default function TimelineExperience() {
 
       <div ref={pinWrapRef} className={styles.pinWrap}>
         <div className={styles.railBackdrop} />
+
+        <div className={styles.globalRail}>
+          <div className={styles.progressRail}>
+            <div className={styles.progressFill} />
+            <div className={styles.progressPulse} />
+          </div>
+        </div>
+
         <div ref={trackRef} className={styles.track}>
-          {timelineData.map((item, index) => (
+          {timelineData.map((item) => (
             <div
               key={item.id}
               className={`${styles.monthPanel} ${styles[item.colorClass]}`}
@@ -489,15 +502,6 @@ export default function TimelineExperience() {
                 <div className={styles.centerLineZone}>
                   <div className={styles.nodeWrap}>
                     <span className={styles.node} />
-                  </div>
-
-                  <div className={styles.progressRail}>
-                    {index === 0 && (
-                      <>
-                        <div className={styles.progressFill} />
-                        <div className={styles.progressPulse} />
-                      </>
-                    )}
                   </div>
 
                   <div className={styles.monthBadge}>
