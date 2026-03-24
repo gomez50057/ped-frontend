@@ -12,7 +12,7 @@ import SchoolIcon from "@mui/icons-material/School";
 import Groups3Icon from "@mui/icons-material/Groups3";
 import ForumIcon from "@mui/icons-material/Forum";
 import SouthIcon from "@mui/icons-material/South";
-import styles from "./TimelineExperience.module.css";
+import styles from "@/styles/TimelineExperience.module.css";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 
 gsap.registerPlugin(ScrollTrigger);
