@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useId } from "react";
+import { useLayoutEffect, useRef, useId } from "react";
 import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
@@ -14,91 +14,148 @@ const imgBasePath = "/img/";
 
 gsap.registerPlugin(ScrollTrigger);
 
+const numberFormatter = new Intl.NumberFormat("es-MX");
+
 const statsData = [
   {
     icon: <LightbulbOutlinedIcon fontSize="inherit" />,
-    value: "50,000",
+    endValue: 50000,
     label: "propuestas recibidas",
   },
   {
     icon: <Groups2OutlinedIcon fontSize="inherit" />,
-    value: "32,000",
+    endValue: 32000,
     label: "participantes",
   },
   {
     icon: <ForumOutlinedIcon fontSize="inherit" />,
-    value: "18",
+    endValue: 18,
     label: "foros ciudadanos",
   },
 ];
 
 export default function Hero() {
+  const rootRef = useRef(null);
   const txtRef = useRef(null);
   const imgRef = useRef(null);
+  const statsRef = useRef(null);
+  const statValueRefs = useRef([]);
   const circlePathId = useId();
 
-  useEffect(() => {
-    if (txtRef.current) {
-      const headerSection = document.getElementById("header");
-      const nextSection = headerSection?.nextElementSibling;
+  useLayoutEffect(() => {
+    const mm = gsap.matchMedia();
 
-      const headerTxtEl = txtRef.current;
-      const headerTxtRect = headerTxtEl.getBoundingClientRect();
-      const headerTxtCenter =
-        window.scrollY + headerTxtRect.top + headerTxtRect.height / 2;
+    const ctx = gsap.context(() => {
+      const animateCounters = () => {
+        statValueRefs.current.forEach((node, index) => {
+          if (!node) return;
 
-      let distance = 0;
-      let innerContainer = null;
+          const counter = { value: 0 };
 
-      if (nextSection) {
-        const nextSectionRect = nextSection.getBoundingClientRect();
-        innerContainer = nextSection.querySelector('[class*="logoAcuerdo"]');
-        let targetCenter = 0;
+          gsap.to(counter, {
+            value: statsData[index].endValue,
+            duration: 2,
+            ease: "power3.out",
+            onUpdate: () => {
+              node.textContent = numberFormatter.format(
+                Math.round(counter.value)
+              );
+            },
+          });
+        });
+      };
 
-        if (innerContainer) {
-          const innerRect = innerContainer.getBoundingClientRect();
-          targetCenter =
-            window.scrollY + innerRect.top + innerRect.height / 2;
-        } else {
-          targetCenter =
-            window.scrollY + nextSectionRect.top + nextSectionRect.height / 2;
+      if (txtRef.current) {
+        const headerSection = rootRef.current;
+        const nextSection = headerSection?.nextElementSibling;
+
+        const headerTxtEl = txtRef.current;
+        const headerTxtRect = headerTxtEl.getBoundingClientRect();
+        const headerTxtCenter =
+          window.scrollY + headerTxtRect.top + headerTxtRect.height / 2;
+
+        let distance = 0;
+        let innerContainer = null;
+
+        if (nextSection) {
+          const nextSectionRect = nextSection.getBoundingClientRect();
+          innerContainer = nextSection.querySelector('[class*="logoAcuerdo"]');
+
+          let targetCenter = 0;
+
+          if (innerContainer) {
+            const innerRect = innerContainer.getBoundingClientRect();
+            targetCenter =
+              window.scrollY + innerRect.top + innerRect.height / 2;
+          } else {
+            targetCenter =
+              window.scrollY + nextSectionRect.top + nextSectionRect.height / 2;
+          }
+
+          distance = targetCenter - headerTxtCenter;
         }
 
-        distance = targetCenter - headerTxtCenter;
+        gsap.set(txtRef.current, {
+          y: 0,
+          opacity: 1,
+          filter: "none",
+        });
+
+        gsap.to(txtRef.current, {
+          x: "-13vw",
+          y: distance,
+          scale: 0.6,
+          opacity: 0.5,
+          ease: "none",
+          scrollTrigger: {
+            trigger: headerSection,
+            start: "top top",
+            endTrigger: innerContainer || nextSection,
+            end: "center center",
+            scrub: true,
+            markers: false,
+          },
+        });
       }
 
-      gsap.set(txtRef.current, { y: 0, opacity: 1, filter: "none" });
+      if (imgRef.current) {
+        gsap.set(imgRef.current, { opacity: 0 });
 
-      gsap.to(txtRef.current, {
-        x: "-13vw",
-        y: distance,
-        scale: 0.6,
-        opacity: 0.5,
-        ease: "none",
-        scrollTrigger: {
-          trigger: headerSection,
-          start: "top top",
-          endTrigger: innerContainer || nextSection,
-          end: "center center",
-          scrub: true,
-          markers: false,
-        },
-      });
-    }
+        gsap.to(imgRef.current, {
+          delay: 0.1,
+          opacity: 1,
+          duration: 1,
+          ease: "power1.out",
+        });
+      }
 
-    if (imgRef.current) {
-      gsap.set(imgRef.current, { opacity: 0 });
-      gsap.to(imgRef.current, {
-        delay: 0.1,
-        opacity: 1,
-        duration: 1,
-        ease: "power1.out",
+      mm.add("(min-width: 901px)", () => {
+        ScrollTrigger.create({
+          trigger: rootRef.current,
+          start: "top 75%",
+          once: true,
+          onEnter: animateCounters,
+        });
       });
-    }
+
+      mm.add("(max-width: 900px)", () => {
+        ScrollTrigger.create({
+          trigger: statsRef.current || rootRef.current,
+          start: "top 85%",
+          once: true,
+          onEnter: animateCounters,
+        });
+      });
+    }, rootRef);
+
+    return () => {
+      ctx.revert();
+      mm.revert();
+    };
   }, []);
 
   return (
-    <section id="header">
+    <section id="header" ref={rootRef}>
       <div className={styles.contentHeader}>
         <div className={`${styles.contentTren} ${styles.fadeInTarget}`}>
           <AnimatePath />
@@ -122,7 +179,7 @@ export default function Hero() {
           />
         </div>
 
-        <div className={styles.statsFloating}>
+        <div className={styles.statsFloating} ref={statsRef}>
           {statsData.map((item, index) => (
             <div key={index} className={styles.statCard}>
               <div className={styles.statIcon} aria-hidden="true">
@@ -130,7 +187,13 @@ export default function Hero() {
               </div>
 
               <div className={styles.statInfo}>
-                <strong>{item.value}</strong>
+                <strong
+                  ref={(el) => {
+                    statValueRefs.current[index] = el;
+                  }}
+                >
+                  0
+                </strong>
                 <span>{item.label}</span>
               </div>
             </div>
