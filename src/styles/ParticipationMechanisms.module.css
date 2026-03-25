@@ -397,3 +397,9 @@
     font-size: 0.86rem;
   }
 }
+
+.countNumber {
+  display: inline-block;
+  min-width: 0.5ch;
+  font-variant-numeric: tabular-nums;
+}

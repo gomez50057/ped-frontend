@@ -119,6 +119,49 @@ function getIcon(icon, className) {
   return map[icon] || <Groups3Icon className={className} />;
 }
 
+function isNumericToken(token) {
+  return /^\d[\d,.]*$/.test(token.trim());
+}
+
+function formatCounterValue(value, original) {
+  if (original.includes(",")) {
+    return Math.round(value).toLocaleString("en-US");
+  }
+
+  return String(Math.round(value));
+}
+
+function renderAnimatedStat(text) {
+  const lines = text.split("\n");
+
+  return lines.map((line, lineIndex) => {
+    const parts = line.split(/(\d[\d,.]*)/g);
+
+    return (
+      <span key={lineIndex}>
+        {parts.map((part, partIndex) => {
+          if (isNumericToken(part)) {
+            const numericValue = Number(part.replace(/,/g, ""));
+            return (
+              <span
+                key={`${lineIndex}-${partIndex}`}
+                className={styles.countNumber}
+                data-count-to={numericValue}
+                data-count-original={part}
+              >
+                0
+              </span>
+            );
+          }
+
+          return <span key={`${lineIndex}-${partIndex}`}>{part}</span>;
+        })}
+        {lineIndex < lines.length - 1 && <br />}
+      </span>
+    );
+  });
+}
+
 function formatText(text) {
   return text.split("\n").map((line, index) => (
     <span key={index}>
@@ -150,7 +193,7 @@ function Card({ item }) {
         <p className={styles.description}>{formatText(item.description)}</p>
         <div className={styles.divider} />
         <p className={styles.date}>{formatText(item.date)}</p>
-        <p className={styles.stat}>{formatText(item.stat)}</p>
+        <p className={styles.stat}>{renderAnimatedStat(item.stat)}</p>
       </div>
     </article>
   );
@@ -230,6 +273,44 @@ export default function ParticipationMechanisms() {
 
       cards.forEach((card) => {
         const pill = card.querySelector(`.${styles.titlePill}`);
+        const counters = card.querySelectorAll(`.${styles.countNumber}`);
+
+        if (counters.length) {
+          counters.forEach((counter) => {
+            const finalValue = Number(counter.dataset.countTo || 0);
+            const originalValue = counter.dataset.countOriginal || String(finalValue);
+
+            const counterState = { value: 0 };
+
+            const tl = gsap.timeline({
+              scrollTrigger: {
+                trigger: card,
+                start: "top 88%",
+                toggleActions: "play none none none",
+              },
+            });
+
+            // Anima primero hasta el 90% del valor final para un conteo inicial más rápido.
+            tl.to(counterState, {
+              value: finalValue * 0.9,
+              duration: 1.9,
+              ease: "power2.out",
+              onUpdate: () => {
+                counter.textContent = formatCounterValue(counterState.value, originalValue);
+              },
+            });
+
+            // Luego anima suavemente hasta el valor final para un efecto de conteo más natural.
+            tl.to(counterState, {
+              value: finalValue,
+              duration: 2.5,
+              ease: "power1.out",
+              onUpdate: () => {
+                counter.textContent = formatCounterValue(counterState.value, originalValue);
+              },
+            });
+          });
+        }
 
         card.addEventListener("mouseenter", () => {
           gsap.to(card, {
