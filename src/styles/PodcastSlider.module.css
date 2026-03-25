@@ -129,4 +129,8 @@
     bottom: -4%;
     width: 20%;
   }
+
+  .aspect iframe {
+    border-top-right-radius: 0;
+  }
 }

@@ -348,7 +348,7 @@ export default function ParticipationMechanisms() {
       <div className={styles.bgTexture} />
 
       <div className={styles.header}>
-        <h2 className={styles.title}>MECANISMOS DE PARTICIPACIÓN CIUDADANA</h2>
+        <h2 className={styles.title}>Mecanismos de <span className="spanDoarado">Participación Ciudadana</span></h2>
         <p className={styles.subtitle}>
           Diversos mecanismos recopilaron propuestas ciudadanas en todo el estado,
           mediante foros, consultas, diálogos y ejercicios creativos.

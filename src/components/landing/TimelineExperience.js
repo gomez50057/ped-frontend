@@ -449,7 +449,7 @@ export default function TimelineExperience() {
       <div className={styles.intro}>
         <div className={styles.introInner}>
           <p className={styles.kicker}>LÍNEA DE TIEMPO</p>
-          <h2 className={styles.title}>Actualización del Plan Estatal de Desarrollo</h2>
+          <h2 className={styles.title}>Actualización del <span className="spanDoarado">Plan Estatal de Desarrollo</span></h2>
           <p className={styles.subtitle}>
             Franja de participación ciudadana · Junio — Noviembre 2025
           </p>
