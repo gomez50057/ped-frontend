@@ -13,6 +13,7 @@ const LOGOS = [
 
 const NAV_ITEMS = [
   { label: "Inicio", href: "/" },
+  { label: "Actualización del PED", href: "/ped/" },
   {
     label: "Estatal",
     submenu: [

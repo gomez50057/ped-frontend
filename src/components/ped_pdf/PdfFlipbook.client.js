@@ -9,252 +9,241 @@ import "react-pdf/dist/Page/TextLayer.css";
 
 import styles from "./PdfFlipbook.module.css";
 
-// Fuente única del PDF (evita duplicar strings)
-const PDF_FILE = "/pdf/Actualizacion_PED_2025_2028.pdf";
+// ==============================
+// CONFIG GENERAL
+// ==============================
+const PDF_FILE = "/pdf/Actualizacion_PED_2025_2028_opt.pdf";
 const PDF_DOWNLOAD_NAME = "Actualizacion_PED_2025_2028.pdf";
 
-// Worker de pdf.js (misma versión que pdfjs-dist)
+// Worker de pdf.js
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   "pdfjs-dist/build/pdf.worker.min.mjs",
   import.meta.url
 ).toString();
 
-// Relación alto/ancho aproximada del PED (A4 vertical)
-const ASPECT_RATIO = 1.414; // alto = ancho * 1.414
+// Opciones para mejorar compatibilidad con imágenes embebidas
+const PDF_OPTIONS = {
+  wasmUrl: `https://unpkg.com/pdfjs-dist@${pdfjs.version}/wasm/`,
+  cMapUrl: `https://unpkg.com/pdfjs-dist@${pdfjs.version}/cmaps/`,
+  standardFontDataUrl: `https://unpkg.com/pdfjs-dist@${pdfjs.version}/standard_fonts/`,
+  maxImageSize: -1,
+};
 
-// Parámetros de la lupa
-const LENS_SIZE = 200; // diámetro en px
-const LENS_ZOOM = 2; // factor de zoom
+// Relación alto/ancho aproximada A4 vertical
+const ASPECT_RATIO = 1.414;
 
-// Tiempo de bloqueo de interacciones tras cada flip
+// Parámetros de lupa
+const LENS_SIZE = 200;
+const LENS_ZOOM = 2;
+
+// Lock tras flip
 const FLIP_LOCK_MS = 900;
 
-/**
- * ============================================
- * OPTIMIZACIÓN PARA PDF PESADO (SIN “REINICIO”)
- * ============================================
- * 1) Render Window: renderiza solo páginas cercanas a la actual (±N).
- * 2) Placeholder: evita pantalla blanca mientras PDF.js pinta el canvas.
- * 3) Retry controlado + Watchdog: si una página falla o se queda “en blanco”, forzamos re-render
- *    SOLO de esa página (sin repintar todo el libro en cada flip).
- */
+// Render conservador para PDF pesado
+const RENDER_WINDOW_DESKTOP = 2;
+const RENDER_WINDOW_MOBILE = 0;
 
-const RENDER_WINDOW = 3; // actual ± 3 (ajusta 2..5 según potencia)
+// Reintento por página si falla render
+const PAGE_MAX_RETRIES = 1;
+const PAGE_RETRY_DELAY_MS = 300;
 
-const PAGE_MAX_RETRIES = 2;
-const PAGE_RETRY_DELAY_MS = 250;
-const PAGE_RENDER_TIMEOUT_MS = 3500;
+// ==============================
+// PÁGINA INDIVIDUAL
+// ==============================
+const BookPage = React.memo(
+  React.forwardRef(function BookPage(
+    { pageNumber, pageWidth, enableMagnifier = false, shouldRender = true },
+    forwardedRef
+  ) {
+    const localRef = useRef(null);
 
-const BookPage = React.forwardRef(function BookPage(
-  { pageNumber, pageWidth, enableMagnifier = false, shouldRender = true },
-  forwardedRef
-) {
-  const localRef = useRef(null);
+    const [lensPos, setLensPos] = useState({ x: 0, y: 0 });
+    const [showLens, setShowLens] = useState(false);
+    const [retryKey, setRetryKey] = useState(0);
 
-  // Lupa
-  const [lensPos, setLensPos] = useState({ x: 0, y: 0 });
-  const [showLens, setShowLens] = useState(false);
+    const rafIdRef = useRef(null);
+    const pendingPosRef = useRef(null);
+    const retryCountRef = useRef(0);
 
-  // Throttle pointer move
-  const rafIdRef = useRef(null);
-  const pendingPosRef = useRef(null);
-
-  // Retry
-  const [retryKey, setRetryKey] = useState(0);
-  const retryCountRef = useRef(0);
-
-  // Watchdog render (anti “página en blanco” colgada)
-  const renderTimeoutRef = useRef(null);
-
-  const setRefs = (node) => {
-    localRef.current = node;
-    if (typeof forwardedRef === "function") forwardedRef(node);
-    else if (forwardedRef) forwardedRef.current = node;
-  };
-
-  useEffect(() => {
-    return () => {
-      if (rafIdRef.current) cancelAnimationFrame(rafIdRef.current);
-      if (renderTimeoutRef.current) clearTimeout(renderTimeoutRef.current);
+    const setRefs = (node) => {
+      localRef.current = node;
+      if (typeof forwardedRef === "function") forwardedRef(node);
+      else if (forwardedRef) forwardedRef.current = node;
     };
-  }, []);
 
-  const scheduleLensPosUpdate = (pos) => {
-    pendingPosRef.current = pos;
-    if (rafIdRef.current) return;
+    useEffect(() => {
+      retryCountRef.current = 0;
+      setRetryKey(0);
+      setShowLens(false);
+    }, [pageNumber, pageWidth]);
 
-    rafIdRef.current = requestAnimationFrame(() => {
-      rafIdRef.current = null;
-      if (pendingPosRef.current) setLensPos(pendingPosRef.current);
-    });
-  };
+    useEffect(() => {
+      return () => {
+        if (rafIdRef.current) cancelAnimationFrame(rafIdRef.current);
+      };
+    }, []);
 
-  const handleMove = (e) => {
-    if (!enableMagnifier || !localRef.current) return;
+    const scheduleLensPosUpdate = (pos) => {
+      pendingPosRef.current = pos;
+      if (rafIdRef.current) return;
 
-    const rect = localRef.current.getBoundingClientRect();
-    let x = e.clientX - rect.left;
-    let y = e.clientY - rect.top;
-
-    // Clamp visual (evita que el círculo se corte por borde)
-    const minLensCenterX = LENS_SIZE / 2;
-    const maxLensCenterX = rect.width - LENS_SIZE / 2;
-    const minLensCenterY = LENS_SIZE / 2;
-    const maxLensCenterY = rect.height - LENS_SIZE / 2;
-
-    x = Math.max(minLensCenterX, Math.min(maxLensCenterX, x));
-    y = Math.max(minLensCenterY, Math.min(maxLensCenterY, y));
-
-    scheduleLensPosUpdate({ x, y });
-  };
-
-  const handleEnter = () => {
-    if (!enableMagnifier) return;
-    setShowLens(true);
-  };
-
-  const handleLeave = () => {
-    if (!enableMagnifier) return;
-    setShowLens(false);
-  };
-
-  const stopRenderWatchdog = () => {
-    if (renderTimeoutRef.current) {
-      clearTimeout(renderTimeoutRef.current);
-      renderTimeoutRef.current = null;
-    }
-  };
-
-  const forceRetry = () => {
-    if (retryCountRef.current >= PAGE_MAX_RETRIES) return;
-    retryCountRef.current += 1;
-
-    stopRenderWatchdog();
-
-    setTimeout(() => {
-      setRetryKey((k) => k + 1);
-    }, PAGE_RETRY_DELAY_MS);
-  };
-
-  const startRenderWatchdog = () => {
-    stopRenderWatchdog();
-    renderTimeoutRef.current = setTimeout(() => {
-      // si no confirmó onRenderSuccess en X ms, reintenta
-      forceRetry();
-    }, PAGE_RENDER_TIMEOUT_MS);
-  };
-
-  // Arranca watchdog cuando esta página entra a renderizarse (sin repintar todo el libro)
-  useEffect(() => {
-    if (!shouldRender) return;
-    startRenderWatchdog();
-    return () => stopRenderWatchdog();
-    // Se rearma en cada retryKey/pageWidth/pageNumber
-  }, [shouldRender, pageNumber, pageWidth, retryKey]);
-
-  // Si está fuera de ventana: placeholder ligero (evita sobrecarga)
-  if (!shouldRender) {
-    return (
-      <div ref={setRefs} className={styles.page}>
-        <div className={styles.pagePlaceholder}>
-          <p className={styles.pagePlaceholderText}>Cargando…</p>
-        </div>
-      </div>
-    );
-  }
-
-  // Offset para que (x,y) quede al centro del lente
-  const offsetLeft = LENS_SIZE / 2 - lensPos.x * LENS_ZOOM;
-  const offsetTop = LENS_SIZE / 2 - lensPos.y * LENS_ZOOM;
-
-  return (
-    <div
-      ref={setRefs}
-      className={styles.page}
-      onPointerMove={handleMove}
-      onPointerEnter={handleEnter}
-      onPointerLeave={handleLeave}
-    >
-      {/* Página normal */}
-      <PdfPage
-        key={`p-${pageNumber}-${pageWidth}-${retryKey}`}
-        pageNumber={pageNumber}
-        width={pageWidth}
-        renderTextLayer={false}
-        renderAnnotationLayer={false}
-        devicePixelRatio={1}
-        loading={
-          <div className={styles.pagePlaceholder}>
-            <p className={styles.pagePlaceholderText}>Renderizando página…</p>
-          </div>
+      rafIdRef.current = requestAnimationFrame(() => {
+        rafIdRef.current = null;
+        if (pendingPosRef.current) {
+          setLensPos(pendingPosRef.current);
         }
-        onRenderError={forceRetry}
-        onRenderSuccess={stopRenderWatchdog}
-      />
+      });
+    };
 
-      {/* Lupa */}
-      {enableMagnifier && showLens && (
-        <div
-          className={styles.magnifier}
-          style={{
-            width: `${LENS_SIZE}px`,
-            height: `${LENS_SIZE}px`,
-            left: `${lensPos.x - LENS_SIZE / 2}px`,
-            top: `${lensPos.y - LENS_SIZE / 2}px`,
-            pointerEvents: "none",
-          }}
-        >
+    const handleMove = (e) => {
+      if (!enableMagnifier || !localRef.current) return;
+
+      const rect = localRef.current.getBoundingClientRect();
+      let x = e.clientX - rect.left;
+      let y = e.clientY - rect.top;
+
+      const minLensCenterX = LENS_SIZE / 2;
+      const maxLensCenterX = rect.width - LENS_SIZE / 2;
+      const minLensCenterY = LENS_SIZE / 2;
+      const maxLensCenterY = rect.height - LENS_SIZE / 2;
+
+      x = Math.max(minLensCenterX, Math.min(maxLensCenterX, x));
+      y = Math.max(minLensCenterY, Math.min(maxLensCenterY, y));
+
+      scheduleLensPosUpdate({ x, y });
+    };
+
+    const handleEnter = () => {
+      if (!enableMagnifier) return;
+      setShowLens(true);
+    };
+
+    const handleLeave = () => {
+      if (!enableMagnifier) return;
+      setShowLens(false);
+    };
+
+    const forceRetry = (err) => {
+      if (err) {
+        console.error(`Error renderizando página ${pageNumber}:`, err);
+      }
+
+      if (!shouldRender) return;
+      if (retryCountRef.current >= PAGE_MAX_RETRIES) return;
+
+      retryCountRef.current += 1;
+
+      window.setTimeout(() => {
+        setRetryKey((k) => k + 1);
+      }, PAGE_RETRY_DELAY_MS);
+    };
+
+    if (!shouldRender) {
+      return (
+        <div ref={setRefs} className={styles.page}>
+          <div className={styles.pagePlaceholder}>
+            <p className={styles.pagePlaceholderText}>Página en espera…</p>
+          </div>
+        </div>
+      );
+    }
+
+    const offsetLeft = LENS_SIZE / 2 - lensPos.x * LENS_ZOOM;
+    const offsetTop = LENS_SIZE / 2 - lensPos.y * LENS_ZOOM;
+
+    return (
+      <div
+        ref={setRefs}
+        className={styles.page}
+        onPointerMove={handleMove}
+        onPointerEnter={handleEnter}
+        onPointerLeave={handleLeave}
+      >
+        <PdfPage
+          key={`p-${pageNumber}-${pageWidth}-${retryKey}`}
+          pageNumber={pageNumber}
+          width={pageWidth}
+          renderMode="canvas"
+          renderTextLayer={false}
+          renderAnnotationLayer={false}
+          devicePixelRatio={1}
+          loading={
+            <div className={styles.pagePlaceholder}>
+              <p className={styles.pagePlaceholderText}>Renderizando página…</p>
+            </div>
+          }
+          onRenderError={forceRetry}
+        />
+
+        {enableMagnifier && showLens && (
           <div
-            className={styles.magnifierInner}
+            className={styles.magnifier}
             style={{
-              transform: `scale(${LENS_ZOOM})`,
-              transformOrigin: "top left",
-              left: `${offsetLeft}px`,
-              top: `${offsetTop}px`,
+              width: `${LENS_SIZE}px`,
+              height: `${LENS_SIZE}px`,
+              left: `${lensPos.x - LENS_SIZE / 2}px`,
+              top: `${lensPos.y - LENS_SIZE / 2}px`,
+              pointerEvents: "none",
             }}
           >
-            <PdfPage
-              key={`m-${pageNumber}-${pageWidth}-${retryKey}`}
-              pageNumber={pageNumber}
-              width={pageWidth}
-              renderTextLayer={false}
-              renderAnnotationLayer={false}
-              devicePixelRatio={1}
-              onRenderError={forceRetry}
-            />
+            <div
+              className={styles.magnifierInner}
+              style={{
+                transform: `scale(${LENS_ZOOM})`,
+                transformOrigin: "top left",
+                left: `${offsetLeft}px`,
+                top: `${offsetTop}px`,
+              }}
+            >
+              <PdfPage
+                key={`m-${pageNumber}-${pageWidth}-${retryKey}`}
+                pageNumber={pageNumber}
+                width={pageWidth}
+                renderMode="canvas"
+                renderTextLayer={false}
+                renderAnnotationLayer={false}
+                devicePixelRatio={1}
+                onRenderError={forceRetry}
+              />
+            </div>
           </div>
-        </div>
-      )}
-    </div>
-  );
-});
+        )}
+      </div>
+    );
+  }),
+  (prev, next) =>
+    prev.pageNumber === next.pageNumber &&
+    prev.pageWidth === next.pageWidth &&
+    prev.enableMagnifier === next.enableMagnifier &&
+    prev.shouldRender === next.shouldRender
+);
 
+BookPage.displayName = "BookPage";
+
+// ==============================
+// COMPONENTE PRINCIPAL
+// ==============================
 export default function PdfFlipbookClient() {
   const [numPages, setNumPages] = useState(null);
   const [pageWidth, setPageWidth] = useState(0);
   const [pageHeight, setPageHeight] = useState(0);
   const [isLaptop, setIsLaptop] = useState(false);
+  const [loadProgress, setLoadProgress] = useState(0);
 
   const [isFlipping, setIsFlipping] = useState(false);
-  const [mode, setMode] = useState("cover"); // "cover" | "book" | "backCover"
+  const [mode, setMode] = useState("cover"); // cover | book | backCover
   const [currentInteriorIndex, setCurrentInteriorIndex] = useState(0);
   const [bookStartIndex, setBookStartIndex] = useState(0);
 
-  // Lupa ON/OFF (solo laptop)
   const [magnifierEnabled, setMagnifierEnabled] = useState(false);
-
-  // Sonido
   const [isMuted, setIsMuted] = useState(false);
 
-  const bookRef = useRef(null);
+  const [isFlipLocked, setIsFlipLocked] = useState(false);
 
-  // sonidos
+  const bookRef = useRef(null);
   const flipSoundsRef = useRef([]);
   const flipSoundIndexRef = useRef(0);
   const lastStateRef = useRef("read");
-
-  // Lock de flip
-  const [isFlipLocked, setIsFlipLocked] = useState(false);
   const flipLockTimeoutRef = useRef(null);
 
   useEffect(() => {
@@ -263,7 +252,7 @@ export default function PdfFlipbookClient() {
     };
   }, []);
 
-  // Precargar sonidos
+  // Precarga sonidos
   useEffect(() => {
     if (typeof window === "undefined") return;
 
@@ -282,38 +271,7 @@ export default function PdfFlipbookClient() {
     };
   }, []);
 
-  const playFlipSound = () => {
-    const arr = flipSoundsRef.current;
-    if (!arr || arr.length === 0) return;
-    if (isMuted) return;
-
-    const idx = flipSoundIndexRef.current % arr.length;
-    const audio = arr[idx];
-    flipSoundIndexRef.current = (idx + 1) % arr.length;
-
-    try {
-      audio.currentTime = 0;
-      void audio.play();
-    } catch {
-      // ignore
-    }
-  };
-
-  const toggleMute = () => setIsMuted((prev) => !prev);
-
-  // Evita capturar flechas si escriben en inputs
-  const isTypingTarget = (el) => {
-    if (!el) return false;
-    const tag = el.tagName?.toLowerCase();
-    return (
-      tag === "input" ||
-      tag === "textarea" ||
-      tag === "select" ||
-      el.isContentEditable
-    );
-  };
-
-  // Calcular tamaños según viewport
+  // Resize
   useEffect(() => {
     function handleResize() {
       if (typeof window === "undefined") return;
@@ -324,10 +282,7 @@ export default function PdfFlipbookClient() {
       const laptop = w >= 1024;
       setIsLaptop(laptop);
 
-      let newPageWidth;
-      if (laptop) newPageWidth = (w * 0.8) / 2;
-      else newPageWidth = w * 0.9;
-
+      let newPageWidth = laptop ? (w * 0.8) / 2 : w * 0.9;
       newPageWidth = Math.min(newPageWidth, 700);
 
       const rawPageHeight = newPageWidth * ASPECT_RATIO;
@@ -343,19 +298,20 @@ export default function PdfFlipbookClient() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  function onDocumentLoadSuccess({ numPages }) {
-    setNumPages(numPages);
-    setCurrentInteriorIndex(0);
-    setBookStartIndex(0);
-    setMode("cover");
-  }
-
-  const totalPages = numPages || 0;
-  const hasInteriorPages = totalPages > 2 ? totalPages - 2 : 0;
-
   // Teclado
   useEffect(() => {
     if (!numPages) return;
+
+    function isTypingTarget(el) {
+      if (!el) return false;
+      const tag = el.tagName?.toLowerCase();
+      return (
+        tag === "input" ||
+        tag === "textarea" ||
+        tag === "select" ||
+        el.isContentEditable
+      );
+    }
 
     function handleKeyDown(e) {
       if (isFlipLocked) return;
@@ -367,18 +323,40 @@ export default function PdfFlipbookClient() {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mode, numPages, currentInteriorIndex, hasInteriorPages, isFlipLocked]);
+  }, [numPages, isFlipLocked, mode, currentInteriorIndex]);
+
+  const playFlipSound = () => {
+    const arr = flipSoundsRef.current;
+    if (!arr?.length || isMuted) return;
+
+    const idx = flipSoundIndexRef.current % arr.length;
+    const audio = arr[idx];
+    flipSoundIndexRef.current = (idx + 1) % arr.length;
+
+    try {
+      audio.currentTime = 0;
+      void audio.play();
+    } catch {
+      // ignore
+    }
+  };
+
+  const toggleMute = () => setIsMuted((prev) => !prev);
+
+  function onDocumentLoadSuccess({ numPages: loadedPages }) {
+    setNumPages(loadedPages);
+    setCurrentInteriorIndex(0);
+    setBookStartIndex(0);
+    setMode("cover");
+  }
 
   function handleFlip(e) {
-    // IMPORTANTE: no forzamos repintado global aquí (evita “reinicios”)
     setCurrentInteriorIndex(e.data);
   }
 
   function handleChangeState(e) {
     const state = e.data;
 
-    // sonido al entrar a flipping
     if (state === "flipping" && lastStateRef.current !== "flipping") {
       playFlipSound();
     }
@@ -398,6 +376,10 @@ export default function PdfFlipbookClient() {
       setIsFlipping(false);
     }
   }
+
+  const totalPages = numPages || 0;
+  const hasInteriorPages = totalPages > 2 ? totalPages - 2 : 0;
+  const renderWindow = isLaptop ? RENDER_WINDOW_DESKTOP : RENDER_WINDOW_MOBILE;
 
   const handlePrev = () => {
     if (isFlipLocked) return;
@@ -451,31 +433,23 @@ export default function PdfFlipbookClient() {
     }
   };
 
-  // Sin tamaño calculado
   if (!pageWidth || !pageHeight) {
     return (
       <section className={styles.section}>
-        <h1 className={styles.title}>Actualización del Plan Estatal de Desarrollo (PED) 2025-2028 </h1>
         <p className={styles.status}>Calculando tamaño del visor…</p>
       </section>
     );
   }
 
-  // wrapper libro: 2 páginas en laptop, 1 en móvil
   const wrapperWidth = isLaptop ? pageWidth * 2 : pageWidth;
+  const hasLoaded = !!numPages;
+  const magnifierEffective = magnifierEnabled && isLaptop;
 
-  // indicador
   let currentDisplayPage = 1;
   if (mode === "cover") currentDisplayPage = 1;
   else if (mode === "book") currentDisplayPage = currentInteriorIndex + 2;
   else if (mode === "backCover") currentDisplayPage = totalPages || 1;
 
-  const hasLoaded = !!numPages;
-
-  // Lupa solo laptop
-  const magnifierEffective = magnifierEnabled && isLaptop;
-
-  // “grosor”
   let leftStackCount = 0;
   let rightStackCount = 0;
 
@@ -489,14 +463,49 @@ export default function PdfFlipbookClient() {
   const rightStackRatio =
     totalPages > 0 ? Math.min(1, rightStackCount / totalPages) : 0;
 
+  const interiorPages = hasInteriorPages
+    ? Array.from({ length: hasInteriorPages }, (_, index) => {
+        const shouldRender = isLaptop
+          ? index >= currentInteriorIndex - renderWindow &&
+            index <= currentInteriorIndex + 1 + renderWindow
+          : Math.abs(index - currentInteriorIndex) <= renderWindow;
+
+        return (
+          <BookPage
+            key={index + 2}
+            pageNumber={index + 2}
+            pageWidth={pageWidth}
+            enableMagnifier={magnifierEffective}
+            shouldRender={shouldRender}
+          />
+        );
+      })
+    : null;
+
   return (
     <section className={styles.section}>
       <div className={styles.viewer} id="pdf-viewer" data-ped-viewer="true">
         <Document
           file={PDF_FILE}
+          options={PDF_OPTIONS}
           onLoadSuccess={onDocumentLoadSuccess}
-          loading={<p className={styles.status}>Cargando PED…</p>}
-          error={<p className={styles.statusError}>No se pudo cargar el archivo PED.</p>}
+          onLoadProgress={({ loaded, total }) => {
+            if (!total) return;
+            setLoadProgress(Math.round((loaded / total) * 100));
+          }}
+          loading={
+            <p className={styles.status}>
+              Cargando PED… {loadProgress > 0 ? `${loadProgress}%` : ""}
+            </p>
+          }
+          error={
+            <p className={styles.statusError}>
+              No se pudo cargar el archivo PED.
+            </p>
+          }
+          onLoadError={(err) => {
+            console.error("Error cargando PDF:", err);
+          }}
         >
           {!hasLoaded ? (
             <p className={styles.status}>Preparando páginas…</p>
@@ -567,8 +576,9 @@ export default function PdfFlipbookClient() {
             </div>
           ) : hasInteriorPages > 0 ? (
             <div
-              className={`${styles.bookWrapper} ${isFlipping ? styles.bookWrapperFlipping : ""
-                }`}
+              className={`${styles.bookWrapper} ${
+                isFlipping ? styles.bookWrapperFlipping : ""
+              }`}
               style={{
                 width: wrapperWidth,
                 height: pageHeight,
@@ -584,7 +594,6 @@ export default function PdfFlipbookClient() {
                 height={pageHeight}
                 size="fixed"
                 showCover={false}
-                // laptop: “book view” (2 páginas), móvil: 1 página
                 usePortrait={!isLaptop}
                 flippingTime={1200}
                 drawShadow={true}
@@ -594,25 +603,13 @@ export default function PdfFlipbookClient() {
                 useMouseEvents={true}
                 mobileScrollSupport={true}
                 startPage={bookStartIndex}
-                className={`${styles.flipbook} ${isFlipping ? styles.flipbookFlipping : ""
-                  }`}
+                className={`${styles.flipbook} ${
+                  isFlipping ? styles.flipbookFlipping : ""
+                }`}
                 onFlip={handleFlip}
                 onChangeState={handleChangeState}
               >
-                {Array.from({ length: hasInteriorPages }, (_, index) => {
-                  const shouldRender =
-                    Math.abs(index - currentInteriorIndex) <= RENDER_WINDOW;
-
-                  return (
-                    <BookPage
-                      key={index + 2}
-                      pageNumber={index + 2}
-                      pageWidth={pageWidth}
-                      enableMagnifier={magnifierEffective}
-                      shouldRender={shouldRender}
-                    />
-                  );
-                })}
+                {interiorPages}
               </HTMLFlipBook>
 
               <button
@@ -625,6 +622,7 @@ export default function PdfFlipbookClient() {
               >
                 ‹
               </button>
+
               <button
                 type="button"
                 className={`${styles.navButton} ${styles.navButtonRight}`}
@@ -657,13 +655,13 @@ export default function PdfFlipbookClient() {
           )}
         </Document>
 
-        {/* Barra de controles: Lupa + Sonido + Descargar */}
         <div className={styles.controlsBar}>
           <div className={styles.controlsGroup}>
             <button
               type="button"
-              className={`${styles.iconButton} ${magnifierEffective ? styles.iconButtonActive : ""
-                }`}
+              className={`${styles.iconButton} ${
+                magnifierEffective ? styles.iconButtonActive : ""
+              }`}
               onClick={() => setMagnifierEnabled((v) => !v)}
               aria-pressed={magnifierEffective}
               disabled={!isLaptop}
@@ -679,8 +677,9 @@ export default function PdfFlipbookClient() {
 
           <button
             type="button"
-            className={`${styles.iconButton} ${isMuted ? styles.iconButtonMuted : ""
-              }`}
+            className={`${styles.iconButton} ${
+              isMuted ? styles.iconButtonMuted : ""
+            }`}
             onClick={toggleMute}
             aria-pressed={isMuted}
             aria-label={isMuted ? "Activar sonido" : "Silenciar sonido"}
