@@ -1,12 +1,15 @@
 #header {
   position: relative;
+  width: 100%;
+  overflow: hidden;
 }
 
 .contentHeader {
-  width: 100vw;
-  height: 100vh;
-  margin: 0;
   position: relative;
+  width: 100%;
+  min-height: 100svh;
+  height: 100svh;
+  margin: 0;
 }
 
 /*  */
@@ -14,10 +17,10 @@
 /*  */
 .headerTxt {
   position: absolute;
-  top: 49vh;
+  top: 49%;
   left: 0;
   transform: translate(0%, -50%);
-  width: 78vw;
+  width: min(78vw, 1480px);
   height: auto;
   opacity: 0;
   transition: opacity 1s ease-in;
@@ -26,8 +29,8 @@
   padding: 0;
 }
 
-/* Imagen dentro de headerTxt */
 .headerTxt img {
+  display: block;
   width: 100%;
   height: auto;
 }
@@ -37,11 +40,12 @@
 /*  */
 .contentTren {
   position: absolute;
-  bottom: 25vh;
+  bottom: clamp(7rem, 18vh, 25vh);
   left: 0;
-  width: 100vw;
-  height: 200px;
+  width: 100%;
+  height: clamp(80px, 12vw, 200px);
   z-index: 100;
+  pointer-events: none;
 }
 
 /*  */
@@ -51,14 +55,16 @@
   position: absolute;
   top: 0;
   right: 0;
-  width: 100vw;
+  width: 100%;
   height: auto;
   opacity: 0;
   transition: opacity 1s ease-in;
   will-change: opacity, transform;
+  z-index: 1;
 }
 
 .headerImg img {
+  display: block;
   width: 100%;
   height: auto;
 }
@@ -68,7 +74,8 @@
 /*  */
 .floatingImg {
   display: block;
-  animation: floatingAnimation 10s infinite alternate ease-in-out,
+  animation:
+    floatingAnimation 10s infinite alternate ease-in-out,
     shadowAnimation 8s infinite alternate ease-in-out;
   will-change: transform, filter;
 }
@@ -84,77 +91,87 @@
 .statsFloating {
   position: absolute;
   top: 50%;
-  right: clamp(1rem, 3vw, 2.5rem);
+  right: clamp(1rem, 2.4vw, 2.5rem);
   transform: translateY(-50%);
   display: flex;
   flex-direction: column;
   align-items: stretch;
   gap: 0.85rem;
-  padding: 1rem;
+  width: clamp(220px, 19vw, 320px);
+  padding: clamp(0.85rem, 1.2vw, 1rem);
   border-radius: 1.4rem;
-  background: rgba(245, 236, 223, 0.92);
+  background: rgba(245, 236, 223, 0.9);
   border: 1px solid rgba(164, 131, 82, 0.18);
   box-shadow: 0 18px 42px rgba(78, 58, 32, 0.12);
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   z-index: 260;
 }
 
-/* Texto */
 .statCard {
-  position: relative;
-  display: flex;
+  display: grid;
+  grid-template-columns: auto 1fr;
   align-items: center;
-  gap: 0.85rem;
-  min-width: 13rem;
+  column-gap: 0.85rem;
+  min-width: 0;
   padding: 0 0 0.85rem 0;
 }
 
-/* Texto */
 .statCard:not(:last-child) {
   border-bottom: 1px solid rgba(122, 91, 52, 0.22);
 }
 
-/* Texto */
 .statCard:last-child {
   padding-bottom: 0;
   border-bottom: none;
 }
 
-/* Texto */
 .statIcon {
-  width: 3rem;
-  height: 3rem;
-  flex: 0 0 3rem;
+  width: clamp(2.75rem, 3vw, 3rem);
+  height: clamp(2.75rem, 3vw, 3rem);
+  flex: 0 0 auto;
   border-radius: 50%;
   display: grid;
   place-items: center;
-  font-size: 1.45rem;
+  font-size: clamp(1.2rem, 1.5vw, 1.45rem);
   color: #8b6424;
   background: linear-gradient(135deg, #ecd1a1, #d9b06b);
   box-shadow: inset 0 2px 6px rgba(255, 255, 255, 0.25);
 }
 
-/* Texto */
 .statInfo {
   display: flex;
   flex-direction: column;
-  line-height: 1.02;
+  min-width: 0;
+  line-height: 1.08;
 }
 
-/* Texto */
 .statInfo strong {
-  font-size: clamp(1.35rem, 1vw + 0.85rem, 2rem);
+  font-size: clamp(1.2rem, 1vw + 0.75rem, 2rem);
   font-weight: 800;
   color: #6c3e52;
   letter-spacing: -0.03em;
 }
 
-/* Texto */
 .statInfo span {
-  font-size: clamp(0.72rem, 0.35vw + 0.55rem, 0.95rem);
+  font-size: clamp(0.72rem, 0.3vw + 0.62rem, 0.95rem);
   font-weight: 600;
   color: #5f3c2f;
   text-wrap: balance;
+}
+
+/*  */
+/* Link del círculo */
+/*  */
+.consultCircleLink {
+  position: absolute;
+  right: clamp(1rem, 2.4vw, 2.5rem);
+  bottom: clamp(1rem, 2vw, 2rem);
+  display: block;
+  width: clamp(120px, 11vw, 180px);
+  aspect-ratio: 1 / 1;
+  z-index: 270;
+  text-decoration: none;
 }
 
 /*  */
@@ -162,24 +179,12 @@
 /*  */
 .consultCircle {
   position: absolute;
+  inset: 0;
   width: 100%;
   aspect-ratio: 1 / 1;
   z-index: 260;
   cursor: pointer;
   transition: transform 0.35s ease, filter 0.35s ease;
-}
-
-/* Texto */
-/* Texto */
-.consultCircleLink {
-  position: absolute;
-  right: clamp(1rem, 3vw, 2.5rem);
-  bottom: clamp(1rem, 2vw, 2rem);
-  display: block;
-  width: clamp(120px, 11vw, 180px);
-  aspect-ratio: 1 / 1;
-  z-index: 260;
-  text-decoration: none;
 }
 
 .consultCircle::before {
@@ -188,33 +193,31 @@
   inset: 10px;
   border-radius: 50%;
   border: 1px dashed rgba(108, 62, 82, 0.28);
-  transition: transform 0.35s ease, border-color 0.35s ease, opacity 0.35s ease;
+  transition:
+    transform 0.35s ease,
+    border-color 0.35s ease,
+    opacity 0.35s ease;
 }
 
-/* Texto */
 .consultCircle:hover {
   transform: translateY(-6px) scale(1.04);
   filter: drop-shadow(0 14px 24px rgba(108, 62, 82, 0.18));
 }
 
-/* Texto */
 .consultCircle:hover::before {
   transform: scale(1.05);
   border-color: rgba(108, 62, 82, 0.5);
 }
 
-/* Texto */
 .consultCircle:hover .consultCircleInner {
   transform: scale(1.06);
   box-shadow: 0 18px 34px rgba(0, 0, 0, 0.2);
 }
 
-/* Texto */
 .consultCircle:hover .circleTextSvg {
   animation-duration: 9s;
 }
 
-/* Texto */
 .circleTextSvg {
   position: absolute;
   inset: 0;
@@ -224,7 +227,6 @@
   transition: transform 0.35s ease;
 }
 
-/* Texto */
 .circleText {
   fill: #6c3e52;
   font-size: 11px;
@@ -233,7 +235,6 @@
   text-transform: uppercase;
 }
 
-/* Texto */
 .consultCircleInner {
   position: absolute;
   inset: 18%;
@@ -245,8 +246,8 @@
   transition: transform 0.35s ease, box-shadow 0.35s ease;
 }
 
-/* Texto */
 .consultCircleInner img {
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -281,52 +282,79 @@
   }
 }
 
+
+
 /*  */
 /* Responsive tablet */
 /*  */
 @media (max-width: 768px) {
   .contentHeader {
-    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: auto;
     height: auto;
-    margin: 0;
+    padding-bottom: 8rem;
+    overflow: visible;
   }
 
   .headerTxt {
     position: relative;
-    top: 15vh;
-    left: 0;
+    top: auto;
+    left: auto;
     transform: none;
-    width: 75vw;
-    height: auto;
+    width: min(88vw, 720px);
+    margin-top: clamp(3.25rem, 8vh, 5.5rem);
+    z-index: 200;
   }
 
   .contentTren {
     position: absolute;
-    top: 15vh;
+    top: clamp(4.5rem, 13vh, 7rem);
+    bottom: auto;
     left: 0;
-    width: 100vw;
-    height: 50px;
+    width: 100%;
+    height: clamp(52px, 8vw, 84px);
     z-index: 100;
   }
 
-  .statsFloating {
+  .headerImg {
+    position: relative;
     top: auto;
-    right: 1rem;
-    bottom: 8.5rem;
+    right: auto;
+    width: 100%;
+    height: auto;
+    margin-top: clamp(1rem, 2.5vw, 1.5rem);
+    opacity: 1;
+  }
+
+  .headerImg img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .statsFloating {
+    position: relative;
+    top: auto;
+    right: auto;
+    bottom: auto;
     transform: none;
-    width: min(72vw, 270px);
+    width: min(88vw, 420px);
+    margin: 1.25rem auto 0;
     gap: 0.7rem;
-    padding: 0.85rem;
+    padding: 0.95rem;
   }
 
   .statCard {
     min-width: unset;
   }
 
-  .consultCircle {
-    width: 120px;
+  .consultCircleLink {
     right: 1rem;
     bottom: 1rem;
+    width: 120px;
   }
 
   .circleText {
@@ -349,38 +377,100 @@
 /* Responsive mobile */
 /*  */
 @media (max-width: 576px) {
-  .headerImg {
-    position: relative;
-    width: 100vw;
-    height: 100vh;
-  }
-
-  .headerImg img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  .contentHeader {
+    padding-bottom: 7rem;
   }
 
   .headerTxt {
-    position: relative;
-    top: 65vh;
-    left: 0;
-    transform: none;
-    width: 100vw;
-    height: auto;
+    width: calc(100% - 2rem);
+    margin-top: clamp(3rem, 7vh, 4.25rem);
     padding: 0 1rem;
   }
 
-  .statsFloating {
-    left: 1rem;
-    right: 1rem;
-    width: auto;
-    bottom: 8rem;
+  .contentTren {
+    top: clamp(4rem, 11vh, 5.25rem);
+    height: clamp(46px, 7vw, 60px);
   }
 
-  .consultCircle {
-    width: 105px;
+  .headerImg {
+    margin-top: 0.85rem;
+  }
+
+  .statsFloating {
+    width: calc(100% - 2rem);
+    margin: 0.9rem auto 0;
+    border-radius: 1.15rem;
+  }
+
+  .statCard {
+    column-gap: 0.75rem;
+  }
+
+  .statIcon {
+    width: 2.7rem;
+    height: 2.7rem;
+    font-size: 1.2rem;
+  }
+
+  .statInfo strong {
+    font-size: 1.2rem;
+  }
+
+  .statInfo span {
+    font-size: 0.78rem;
+  }
+
+  .consultCircleLink {
+    width: 104px;
     right: 0.85rem;
     bottom: 0.85rem;
+  }
+
+  .circleText {
+    font-size: 9px;
+    letter-spacing: 1.2px;
+  }
+}
+
+/*  */
+/* Mobile pequeño */
+/*  */
+@media (max-width: 400px) {
+  .contentHeader {
+    padding-bottom: 6.5rem;
+  }
+
+  .headerTxt {
+    width: calc(100% - 1.25rem);
+    padding: 0 0.625rem;
+  }
+
+  .statsFloating {
+    width: calc(100% - 1.25rem);
+    padding: 0.8rem;
+  }
+
+  .statCard {
+    padding: 0 0 0.75rem 0;
+  }
+
+  .statIcon {
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 1.1rem;
+  }
+
+  .statInfo strong {
+    font-size: 1.08rem;
+  }
+
+  .statInfo span {
+    font-size: 0.74rem;
+  }
+
+  .consultCircleLink {
+    width: 96px;
+    right: 0.65rem;
+    bottom: 0.65rem;
   }
 }
