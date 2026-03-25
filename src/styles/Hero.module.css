@@ -168,7 +168,7 @@
   right: clamp(1rem, 2.4vw, 2.5rem);
   bottom: clamp(1rem, 2vw, 2rem);
   display: block;
-  width: clamp(120px, 11vw, 180px);
+  width: clamp(180px, 17vw, 280px);
   aspect-ratio: 1 / 1;
   z-index: 270;
   text-decoration: none;
@@ -231,7 +231,7 @@
   fill: #6c3e52;
   font-size: 11px;
   font-weight: 700;
-  letter-spacing: 1.8px;
+  letter-spacing: 2px;
   text-transform: uppercase;
 }
 
@@ -282,8 +282,6 @@
   }
 }
 
-
-
 /*  */
 /* Responsive tablet */
 /*  */
@@ -297,6 +295,33 @@
     height: auto;
     padding-bottom: 8rem;
     overflow: visible;
+  }
+
+  .headerImg {
+    position: absolute;
+    left: -10px;
+    width: auto;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    isolation: isolate;
+  }
+
+  .headerImg img {
+    display: block;
+    width: auto;
+    height: 100%;
+    position: relative;
+    z-index: 1;
+  }
+
+  .headerImg::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.30);
+    z-index: 2;
+    pointer-events: none;
   }
 
   .headerTxt {
@@ -319,22 +344,6 @@
     z-index: 100;
   }
 
-  .headerImg {
-    position: relative;
-    top: auto;
-    right: auto;
-    width: 100%;
-    height: auto;
-    margin-top: clamp(1rem, 2.5vw, 1.5rem);
-    opacity: 1;
-  }
-
-  .headerImg img {
-    width: 100%;
-    height: auto;
-    object-fit: contain;
-  }
-
   .statsFloating {
     position: relative;
     top: auto;
@@ -349,17 +358,6 @@
 
   .statCard {
     min-width: unset;
-  }
-
-  .consultCircleLink {
-    right: 1rem;
-    bottom: 1rem;
-    width: 120px;
-  }
-
-  .circleText {
-    font-size: 10px;
-    letter-spacing: 1.4px;
   }
 
   @keyframes floatingAnimation {
@@ -383,9 +381,10 @@
 
   .headerTxt {
     width: calc(100% - 2rem);
-    margin-top: clamp(3rem, 7vh, 4.25rem);
+    margin-top: clamp(10rem, 15vh, 14.25rem);
     padding: 0 1rem;
   }
+
 
   .contentTren {
     top: clamp(4rem, 11vh, 5.25rem);
@@ -421,21 +420,19 @@
   }
 
   .consultCircleLink {
-    width: 104px;
-    right: 0.85rem;
-    bottom: 0.85rem;
+    left: 50%;
+    bottom: -4rem;
+    width: clamp(180px, 17vw, 280px);
+    transform: translateX(-50%);
   }
 
-  .circleText {
-    font-size: 9px;
-    letter-spacing: 1.2px;
-  }
+
 }
 
 /*  */
 /* Mobile pequeño */
 /*  */
-@media (max-width: 400px) {
+@media (max-width: 375px) {
   .contentHeader {
     padding-bottom: 6.5rem;
   }
@@ -472,5 +469,9 @@
     width: 96px;
     right: 0.65rem;
     bottom: 0.65rem;
+  }
+
+  .consultCircleLink {
+    width: 96px;
   }
 }
