@@ -18,6 +18,7 @@ const NAV_ITEMS = [
     label: "Estatal",
     submenu: [
       { label: "Plan Estatal de Desarrollo 2022-2028", href: "https://bibliotecadigitaluplaph.hidalgo.gob.mx/Biblioteca%20Digital%20de%20Planeaci%C3%B3n/Estatal/Plan%20Estatal%20de%20Desarrollo%202022-2028.pdf" },
+       { label: "Actualización del Plan Estatal de Desarrollo 2022-2028", href: "https://bibliotecadigitaluplaph.hidalgo.gob.mx/Biblioteca%20Digital%20de%20Planeaci%C3%B3n/Estatal/Actualizaci%C3%B3n%20del%20Plan%20Estatal%20de%20Desarrollo%202022-2028.pdf" },
     ]
   },
   {

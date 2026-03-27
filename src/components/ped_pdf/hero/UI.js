@@ -5,7 +5,7 @@ import { atom, useAtom } from "jotai";
 import { useEffect, useRef, useCallback } from "react";
 import styles from "./UI.module.css";
 
-const pictures = ["C1", "C2", "C3", "C4", "C5", "C6", "C7", "C8", "C9", "C10"];
+const pictures = ["C1", "C2", "C3", "C4", "C5", "C6", "C7", "C8", "C9", "C10", "C11", "C12", "C13", "C14"];
 
 export const pageAtom = atom(0);
 
