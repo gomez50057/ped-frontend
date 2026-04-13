@@ -154,7 +154,7 @@ function EventCard({ event, position, colorClass }) {
       </div>
 
       <h3 className={styles.cardTitle}>{event.title}</h3>
-      <p className={styles.cardDate}>{event.date}</p>
+      {/* <p className={styles.cardDate}>{event.date}</p> */}
       <p className={styles.cardStat}>{event.stat}</p>
 
       <div className={styles.cardFooter}>
@@ -451,7 +451,7 @@ export default function TimelineExperience() {
           <p className={styles.kicker}>LÍNEA DE TIEMPO</p>
           <h2 className={styles.title}>Actualización del <span className="spanDoarado">Plan Estatal de Desarrollo</span></h2>
           <p className={styles.subtitle}>
-            Franja de participación ciudadana · Junio — Noviembre 2025
+            Franja de participación ciudadana en Hidalgo
           </p>
 
           <div className={styles.pill}>
@@ -505,10 +505,10 @@ export default function TimelineExperience() {
                     <span className={styles.node} />
                   </div>
 
-                  <div className={styles.monthBadge}>
+                  {/* <div className={styles.monthBadge}>
                     <strong>{item.month}</strong>
                     <small>{item.year}</small>
-                  </div>
+                  </div> */}
                 </div>
 
                 <div className={styles.bottomZone}>

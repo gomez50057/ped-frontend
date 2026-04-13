@@ -192,7 +192,7 @@ function Card({ item }) {
       <div className={styles.cardBody}>
         <p className={styles.description}>{formatText(item.description)}</p>
         <div className={styles.divider} />
-        <p className={styles.date}>{formatText(item.date)}</p>
+        {/* <p className={styles.date}>{formatText(item.date)}</p> */}
         <p className={styles.stat}>{renderAnimatedStat(item.stat)}</p>
       </div>
     </article>
