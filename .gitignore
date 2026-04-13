@@ -40,3 +40,4 @@ Dockerfile
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+public/pdf/Actualizacion_PED_2025_2028.pdf
