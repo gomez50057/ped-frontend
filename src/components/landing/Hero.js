@@ -1,6 +1,6 @@
 "use client";
 
-import { useLayoutEffect, useRef, useId } from "react";
+import { useLayoutEffect, useRef } from "react";
 import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
@@ -40,7 +40,7 @@ export default function Hero() {
   const imgRef = useRef(null);
   const statsRef = useRef(null);
   const statValueRefs = useRef([]);
-  const circlePathId = useId();
+  const circlePathId = "hero-consult-circle-path";
 
   useLayoutEffect(() => {
     const mm = gsap.matchMedia();

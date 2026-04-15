@@ -1,8 +1,8 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Navigation } from "swiper/modules";
+import { Autoplay } from "swiper/modules";
 import Link from "next/link";
 
 import "swiper/css";
@@ -18,11 +18,11 @@ const slides = [
     href: "/pdf/Plan Nacional de Desarrollo 2025 - 2030.pdf"
   },
   {
-    title: "Plan Estatal de Desarrollo del Estado de Hidalgo (vigente)",
+    title: "Plan Estatal de Desarrollo del Estado de Hidalgo",
     description:
       "Revisa el Plan Estatal de Desarrollo actualmente en vigor, que contiene la visión, estrategias y acciones que han guiado la administración pública del estado.",
     image: "/img/slider/PED.png",
-    href: "/pdf/Plan Estatal de Desarrollo 2022-2028.pdf"
+    href: "https://periodico.hidalgo.gob.mx/?tribe_events=Periodico-Oficial-Alcance-3-del-20-de-marzo-de-2026"
   },
   {
     title: "Lineamientos para la actualización del Plan Estatal de Desarrollo",
@@ -34,18 +34,39 @@ const slides = [
 ];
 
 const CarouselSlider = () => {
+  const [swiperInstance, setSwiperInstance] = useState(null);
+
   return (
     <div className={styles.carouselContainer}>
+      <button
+        type="button"
+        className={`${styles.navButton} ${styles.prevButton}`}
+        onClick={() => swiperInstance?.slidePrev()}
+        aria-label="Slide anterior"
+      >
+        ‹
+      </button>
+
+      <button
+        type="button"
+        className={`${styles.navButton} ${styles.nextButton}`}
+        onClick={() => swiperInstance?.slideNext()}
+        aria-label="Slide siguiente"
+      >
+        ›
+      </button>
+
       <Swiper
-        direction="vertical"
+        onSwiper={setSwiperInstance}
+        direction="horizontal"
         slidesPerView={1}
-        spaceBetween={30}
+        spaceBetween={20}
+        rewind={true}
         autoplay={{
-          delay: 3000,
+          delay: 4500,
           disableOnInteraction: false,
         }}
-        navigation={true}
-        modules={[Autoplay, Navigation]}
+        modules={[Autoplay]}
         className={styles.mySwiper}
       >
         {slides.map((slide, index) => (
