@@ -267,7 +267,8 @@ export default function TimelineExperience() {
         );
 
         gsap.to(`.${styles.progressRail}`, {
-          filter: "drop-shadow(0 0 12px rgba(255,255,255,0.18))",
+          filter:
+            "drop-shadow(0 0 12px color-mix(in srgb, var(--home-timeline-glow-base) 18%, transparent))",
           repeat: -1,
           yoyo: true,
           duration: 1.8,
@@ -308,7 +309,8 @@ export default function TimelineExperience() {
             });
 
             gsap.to(node, {
-              boxShadow: "0 0 0 14px rgba(255,255,255,0.10), 0 0 35px currentColor",
+              boxShadow:
+                "0 0 0 14px var(--home-timeline-node-ring), 0 0 35px currentColor",
               repeat: -1,
               yoyo: true,
               duration: 1.4,

@@ -1,4 +1,3 @@
-import Footer from "@/components/shared/Footer";
 import ClientLayout from "@/components/shared/ClientLayout";
 import GoogleAnalytics from "@/components/shared/GoogleAnalytics";
 import "@/styles/globals.css";
@@ -46,7 +45,6 @@ export default function RootLayout({ children }) {
       </head>
       <body>
         <ClientLayout>{children}</ClientLayout>
-        <Footer />
       </body>
     </html>
   );

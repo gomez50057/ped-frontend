@@ -1,7 +1,7 @@
 import HeroSection from "@/components/landing/Hero";
 import AboutSection from "@/components/landing/About";
 import TimelineSection from "@/components/landing/TimelineExperience";
-import ParticipationMechanisms from "@/components/landing/ParticipationMechanisms";
+// import ParticipationMechanisms from "@/components/landing/ParticipationMechanisms";
 import PodcastSlider from "@/components/landing/PodcastSlider";
 import CarouselSlider from "@/components/landing/CarouselSlider";
 import BibliotecaDigital from "@/components/landing/BibliotecaDigital";

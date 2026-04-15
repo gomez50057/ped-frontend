@@ -1,9 +1,9 @@
 .card {
   border-radius: 60px;
-  background: #ffffff;
+  background: var(--home-podcast-shell);
   overflow: hidden;
   clip-path: inset(0 round 60px);
-  box-shadow: 0 10px 26px rgba(0, 0, 0, .18);
+  box-shadow: var(--home-shadow-strong);
   width: 100%;
   margin-inline: auto;
   isolation: isolate;
@@ -26,7 +26,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #7a0f2d;
+  background: var(--home-podcast-panel);
   border-top-left-radius: 60px;
   border-bottom-left-radius: 60px;
 }
@@ -53,7 +53,7 @@
 .rightVideo {
   position: relative;
   flex: 1;
-  background: #fff;
+  background: var(--home-podcast-embed);
   display: flex;
   flex-direction: column;
   border-top-right-radius: 60px;
@@ -96,7 +96,7 @@
   border-radius: 50%;
   border: none;
   background: var(--vinoClr, #c04a66);
-  color: #fff;
+  color: var(--home-text-on-accent);
   font-size: 20px;
   display: grid;
   place-items: center;
@@ -106,7 +106,7 @@
 .dot {
   width: 10px;
   height: 10px;
-  background: #bbb;
+  background: var(--home-podcast-dot);
   border-radius: 50%;
 }
 

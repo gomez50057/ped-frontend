@@ -12,12 +12,342 @@
   --vinoGradient: linear-gradient(-45deg, var(--vinoOsc), var(--vinoClr));
   --doradoGradient: linear-gradient(-45deg, var(--doradoOsc), var(--doradoClr));
   --grisGradient: linear-gradient(-45deg, var(--grisClr), var(--blanco));
-}
-
-/* Root para swiper */
-:root {
   --swiper-navigation-color: white;
   --swiper-navigation-size: 1.5rem;
+}
+
+.home-theme-scope {
+  --home-bg: #f4f0eb;
+  --home-surface: #fffaf4;
+  --home-surface-muted: #f3e9dc;
+  --home-surface-strong: #d8c0a0;
+  --home-surface-glass: rgba(255, 250, 244, 0.82);
+  --home-surface-glass-strong: rgba(255, 255, 255, 0.88);
+  --home-text-primary: #4a2231;
+  --home-text-secondary: #70565b;
+  --home-text-muted: #8d7870;
+  --home-text-on-accent: #fefaf6;
+  --home-border-soft: rgba(105, 27, 50, 0.12);
+  --home-border-strong: rgba(188, 149, 91, 0.24);
+  --home-shadow-soft: 0 12px 28px rgba(58, 20, 32, 0.08);
+  --home-shadow-strong: 0 22px 52px rgba(58, 20, 32, 0.12);
+  --home-hero-stat-bg: rgba(245, 236, 223, 0.9);
+  --home-hero-stat-icon: linear-gradient(135deg, #ecd1a1, #d9b06b);
+  --home-hero-circle-bg: #efe2cf;
+  --home-hero-circle-border: rgba(255, 248, 240, 0.95);
+  --home-hero-mobile-overlay: rgba(255, 255, 255, 0.3);
+  --home-about-surface: transparent;
+  --home-about-accent: var(--doradoOsc);
+  --home-timeline-bg: #f8f2ea;
+  --home-timeline-border: rgba(0, 0, 0, 0.1);
+  --home-timeline-shadow:
+    20px 20px 60px rgba(190, 190, 190, 0.9),
+    -20px -20px 60px rgba(255, 255, 255, 0.95);
+  --home-timeline-grid: rgba(255, 255, 255, 0.12);
+  --home-timeline-kicker: #8b1e43;
+  --home-timeline-title: #7f1737;
+  --home-timeline-subtitle: #725b5f;
+  --home-timeline-pill-bg: rgba(255, 255, 255, 0.8);
+  --home-timeline-pill-text: #614e51;
+  --home-timeline-hint-bg: rgba(127, 23, 55, 0.08);
+  --home-timeline-hint-text: #7f1737;
+  --home-timeline-rail-bg:
+    linear-gradient(90deg,
+      rgba(255, 255, 255, 0.12) 0%,
+      rgba(255, 255, 255, 0.08) 100%);
+  --home-timeline-rail-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.2),
+    inset 0 8px 18px rgba(0, 0, 0, 0.08),
+    0 10px 22px rgba(71, 35, 56, 0.06);
+  --home-timeline-active-filter: saturate(1.06);
+  --home-timeline-node-bg: #ffffff;
+  --home-timeline-node-shadow:
+    0 0 0 10px rgba(255, 255, 255, 0.18),
+    0 12px 24px rgba(0, 0, 0, 0.08);
+  --home-timeline-node-ring: rgba(255, 255, 255, 0.1);
+  --home-timeline-glow-base: white;
+  --home-timeline-badge-bg: rgba(255, 255, 255, 0.14);
+  --home-timeline-badge-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.18),
+    0 12px 32px rgba(69, 34, 51, 0.14);
+  --home-timeline-card-bg:
+    linear-gradient(180deg,
+      rgba(255, 255, 255, 0.97) 0%,
+      rgba(255, 255, 255, 0.9) 100%);
+  --home-timeline-card-shadow:
+    0 20px 44px rgba(64, 37, 42, 0.1),
+    inset 0 0 0 1px rgba(140, 74, 83, 0.08);
+  --home-timeline-card-shadow-hover:
+    0 28px 56px rgba(64, 37, 42, 0.16),
+    inset 0 0 0 1px rgba(140, 74, 83, 0.12);
+  --home-timeline-card-title: #2d2325;
+  --home-timeline-card-text: #725d60;
+  --home-timeline-card-stat: #1f1b1c;
+  --home-timeline-card-meta: #6f5d60;
+  --home-timeline-legend-bg: rgba(255, 255, 255, 0.9);
+  --home-timeline-legend-shadow:
+    0 16px 34px rgba(64, 37, 42, 0.08),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.72);
+  --home-timeline-legend-item-bg: rgba(255, 255, 255, 0.55);
+  --home-timeline-legend-text: #5c4b4c;
+  --home-timeline-legend-copy: #46393a;
+  --home-podcast-shell: #ffffff;
+  --home-podcast-panel: #7a0f2d;
+  --home-podcast-embed: #ffffff;
+  --home-podcast-dot: #bbb;
+  --home-carousel-overlay: rgba(0, 0, 0, 0.5);
+  --home-carousel-text: var(--blanco);
+  --home-carousel-nav: #ffffff;
+  --home-biblioteca-shell: var(--doradoGradient);
+  --home-biblioteca-overlay: var(--grisOsc);
+  --home-biblioteca-copy: var(--blanco);
+  --home-biblioteca-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+  --home-footer-surface: rgba(255, 250, 244, 0.88);
+  --home-footer-border: rgba(105, 27, 50, 0.12);
+  --home-footer-text: #506a50;
+  --home-footer-strong: #4a2231;
+  --home-footer-line: var(--vinoClr);
+  --home-footer-social-filter: none;
+  --home-footer-shell: linear-gradient(180deg,
+      rgba(255, 250, 244, 0.82) 0%,
+      rgba(243, 233, 220, 0.9) 100%);
+  --home-footer-top-border: rgba(188, 149, 91, 0.2);
+  --home-footer-icon-shell: rgba(255, 255, 255, 0.66);
+}
+
+.home-theme-scope[data-home-theme="dark"] {
+  --home-bg: #190f15;
+  --home-surface: #24141d;
+  --home-surface-muted: #311a25;
+  --home-surface-strong: #533542;
+  --home-surface-glass: rgba(36, 20, 29, 0.82);
+  --home-surface-glass-strong: rgba(49, 26, 37, 0.88);
+  --home-text-primary: #f5ede7;
+  --home-text-secondary: #d7c1bd;
+  --home-text-muted: #b89ea3;
+  --home-text-on-accent: #fffaf4;
+  --home-border-soft: rgba(222, 201, 163, 0.14);
+  --home-border-strong: rgba(222, 201, 163, 0.22);
+  --home-shadow-soft: 0 12px 28px rgba(0, 0, 0, 0.28);
+  --home-shadow-strong: 0 24px 52px rgba(0, 0, 0, 0.38);
+  --home-hero-stat-bg: rgba(40, 20, 30, 0.86);
+  --home-hero-stat-icon: linear-gradient(135deg, #dec9a3, #bc955b);
+  --home-hero-circle-bg: #28161f;
+  --home-hero-circle-border: rgba(245, 243, 245, 0.16);
+  --home-hero-mobile-overlay: rgba(20, 10, 16, 0.3);
+  --home-about-surface: linear-gradient(180deg,
+      rgba(49, 26, 37, 0.82) 0%,
+      rgba(36, 20, 29, 0.68) 100%);
+  --home-about-accent: #dec9a3;
+  --home-timeline-bg: #22131b;
+  --home-timeline-border: rgba(222, 201, 163, 0.12);
+  --home-timeline-shadow:
+    0 28px 64px rgba(0, 0, 0, 0.38),
+    inset 0 1px 0 rgba(255, 255, 255, 0.02);
+  --home-timeline-grid: rgba(255, 255, 255, 0.05);
+  --home-timeline-kicker: #dec9a3;
+  --home-timeline-title: #f5ede7;
+  --home-timeline-subtitle: #cdb5b9;
+  --home-timeline-pill-bg: rgba(49, 26, 37, 0.82);
+  --home-timeline-pill-text: #ead6d3;
+  --home-timeline-hint-bg: rgba(222, 201, 163, 0.12);
+  --home-timeline-hint-text: #f2dfbc;
+  --home-timeline-rail-bg:
+    linear-gradient(90deg,
+      rgba(255, 255, 255, 0.08) 0%,
+      rgba(255, 255, 255, 0.04) 100%);
+  --home-timeline-rail-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08),
+    inset 0 8px 18px rgba(0, 0, 0, 0.24),
+    0 10px 24px rgba(0, 0, 0, 0.18);
+  --home-timeline-active-filter: saturate(1.1) brightness(1.04);
+  --home-timeline-node-bg: #190f15;
+  --home-timeline-node-shadow:
+    0 0 0 10px rgba(222, 201, 163, 0.12),
+    0 14px 30px rgba(0, 0, 0, 0.28);
+  --home-timeline-node-ring: rgba(222, 201, 163, 0.16);
+  --home-timeline-glow-base: rgba(245, 243, 245, 0.85);
+  --home-timeline-badge-bg: rgba(36, 20, 29, 0.74);
+  --home-timeline-badge-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.06),
+    0 12px 32px rgba(0, 0, 0, 0.24);
+  --home-timeline-card-bg:
+    linear-gradient(180deg,
+      rgba(49, 26, 37, 0.96) 0%,
+      rgba(36, 20, 29, 0.94) 100%);
+  --home-timeline-card-shadow:
+    0 20px 44px rgba(0, 0, 0, 0.24),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+  --home-timeline-card-shadow-hover:
+    0 28px 56px rgba(0, 0, 0, 0.32),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+  --home-timeline-card-title: #f7efea;
+  --home-timeline-card-text: #d1bcc0;
+  --home-timeline-card-stat: #fff7ef;
+  --home-timeline-card-meta: #c6afb4;
+  --home-timeline-legend-bg: rgba(36, 20, 29, 0.88);
+  --home-timeline-legend-shadow:
+    0 16px 34px rgba(0, 0, 0, 0.26),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+  --home-timeline-legend-item-bg: rgba(255, 255, 255, 0.03);
+  --home-timeline-legend-text: #ead8d4;
+  --home-timeline-legend-copy: #d8c3c1;
+  --home-podcast-shell: #24141d;
+  --home-podcast-panel: #4d1830;
+  --home-podcast-embed: #1c1017;
+  --home-podcast-dot: #71555f;
+  --home-carousel-overlay: rgba(13, 7, 11, 0.62);
+  --home-carousel-text: #fffaf4;
+  --home-carousel-nav: #dec9a3;
+  --home-biblioteca-shell: linear-gradient(135deg, #24141d 0%, #4d1830 100%);
+  --home-biblioteca-overlay: rgba(24, 14, 21, 0.9);
+  --home-biblioteca-copy: #f7efea;
+  --home-biblioteca-shadow: 0 24px 56px rgba(0, 0, 0, 0.28);
+  --home-footer-surface: rgba(36, 20, 29, 0.76);
+  --home-footer-border: rgba(222, 201, 163, 0.12);
+  --home-footer-text: #d5c0c4;
+  --home-footer-strong: #f6ebe4;
+  --home-footer-line: #dec9a3;
+  --home-footer-social-filter: brightness(0.98) contrast(1.08);
+  --home-footer-shell: linear-gradient(180deg,
+      rgba(28, 16, 23, 0.94) 0%,
+      rgba(20, 12, 18, 0.98) 100%);
+  --home-footer-top-border: rgba(222, 201, 163, 0.18);
+  --home-footer-icon-shell: rgba(255, 255, 255, 0.04);
+}
+
+@media (prefers-color-scheme: dark) {
+  .home-theme-scope:not([data-home-theme="light"]) {
+    --home-bg: #190f15;
+    --home-surface: #24141d;
+    --home-surface-muted: #311a25;
+    --home-surface-strong: #533542;
+    --home-surface-glass: rgba(36, 20, 29, 0.82);
+    --home-surface-glass-strong: rgba(49, 26, 37, 0.88);
+    --home-text-primary: #f5ede7;
+    --home-text-secondary: #d7c1bd;
+    --home-text-muted: #b89ea3;
+    --home-text-on-accent: #fffaf4;
+    --home-border-soft: rgba(222, 201, 163, 0.14);
+    --home-border-strong: rgba(222, 201, 163, 0.22);
+    --home-shadow-soft: 0 12px 28px rgba(0, 0, 0, 0.28);
+    --home-shadow-strong: 0 24px 52px rgba(0, 0, 0, 0.38);
+    --home-hero-stat-bg: rgba(40, 20, 30, 0.86);
+    --home-hero-stat-icon: linear-gradient(135deg, #dec9a3, #bc955b);
+    --home-hero-circle-bg: #28161f;
+    --home-hero-circle-border: rgba(245, 243, 245, 0.16);
+    --home-hero-mobile-overlay: rgba(20, 10, 16, 0.3);
+    --home-about-surface: linear-gradient(180deg,
+        rgba(49, 26, 37, 0.82) 0%,
+        rgba(36, 20, 29, 0.68) 100%);
+    --home-about-accent: #dec9a3;
+    --home-timeline-bg: #22131b;
+    --home-timeline-border: rgba(222, 201, 163, 0.12);
+    --home-timeline-shadow:
+      0 28px 64px rgba(0, 0, 0, 0.38),
+      inset 0 1px 0 rgba(255, 255, 255, 0.02);
+    --home-timeline-grid: rgba(255, 255, 255, 0.05);
+    --home-timeline-kicker: #dec9a3;
+    --home-timeline-title: #f5ede7;
+    --home-timeline-subtitle: #cdb5b9;
+    --home-timeline-pill-bg: rgba(49, 26, 37, 0.82);
+    --home-timeline-pill-text: #ead6d3;
+    --home-timeline-hint-bg: rgba(222, 201, 163, 0.12);
+    --home-timeline-hint-text: #f2dfbc;
+    --home-timeline-rail-bg:
+      linear-gradient(90deg,
+        rgba(255, 255, 255, 0.08) 0%,
+        rgba(255, 255, 255, 0.04) 100%);
+    --home-timeline-rail-shadow:
+      inset 0 0 0 1px rgba(255, 255, 255, 0.08),
+      inset 0 8px 18px rgba(0, 0, 0, 0.24),
+      0 10px 24px rgba(0, 0, 0, 0.18);
+    --home-timeline-active-filter: saturate(1.1) brightness(1.04);
+    --home-timeline-node-bg: #190f15;
+    --home-timeline-node-shadow:
+      0 0 0 10px rgba(222, 201, 163, 0.12),
+      0 14px 30px rgba(0, 0, 0, 0.28);
+    --home-timeline-node-ring: rgba(222, 201, 163, 0.16);
+    --home-timeline-glow-base: rgba(245, 243, 245, 0.85);
+    --home-timeline-badge-bg: rgba(36, 20, 29, 0.74);
+    --home-timeline-badge-shadow:
+      inset 0 0 0 1px rgba(255, 255, 255, 0.06),
+      0 12px 32px rgba(0, 0, 0, 0.24);
+    --home-timeline-card-bg:
+      linear-gradient(180deg,
+        rgba(49, 26, 37, 0.96) 0%,
+        rgba(36, 20, 29, 0.94) 100%);
+    --home-timeline-card-shadow:
+      0 20px 44px rgba(0, 0, 0, 0.24),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+    --home-timeline-card-shadow-hover:
+      0 28px 56px rgba(0, 0, 0, 0.32),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+    --home-timeline-card-title: #f7efea;
+    --home-timeline-card-text: #d1bcc0;
+    --home-timeline-card-stat: #fff7ef;
+    --home-timeline-card-meta: #c6afb4;
+    --home-timeline-legend-bg: rgba(36, 20, 29, 0.88);
+    --home-timeline-legend-shadow:
+      0 16px 34px rgba(0, 0, 0, 0.26),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+    --home-timeline-legend-item-bg: rgba(255, 255, 255, 0.03);
+    --home-timeline-legend-text: #ead8d4;
+    --home-timeline-legend-copy: #d8c3c1;
+    --home-podcast-shell: #24141d;
+    --home-podcast-panel: #4d1830;
+    --home-podcast-embed: #1c1017;
+    --home-podcast-dot: #71555f;
+    --home-carousel-overlay: rgba(13, 7, 11, 0.62);
+    --home-carousel-text: #fffaf4;
+    --home-carousel-nav: #dec9a3;
+    --home-biblioteca-shell: linear-gradient(135deg, #24141d 0%, #4d1830 100%);
+    --home-biblioteca-overlay: rgba(24, 14, 21, 0.9);
+    --home-biblioteca-copy: #f7efea;
+    --home-biblioteca-shadow: 0 24px 56px rgba(0, 0, 0, 0.28);
+    --home-footer-surface: rgba(36, 20, 29, 0.76);
+    --home-footer-border: rgba(222, 201, 163, 0.12);
+    --home-footer-text: #d5c0c4;
+    --home-footer-strong: #f6ebe4;
+    --home-footer-line: #dec9a3;
+    --home-footer-social-filter: brightness(0.98) contrast(1.08);
+    --home-footer-shell: linear-gradient(180deg,
+        rgba(28, 16, 23, 0.94) 0%,
+        rgba(20, 12, 18, 0.98) 100%);
+    --home-footer-top-border: rgba(222, 201, 163, 0.18);
+    --home-footer-icon-shell: rgba(255, 255, 255, 0.04);
+  }
+}
+
+.home-theme-scope {
+  background:
+    radial-gradient(circle at top center, rgba(188, 149, 91, 0.1), transparent 28%),
+    linear-gradient(180deg, var(--home-bg) 0%, color-mix(in srgb, var(--home-bg) 92%, black) 100%);
+  color: var(--home-text-primary);
+  --swiper-navigation-color: var(--home-carousel-nav);
+}
+
+.home-theme-scope h1,
+.home-theme-scope h2,
+.home-theme-scope h3 {
+  color: var(--home-text-primary);
+}
+
+.home-theme-scope p {
+  color: var(--home-text-secondary);
+}
+
+.home-theme-scope .spanDoarado {
+  color: var(--home-about-accent);
+}
+
+.home-theme-scope .spanDoaradoClr {
+  color: color-mix(in srgb, var(--home-about-accent) 78%, white);
+}
+
+.home-theme-scope .spanVino,
+.home-theme-scope .spanvino {
+  color: var(--home-text-primary);
 }
 
 * {
@@ -28,7 +358,6 @@
 body {
   margin: 0;
   padding: 0;
-  background: #F1F1F1;
   overflow-x: hidden;
   overflow-y: auto;
 }
@@ -80,7 +409,7 @@ h3 .spanDoaradoClr {
 }
 
 h1 .spanVino,
-h2 .spanvino, 
+h2 .spanvino,
 h3 .spanVino {
   color: var(--vinoOsc);
   font-style: italic;
@@ -119,5 +448,4 @@ body {
 .swiper-button-prev:hover,
 .swiper-button-next:hover {
   color: #800020;
-  /* Color vino al hacer hover */
 }

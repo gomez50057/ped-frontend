@@ -6,11 +6,13 @@
   padding: 1rem 2.5rem;
   margin: 1.5rem 0;
   gap: 20px;
+  background: var(--home-about-surface);
+  color: var(--home-text-primary);
 }
 
 .titule{
   font-size: 1rem;
-  color: var(--grisClr);
+  color: var(--home-text-muted);
   
 }
 
@@ -22,14 +24,16 @@
 
 .aboutContainer h2 {
   font-size: 4rem;
+  color: var(--home-text-primary);
 }
 
 .aboutContainer p {
   text-align: justify;
+  color: var(--home-text-secondary);
 }
 
 .aboutContainer p span {
-  color: var(--doradoOsc);
+  color: var(--home-about-accent);
   font-style: italic;
   font-weight: 700;
   font-size: 1.2rem;
@@ -41,7 +45,7 @@
 }
 
 .aboutContainer h3 {
-  color: var(--grisClr);
+  color: var(--home-text-muted);
 }
 
 .tren {

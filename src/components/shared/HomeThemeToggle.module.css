@@ -1,0 +1,125 @@
+.themeToggle {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  z-index: 1200;
+}
+
+.trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 2.5rem;
+  padding: 0.55rem 0.8rem;
+  border: 1px solid var(--home-border-strong);
+  border-radius: 999px;
+  background: var(--home-surface-glass);
+  color: var(--home-text-primary);
+  font-size: 0.82rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: var(--home-shadow-soft);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.triggerIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.1rem;
+  height: 1.1rem;
+  font-size: 0.95rem;
+  line-height: 1;
+}
+
+.triggerLabel {
+  white-space: nowrap;
+}
+
+.panel {
+  position: absolute;
+  top: auto;
+  bottom: calc(100% + 0.55rem);
+  right: 0;
+  width: min(280px, calc(100vw - 2rem));
+  padding: 0.85rem;
+  border-radius: 1.15rem;
+  background: var(--home-surface-glass);
+  border: 1px solid var(--home-border-strong);
+  box-shadow: var(--home-shadow-strong);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.7rem;
+}
+
+.kicker {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--home-text-muted);
+}
+
+.status {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--home-text-secondary);
+  text-align: right;
+}
+
+.buttonGroup {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+
+.button {
+  min-height: 2.4rem;
+  padding: 0.6rem 0.7rem;
+  border: 1px solid var(--home-border-soft);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--home-surface-glass-strong) 78%, transparent);
+  color: var(--home-text-secondary);
+  font-size: 0.82rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    background-color 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.button:hover {
+  transform: translateY(-1px);
+  border-color: var(--home-border-strong);
+  color: var(--home-text-primary);
+}
+
+.buttonActive {
+  background: var(--vinoGradient);
+  border-color: transparent;
+  color: var(--home-text-on-accent);
+  box-shadow: 0 10px 20px rgba(58, 20, 32, 0.2);
+}
+
+@media (max-width: 767px) {
+  .themeToggle {
+    bottom: 1rem;
+    right: 1rem;
+  }
+
+  .panel {
+    top: auto;
+    bottom: calc(100% + 0.55rem);
+  }
+}

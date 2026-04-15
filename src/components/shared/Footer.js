@@ -1,10 +1,10 @@
-import './Footer.css';
+import styles from "./Footer.module.css";
 const imgBasePath = "https://bibliotecadigitaluplaph.hidalgo.gob.mx/img_banco/footer/";
 
 const Footer = () => {
   return (
-    <footer id='footer' className="footer">
-      <div className="footer_redes">
+    <footer id="footer" className={styles.footer}>
+      <div className={styles.footerRedes}>
         <a href="https://www.facebook.com/profile.php?id=100069229599131" target="_blank" rel="noopener noreferrer">
           <img src={`${imgBasePath}facebook.webp`} alt="Logo de Facebook" />
         </a>
@@ -19,10 +19,10 @@ const Footer = () => {
         </a>
       </div>
 
-      <div className="footer_contacto">
+      <div className={styles.footerContacto}>
 
-        <div className="footer_contacto_txt">
-          <div className="footer_contacto_ico">
+        <div className={styles.footerContactoTxt}>
+          <div className={styles.footerContactoIco}>
             <img src={`${imgBasePath}telefono.webp`} alt="icono de un telefono" />
             <div>
               <p><span>CONTACTO:</span></p>
@@ -35,7 +35,7 @@ const Footer = () => {
 
           {/* <p><span>Unidad de Planeación y Prospectiva</span></p> */}
           <p>participacionciudadana@hidalgo.gob.mx</p>
-          <div className="linea_footer"></div>
+          <div className={styles.lineaFooter}></div>
           <p>Gobierno del Estado de Hidalgo</p>
           <p><span>www.hidalgo.gob.mx</span></p>
         </div>
