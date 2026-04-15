@@ -34,7 +34,7 @@ const mechanisms = [
     description:
       "Foros regionales de consulta\nen los 45 municipios con presencia\nde población indígena",
     date: "Agosto a octubre 2025",
-    stat: "17,319 propuestas",
+    stat: "7,319 propuestas",
     color: "green",
     icon: "indigenas",
     size: "top",

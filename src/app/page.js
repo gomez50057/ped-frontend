@@ -14,7 +14,7 @@ export default function HomePage() {
       <HeroSection />
       <AboutSection />
       <TimelineSection />
-      <ParticipationMechanisms />
+      {/* <ParticipationMechanisms /> */}
       <div style={{ paddingInline: "clamp(1rem, 4vw, 2.5rem)" }}>
         <CarouselSlider />
       </div>

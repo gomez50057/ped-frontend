@@ -19,13 +19,13 @@ const numberFormatter = new Intl.NumberFormat("es-MX");
 const statsData = [
   {
     icon: <LightbulbOutlinedIcon fontSize="inherit" />,
-    endValue: 50000,
+    endValue: 26367,
     label: "propuestas recibidas",
   },
   {
     icon: <Groups2OutlinedIcon fontSize="inherit" />,
-    endValue: 32000,
-    label: "participantes",
+    endValue: 8,
+    label: "mecanismos de participación ciudadana",
   },
   {
     icon: <ForumOutlinedIcon fontSize="inherit" />,

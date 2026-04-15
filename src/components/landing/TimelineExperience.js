@@ -28,6 +28,7 @@ const timelineData = [
         tag: "CONSULTA DIGITAL",
         title: "Espacio digital abierto",
         date: "Junio → Octubre 2025",
+        text: "Espacio para identificar temas de mayor interés social y propuestas de atención.",
         stat: "5,343 propuestas",
         icon: "digital",
       },
@@ -37,6 +38,7 @@ const timelineData = [
         tag: "RETO IA",
         title: "Inteligencia Artificial",
         date: "Junio → Octubre 2025",
+        text: "Uso de herramientas de inteligencia artificial para representar una visión prospectiva de Hidalgo.",
         stat: "15 insumos para visión a largo plazo",
         icon: "ia",
       },
@@ -52,6 +54,7 @@ const timelineData = [
         tag: "PODCAST",
         title: "Diálogos con autoridades",
         date: "Agosto → Septiembre 2025",
+        text: "Serie de podcasts con entrevistas a autoridades para conocer sus propuestas y preocupaciones.",
         stat: "20 participantes · 6 eventos",
         icon: "podcast",
       },
@@ -61,7 +64,8 @@ const timelineData = [
         tag: "PUEBLOS Y COMUNIDADES INDÍGENAS",
         title: "Foros regionales en 45 municipios",
         date: "Agosto → Octubre 2025",
-        stat: "17,319 propuestas ciudadanas",
+        text: "Espacio para conocer las propuestas e inquietudes de pueblos originarios y comunidades indígenas de Hidalgo.",
+        stat: "7,319 propuestas ciudadanas",
         icon: "indigenas",
       },
     ],
@@ -76,6 +80,7 @@ const timelineData = [
         tag: "CONSULTA INFANTIL",
         title: "9 eventos en escuelas",
         date: "23 Sep → 8 Oct 2025",
+        text: "Consulta dirigida a niñas y niños para conocer sus propuestas e inquietudes.",
         stat: "175 propuestas · 1,100 expresiones gráficas",
         icon: "infantil",
       },
@@ -92,6 +97,7 @@ const timelineData = [
         tag: "CONSULTA CON JUVENTUDES",
         title: "320 bachilleratos + 6 IES UAEH",
         date: "29 Sep → 4 Nov 2025",
+        text: "Consulta dirigida a jóvenes en bachillerato y educación superior para conocer sus propuestas e inquietudes.",
         stat: "2,483 propuestas EMS · 2,025 propuestas UAEH",
         icon: "juventudes",
       },
@@ -101,6 +107,7 @@ const timelineData = [
         tag: "FOROS CIUDADANOS",
         title: "18 foros en 12 universidades",
         date: "29 Sep → 25 Nov 2025",
+        text: "Foros de diálogo con la sociedad civil para conocer sus propuestas e inquietudes.",
         stat: "6,915 propuestas",
         icon: "foros",
       },
@@ -115,8 +122,9 @@ const timelineData = [
     bottomEvents: [
       {
         tag: "GRUPOS FOCALES",
-        title: "8 debates especializados",
+        title: "8 debates especializados con 69 participantes",
         date: "8 Ago → 21 Nov 2025",
+        text: "Grupos focales con expertos para profundizar en temas clave para el desarrollo de Hidalgo.",
         stat: "583 propuestas con enfoque sectorial",
         icon: "focales",
       },
@@ -154,6 +162,8 @@ function EventCard({ event, position, colorClass }) {
       </div>
 
       <h3 className={styles.cardTitle}>{event.title}</h3>
+      <p className={styles.cardDate}>{event.text}</p>
+
       {/* <p className={styles.cardDate}>{event.date}</p> */}
       <p className={styles.cardStat}>{event.stat}</p>
 
@@ -448,7 +458,7 @@ export default function TimelineExperience() {
 
       <div className={styles.intro}>
         <div className={styles.introInner}>
-          <p className={styles.kicker}>LÍNEA DE TIEMPO</p>
+          <p className={styles.kicker}>RUTA DE TRABAJO</p>
           <h2 className={styles.title}>Actualización del <span className="spanDoarado">Plan Estatal de Desarrollo</span></h2>
           <p className={styles.subtitle}>
             Franja de participación ciudadana en Hidalgo
