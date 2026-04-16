@@ -3,7 +3,11 @@
 import { Environment, Float, OrbitControls } from "@react-three/drei";
 import { Book } from "./Book";
 
-export const Experience = () => {
+export const Experience = ({
+  onBookClick,
+  onBookHoverChange,
+  onBookPointerMove,
+}) => {
   return (
     <>
       <Float
@@ -13,7 +17,11 @@ export const Experience = () => {
         rotationIntensity={2}
       >
         <group scale={[1.6, 1.6, 1.6]}>
-          <Book />
+          <Book
+            onBookClick={onBookClick}
+            onBookHoverChange={onBookHoverChange}
+            onBookPointerMove={onBookPointerMove}
+          />
         </group>
       </Float>
 

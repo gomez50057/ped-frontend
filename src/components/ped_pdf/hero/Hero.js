@@ -2,18 +2,20 @@
 
 import { Canvas } from "@react-three/fiber";
 import { Loader } from "@react-three/drei";
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useCallback, useEffect, useRef, useState } from "react";
 import { Experience } from "@/components/ped_pdf/hero/Experience";
-import { UI } from "@/components/ped_pdf/hero/UI";
 import styles from "./UI.module.css";
 
-export default function Hero() {
+export default function Hero({ onBookClick }) {
+  const containerRef = useRef(null);
   const [cameraConfig, setCameraConfig] = useState({
     x: -0.2,
     y: 1,
     z: 4,
     fov: 45,
   });
+  const [isBookHovered, setIsBookHovered] = useState(false);
+  const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
     const update = () => {
@@ -41,9 +43,41 @@ export default function Hero() {
     return () => window.removeEventListener("resize", update);
   }, []);
 
+  const syncCursorPosition = useCallback((point) => {
+    if (!containerRef.current || !point) return;
+
+    const rect = containerRef.current.getBoundingClientRect();
+    setCursorPosition({
+      x: point.clientX - rect.left,
+      y: point.clientY - rect.top,
+    });
+  }, []);
+
+  const handleBookHoverChange = useCallback(
+    (hovered, point) => {
+      setIsBookHovered(hovered);
+
+      if (hovered && point) {
+        syncCursorPosition(point);
+      }
+    },
+    [syncCursorPosition]
+  );
+
+  const handleBookPointerMove = useCallback(
+    (point) => {
+      syncCursorPosition(point);
+    },
+    [syncCursorPosition]
+  );
+
   return (
-    <div className={styles.containerBase}>
-      <UI showOnlyEnds={true} />
+    <div
+      ref={containerRef}
+      className={`${styles.containerBase} ${
+        isBookHovered ? styles.pointerCursor : ""
+      }`}
+    >
       <Loader />
       <Canvas
         shadows
@@ -55,13 +89,31 @@ export default function Hero() {
           ],
           fov: cameraConfig.fov,
         }}
-      >
-        <group position-y={0}>
-          <Suspense fallback={null}>
-            <Experience />
-          </Suspense>
-        </group>
-      </Canvas>
+        >
+          <group position-y={0}>
+            <Suspense fallback={null}>
+              <Experience
+                onBookClick={onBookClick}
+                onBookHoverChange={handleBookHoverChange}
+                onBookPointerMove={handleBookPointerMove}
+              />
+            </Suspense>
+          </group>
+        </Canvas>
+
+      {isBookHovered && (
+        <div
+          className={styles.cursorHint}
+          style={{
+            left: `${cursorPosition.x}px`,
+            top: `${cursorPosition.y}px`,
+          }}
+          aria-hidden="true"
+        >
+          <span className={styles.cursorRing}></span>
+          <span className={styles.cursorLabel}>Da clic para leer el PED</span>
+        </div>
+      )}
     </div>
   );
 }

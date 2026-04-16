@@ -5,6 +5,7 @@ import TimelineSection from "@/components/landing/TimelineExperience";
 import PodcastSlider from "@/components/landing/PodcastSlider";
 import CarouselSlider from "@/components/landing/CarouselSlider";
 import BibliotecaDigital from "@/components/landing/BibliotecaDigital";
+import PedPdfHeroSection from "@/components/landing/PedPdfHeroSection";
 
 // import PublicKnowledgeSection from "@/components/landing/PublicKnowledgeSection";
 
@@ -14,6 +15,7 @@ export default function HomePage() {
       <HeroSection />
       <AboutSection />
       <TimelineSection />
+      <PedPdfHeroSection />
       {/* <ParticipationMechanisms /> */}
       <div style={{ paddingInline: "clamp(1rem, 4vw, 2.5rem)" }}>
         <CarouselSlider />
