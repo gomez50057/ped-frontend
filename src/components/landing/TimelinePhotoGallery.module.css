@@ -1,0 +1,231 @@
+.galleryLauncher {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-top: 0.8rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid color-mix(in srgb, currentColor 16%, transparent);
+}
+
+.galleryMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.galleryKicker {
+  color: var(--home-timeline-card-meta);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.galleryCount {
+  color: var(--home-timeline-card-text);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.galleryButton {
+  min-height: 2.2rem;
+  padding: 0.55rem 0.9rem;
+  border: 1px solid color-mix(in srgb, currentColor 24%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, currentColor 12%, white);
+  color: currentColor;
+  font-size: 0.78rem;
+  font-weight: 900;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.galleryButton:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.12);
+  background: color-mix(in srgb, currentColor 18%, white);
+}
+
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: rgba(22, 12, 18, 0.68);
+  backdrop-filter: blur(10px);
+}
+
+.modal {
+  width: 100vw;
+  height: 100vh;
+  max-height: none;
+  overflow: auto;
+  padding: 1.25rem 1.4rem 1.5rem;
+  border-radius: 0;
+  background: var(--home-surface);
+  border: none;
+  box-shadow: none;
+}
+
+.modal::before {
+  content: "";
+  display: block;
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+.modalHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  padding-bottom: 0.9rem;
+  background: var(--home-surface);
+  max-width: 1240px;
+  margin-inline: auto;
+}
+
+.modalHeaderCopy {
+  min-width: 0;
+}
+
+.modalKicker {
+  margin: 0 0 0.35rem;
+  color: var(--home-text-muted);
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.modalTitle {
+  margin: 0;
+  color: var(--home-text-primary);
+  font-size: clamp(1.2rem, 2vw, 1.7rem);
+  font-weight: 900;
+}
+
+.closeButton {
+  width: 2.5rem;
+  height: 2.5rem;
+  border: none;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--home-text-primary) 10%, white);
+  color: var(--home-text-primary);
+  font-size: 1rem;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.heroMedia {
+  position: relative;
+  width: 100%;
+  height: min(72vh, 880px);
+  min-height: 360px;
+  overflow: hidden;
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at center, rgba(255, 255, 255, 0.36), transparent 60%),
+    color-mix(in srgb, var(--home-surface-muted) 88%, black);
+  max-width: 1240px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.heroImage,
+.thumbnailImage {
+  object-fit: contain;
+}
+
+.heroCaption {
+  max-width: 1240px;
+  margin: 0.85rem auto 1rem;
+  color: var(--home-text-secondary);
+  font-size: 0.96rem;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.navButton {
+  position: absolute;
+  top: 50%;
+  z-index: 1;
+  width: 3rem;
+  height: 3rem;
+  border: none;
+  border-radius: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.84);
+  color: var(--home-text-primary);
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.16);
+}
+
+.navButtonLeft {
+  left: 1rem;
+}
+
+.navButtonRight {
+  right: 1rem;
+}
+
+@media (max-width: 640px) {
+  .galleryLauncher {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .galleryButton {
+    width: 100%;
+  }
+
+  .modal {
+    padding: 0.9rem 0.9rem 1.2rem;
+  }
+
+  .modalHeader {
+    align-items: center;
+    padding-bottom: 0.75rem;
+  }
+
+  .closeButton {
+    width: 2.2rem;
+    height: 2.2rem;
+  }
+
+  .heroMedia {
+    height: min(68vh, 540px);
+    min-height: 280px;
+    border-radius: 18px;
+  }
+
+  .navButton {
+    width: 2.45rem;
+    height: 2.45rem;
+    font-size: 1.55rem;
+  }
+
+  .navButtonLeft {
+    left: 0.55rem;
+  }
+
+  .navButtonRight {
+    right: 0.55rem;
+  }
+}
