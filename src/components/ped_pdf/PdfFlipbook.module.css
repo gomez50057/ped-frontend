@@ -18,7 +18,18 @@
   align-items: start;
   padding-inline: 0.5rem;
   gap: 0.75rem;
+  overflow-x: hidden;
+  position: relative;
+}
+
+.viewerDesktop {
   overflow-x: auto;
+}
+
+.viewerCompact {
+  flex-direction: column;
+  align-items: center;
+  gap: 0.9rem;
 }
 
 /* ---------------- “LIBRO” (WRAPPER + FLIPBOOK) ---------------- */
@@ -216,6 +227,10 @@
     inset 15px 0 15px rgba(0, 0, 0, 0.06);
 }
 
+.sectionCompact .page {
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.03);
+}
+
 /* Degradado suave hacia el lomo en pantallas grandes */
 @media (min-width: 1024px) {
   .page {
@@ -246,6 +261,10 @@
 .page:hover::after {
   opacity: 1;
   transform: translate(-1px, 1px) rotate(2deg);
+}
+
+.sectionCompact .page::after {
+  display: none;
 }
 
 /* Efecto cuando está en animación de flip */
@@ -302,8 +321,7 @@
   border: none;
   font-size: 0.8rem;
   font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  letter-spacing: 0.02em;
   cursor: pointer;
   background: radial-gradient(circle at 30% 30%, #ffffff, #e4e4ea);
   color: #444;
@@ -313,6 +331,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 0.5rem;
+  text-decoration: none;
   transition:
     transform 0.15s ease,
     box-shadow 0.15s ease,
@@ -326,8 +346,8 @@
   top: 50%;
   width: 42px;
   height: 42px;
-  font-size: 1.5rem;
   z-index: 50;
+  padding: 0;
 }
 
 .navButtonLeft {
@@ -340,9 +360,17 @@
 
 /* IconButton: pill de la barra de controles */
 .iconButton {
-  min-width: 36px;
-  height: 32px;
-  padding: 0 0.9rem;
+  min-height: 2.8rem;
+  padding: 0.72rem 1rem;
+  white-space: nowrap;
+}
+
+.iconButton :global(svg),
+.settingsToggle :global(svg),
+.navButton :global(svg),
+.openButton :global(svg) {
+  font-size: 1.2rem;
+  flex-shrink: 0;
 }
 
 /* Hover / active / disabled (compartido) */
@@ -399,6 +427,10 @@
   backdrop-filter: blur(6px);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
   z-index: 12;
+}
+
+.pageIndicatorCompact {
+  display: none;
 }
 
 /* ---------------- PORTADA INICIAL / CONTRAPORTADA ---------------- */
@@ -462,6 +494,11 @@
   align-items: center;
 }
 
+.singleCoverCompact::before,
+.singleCoverCompact::after {
+  display: none;
+}
+
 /* Botón flotante para “Abrir catálogo” */
 .openButton {
   position: absolute;
@@ -486,11 +523,10 @@
   transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
 }
 
-.openButton::after {
-  content: "›";
-  font-size: 1.1rem;
-  line-height: 1;
-  transform: translateY(1px);
+.openButtonCompact {
+  position: static;
+  width: min(100%, 18rem);
+  justify-content: center;
 }
 
 .openButton:hover {
@@ -562,22 +598,16 @@
   .navButton {
     width: 36px;
     height: 36px;
-    font-size: 1.3rem;
   }
 
   .pageIndicator {
     font-size: 0.7rem;
   }
 
-  .controlsBar {
-    padding-inline: 0.4rem;
-  }
-
   .iconButton {
-    min-width: 32px;
-    height: 30px;
-    padding-inline: 0.7rem;
-    font-size: 0.78rem;
+    min-height: 2.65rem;
+    padding-inline: 0.9rem;
+    font-size: 0.82rem;
   }
 
   .viewer {
@@ -587,29 +617,118 @@
     align-items: start;
     padding-inline: 0.5rem;
     gap: 0.75rem;
-    overflow-x: auto;
-        flex-direction: column-reverse;
-
+    overflow-x: hidden;
+    flex-direction: column;
   }
 }
 
 /* ====== BARRA DE CONTROLES (LUPA + SONIDO) ====== */
 
 .controlsBar {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: space-evenly;
-  padding: 2rem 0 0 1.25rem;
-  gap: 0.75rem;
-  border-radius: 999px;
+  position: absolute;
   z-index: 100;
 }
 
 .controlsGroup {
   display: flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.65rem;
+}
+
+.controlsBarDesktop {
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+}
+
+.controlsBarCompact {
+  position: fixed;
+  right: max(1rem, env(safe-area-inset-right));
+  bottom: max(1rem, env(safe-area-inset-bottom));
+}
+
+.compactMenu {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 0.75rem);
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.readingNavCompact {
+  width: min(100%, 28rem);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.navStripButton {
+  min-height: 2.85rem;
+  padding: 0.72rem 0.9rem;
+  border-radius: 999px;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  cursor: pointer;
+  background: radial-gradient(circle at 30% 30%, #ffffff, #e4e4ea);
+  color: #444;
+  box-shadow:
+    0 4px 8px rgba(0, 0, 0, 0.16),
+    0 0 0 1px rgba(255, 255, 255, 0.9);
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    opacity 0.15s ease;
+}
+
+.navStripButton:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.navStripButton:disabled {
+  opacity: 0.42;
+  cursor: default;
+}
+
+.pageIndicatorInline {
+  padding: 0.3rem 0.8rem;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.72);
+  color: #f5f5f5;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.settingsToggle {
+  width: 3.3rem;
+  height: 3.3rem;
+  border-radius: 50%;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #fff;
+  background: linear-gradient(-45deg, #691b32, #a02142);
+  box-shadow: 0 16px 32px rgba(58, 20, 32, 0.28);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease;
+}
+
+.settingsToggle:hover {
+  transform: translateY(-1px);
+}
+
+.settingsToggleActive {
+  background: linear-gradient(-45deg, #4f1425, #7d1b34);
 }
 
 /* Lupa activada */
@@ -622,4 +741,53 @@
 .iconButtonMuted {
   background: radial-gradient(circle at 30% 30%, #fff5f5, #f4d1d1);
   color: #691b32;
+}
+
+@media (max-width: 1023px) {
+  .viewer {
+    justify-content: center;
+  }
+
+  .bookWrapperCompact,
+  .singleCoverCompact {
+    box-shadow:
+      0 18px 36px rgba(0, 0, 0, 0.24),
+      0 0 0 1px rgba(0, 0, 0, 0.04);
+  }
+
+  .bookWrapperCompact::before,
+  .bookWrapperCompact::after,
+  .bookWrapperCompact .flipbook::before {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .controlsBarCompact {
+    right: 0.85rem;
+    bottom: 0.85rem;
+  }
+
+  .compactMenu {
+    width: min(72vw, 16rem);
+  }
+
+  .iconButton span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .settingsToggle {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .readingNavCompact {
+    grid-template-columns: 1fr;
+  }
+
+  .pageIndicatorInline {
+    order: -1;
+    justify-self: center;
+  }
 }

@@ -3,6 +3,16 @@
 import React, { useState, useEffect, useRef } from "react";
 import HTMLFlipBook from "react-pageflip";
 import { Document, Page as PdfPage, pdfjs } from "react-pdf";
+import ChevronLeftRoundedIcon from "@mui/icons-material/ChevronLeftRounded";
+import ChevronRightRoundedIcon from "@mui/icons-material/ChevronRightRounded";
+import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
+import DownloadRoundedIcon from "@mui/icons-material/DownloadRounded";
+import MenuBookRoundedIcon from "@mui/icons-material/MenuBookRounded";
+import SettingsRoundedIcon from "@mui/icons-material/SettingsRounded";
+import VolumeOffRoundedIcon from "@mui/icons-material/VolumeOffRounded";
+import VolumeUpRoundedIcon from "@mui/icons-material/VolumeUpRounded";
+import ZoomInRoundedIcon from "@mui/icons-material/ZoomInRounded";
+import ZoomOutRoundedIcon from "@mui/icons-material/ZoomOutRounded";
 
 import "react-pdf/dist/Page/AnnotationLayer.css";
 import "react-pdf/dist/Page/TextLayer.css";
@@ -237,10 +247,12 @@ export default function PdfFlipbookClient() {
 
   const [magnifierEnabled, setMagnifierEnabled] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
   const [isFlipLocked, setIsFlipLocked] = useState(false);
 
   const bookRef = useRef(null);
+  const settingsRef = useRef(null);
   const flipSoundsRef = useRef([]);
   const flipSoundIndexRef = useRef(0);
   const lastStateRef = useRef("read");
@@ -251,6 +263,23 @@ export default function PdfFlipbookClient() {
       if (flipLockTimeoutRef.current) clearTimeout(flipLockTimeoutRef.current);
     };
   }, []);
+
+  useEffect(() => {
+    if (!isSettingsOpen) return;
+
+    const handlePointerDown = (event) => {
+      if (!settingsRef.current?.contains(event.target)) {
+        setIsSettingsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handlePointerDown);
+    document.addEventListener("touchstart", handlePointerDown);
+    return () => {
+      document.removeEventListener("mousedown", handlePointerDown);
+      document.removeEventListener("touchstart", handlePointerDown);
+    };
+  }, [isSettingsOpen]);
 
   // Precarga sonidos
   useEffect(() => {
@@ -281,6 +310,9 @@ export default function PdfFlipbookClient() {
 
       const laptop = w >= 1024;
       setIsLaptop(laptop);
+      if (laptop) {
+        setIsSettingsOpen(false);
+      }
 
       let newPageWidth = laptop ? (w * 0.8) / 2 : w * 0.9;
       newPageWidth = Math.min(newPageWidth, 700);
@@ -342,6 +374,7 @@ export default function PdfFlipbookClient() {
   };
 
   const toggleMute = () => setIsMuted((prev) => !prev);
+  const isCompactControls = !isLaptop;
 
   function onDocumentLoadSuccess({ numPages: loadedPages }) {
     setNumPages(loadedPages);
@@ -380,6 +413,8 @@ export default function PdfFlipbookClient() {
   const totalPages = numPages || 0;
   const hasInteriorPages = totalPages > 2 ? totalPages - 2 : 0;
   const renderWindow = isLaptop ? RENDER_WINDOW_DESKTOP : RENDER_WINDOW_MOBILE;
+  const showCompactReadingNav =
+    isCompactControls && totalPages > 1 && mode !== "cover";
 
   const handlePrev = () => {
     if (isFlipLocked) return;
@@ -483,8 +518,18 @@ export default function PdfFlipbookClient() {
     : null;
 
   return (
-    <section className={styles.section}>
-      <div className={styles.viewer} id="pdf-viewer" data-ped-viewer="true">
+    <section
+      className={`${styles.section} ${
+        isCompactControls ? styles.sectionCompact : styles.sectionDesktop
+      }`}
+    >
+      <div
+        className={`${styles.viewer} ${
+          isCompactControls ? styles.viewerCompact : styles.viewerDesktop
+        }`}
+        id="pdf-viewer"
+        data-ped-viewer="true"
+      >
         <Document
           file={PDF_FILE}
           options={PDF_OPTIONS}
@@ -524,31 +569,51 @@ export default function PdfFlipbookClient() {
               </div>
             </div>
           ) : mode === "cover" ? (
-            <div
-              className={styles.singleCoverWrapper}
-              style={{ width: pageWidth, height: pageHeight }}
-            >
-              <div className={styles.singleCoverInner}>
-                <BookPage
-                  pageNumber={1}
-                  pageWidth={pageWidth}
-                  enableMagnifier={magnifierEffective}
-                  shouldRender={true}
-                />
+            <>
+              <div
+                className={styles.singleCoverWrapper}
+                style={{ width: pageWidth, height: pageHeight }}
+              >
+                <div className={styles.singleCoverInner}>
+                  <BookPage
+                    pageNumber={1}
+                    pageWidth={pageWidth}
+                    enableMagnifier={magnifierEffective}
+                    shouldRender={true}
+                  />
+                  {!isCompactControls && (
+                    <button
+                      type="button"
+                      className={styles.openButton}
+                      onClick={handleNext}
+                      disabled={isFlipLocked}
+                      aria-disabled={isFlipLocked}
+                    >
+                      <MenuBookRoundedIcon fontSize="small" />
+                      Abrir el PED
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              {isCompactControls && (
                 <button
                   type="button"
-                  className={styles.openButton}
+                  className={`${styles.openButton} ${styles.openButtonCompact}`}
                   onClick={handleNext}
                   disabled={isFlipLocked}
                   aria-disabled={isFlipLocked}
                 >
+                  <MenuBookRoundedIcon fontSize="small" />
                   Abrir el PED
                 </button>
-              </div>
-            </div>
+              )}
+            </>
           ) : mode === "backCover" ? (
             <div
-              className={styles.singleCoverWrapper}
+              className={`${styles.singleCoverWrapper} ${
+                isCompactControls ? styles.singleCoverCompact : ""
+              }`}
               style={{ width: pageWidth, height: pageHeight }}
             >
               <div className={styles.singleCoverInner}>
@@ -558,19 +623,25 @@ export default function PdfFlipbookClient() {
                   enableMagnifier={magnifierEffective}
                   shouldRender={true}
                 />
-                <button
-                  type="button"
-                  className={`${styles.navButton} ${styles.navButtonLeft}`}
-                  onClick={handlePrev}
-                  aria-label="Volver al interior"
-                  disabled={isFlipLocked}
-                  aria-disabled={isFlipLocked}
-                >
-                  ‹
-                </button>
+                {!isCompactControls && (
+                  <button
+                    type="button"
+                    className={`${styles.navButton} ${styles.navButtonLeft}`}
+                    onClick={handlePrev}
+                    aria-label="Volver al interior"
+                    disabled={isFlipLocked}
+                    aria-disabled={isFlipLocked}
+                  >
+                    <ChevronLeftRoundedIcon />
+                  </button>
+                )}
               </div>
 
-              <div className={styles.pageIndicator}>
+              <div
+                className={`${styles.pageIndicator} ${
+                  isCompactControls ? styles.pageIndicatorCompact : ""
+                }`}
+              >
                 Página {currentDisplayPage} de {totalPages}
               </div>
             </div>
@@ -578,6 +649,8 @@ export default function PdfFlipbookClient() {
             <div
               className={`${styles.bookWrapper} ${
                 isFlipping ? styles.bookWrapperFlipping : ""
+              } ${
+                isCompactControls ? styles.bookWrapperCompact : ""
               }`}
               style={{
                 width: wrapperWidth,
@@ -612,29 +685,37 @@ export default function PdfFlipbookClient() {
                 {interiorPages}
               </HTMLFlipBook>
 
-              <button
-                type="button"
-                className={`${styles.navButton} ${styles.navButtonLeft}`}
-                onClick={handlePrev}
-                aria-label="Página anterior / Portada"
-                disabled={isFlipLocked}
-                aria-disabled={isFlipLocked}
-              >
-                ‹
-              </button>
+              {!isCompactControls && (
+                <>
+                  <button
+                    type="button"
+                    className={`${styles.navButton} ${styles.navButtonLeft}`}
+                    onClick={handlePrev}
+                    aria-label="Página anterior / Portada"
+                    disabled={isFlipLocked}
+                    aria-disabled={isFlipLocked}
+                  >
+                    <ChevronLeftRoundedIcon />
+                  </button>
 
-              <button
-                type="button"
-                className={`${styles.navButton} ${styles.navButtonRight}`}
-                onClick={handleNext}
-                aria-label="Página siguiente / Contra-portada"
-                disabled={isFlipLocked}
-                aria-disabled={isFlipLocked}
-              >
-                ›
-              </button>
+                  <button
+                    type="button"
+                    className={`${styles.navButton} ${styles.navButtonRight}`}
+                    onClick={handleNext}
+                    aria-label="Página siguiente / Contra-portada"
+                    disabled={isFlipLocked}
+                    aria-disabled={isFlipLocked}
+                  >
+                    <ChevronRightRoundedIcon />
+                  </button>
+                </>
+              )}
 
-              <div className={styles.pageIndicator}>
+              <div
+                className={`${styles.pageIndicator} ${
+                  isCompactControls ? styles.pageIndicatorCompact : ""
+                }`}
+              >
                 Página {currentDisplayPage} de {totalPages}
               </div>
             </div>
@@ -655,48 +736,137 @@ export default function PdfFlipbookClient() {
           )}
         </Document>
 
-        <div className={styles.controlsBar}>
-          <div className={styles.controlsGroup}>
+        {showCompactReadingNav && (
+          <div className={styles.readingNavCompact}>
             <button
               type="button"
-              className={`${styles.iconButton} ${
-                magnifierEffective ? styles.iconButtonActive : ""
-              }`}
-              onClick={() => setMagnifierEnabled((v) => !v)}
-              aria-pressed={magnifierEffective}
-              disabled={!isLaptop}
-              title={
-                !isLaptop
-                  ? "La lupa solo está disponible en laptop/desktop."
-                  : "Activar/desactivar lupa"
-              }
+              className={styles.navStripButton}
+              onClick={handlePrev}
+              aria-label="Página anterior"
+              disabled={isFlipLocked}
+              aria-disabled={isFlipLocked}
             >
-              {magnifierEffective ? "🔍 Lupa ON" : "🔍 Lupa OFF"}
+              <ChevronLeftRoundedIcon />
+              <span>Anterior</span>
+            </button>
+
+            <div className={styles.pageIndicatorInline}>
+              Página {currentDisplayPage} de {totalPages}
+            </div>
+
+            <button
+              type="button"
+              className={styles.navStripButton}
+              onClick={handleNext}
+              aria-label="Página siguiente"
+              disabled={isFlipLocked || mode === "backCover"}
+              aria-disabled={isFlipLocked || mode === "backCover"}
+            >
+              <span>Siguiente</span>
+              <ChevronRightRoundedIcon />
             </button>
           </div>
+        )}
 
-          <button
-            type="button"
-            className={`${styles.iconButton} ${
-              isMuted ? styles.iconButtonMuted : ""
-            }`}
-            onClick={toggleMute}
-            aria-pressed={isMuted}
-            aria-label={isMuted ? "Activar sonido" : "Silenciar sonido"}
-          >
-            {isMuted ? "🔇 Sonido" : "🔊 Sonido"}
-          </button>
+        <div
+          ref={settingsRef}
+          className={`${styles.controlsBar} ${
+            isCompactControls ? styles.controlsBarCompact : styles.controlsBarDesktop
+          }`}
+        >
+          {isCompactControls ? (
+            <>
+              {isSettingsOpen && (
+                <div className={styles.compactMenu} role="menu" aria-label="Opciones del visor">
+                  <button
+                    type="button"
+                    className={`${styles.iconButton} ${
+                      isMuted ? styles.iconButtonMuted : ""
+                    }`}
+                    onClick={() => {
+                      toggleMute();
+                      setIsSettingsOpen(false);
+                    }}
+                    aria-pressed={isMuted}
+                    aria-label={isMuted ? "Activar sonido" : "Silenciar sonido"}
+                    role="menuitem"
+                  >
+                    {isMuted ? <VolumeOffRoundedIcon fontSize="small" /> : <VolumeUpRoundedIcon fontSize="small" />}
+                    <span>{isMuted ? "Activar sonido" : "Silenciar sonido"}</span>
+                  </button>
 
-          <a
-            className={styles.iconButton}
-            href={PDF_FILE}
-            download={PDF_DOWNLOAD_NAME}
-            target="_blank"
-            rel="noreferrer"
-            aria-label="Descargar PED en PDF"
-          >
-            ⬇️ Descargar PED (PDF)
-          </a>
+                  <a
+                    className={styles.iconButton}
+                    href={PDF_FILE}
+                    download={PDF_DOWNLOAD_NAME}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label="Descargar PED en PDF"
+                    role="menuitem"
+                    onClick={() => setIsSettingsOpen(false)}
+                  >
+                    <DownloadRoundedIcon fontSize="small" />
+                    <span>Descargar PDF</span>
+                  </a>
+                </div>
+              )}
+
+              <button
+                type="button"
+                className={`${styles.settingsToggle} ${
+                  isSettingsOpen ? styles.settingsToggleActive : ""
+                }`}
+                onClick={() => setIsSettingsOpen((value) => !value)}
+                aria-expanded={isSettingsOpen}
+                aria-label={isSettingsOpen ? "Cerrar opciones del visor" : "Abrir opciones del visor"}
+              >
+                {isSettingsOpen ? <CloseRoundedIcon /> : <SettingsRoundedIcon />}
+              </button>
+            </>
+          ) : (
+            <>
+              <div className={styles.controlsGroup}>
+                <button
+                  type="button"
+                  className={`${styles.iconButton} ${
+                    magnifierEffective ? styles.iconButtonActive : ""
+                  }`}
+                  onClick={() => setMagnifierEnabled((v) => !v)}
+                  aria-pressed={magnifierEffective}
+                  disabled={!isLaptop}
+                  title="Activar o desactivar la lupa"
+                >
+                  {magnifierEffective ? <ZoomOutRoundedIcon fontSize="small" /> : <ZoomInRoundedIcon fontSize="small" />}
+                  <span>{magnifierEffective ? "Desactivar lupa" : "Activar lupa"}</span>
+                </button>
+              </div>
+
+              <button
+                type="button"
+                className={`${styles.iconButton} ${
+                  isMuted ? styles.iconButtonMuted : ""
+                }`}
+                onClick={toggleMute}
+                aria-pressed={isMuted}
+                aria-label={isMuted ? "Activar sonido" : "Silenciar sonido"}
+              >
+                {isMuted ? <VolumeOffRoundedIcon fontSize="small" /> : <VolumeUpRoundedIcon fontSize="small" />}
+                <span>{isMuted ? "Activar sonido" : "Silenciar sonido"}</span>
+              </button>
+
+              <a
+                className={styles.iconButton}
+                href={PDF_FILE}
+                download={PDF_DOWNLOAD_NAME}
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Descargar PED en PDF"
+              >
+                <DownloadRoundedIcon fontSize="small" />
+                <span>Descargar PDF</span>
+              </a>
+            </>
+          )}
         </div>
       </div>
     </section>

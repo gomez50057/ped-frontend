@@ -1,7 +1,32 @@
 .section {
   position: relative;
   width: 100%;
+  padding: clamp(1rem, 3vw, 2rem);
+}
+
+.stage {
+  position: relative;
+  width: min(100%, 96rem);
+  margin: 0 auto;
+  border-radius: clamp(1.25rem, 3vw, 2.25rem);
   overflow: hidden;
+  box-shadow: 0 28px 60px rgba(58, 20, 32, 0.12);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.66) 0%, rgba(255, 255, 255, 0.18) 100%);
+}
+
+.stage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(25, 17, 22, 0.08) 70%, rgba(25, 17, 22, 0.16) 100%);
+  pointer-events: none;
+}
+
+.heroFrame {
+  position: relative;
+  min-height: clamp(32rem, 88svh, 54rem);
 }
 
 .overlay {
@@ -24,6 +49,8 @@
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   pointer-events: auto;
+  position: relative;
+  z-index: 1;
 }
 
 .eyebrow {
@@ -106,16 +133,27 @@
 .modalOverlay {
   position: fixed;
   inset: 0;
-  z-index: 999;
+  z-index: 4000;
   background: rgba(17, 11, 15, 0.76);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
+  padding: max(0.75rem, env(safe-area-inset-top)) max(0.75rem, env(safe-area-inset-right)) max(0.75rem, env(safe-area-inset-bottom)) max(0.75rem, env(safe-area-inset-left));
+}
+
+.modalViewport {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 1.35rem;
+  overflow: hidden;
+  background: rgba(17, 11, 15, 0.28);
 }
 
 .modalContent {
   width: 100%;
-  height: 100dvh;
+  height: 100%;
   overflow: auto;
+  overscroll-behavior: contain;
 }
 
 .closeButton {
@@ -134,9 +172,18 @@
   cursor: pointer;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.24);
 }
 
 @media (max-width: 900px) {
+  .section {
+    padding: 0.9rem;
+  }
+
+  .heroFrame {
+    min-height: clamp(30rem, 82svh, 44rem);
+  }
+
   .overlay {
     align-items: flex-end;
     justify-content: center;
@@ -150,8 +197,31 @@
 }
 
 @media (max-width: 640px) {
+  .section {
+    padding: 0.75rem;
+  }
+
+  .stage {
+    border-radius: 1.25rem;
+  }
+
+  .heroFrame {
+    min-height: clamp(24rem, 64svh, 34rem);
+  }
+
+  .overlay {
+    position: static;
+    padding: 0;
+    display: block;
+    margin-top: -2rem;
+  }
+
   .contentCard {
     padding: 1rem;
+    width: calc(100% - 1rem);
+    margin: 0 auto 0.75rem;
+    border-radius: 1.15rem;
+    background: color-mix(in srgb, var(--home-surface-1, #ffffff) 92%, transparent);
   }
 
   .actions {
@@ -166,5 +236,15 @@
   .closeButton {
     top: 0.75rem;
     right: 0.75rem;
+    min-height: 2.65rem;
+    padding-inline: 0.95rem;
+  }
+
+  .hint {
+    font-size: 0.82rem;
+  }
+
+  .modalViewport {
+    border-radius: 1rem;
   }
 }

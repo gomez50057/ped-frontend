@@ -8,43 +8,28 @@ import HomeThemeToggle from "@/components/shared/HomeThemeToggle";
 const HOME_THEME_STORAGE_KEY = "ped-home-theme-preference";
 
 function isValidPreference(value) {
-  return value === "system" || value === "light" || value === "dark";
+  return value === "light" || value === "dark";
 }
 
 export default function ClientLayout({ children }) {
   const pathname = usePathname();
-  const [themePreference, setThemePreference] = useState("system");
-  const [systemTheme, setSystemTheme] = useState("light");
+  const [themePreference, setThemePreference] = useState("light");
   const hideNavbar =
     pathname.startsWith("/dashboard") ||
     pathname.startsWith("/revision") ||
     pathname.startsWith("/reconocimiento-uaeh") ||
     pathname.startsWith("/certificate-batch-preview");
   const isHome = pathname === "/";
-  const resolvedTheme = useMemo(
-    () => (themePreference === "system" ? systemTheme : themePreference),
-    [systemTheme, themePreference]
-  );
+  const resolvedTheme = useMemo(() => themePreference, [themePreference]);
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
     const savedPreference = window.localStorage.getItem(HOME_THEME_STORAGE_KEY);
 
     if (isValidPreference(savedPreference)) {
       setThemePreference(savedPreference);
+    } else if (savedPreference === "system") {
+      setThemePreference("light");
     }
-
-    setSystemTheme(mediaQuery.matches ? "dark" : "light");
-
-    const handleSystemThemeChange = (event) => {
-      setSystemTheme(event.matches ? "dark" : "light");
-    };
-
-    mediaQuery.addEventListener("change", handleSystemThemeChange);
-
-    return () => {
-      mediaQuery.removeEventListener("change", handleSystemThemeChange);
-    };
   }, []);
 
   useEffect(() => {

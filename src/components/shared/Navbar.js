@@ -216,6 +216,7 @@ const DOC_GROUP_LABELS = new Set([
 export default function Navbar() {
   const [isVisible, setIsVisible] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [viewerBlocked, setViewerBlocked] = useState(false);
 
   // Modal state
   const [planesModalOpen, setPlanesModalOpen] = useState(false);
@@ -251,6 +252,15 @@ export default function Navbar() {
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const handleViewerToggle = (event) => {
+      setViewerBlocked(Boolean(event.detail?.open));
+    };
+
+    window.addEventListener("ped-viewer-toggle", handleViewerToggle);
+    return () => window.removeEventListener("ped-viewer-toggle", handleViewerToggle);
   }, []);
 
   // Cierra menú/modal al cambiar ruta
@@ -303,6 +313,7 @@ export default function Navbar() {
           ${isVisible ? styles.active : styles.hidden} 
           ${lastScrollPos.current > 100 ? styles.scrolled : ""}
         `}
+        style={{ pointerEvents: viewerBlocked ? "none" : "auto" }}
       >
         <div className={styles.NavbarList}>
           <div className={styles.NavbarImg}>
@@ -321,7 +332,10 @@ export default function Navbar() {
         </div>
       </nav>
 
-      <div className={`${styles.NavbarMenuContainer} ${menuOpen ? styles.menuOpen : ""}`}>
+      <div
+        className={`${styles.NavbarMenuContainer} ${menuOpen ? styles.menuOpen : ""}`}
+        style={{ pointerEvents: viewerBlocked ? "none" : "auto" }}
+      >
         {renderNavItems(true)}
       </div>
 

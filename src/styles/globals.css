@@ -350,6 +350,11 @@
   color: var(--home-text-primary);
 }
 
+html[data-ped-viewer-open="true"] .Navbar,
+html[data-ped-viewer-open="true"] .NavbarMenuContainer {
+  pointer-events: none;
+}
+
 * {
   box-sizing: border-box;
   font-family: "Montserrat", sans-serif;

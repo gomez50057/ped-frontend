@@ -11,13 +11,27 @@ export default function PedPdfHeroSection() {
   const [isViewerOpen, setIsViewerOpen] = useState(false);
 
   useEffect(() => {
-    if (!isViewerOpen) return;
+    if (!isViewerOpen) {
+      document.documentElement.removeAttribute("data-ped-viewer-open");
+      window.dispatchEvent(
+        new CustomEvent("ped-viewer-toggle", { detail: { open: false } })
+      );
+      return;
+    }
 
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+    document.documentElement.setAttribute("data-ped-viewer-open", "true");
+    window.dispatchEvent(
+      new CustomEvent("ped-viewer-toggle", { detail: { open: true } })
+    );
 
     return () => {
       document.body.style.overflow = previousOverflow;
+      document.documentElement.removeAttribute("data-ped-viewer-open");
+      window.dispatchEvent(
+        new CustomEvent("ped-viewer-toggle", { detail: { open: false } })
+      );
     };
   }, [isViewerOpen]);
 
@@ -40,38 +54,44 @@ export default function PedPdfHeroSection() {
         aria-label="Consulta y descarga del Plan Estatal de Desarrollo"
         className={styles.section}
       >
-        <Hero onBookClick={() => setIsViewerOpen(true)} />
+        <div className={styles.stage}>
+          <div className={styles.heroFrame}>
+            <Hero onBookClick={() => setIsViewerOpen(true)} />
+          </div>
 
-        <div className={styles.overlay}>
-          <div className={styles.contentCard}>
-            <span className={styles.eyebrow}>PED 2025-2028</span>
-            <h2 className={styles.title}>Míralo aquí mismo o descárgalo al instante</h2>
-            <p className={styles.description}>
-              Explora el Plan Estatal de Desarrollo en pantalla completa o llévatelo en PDF
-              con un solo clic.
-            </p>
+          <div className={styles.overlay}>
+            <div className={styles.contentCard}>
+              <span className={styles.eyebrow}>PED 2025-2028</span>
+              <h2 className={styles.title}>Míralo aquí mismo o descárgalo al instante</h2>
+              <p className={styles.description}>
+                Explora el Plan Estatal de Desarrollo en pantalla completa o llévatelo en PDF
+                con un solo clic.
+              </p>
 
-            <div className={styles.actions}>
-              <button
-                type="button"
-                className={styles.primaryButton}
-                onClick={() => setIsViewerOpen(true)}
-              >
-                Visualizar PED
-              </button>
+              <div className={styles.actions}>
+                <button
+                  type="button"
+                  className={styles.primaryButton}
+                  onClick={() => setIsViewerOpen(true)}
+                >
+                  Visualizar PED
+                </button>
 
-              <a
-                className={styles.secondaryButton}
-                href={PDF_FILE}
-                download="Actualizacion_PED_2025_2028.pdf"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Descargar PDF
-              </a>
+                <a
+                  className={styles.secondaryButton}
+                  href={PDF_FILE}
+                  download="Actualizacion_PED_2025_2028.pdf"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Descargar PDF
+                </a>
+              </div>
+
+              <p className={styles.hint}>
+                También puedes hacer clic sobre el libro para abrir el visor.
+              </p>
             </div>
-
-            <p className={styles.hint}>También puedes hacer clic sobre el libro para abrir el visor.</p>
           </div>
         </div>
       </section>
@@ -82,18 +102,28 @@ export default function PedPdfHeroSection() {
           role="dialog"
           aria-modal="true"
           aria-label="Visor del Plan Estatal de Desarrollo"
+          onClick={(event) => {
+            if (event.target === event.currentTarget) {
+              setIsViewerOpen(false);
+            }
+          }}
         >
-          <button
-            type="button"
-            className={styles.closeButton}
-            onClick={() => setIsViewerOpen(false)}
-            aria-label="Cerrar visor"
+          <div
+            className={styles.modalViewport}
+            onClick={(event) => event.stopPropagation()}
           >
-            Cerrar
-          </button>
+            <button
+              type="button"
+              className={styles.closeButton}
+              onClick={() => setIsViewerOpen(false)}
+              aria-label="Cerrar visor"
+            >
+              Cerrar
+            </button>
 
-          <div className={styles.modalContent}>
-            <PdfFlipbook />
+            <div className={styles.modalContent}>
+              <PdfFlipbook />
+            </div>
           </div>
         </div>
       )}

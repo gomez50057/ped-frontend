@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import styles from "./HomeThemeToggle.module.css";
 
 const OPTIONS = [
-  { value: "system", label: "Sistema" },
   { value: "light", label: "Claro" },
   { value: "dark", label: "Oscuro" },
 ];
@@ -39,12 +38,7 @@ export default function HomeThemeToggle({
     };
   }, []);
 
-  const currentLabel =
-    preference === "system"
-      ? `Sistema · ${resolvedTheme === "dark" ? "Oscuro" : "Claro"}`
-      : preference === "dark"
-        ? "Oscuro"
-        : "Claro";
+  const currentLabel = preference === "dark" ? "Oscuro" : "Claro";
 
   return (
     <div
