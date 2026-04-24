@@ -1,63 +1,75 @@
 .section {
   position: relative;
   width: 100%;
-  padding: clamp(1rem, 3vw, 2rem);
+  padding: clamp(0.75rem, 2.4vw, 2.5rem);
 }
 
 .stage {
   position: relative;
-  width: min(100%, 96rem);
+  display: grid;
+  grid-template-columns: minmax(20rem, 0.9fr) minmax(24rem, 1.1fr);
+  align-items: center;
+  gap: clamp(1rem, 2.2vw, 2.5rem);
+  width: 100%;
   margin: 0 auto;
-  border-radius: clamp(1.25rem, 3vw, 2.25rem);
+  padding: clamp(1rem, 2.4vw, 2.25rem);
+  padding-left: clamp(1rem, 3vw, 4.5rem);
+  border-radius: clamp(1.1rem, 2vw, 2.25rem);
   overflow: hidden;
   box-shadow: 0 28px 60px rgba(58, 20, 32, 0.12);
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.66) 0%, rgba(255, 255, 255, 0.18) 100%);
+    radial-gradient(circle at 85% 14%, rgba(188, 149, 91, 0.18), transparent 22%),
+    radial-gradient(circle at 15% 85%, rgba(105, 27, 50, 0.08), transparent 24%),
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.92) 0%,
+      rgba(248, 245, 247, 0.82) 42%,
+      rgba(241, 235, 227, 0.66) 100%
+    );
 }
 
-.stage::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(25, 17, 22, 0.08) 70%, rgba(25, 17, 22, 0.16) 100%);
-  pointer-events: none;
+.copyColumn,
+.visualColumn {
+  position: relative;
+  z-index: 1;
+}
+
+.copyColumn {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  z-index: 3;
+}
+
+.visualColumn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: clamp(28rem, 42vw, 42rem);
 }
 
 .heroFrame {
   position: relative;
-  min-height: clamp(32rem, 88svh, 54rem);
-}
-
-.overlay {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: flex-end;
-  justify-content: flex-start;
-  padding: clamp(1.25rem, 4vw, 3rem);
-  pointer-events: none;
+  width: 100%;
+  height: clamp(28rem, 44vw, 42rem);
+  min-height: clamp(28rem, 44vw, 42rem);
+  margin-inline: 0;
+  z-index: 1;
 }
 
 .contentCard {
-  width: min(34rem, 100%);
-  padding: clamp(1.2rem, 2.4vw, 2rem);
-  border-radius: 1.75rem;
-  background: color-mix(in srgb, var(--home-surface-1, #ffffff) 78%, transparent);
-  border: 1px solid color-mix(in srgb, var(--home-border-soft, rgba(0, 0, 0, 0.08)) 88%, transparent);
-  box-shadow: 0 22px 46px rgba(0, 0, 0, 0.18);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  pointer-events: auto;
+  width: 100%;
+  padding: clamp(1.2rem, 2vw, 2rem);
   position: relative;
-  z-index: 1;
+  z-index: 4;
 }
 
 .eyebrow {
   display: inline-block;
   margin-bottom: 0.75rem;
   color: var(--doradoOsc);
-  font-size: 0.8rem;
+  font-size: 1rem;
   font-weight: 800;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -66,16 +78,16 @@
 .title {
   margin: 0;
   color: var(--VinoNegro);
-  font-size: clamp(1.7rem, 2vw + 1rem, 3rem);
-  line-height: 1.02;
+  font-size: clamp(1.9rem, 2vw + 1rem, 3.1rem);
+  line-height: 0.98;
   text-wrap: balance;
 }
 
 .description {
   margin: 0.95rem 0 0;
   color: var(--grisOsc);
-  font-size: clamp(0.96rem, 0.35vw + 0.9rem, 1.08rem);
-  line-height: 1.65;
+  font-size: clamp(0.96rem, 0.3vw + 0.9rem, 1.08rem);
+  line-height: 1.7;
 }
 
 .actions {
@@ -120,14 +132,7 @@
 
 .primaryButton:hover,
 .secondaryButton:hover {
-  transform: translateY(-1px);
-}
-
-.hint {
-  margin: 1rem 0 0;
-  color: var(--grisClr);
-  font-size: 0.88rem;
-  line-height: 1.45;
+  transform: translateY(-2px);
 }
 
 .modalOverlay {
@@ -137,7 +142,10 @@
   background: rgba(17, 11, 15, 0.76);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  padding: max(0.75rem, env(safe-area-inset-top)) max(0.75rem, env(safe-area-inset-right)) max(0.75rem, env(safe-area-inset-bottom)) max(0.75rem, env(safe-area-inset-left));
+  padding: max(0.75rem, env(safe-area-inset-top))
+    max(0.75rem, env(safe-area-inset-right))
+    max(0.75rem, env(safe-area-inset-bottom))
+    max(0.75rem, env(safe-area-inset-left));
 }
 
 .modalViewport {
@@ -175,24 +183,54 @@
   box-shadow: 0 10px 24px rgba(0, 0, 0, 0.24);
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1440px) {
+  .stage {
+    grid-template-columns: minmax(18rem, 0.92fr) minmax(22rem, 1.08fr);
+    padding-left: clamp(1rem, 2vw, 2.5rem);
+  }
+
+  .visualColumn {
+    min-height: clamp(26rem, 40vw, 38rem);
+  }
+
+  .heroFrame {
+    height: clamp(26rem, 40vw, 38rem);
+    min-height: clamp(26rem, 40vw, 38rem);
+  }
+}
+
+@media (max-width: 1024px) {
   .section {
     padding: 0.9rem;
   }
 
-  .heroFrame {
-    min-height: clamp(30rem, 82svh, 44rem);
+  .stage {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+    gap: 1.25rem;
   }
 
-  .overlay {
-    align-items: flex-end;
+  .copyColumn {
     justify-content: center;
-    padding: 1rem;
+  }
+
+  .visualColumn {
+    min-height: clamp(22rem, 62vw, 32rem);
+  }
+
+  .heroFrame {
+    height: clamp(22rem, 62vw, 32rem);
+    min-height: clamp(22rem, 62vw, 32rem);
   }
 
   .contentCard {
-    width: min(100%, 32rem);
-    border-radius: 1.35rem;
+    width: min(100%, 34rem);
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  .actions {
+    justify-content: center;
   }
 }
 
@@ -202,26 +240,33 @@
   }
 
   .stage {
+    padding: 0.9rem;
     border-radius: 1.25rem;
+    gap: 1rem;
+  }
+
+  .visualColumn {
+    min-height: clamp(18rem, 78vw, 26rem);
   }
 
   .heroFrame {
-    min-height: clamp(24rem, 64svh, 34rem);
-  }
-
-  .overlay {
-    position: static;
-    padding: 0;
-    display: block;
-    margin-top: -2rem;
+    height: clamp(18rem, 78vw, 26rem);
+    min-height: clamp(18rem, 78vw, 26rem);
   }
 
   .contentCard {
+    width: 100%;
     padding: 1rem;
-    width: calc(100% - 1rem);
-    margin: 0 auto 0.75rem;
     border-radius: 1.15rem;
-    background: color-mix(in srgb, var(--home-surface-1, #ffffff) 92%, transparent);
+  }
+
+  .title {
+    font-size: clamp(1.6rem, 7vw, 2.3rem);
+  }
+
+  .description {
+    font-size: 0.95rem;
+    line-height: 1.6;
   }
 
   .actions {
@@ -240,11 +285,31 @@
     padding-inline: 0.95rem;
   }
 
-  .hint {
-    font-size: 0.82rem;
-  }
-
   .modalViewport {
     border-radius: 1rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .stage {
+    padding: 0.75rem;
+  }
+
+  .heroFrame {
+    height: clamp(16rem, 82vw, 22rem);
+    min-height: clamp(16rem, 82vw, 22rem);
+  }
+
+  .contentCard {
+    padding: 0.9rem;
+  }
+
+  .eyebrow {
+    font-size: 0.72rem;
+  }
+
+  .primaryButton,
+  .secondaryButton {
+    font-size: 0.88rem;
   }
 }

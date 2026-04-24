@@ -77,17 +77,11 @@ export default function IndicatorsFeedbackSection({
       });
 
       if (res.ok) {
-        const data = await res.json();
-        console.log("Propuesta enviada correctamente:", data);
-        // Notifica éxito al usuario (puedes usar snackbar, etc)
+        await res.json();
       } else {
-        const errorData = await res.json();
-        console.error("Error al enviar la propuesta:", errorData);
-        // Notifica error al usuario
+        await res.json();
       }
-    } catch (error) {
-      console.error("Error de red al enviar la propuesta:", error);
-      // Notifica error al usuario
+    } catch {
     }
     setShowProposalForm(false);
   }

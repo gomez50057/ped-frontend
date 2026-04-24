@@ -55,17 +55,12 @@ export default function PedPdfHeroSection() {
         className={styles.section}
       >
         <div className={styles.stage}>
-          <div className={styles.heroFrame}>
-            <Hero onBookClick={() => setIsViewerOpen(true)} />
-          </div>
-
-          <div className={styles.overlay}>
+          <div className={styles.copyColumn}>
             <div className={styles.contentCard}>
               <span className={styles.eyebrow}>PED 2025-2028</span>
-              <h2 className={styles.title}>Míralo aquí mismo o descárgalo al instante</h2>
+              <h2 className={styles.title}>Consulta el <span className="spanDoaradoClr">Plan Estatal de Desarrollo</span></h2>
               <p className={styles.description}>
-                Explora el Plan Estatal de Desarrollo en pantalla completa o llévatelo en PDF
-                con un solo clic.
+                Explora el Plan Estatal de Desarrollo o llévatelo en PDF con un solo clic.
               </p>
 
               <div className={styles.actions}>
@@ -87,10 +82,12 @@ export default function PedPdfHeroSection() {
                   Descargar PDF
                 </a>
               </div>
+            </div>
+          </div>
 
-              <p className={styles.hint}>
-                También puedes hacer clic sobre el libro para abrir el visor.
-              </p>
+          <div className={styles.visualColumn}>
+            <div className={styles.heroFrame}>
+              <Hero onBookClick={() => setIsViewerOpen(true)} />
             </div>
           </div>
         </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useFrame } from "@react-three/fiber";
+import { useTexture } from "@react-three/drei";
 import { easing } from "maath";
 import { useMemo, useRef } from "react";
 import {
@@ -15,7 +16,6 @@ import {
   Uint16BufferAttribute,
   Vector3,
 } from "three";
-import { useTexture } from "@react-three/drei";
 
 const COVER_SIDES = {
   front: "book-cover",
@@ -188,7 +188,11 @@ export const Book = ({
   ...props
 }) => {
   return (
-    <group {...props} rotation-y={-Math.PI / 2}>
+    <group
+      {...props}
+      rotation={[0.22, -Math.PI / 1.9, -0.05]}
+      position={[0.04, 0.08, 0]}
+    >
       <Cover
         onClick={onBookClick}
         onHoverChange={onBookHoverChange}
