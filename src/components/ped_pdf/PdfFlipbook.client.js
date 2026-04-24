@@ -39,8 +39,8 @@ const PDF_OPTIONS = {
   maxImageSize: -1,
 };
 
-// Relación alto/ancho aproximada A4 vertical
-const ASPECT_RATIO = 1.414;
+// Relación alto/ancho inicial; se ajusta con la primera página real del PDF.
+const DEFAULT_PAGE_ASPECT_RATIO = 1.414;
 
 // Parámetros de lupa
 const LENS_SIZE = 200;
@@ -237,6 +237,9 @@ export default function PdfFlipbookClient() {
   const [numPages, setNumPages] = useState(null);
   const [pageWidth, setPageWidth] = useState(0);
   const [pageHeight, setPageHeight] = useState(0);
+  const [pageAspectRatio, setPageAspectRatio] = useState(
+    DEFAULT_PAGE_ASPECT_RATIO
+  );
   const [isLaptop, setIsLaptop] = useState(false);
   const [loadProgress, setLoadProgress] = useState(0);
 
@@ -314,12 +317,19 @@ export default function PdfFlipbookClient() {
         setIsSettingsOpen(false);
       }
 
-      let newPageWidth = laptop ? (w * 0.8) / 2 : w * 0.9;
-      newPageWidth = Math.min(newPageWidth, 700);
+      const horizontalChrome = laptop ? 120 : 32;
+      const verticalChrome = laptop ? 112 : 178;
+      const maxBookWidth = Math.max(260, w - horizontalChrome);
+      const maxPageHeight = Math.max(300, h - verticalChrome);
+      const pageWidthByHeight = maxPageHeight / pageAspectRatio;
+      const pageWidthByViewport = laptop ? maxBookWidth / 2 : maxBookWidth;
 
-      const rawPageHeight = newPageWidth * ASPECT_RATIO;
-      const maxPageHeight = h * 0.96;
-      const newPageHeight = Math.min(rawPageHeight, maxPageHeight);
+      const newPageWidth = Math.min(
+        pageWidthByViewport,
+        pageWidthByHeight,
+        700
+      );
+      const newPageHeight = newPageWidth * pageAspectRatio;
 
       setPageWidth(newPageWidth);
       setPageHeight(newPageHeight);
@@ -328,7 +338,7 @@ export default function PdfFlipbookClient() {
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  }, [pageAspectRatio]);
 
   // Teclado
   useEffect(() => {
@@ -376,7 +386,20 @@ export default function PdfFlipbookClient() {
   const toggleMute = () => setIsMuted((prev) => !prev);
   const isCompactControls = !isLaptop;
 
-  function onDocumentLoadSuccess({ numPages: loadedPages }) {
+  async function onDocumentLoadSuccess(pdfDocument) {
+    const { numPages: loadedPages } = pdfDocument;
+
+    try {
+      const firstPage = await pdfDocument.getPage(1);
+      const viewport = firstPage.getViewport({ scale: 1 });
+
+      if (viewport.width > 0) {
+        setPageAspectRatio(viewport.height / viewport.width);
+      }
+    } catch (err) {
+      console.error("No se pudo calcular el tamaño de la primera página:", err);
+    }
+
     setNumPages(loadedPages);
     setCurrentInteriorIndex(0);
     setBookStartIndex(0);
@@ -529,6 +552,10 @@ export default function PdfFlipbookClient() {
         }`}
         id="pdf-viewer"
         data-ped-viewer="true"
+        style={{
+          "--viewer-book-width": `${wrapperWidth}px`,
+          "--viewer-page-height": `${pageHeight}px`,
+        }}
       >
         <Document
           file={PDF_FILE}
@@ -821,6 +848,7 @@ export default function PdfFlipbookClient() {
                 aria-label={isSettingsOpen ? "Cerrar opciones del visor" : "Abrir opciones del visor"}
               >
                 {isSettingsOpen ? <CloseRoundedIcon /> : <SettingsRoundedIcon />}
+                <span>Opciones</span>
               </button>
             </>
           ) : (

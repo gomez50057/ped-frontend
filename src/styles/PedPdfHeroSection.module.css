@@ -135,54 +135,6 @@
   transform: translateY(-2px);
 }
 
-.modalOverlay {
-  position: fixed;
-  inset: 0;
-  z-index: 4000;
-  background: rgba(17, 11, 15, 0.76);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  padding: max(0.75rem, env(safe-area-inset-top))
-    max(0.75rem, env(safe-area-inset-right))
-    max(0.75rem, env(safe-area-inset-bottom))
-    max(0.75rem, env(safe-area-inset-left));
-}
-
-.modalViewport {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  border-radius: 1.35rem;
-  overflow: hidden;
-  background: rgba(17, 11, 15, 0.28);
-}
-
-.modalContent {
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  overscroll-behavior: contain;
-}
-
-.closeButton {
-  position: fixed;
-  top: 1rem;
-  right: 1rem;
-  z-index: 1000;
-  min-height: 2.9rem;
-  padding: 0.72rem 1.15rem;
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  background: rgba(17, 11, 15, 0.82);
-  color: #fff;
-  font-size: 0.88rem;
-  font-weight: 700;
-  cursor: pointer;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.24);
-}
-
 @media (max-width: 1440px) {
   .stage {
     grid-template-columns: minmax(18rem, 0.92fr) minmax(22rem, 1.08fr);
@@ -278,16 +230,6 @@
     width: 100%;
   }
 
-  .closeButton {
-    top: 0.75rem;
-    right: 0.75rem;
-    min-height: 2.65rem;
-    padding-inline: 0.95rem;
-  }
-
-  .modalViewport {
-    border-radius: 1rem;
-  }
 }
 
 @media (max-width: 420px) {

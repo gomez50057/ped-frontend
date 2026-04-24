@@ -1,13 +1,13 @@
 "use client";
 
-import { useLayoutEffect, useRef } from "react";
-import Link from "next/link";
+import { useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import LightbulbOutlinedIcon from "@mui/icons-material/LightbulbOutlined";
 import Groups2OutlinedIcon from "@mui/icons-material/Groups2Outlined";
 import ForumOutlinedIcon from "@mui/icons-material/ForumOutlined";
 import AnimatePath from "./AnimatePath";
+import PedPdfViewerModal from "@/components/landing/modal/PedPdfViewerModal";
 import styles from "@/styles/Hero.module.css";
 
 const imgBasePath = "/img/";
@@ -35,6 +35,7 @@ const statsData = [
 ];
 
 export default function Hero() {
+  const [isViewerOpen, setIsViewerOpen] = useState(false);
   const rootRef = useRef(null);
   const txtRef = useRef(null);
   const imgRef = useRef(null);
@@ -200,11 +201,14 @@ export default function Hero() {
           ))}
         </div>
 
-        <Link
+        <a
           href="/ped/"
-          target="_blank"
-          rel="noopener noreferrer"
           className={styles.consultCircleLink}
+          aria-haspopup="dialog"
+          onClick={(event) => {
+            event.preventDefault();
+            setIsViewerOpen(true);
+          }}
         >
           <div className={styles.consultCircle}>
             <svg
@@ -232,8 +236,13 @@ export default function Hero() {
               />
             </div>
           </div>
-        </Link>
+        </a>
       </div>
+
+      <PedPdfViewerModal
+        isOpen={isViewerOpen}
+        onClose={() => setIsViewerOpen(false)}
+      />
     </section>
   );
 }
