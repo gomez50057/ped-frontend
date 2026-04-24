@@ -143,29 +143,26 @@
   justify-content: center;
 }
 
-.heroImageFrame {
-  position: relative;
-  width: min(100%, calc((72vh - 1rem) * 1.5), 1020px);
-  height: min(100%, 72vh, 680px);
-  border-radius: 26px;
-  overflow: hidden;
-  background: var(--home-surface-muted);
-  box-shadow: var(--home-shadow-strong);
-}
-
 .heroImage {
-  object-fit: cover;
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: min(100%, 1020px);
+  max-height: min(72vh, 680px);
+  border-radius: 26px;
+  object-fit: contain;
+  box-shadow: var(--home-shadow-strong);
 }
 
 .thumbnailImage {
   object-fit: contain;
 }
 
-.heroImageFrameNext {
+.heroImageNext {
   animation: photoEnterNext 0.62s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-.heroImageFramePrevious {
+.heroImagePrevious {
   animation: photoEnterPrevious 0.62s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
@@ -281,9 +278,9 @@
     border-radius: 18px;
   }
 
-  .heroImageFrame {
-    width: 100%;
-    height: min(100%, 58vh);
+  .heroImage {
+    max-width: 100%;
+    max-height: min(58vh, 100%);
     border-radius: 20px;
   }
 

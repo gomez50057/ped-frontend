@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import Image from "next/image";
 import { createPortal } from "react-dom";
 import styles from "./TimelinePhotoGallery.module.css";
 
@@ -168,22 +167,16 @@ export default function TimelinePhotoGallery({
                       ‹
                     </button>
 
-                    <div
+                    <img
                       key={`${activeImage.src}-${activeIndex}`}
-                      className={`${styles.heroImageFrame} ${
+                      src={activeImage.src}
+                      alt={activeImage.alt}
+                      className={`${styles.heroImage} ${
                         transitionDirection === "previous"
-                          ? styles.heroImageFramePrevious
-                          : styles.heroImageFrameNext
+                          ? styles.heroImagePrevious
+                          : styles.heroImageNext
                       }`}
-                    >
-                      <Image
-                        src={activeImage.src}
-                        alt={activeImage.alt}
-                        fill
-                        sizes="(max-width: 900px) 100vw, 70vw"
-                        className={styles.heroImage}
-                      />
-                    </div>
+                    />
 
                     <div className={styles.photoCounter} aria-live="polite">
                       {activeIndex + 1} de {totalImages}
