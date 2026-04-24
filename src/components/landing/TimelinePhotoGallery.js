@@ -13,7 +13,6 @@ export default function TimelinePhotoGallery({
   const [isOpen, setIsOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const [transitionDirection, setTransitionDirection] = useState("next");
-  const [imageOrientation, setImageOrientation] = useState("landscape");
   const [isMounted, setIsMounted] = useState(false);
   const [portalContainer, setPortalContainer] = useState(null);
   const scrollYRef = useRef(0);
@@ -32,18 +31,6 @@ export default function TimelinePhotoGallery({
   const goToNext = () => {
     setTransitionDirection("next");
     setActiveIndex((current) => (current + 1) % totalImages);
-  };
-
-  const handleImageLoad = (event) => {
-    const image = event.currentTarget;
-
-    if (image.naturalHeight > image.naturalWidth) {
-      setImageOrientation("portrait");
-    } else if (image.naturalWidth > image.naturalHeight) {
-      setImageOrientation("landscape");
-    } else {
-      setImageOrientation("square");
-    }
   };
 
   useEffect(() => {
@@ -184,12 +171,6 @@ export default function TimelinePhotoGallery({
                     <div
                       key={`${activeImage.src}-${activeIndex}`}
                       className={`${styles.heroImageFrame} ${
-                        imageOrientation === "portrait"
-                          ? styles.heroImageFramePortrait
-                          : imageOrientation === "square"
-                            ? styles.heroImageFrameSquare
-                            : styles.heroImageFrameLandscape
-                      } ${
                         transitionDirection === "previous"
                           ? styles.heroImageFramePrevious
                           : styles.heroImageFrameNext
@@ -201,7 +182,6 @@ export default function TimelinePhotoGallery({
                         fill
                         sizes="(max-width: 900px) 100vw, 70vw"
                         className={styles.heroImage}
-                        onLoad={handleImageLoad}
                       />
                     </div>
 

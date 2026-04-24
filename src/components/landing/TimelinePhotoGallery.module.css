@@ -145,32 +145,16 @@
 
 .heroImageFrame {
   position: relative;
-  max-width: 100%;
-  max-height: 100%;
+  width: min(100%, calc((72vh - 1rem) * 1.5), 1020px);
+  height: min(100%, 72vh, 680px);
   border-radius: 26px;
   overflow: hidden;
   background: var(--home-surface-muted);
   box-shadow: var(--home-shadow-strong);
 }
 
-.heroImageFrameLandscape {
-  width: min(100%, calc((72vh - 1rem) * 1.5), 1020px);
-  height: min(100%, 72vh, 680px);
-}
-
-.heroImageFramePortrait {
-  width: min(100%, calc((72vh - 1rem) * 0.72), 520px);
-  height: min(100%, 72vh, 680px);
-}
-
-.heroImageFrameSquare {
-  width: min(100%, 70vh, 680px);
-  height: min(100%, 70vh, 680px);
-}
-
 .heroImage {
-  object-fit: contain;
-  background: var(--home-surface-muted);
+  object-fit: cover;
 }
 
 .thumbnailImage {
@@ -298,20 +282,9 @@
   }
 
   .heroImageFrame {
+    width: 100%;
     height: min(100%, 58vh);
     border-radius: 20px;
-  }
-
-  .heroImageFrameLandscape {
-    width: 100%;
-  }
-
-  .heroImageFramePortrait {
-    width: min(100%, calc(58vh * 0.72));
-  }
-
-  .heroImageFrameSquare {
-    width: min(100%, 58vh);
   }
 
   .navButton {

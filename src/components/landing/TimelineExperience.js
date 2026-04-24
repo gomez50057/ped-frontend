@@ -194,11 +194,6 @@ const eventGalleries = {
       alt: "Convocatoria de inteligencia artificial 9",
       label: "Convocatoria IA 9",
     },
-    {
-      src: "/img/page_links/convocatoria_IA/10.jpeg",
-      alt: "Convocatoria de inteligencia artificial 10",
-      label: "Convocatoria IA 10",
-    },
   ],
   "foros-ciudadanos": [
     {
