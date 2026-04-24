@@ -13,7 +13,6 @@ const LOGOS = [
 
 const NAV_ITEMS = [
   { label: "Inicio", href: "/" },
-  { label: "Actualización del PED", href: "/ped/" },
   {
     label: "Estatal",
     submenu: [
@@ -334,7 +333,7 @@ export default function Navbar() {
 
       <div
         className={`${styles.NavbarMenuContainer} ${menuOpen ? styles.menuOpen : ""}`}
-        style={{ pointerEvents: viewerBlocked ? "none" : "auto" }}
+        style={{ pointerEvents: viewerBlocked ? "none" : undefined }}
       >
         {renderNavItems(true)}
       </div>

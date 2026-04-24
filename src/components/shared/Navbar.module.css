@@ -1,107 +1,211 @@
 .Navbar {
+  --navbar-offset: 1rem;
+  --navbar-shell-height: 74px;
+  --navbar-layer: 3000;
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
-  height: 60px;
-  z-index: 1000;
+  z-index: var(--navbar-layer);
   display: flex;
   justify-content: center;
-  transition: top 0.3s ease-in-out, backdrop-filter 0.3s ease-in-out, background-color 0.3s ease-in-out;
+  padding-top: var(--navbar-offset);
+  transition:
+    transform 0.3s ease-in-out,
+    opacity 0.3s ease-in-out;
 }
 
 .hidden {
-  top: calc(-1 * 60px);
+  transform: translateY(calc(-100% - var(--navbar-offset)));
+  opacity: 0;
 }
 
 .active {
-  top: 0;
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.scrolled .NavbarList {
+  background-color: hsla(240, 33%, 96%, 0.94);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.16);
 }
 
 .NavbarList {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 90vw;
-  padding: 1.5rem 20px;
-  margin: 10px 0;
-  background-color: hsla(240, 33%, 96%, 0.81);
-  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.15);
-  backdrop-filter: blur(3px);
-  border-radius: 100vw;
+  gap: 1rem;
+  width: min(96vw, 1720px);
+  min-height: var(--navbar-shell-height);
+  padding: 0.85rem clamp(1rem, 2vw, 1.5rem);
+  margin: 0;
+  background-color: hsla(240, 33%, 96%, 0.88);
+  box-shadow: 0 18px 34px rgba(0, 0, 0, 0.12);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.56);
+  border-radius: 999px;
+}
+
+.NavbarImg {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.35rem, 1vw, 0.8rem);
+  flex-shrink: 0;
+  min-width: 0;
 }
 
 .NavbarImg img {
-  height: 40px;
-  margin: 0 5px;
+  display: block;
+  height: clamp(30px, 3vw, 42px);
+  width: auto;
 }
 
-/* */
-/* Botón Circulo */
-/* */
+.NavbarImg img:first-child {
+  height: clamp(28px, 2.6vw, 40px);
+}
+
+.NavbarImg img:last-child {
+  height: clamp(30px, 2.7vw, 42px);
+}
+
+.NavbarInicio {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.85rem;
+  min-width: 0;
+  flex: 1;
+}
+
 .NavbarCirculo {
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
+  border: none;
   border-radius: 50%;
   display: none;
   align-items: center;
   justify-content: center;
+  padding: 0;
   background: var(--blanco);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), 0 6px 20px rgba(0, 0, 0, 0.19);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
   cursor: pointer;
+  flex-shrink: 0;
 }
 
 .NavbarCirculo img {
-  width: 90%;
+  width: 84%;
   height: auto;
   border-radius: 50%;
 }
 
-.NavbarCirculo:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4), 0 14px 28px rgba(0, 0, 0, 0.25);
+.NavbarCirculo:hover,
+.NavbarCirculo:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.24);
+  outline: none;
 }
 
-/* */
-/* Menu Horizontal (Desktop) */
-/* */
 .navbarOpcDesktop {
   list-style: none;
   margin: 0;
   padding: 0;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  justify-content: flex-end;
+  gap: clamp(0.2rem, 0.7vw, 0.55rem);
+  min-width: 0;
+  flex-wrap: nowrap;
+  flex: 1;
 }
 
 .navbarOpcDesktop li {
   position: relative;
+  list-style: none;
 }
 
-.navbarOpcDesktop li a {
-  display: block;
-  text-align: center;
-  padding: 10px 14px;
+.navbarOpcDesktop li a,
+.navButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 0.65rem 0.95rem;
+  border-radius: 999px;
   text-decoration: none;
-  font-weight: 600;
-  font-size: var(--size_Fonts_M);
+  font-weight: 700;
+  font-size: 0.95rem;
+  line-height: 1.2;
   color: var(--vinoOsc);
-  transition: color 0.3s, text-decoration 0.3s;
+  text-align: center;
+  white-space: nowrap;
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease,
+    transform 0.25s ease;
 }
 
-.navbarOpcDesktop li a:hover {
+@media (max-width: 1540px) {
+  .Navbar {
+    --navbar-shell-height: 70px;
+  }
+
+  .NavbarList {
+    width: min(97vw, 1560px);
+    padding: 0.75rem 1rem;
+    gap: 0.8rem;
+  }
+
+  .NavbarImg {
+    gap: 0.25rem;
+  }
+
+  .NavbarImg img:first-child {
+    height: 34px;
+  }
+
+  .NavbarImg img:last-child {
+    height: 36px;
+  }
+
+  .navbarOpcDesktop {
+    gap: 0.2rem;
+  }
+
+  .navbarOpcDesktop li a,
+  .navButton {
+    min-height: 38px;
+    padding: 0.55rem 0.72rem;
+    font-size: 0.84rem;
+  }
+}
+
+.navbarOpcDesktop li a:hover,
+.navButton:hover,
+.navbarOpcMobile li a:hover,
+.navbarOpcMobile .navButton:hover {
   color: var(--vinoClr);
-  text-decoration: underline;
+  background-color: rgba(105, 27, 50, 0.08);
 }
 
-.navbarOpcDesktop .dropdownToggle {
-  font-size: var(--size_Fonts_M);
+.navItem {
+  list-style: none;
 }
 
-/* */
-/* Dropdown Toggle Base */
-/* */
+.navButton {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.activeLink {
+  font-weight: 800;
+  color: var(--vinoOsc);
+  background-color: rgba(105, 27, 50, 0.08);
+}
+
 .dropdownToggle {
   font-size: 1rem;
   font-weight: 600;
@@ -113,9 +217,6 @@
   text-align: center;
 }
 
-/* */
-/* Dropdown Menu Base */
-/* */
 .dropdownMenu {
   display: none;
   flex-direction: column;
@@ -132,19 +233,16 @@
   overflow-x: hidden;
 }
 
-/* */
-/* Dropdown Hover Desktop */
-/* */
-@media (min-width: 1024px) {
+@media (min-width: 1181px) {
   .dropdown:hover .dropdownMenu {
     display: flex;
     max-height: 500px;
     background-color: hsla(240, 33%, 96%, 0.95);
     position: absolute;
-    top: 100%;
+    top: calc(100% + 0.35rem);
     left: 0;
-    border-radius: 0.5rem;
-    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.15);
+    border-radius: 0.75rem;
+    box-shadow: 0 18px 32px rgba(0, 0, 0, 0.14);
     z-index: 2000;
   }
 
@@ -158,14 +256,11 @@
   }
 
   .dropdownMenu li a:hover {
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0.08);
     border-radius: 10px;
   }
 }
 
-/* */
-/* Dropdown Toggle Mobile */
-/* */
 .dropdownOpen .dropdownMenu {
   display: flex;
   max-height: 500px;
@@ -174,9 +269,6 @@
   box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.15);
 }
 
-/* */
-/* Dropdown Links Mobile */
-/* */
 .dropdownMenu li a {
   display: block;
   padding: 10px 16px;
@@ -191,86 +283,78 @@
   border-radius: 10px;
 }
 
-/* */
-/* Menu Desplegable (Mobile) */
-/* */
 .NavbarMenuContainer {
   position: fixed;
-  top: 60px;
-  left: 0;
-  width: 100%;
-  background-color: hsla(240, 33%, 96%, 0.95);
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding:
+    calc(var(--navbar-offset) + var(--navbar-shell-height) + 1rem)
+    1rem
+    1rem;
   overflow: hidden;
-  max-height: 0;
-  transition: max-height 0.5s ease-in-out;
-  z-index: 999;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  border-radius: 0 0 10px 10px;
+  background: rgba(245, 243, 245, 0.34);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition:
+    opacity 0.25s ease-in-out,
+    visibility 0.25s ease-in-out;
+  z-index: 99999;
+  box-shadow: none;
+  border-radius: 0;
+  opacity: 0;
+  visibility: hidden;
+  isolation: isolate;
+  pointer-events: none;
 }
 
 .menuOpen {
-  max-height: 500px;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
 }
 
 .navbarOpcMobile {
   list-style: none;
   margin: 0;
-  padding: 1rem;
+  padding: 0.85rem;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
+  gap: 0.4rem;
+  width: min(94vw, 520px);
+  max-height: calc(100vh - (var(--navbar-offset) + var(--navbar-shell-height) + 2rem));
+  overflow-y: auto;
+  background-color: hsla(240, 33%, 96%, 0.98);
+  border: 1px solid rgba(105, 27, 50, 0.08);
+  border-radius: 26px;
+  box-shadow: 0 24px 44px rgba(0, 0, 0, 0.2);
 }
 
 .navbarOpcMobile li {
   width: 100%;
   text-align: center;
-  margin: 5px 0;
 }
 
-.navbarOpcMobile li a {
-  display: block;
-  padding: 10px;
+.navbarOpcMobile li a,
+.navbarOpcMobile .navButton {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0.9rem 1rem;
   text-decoration: none;
-  font-weight: 600;
-  font-size: 1rem;
+  font-weight: 700;
+  font-size: 0.98rem;
   color: var(--vinoOsc);
-  transition: background-color 0.3s;
-}
-
-.navbarOpcMobile li a:hover {
-  background-color: rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-}
-
-/* Boton de navegar con modal */
-
-.navItem {
-  list-style: none;
-}
-
-.navButton {
+  border-radius: 16px;
   background: transparent;
   border: none;
-  cursor: pointer;
-    font-size: 1rem;
-  font-weight: 600;
-  color: var(--vinoOsc);
-  padding: 0;
 }
 
-.navButton:hover {
-  text-decoration: underline;
-}
-
-.activeLink {
-  font-weight: 700;
-  color: var(--vinoOsc);
-}
-
-/* */
-/* Responsive */
-/* */
-@media (max-width: 1023px) {
+@media (max-width: 1400px) {
   .NavbarCirculo {
     display: flex;
   }
@@ -280,18 +364,76 @@
   }
 }
 
-@media (max-width: 1023px) {
-  .NavbarCirculo {
-    display: flex;
+@media (max-width: 900px) {
+  .Navbar {
+    --navbar-offset: 0.75rem;
+    --navbar-shell-height: 68px;
   }
 
-  .navbarOpcDesktop {
-    display: none;
+  .NavbarList {
+    width: min(95vw, 95vw);
+    padding: 0.7rem 0.9rem;
+    gap: 0.75rem;
+  }
+
+  .NavbarImg img:first-child {
+    height: 30px;
+  }
+
+  .NavbarImg img:last-child {
+    height: 34px;
+  }
+
+  .NavbarMenuContainer {
+    padding-inline: 0.75rem;
   }
 }
 
-@media (max-width: 767px) {
-  .NavbarImg img {
-    height: 15px;
+@media (max-width: 640px) {
+  .Navbar {
+    --navbar-offset: 0.6rem;
+    --navbar-shell-height: 64px;
+  }
+
+  .NavbarList {
+    padding: 0.65rem 0.8rem;
+    border-radius: 22px;
+  }
+
+  .NavbarImg {
+    gap: 0.35rem;
+  }
+
+  .NavbarImg img:first-child {
+    height: 24px;
+  }
+
+  .NavbarImg img:last-child {
+    height: 28px;
+  }
+
+  .NavbarCirculo {
+    width: 40px;
+    height: 40px;
+  }
+
+  .NavbarMenuContainer {
+    padding:
+      calc(var(--navbar-offset) + var(--navbar-shell-height) + 0.75rem)
+      0.65rem
+      0.75rem;
+  }
+
+  .navbarOpcMobile {
+    padding: 0.75rem;
+    width: min(96vw, 96vw);
+    border-radius: 20px;
+  }
+
+  .navbarOpcMobile li a,
+  .navbarOpcMobile .navButton {
+    min-height: 46px;
+    font-size: 0.94rem;
+    padding: 0.8rem 0.9rem;
   }
 }

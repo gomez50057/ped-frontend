@@ -10,6 +10,8 @@ export const Experience = ({
 }) => {
   return (
     <>
+      <ambientLight intensity={1.65} />
+
       <Float
         rotation-x={-Math.PI / 4}
         floatIntensity={1}
