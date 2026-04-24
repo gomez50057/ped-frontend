@@ -38,6 +38,11 @@
   cursor: pointer;
 }
 
+.touchScrollArea,
+.touchScrollArea :global(canvas) {
+  touch-action: pan-y !important;
+}
+
 .cursorHint {
   position: absolute;
   z-index: 20;
