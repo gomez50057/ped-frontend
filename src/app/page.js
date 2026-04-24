@@ -5,7 +5,7 @@ import TimelineSection from "@/components/landing/TimelineExperience";
 import PodcastSlider from "@/components/landing/PodcastSlider";
 import CarouselSlider from "@/components/landing/CarouselSlider";
 import BibliotecaDigital from "@/components/landing/BibliotecaDigital";
-import PedPdfHeroSection from "@/components/landing/PedPdfHeroSection";
+import PedPdfHeroSection from "@/components/landing/DownloadViewPED";
 
 // import PublicKnowledgeSection from "@/components/landing/PublicKnowledgeSection";
 

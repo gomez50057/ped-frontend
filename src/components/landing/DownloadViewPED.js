@@ -3,11 +3,11 @@
 import { useState } from "react";
 import Hero from "@/components/ped_pdf/hero/Hero";
 import PedPdfViewerModal from "@/components/landing/modal/PedPdfViewerModal";
-import styles from "@/styles/PedPdfHeroSection.module.css";
+import styles from "@/styles/DownloadViewPED.module.css";
 
 const PDF_FILE = "/pdf/Actualizacion_PED_2025_2028_opt.pdf";
 
-export default function PedPdfHeroSection() {
+export default function DownloadViewPED() {
   const [isViewerOpen, setIsViewerOpen] = useState(false);
 
   return (
