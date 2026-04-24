@@ -423,9 +423,9 @@
   line-height: 1.2;
 }
 
-.cardTitle {
+.card .cardTitle {
   margin: 0 0 0.55rem;
-  color: var(--home-timeline-card-title);
+  color: currentColor;
   font-size: 1.08rem;
   line-height: 1.28;
   font-weight: 900;
@@ -474,23 +474,55 @@
 }
 
 .junio {
-  color: #e4ab05;
+  color: var(--home-event-digital);
+}
+
+.digital {
+  color: var(--home-event-digital);
+}
+
+.ia {
+  color: var(--home-event-ia);
 }
 
 .agosto {
-  color: #f56f1c;
+  color: var(--home-event-podcast);
+}
+
+.podcast {
+  color: var(--home-event-podcast);
+}
+
+.indigenas {
+  color: var(--home-event-indigenas);
 }
 
 .septiembre {
-  color: #e03176;
+  color: var(--home-event-infantil);
+}
+
+.infantil {
+  color: var(--home-event-infantil);
 }
 
 .octubre {
-  color: #6c3ce0;
+  color: var(--home-event-juventudes);
+}
+
+.juventudes {
+  color: var(--home-event-juventudes);
+}
+
+.foros {
+  color: var(--home-event-foros);
 }
 
 .noviembre {
-  color: #088eab;
+  color: var(--home-event-focales);
+}
+
+.focales {
+  color: var(--home-event-focales);
 }
 
 .legend {

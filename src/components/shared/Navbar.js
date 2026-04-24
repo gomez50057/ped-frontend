@@ -255,7 +255,13 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleViewerToggle = (event) => {
-      setViewerBlocked(Boolean(event.detail?.open));
+      const isOpen = Boolean(event.detail?.open);
+      setViewerBlocked(isOpen);
+
+      if (isOpen) {
+        setMenuOpen(false);
+        setPlanesModalOpen(false);
+      }
     };
 
     window.addEventListener("ped-viewer-toggle", handleViewerToggle);
@@ -309,7 +315,13 @@ export default function Navbar() {
     <>
       <nav
         className={`${styles.Navbar} 
-          ${isVisible ? styles.active : styles.hidden} 
+          ${
+            viewerBlocked
+              ? styles.modalHidden
+              : isVisible
+                ? styles.active
+                : styles.hidden
+          } 
           ${lastScrollPos.current > 100 ? styles.scrolled : ""}
         `}
         style={{ pointerEvents: viewerBlocked ? "none" : "auto" }}
@@ -332,7 +344,9 @@ export default function Navbar() {
       </nav>
 
       <div
-        className={`${styles.NavbarMenuContainer} ${menuOpen ? styles.menuOpen : ""}`}
+        className={`${styles.NavbarMenuContainer} ${
+          menuOpen && !viewerBlocked ? styles.menuOpen : ""
+        }`}
         style={{ pointerEvents: viewerBlocked ? "none" : undefined }}
       >
         {renderNavItems(true)}

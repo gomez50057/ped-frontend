@@ -5,7 +5,7 @@
   gap: 0.75rem;
   margin-top: 0.8rem;
   padding-top: 0.85rem;
-  border-top: 1px solid color-mix(in srgb, currentColor 16%, transparent);
+  border-top: 1px solid var(--home-border-soft);
 }
 
 .galleryMeta {
@@ -32,10 +32,10 @@
 .galleryButton {
   min-height: 2.2rem;
   padding: 0.55rem 0.9rem;
-  border: 1px solid color-mix(in srgb, currentColor 24%, transparent);
+  border: 1px solid var(--home-border-strong);
   border-radius: 999px;
-  background: color-mix(in srgb, currentColor 12%, white);
-  color: currentColor;
+  background: var(--home-surface-glass-strong);
+  color: var(--home-text-primary);
   font-size: 0.78rem;
   font-weight: 900;
   cursor: pointer;
@@ -47,8 +47,8 @@
 
 .galleryButton:hover {
   transform: translateY(-1px);
-  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.12);
-  background: color-mix(in srgb, currentColor 18%, white);
+  box-shadow: var(--home-shadow-soft);
+  background: var(--home-surface-muted);
 }
 
 .modalOverlay {
@@ -59,7 +59,7 @@
   align-items: center;
   justify-content: center;
   padding: 0;
-  background: rgba(22, 12, 18, 0.68);
+  background: color-mix(in srgb, var(--home-bg) 72%, rgba(0, 0, 0, 0.72));
   backdrop-filter: blur(10px);
 }
 
@@ -120,9 +120,9 @@
 .closeButton {
   width: 2.5rem;
   height: 2.5rem;
-  border: none;
+  border: 1px solid var(--home-border-soft);
   border-radius: 50%;
-  background: color-mix(in srgb, var(--home-text-primary) 10%, white);
+  background: var(--home-surface-glass-strong);
   color: var(--home-text-primary);
   font-size: 1rem;
   font-weight: 900;
@@ -136,9 +136,6 @@
   min-height: 360px;
   overflow: hidden;
   border-radius: 24px;
-  background:
-    radial-gradient(circle at center, rgba(255, 255, 255, 0.36), transparent 60%),
-    color-mix(in srgb, var(--home-surface-muted) 88%, black);
   max-width: 1240px;
   margin: 0 auto;
   display: flex;
@@ -146,9 +143,94 @@
   justify-content: center;
 }
 
-.heroImage,
+.heroImageFrame {
+  position: relative;
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 26px;
+  overflow: hidden;
+  background: var(--home-surface-muted);
+  box-shadow: var(--home-shadow-strong);
+}
+
+.heroImageFrameLandscape {
+  width: min(100%, calc((72vh - 1rem) * 1.5), 1020px);
+  height: min(100%, 72vh, 680px);
+}
+
+.heroImageFramePortrait {
+  width: min(100%, calc((72vh - 1rem) * 0.72), 520px);
+  height: min(100%, 72vh, 680px);
+}
+
+.heroImageFrameSquare {
+  width: min(100%, 70vh, 680px);
+  height: min(100%, 70vh, 680px);
+}
+
+.heroImage {
+  object-fit: contain;
+  background: var(--home-surface-muted);
+}
+
 .thumbnailImage {
   object-fit: contain;
+}
+
+.heroImageFrameNext {
+  animation: photoEnterNext 0.62s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.heroImageFramePrevious {
+  animation: photoEnterPrevious 0.62s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.photoCounter {
+  position: absolute;
+  left: 50%;
+  bottom: 1rem;
+  z-index: 2;
+  transform: translateX(-50%);
+  padding: 0.45rem 0.85rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--home-surface-glass-strong) 82%, transparent);
+  color: var(--home-text-primary);
+  font-size: 0.8rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  box-shadow: var(--home-shadow-soft);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  pointer-events: none;
+}
+
+@keyframes photoEnterNext {
+  from {
+    opacity: 0;
+    transform: translateX(10px) scale(0.996);
+    filter: blur(3px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes photoEnterPrevious {
+  from {
+    opacity: 0;
+    transform: translateX(-10px) scale(0.996);
+    filter: blur(3px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+    filter: blur(0);
+  }
 }
 
 .heroCaption {
@@ -169,12 +251,12 @@
   border: none;
   border-radius: 50%;
   transform: translateY(-50%);
-  background: rgba(255, 255, 255, 0.84);
+  background: var(--home-surface-glass-strong);
   color: var(--home-text-primary);
   font-size: 2rem;
   line-height: 1;
   cursor: pointer;
-  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.16);
+  box-shadow: var(--home-shadow-strong);
 }
 
 .navButtonLeft {
@@ -215,6 +297,23 @@
     border-radius: 18px;
   }
 
+  .heroImageFrame {
+    height: min(100%, 58vh);
+    border-radius: 20px;
+  }
+
+  .heroImageFrameLandscape {
+    width: 100%;
+  }
+
+  .heroImageFramePortrait {
+    width: min(100%, calc(58vh * 0.72));
+  }
+
+  .heroImageFrameSquare {
+    width: min(100%, 58vh);
+  }
+
   .navButton {
     width: 2.45rem;
     height: 2.45rem;
@@ -227,5 +326,10 @@
 
   .navButtonRight {
     right: 0.55rem;
+  }
+
+  .photoCounter {
+    bottom: 0.7rem;
+    font-size: 0.72rem;
   }
 }

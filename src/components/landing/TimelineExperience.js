@@ -32,7 +32,6 @@ const timelineData = [
         text: "Espacio para identificar temas de mayor interes social y propuestas de atencion.",
         stat: "5,343 propuestas",
         icon: "digital",
-        galleryKey: "consulta-digital",
       },
     ],
     bottomEvents: [
@@ -60,7 +59,6 @@ const timelineData = [
         text: "Serie de podcasts con entrevistas a autoridades para conocer sus propuestas y preocupaciones.",
         stat: "20 participantes · 6 eventos",
         icon: "podcast",
-        galleryKey: "podcast",
       },
     ],
     bottomEvents: [
@@ -71,7 +69,6 @@ const timelineData = [
         text: "Espacio para conocer las propuestas e inquietudes de pueblos originarios y comunidades indigenas de Hidalgo.",
         stat: "7,319 propuestas ciudadanas",
         icon: "indigenas",
-        galleryKey: "indigenas",
       },
     ],
   },
@@ -88,7 +85,6 @@ const timelineData = [
         text: "Consulta dirigida a ninas y ninos para conocer sus propuestas e inquietudes.",
         stat: "175 propuestas · 1,100 expresiones graficas",
         icon: "infantil",
-        galleryKey: "infantil",
       },
     ],
     bottomEvents: [],
@@ -106,7 +102,6 @@ const timelineData = [
         text: "Consulta dirigida a jovenes en bachillerato y educacion superior para conocer sus propuestas e inquietudes.",
         stat: "2,483 propuestas EMS · 2,025 propuestas UAEH",
         icon: "juventudes",
-        galleryKey: "juventudes",
       },
     ],
     bottomEvents: [
@@ -153,177 +148,169 @@ const iconMap = {
 };
 
 const eventGalleries = {
-  "consulta-digital": [
-    {
-      src: "/img/page_links/consulta_digital/persona.png",
-      alt: "Consulta digital del PED",
-      label: "Participacion digital",
-      caption: "Vista representativa del acceso ciudadano a la consulta digital.",
-    },
-    {
-      src: "/img/page_links/consulta_digital/boton.png",
-      alt: "Boton de consulta digital",
-      label: "Acceso al formulario",
-      caption: "Entrada principal para compartir propuestas dentro de la plataforma.",
-    },
-    {
-      src: "/og-image.png",
-      alt: "Imagen principal del Plan Estatal de Desarrollo",
-      label: "Difusion general",
-      caption: "Material grafico utilizado para comunicar la actualizacion del PED.",
-    },
-  ],
   "reto-ia": [
     {
-      src: "/img/page_links/convocatoria_IA/mano.png",
-      alt: "Convocatoria de inteligencia artificial",
-      label: "Convocatoria IA",
-      caption: "Elemento visual del reto enfocado en vision prospectiva e innovacion.",
+      src: "/img/page_links/convocatoria_IA/1.jpeg",
+      alt: "Convocatoria de inteligencia artificial 1",
+      label: "Convocatoria IA 1",
     },
     {
-      src: "/img/page_links/convocatoria_IA/boton.png",
-      alt: "Acceso al reto de inteligencia artificial",
-      label: "Registro del reto",
-      caption: "Pieza de acceso para las personas participantes en la convocatoria.",
+      src: "/img/page_links/convocatoria_IA/2.jpeg",
+      alt: "Convocatoria de inteligencia artificial 2",
+      label: "Convocatoria IA 2",
     },
     {
-      src: "/img/headertxt.png",
-      alt: "Comunicacion del PED",
-      label: "Difusion institucional",
-      caption: "Apoyo grafico para la comunicacion institucional del ejercicio.",
-    },
-  ],
-  podcast: [
-    {
-      src: "/img/Podcast/la-voz-de-hidalgo-portada.png",
-      alt: "Portada del podcast",
-      label: "Portada del podcast",
-      caption: "Identidad visual de la serie de dialogos con autoridades.",
+      src: "/img/page_links/convocatoria_IA/3.jpeg",
+      alt: "Convocatoria de inteligencia artificial 3",
+      label: "Convocatoria IA 3",
     },
     {
-      src: "/img/Podcast/mic.png",
-      alt: "Microfono del podcast",
-      label: "Sesion de grabacion",
-      caption: "Recurso visual asociado a las entrevistas y mensajes clave.",
+      src: "/img/page_links/convocatoria_IA/4.jpeg",
+      alt: "Convocatoria de inteligencia artificial 4",
+      label: "Convocatoria IA 4",
     },
     {
-      src: "/img/logo.png",
-      alt: "Logo institucional",
-      label: "Identidad institucional",
-      caption: "Imagen de respaldo usada para la presencia institucional del contenido.",
-    },
-  ],
-  indigenas: [
-    {
-      src: "/img/forosRegionales/Reg04Huejutla.png",
-      alt: "Foro regional Huejutla",
-      label: "Region Huejutla",
-      caption: "Concentrado visual de la participacion en la region Huasteca.",
+      src: "/img/page_links/convocatoria_IA/5.jpeg",
+      alt: "Convocatoria de inteligencia artificial 5",
+      label: "Convocatoria IA 5",
     },
     {
-      src: "/img/forosRegionales/Reg09Zacualtipan.png",
-      alt: "Foro regional Zacualtipan",
-      label: "Region Zacualtipan",
-      caption: "Sede vinculada a la escucha territorial en comunidades del estado.",
+      src: "/img/page_links/convocatoria_IA/6.jpeg",
+      alt: "Convocatoria de inteligencia artificial 6",
+      label: "Convocatoria IA 6",
     },
     {
-      src: "/img/forosRegionales/Reg12Jacala.png",
-      alt: "Foro regional Jacala",
-      label: "Region Jacala",
-      caption: "Registro grafico de actividades en zonas con presencia de pueblos originarios.",
-    },
-  ],
-  infantil: [
-    {
-      src: "/img/page_links/biblioteca_digital/personas.png",
-      alt: "Participacion infantil",
-      label: "Expresion grafica",
-      caption: "Material visual para representar la participacion de infancias en el proceso.",
+      src: "/img/page_links/convocatoria_IA/7.jpeg",
+      alt: "Convocatoria de inteligencia artificial 7",
+      label: "Convocatoria IA 7",
     },
     {
-      src: "/img/slider/PED.png",
-      alt: "Presentacion del PED",
-      label: "Material didactico",
-      caption: "Recurso de apoyo para comunicar el ejercicio en espacios escolares.",
+      src: "/img/page_links/convocatoria_IA/8.jpeg",
+      alt: "Convocatoria de inteligencia artificial 8",
+      label: "Convocatoria IA 8",
     },
     {
-      src: "/img/slider/PND.jpg",
-      alt: "Planeacion y desarrollo",
-      label: "Contexto de planeacion",
-      caption: "Imagen de apoyo usada como referencia institucional del proceso.",
-    },
-  ],
-  juventudes: [
-    {
-      src: "/img/reconocimiento/UAEH.jpg",
-      alt: "Participacion de juventudes en UAEH",
-      label: "Universidades",
-      caption: "Referencia visual de instituciones de educacion superior participantes.",
+      src: "/img/page_links/convocatoria_IA/9.jpeg",
+      alt: "Convocatoria de inteligencia artificial 9",
+      label: "Convocatoria IA 9",
     },
     {
-      src: "/img/reconocimiento/UPP.jpg",
-      alt: "Participacion juvenil en UPP",
-      label: "Bachillerato y superior",
-      caption: "Vinculacion con espacios formativos para captar propuestas de juventudes.",
-    },
-    {
-      src: "/img/reconocimiento/EDUCACIÓN.jpg",
-      alt: "Participacion educativa",
-      label: "Red educativa",
-      caption: "Soporte visual de la colaboracion con instituciones educativas del estado.",
+      src: "/img/page_links/convocatoria_IA/10.jpeg",
+      alt: "Convocatoria de inteligencia artificial 10",
+      label: "Convocatoria IA 10",
     },
   ],
   "foros-ciudadanos": [
     {
-      src: "/img/forosRegionales/Reg01Tula.png",
-      alt: "Foro ciudadano Tula",
-      label: "Foro Tula",
-      caption: "Participacion ciudadana regional en uno de los principales foros.",
+      src: "/img/page_links/foros_ciudadanos/1.jpeg",
+      alt: "Foro ciudadano 1",
+      label: "Foro ciudadano 1",
     },
     {
-      src: "/img/forosRegionales/Reg03Pachuca.png",
-      alt: "Foro ciudadano Pachuca",
-      label: "Foro Pachuca",
-      caption: "Concentrado de actividades de dialogo en la capital del estado.",
+      src: "/img/page_links/foros_ciudadanos/2.jpg",
+      alt: "Foro ciudadano 2",
+      label: "Foro ciudadano 2",
     },
     {
-      src: "/img/forosRegionales/Reg06Tizayuca.png",
-      alt: "Foro ciudadano Tizayuca",
-      label: "Foro Tizayuca",
-      caption: "Ejemplo de participacion territorial en los foros ciudadanos.",
+      src: "/img/page_links/foros_ciudadanos/3.jpeg",
+      alt: "Foro ciudadano 3",
+      label: "Foro ciudadano 3",
+    },
+    {
+      src: "/img/page_links/foros_ciudadanos/4.jpg",
+      alt: "Foro ciudadano 4",
+      label: "Foro ciudadano 4",
+    },
+    {
+      src: "/img/page_links/foros_ciudadanos/5.jpeg",
+      alt: "Foro ciudadano 5",
+      label: "Foro ciudadano 5",
+    },
+    {
+      src: "/img/page_links/foros_ciudadanos/6.jpg",
+      alt: "Foro ciudadano 6",
+      label: "Foro ciudadano 6",
+    },
+    {
+      src: "/img/page_links/foros_ciudadanos/7.jpeg",
+      alt: "Foro ciudadano 7",
+      label: "Foro ciudadano 7",
+    },
+    {
+      src: "/img/page_links/foros_ciudadanos/8.jpeg",
+      alt: "Foro ciudadano 8",
+      label: "Foro ciudadano 8",
+    },
+    {
+      src: "/img/page_links/foros_ciudadanos/9.jpg",
+      alt: "Foro ciudadano 9",
+      label: "Foro ciudadano 9",
+    },
+    {
+      src: "/img/page_links/foros_ciudadanos/10.jpg",
+      alt: "Foro ciudadano 10",
+      label: "Foro ciudadano 10",
     },
   ],
   "grupos-focales": [
     {
-      src: "/img/ped_document/Mesa de trabajo 1-100.jpg",
-      alt: "Mesa de trabajo 1",
-      label: "Mesa de trabajo 1",
-      caption: "Sesion de trabajo para profundizar en propuestas sectoriales.",
+      src: "/img/page_links/grupos_focales/1.jpg",
+      alt: "Foto de grupos focales 1",
+      label: "Foto de grupos focales 1",
     },
     {
-      src: "/img/ped_document/Mesa de trabajo 2-100.jpg",
-      alt: "Mesa de trabajo 2",
-      label: "Mesa de trabajo 2",
-      caption: "Registro visual de una dinamica de dialogo especializado.",
+      src: "/img/page_links/grupos_focales/2.jpg",
+      alt: "Foto de grupos focales 2",
+      label: "Foto de grupos focales 2",
     },
     {
-      src: "/img/slider/lineamientos_PED.jpg",
-      alt: "Lineamientos del PED",
-      label: "Lineamientos base",
-      caption: "Documento de referencia para orientar el analisis y la discusion tecnica.",
+      src: "/img/page_links/grupos_focales/3.jpg",
+      alt: "Foto de grupos focales 3",
+      label: "Foto de grupos focales 3",
     },
+    {
+      src: "/img/page_links/grupos_focales/4.jpg",
+      alt: "Foto de grupos focales 4",
+      label: "Foto de grupos focales 4",
+    },
+    {
+      src: "/img/page_links/grupos_focales/5.jpg",
+      alt: "Foto de grupos focales 5",
+      label: "Foto de grupos focales 5",
+    },
+    {
+      src: "/img/page_links/grupos_focales/6.jpg",
+      alt: "Foto de grupos focales 6",
+      label: "Foto de grupos focales 6",
+    },
+    {
+      src: "/img/page_links/grupos_focales/7.jpg",
+      alt: "Foto de grupos focales 7",
+      label: "Foto de grupos focales 7",
+    },
+    {
+      src: "/img/page_links/grupos_focales/8.jpg",
+      alt: "Foto de grupos focales 8",
+      label: "Foto de grupos focales 8",
+    },
+    {
+      src: "/img/page_links/grupos_focales/9.jpg",
+      alt: "Foto de grupos focales 9",
+      label: "Foto de grupos focales 9",
+    }
   ],
 };
 
 function EventCard({ event, position, colorClass }) {
   const IconComponent = iconMap[event.icon] || AutoAwesomeIcon;
-  const galleryImages = eventGalleries[event.galleryKey] || [];
+  const galleryImages = eventGalleries[event.galleryKey];
+  const hasGallery = Array.isArray(galleryImages) && galleryImages.length > 0;
+  const eventColorClass = styles[event.icon] || styles[colorClass];
 
   return (
     <article
-      className={`${styles.card} ${
-        position === "top" ? styles.topCard : styles.bottomCard
-      } ${styles[colorClass]}`}
+      className={`${styles.card} ${position === "top" ? styles.topCard : styles.bottomCard
+        } ${eventColorClass}`}
     >
       <div className={styles.cardGlow} />
 
@@ -337,18 +324,17 @@ function EventCard({ event, position, colorClass }) {
 
       <h3 className={styles.cardTitle}>{event.title}</h3>
       <p className={styles.cardDate}>{event.text}</p>
-      <TimelinePhotoGallery
-        title={event.title}
-        galleryLabel={event.tag}
-        images={galleryImages}
-      />
-
-      {/* <p className={styles.cardDate}>{event.date}</p> */}
-      <p className={styles.cardStat}>{event.stat}</p>
+      {hasGallery && (
+        <TimelinePhotoGallery
+          title={event.title}
+          galleryLabel={event.tag}
+          images={galleryImages}
+        />
+      )}      
 
       <div className={styles.cardFooter}>
         <span className={styles.cardMiniLine} />
-        <span className={styles.cardMiniLabel}>Participacion</span>
+        <span className={styles.cardMiniLabel}><p className={styles.cardStat}>{event.stat}</p></span>
       </div>
     </article>
   );
