@@ -54,9 +54,9 @@ const timelineData = [
     topEvents: [
       {
         tag: "PODCAST",
-        title: "Dialogos con autoridades",
+        title: "Dialogos con expertos",
         date: "Agosto -> Septiembre 2025",
-        text: "Serie de podcasts con entrevistas a autoridades para conocer sus propuestas y preocupaciones.",
+        text: "Serie de podcasts con entrevistas a expertos para conocer sus propuestas y preocupaciones.",
         stat: "20 participantes · 6 eventos",
         icon: "podcast",
       },
@@ -64,7 +64,7 @@ const timelineData = [
     bottomEvents: [
       {
         tag: "PUEBLOS Y COMUNIDADES INDIGENAS",
-        title: "Foros regionales en 45 municipios",
+        title: "Foros de consulta",
         date: "Agosto -> Octubre 2025",
         text: "Espacio para conocer las propuestas e inquietudes de pueblos originarios y comunidades indigenas de Hidalgo.",
         stat: "7,319 propuestas ciudadanas",
@@ -107,7 +107,7 @@ const timelineData = [
     bottomEvents: [
       {
         tag: "FOROS CIUDADANOS",
-        title: "18 foros en 12 universidades",
+        title: "18 foros regionales en 12 universidades",
         date: "29 Sep -> 25 Nov 2025",
         text: "Foros de dialogo con la sociedad civil para conocer sus propuestas e inquietudes.",
         stat: "6,915 propuestas",
@@ -744,7 +744,7 @@ export default function TimelineExperience() {
 
       <div className={styles.legend}>
         <div className={styles.legendPill}>
-          <span className={styles.legendItem}>
+          {/* <span className={styles.legendItem}>
             <LanguageIcon className={styles.legendIcon} />
             <span>Digital / Tecnologia</span>
           </span>
@@ -752,7 +752,7 @@ export default function TimelineExperience() {
           <span className={styles.legendItem}>
             <MicIcon className={styles.legendIcon} />
             <span>Medios</span>
-          </span>
+          </span> */}
 
           <span className={styles.legendItem}>
             <ChildCareIcon className={styles.legendIcon} />
@@ -764,20 +764,20 @@ export default function TimelineExperience() {
             <span>Pueblos originarios</span>
           </span>
 
-          <span className={styles.legendItem}>
+          {/* <span className={styles.legendItem}>
             <Groups3Icon className={styles.legendIcon} />
             <span>Foros y dialogos</span>
-          </span>
+          </span> */}
 
           <span className={styles.legendItem}>
             <SchoolIcon className={styles.legendIcon} />
             <span>Juventudes</span>
           </span>
 
-          <span className={styles.legendItem}>
+          {/* <span className={styles.legendItem}>
             <CalendarMonthIcon className={styles.legendIcon} />
             <span>2025 - Hidalgo</span>
-          </span>
+          </span> */}
         </div>
 
         <p className={styles.legendText}>
