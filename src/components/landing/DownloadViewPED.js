@@ -20,7 +20,7 @@ export default function DownloadViewPED() {
           <div className={styles.copyColumn}>
             <div className={styles.contentCard}>
               <span className={styles.eyebrow}>PED 2022-2028</span>
-              <h2 className={styles.title}>Consulta el <span className="spanDoaradoClr">Plan Estatal de Desarrollo</span></h2>
+              <h2 className={styles.title}>Consulta la <span className="spanDoaradoClr">Actualización Plan Estatal de Desarrollo</span></h2>
               <p className={styles.description}>
                 Explora el Plan Estatal de Desarrollo o llévatelo en PDF con un solo clic.
               </p>
