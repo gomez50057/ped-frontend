@@ -59,6 +59,7 @@ const timelineData = [
         text: "Serie de podcasts con entrevistas a expertos para conocer sus propuestas y preocupaciones.",
         stat: "20 participantes · 6 eventos",
         icon: "podcast",
+        galleryKey: "podcast",
       },
     ],
     bottomEvents: [
@@ -294,6 +295,23 @@ const eventGalleries = {
       label: "Foto de grupos focales 9",
     }
   ],
+  "podcast": [
+    {
+      src: "/img/page_links/podcast/1.jpg",
+      alt: "Foto de podcast 1",
+      label: "Foto de podcast 1",
+    },
+    {
+      src: "/img/page_links/podcast/2.jpg",
+      alt: "Foto de podcast 2",
+      label: "Foto de podcast 2",
+    },
+    {
+      src: "/img/page_links/podcast/3.jpg",
+      alt: "Foto de podcast 3",
+      label: "Foto de podcast 3",
+    },    
+  ],
 };
 
 function EventCard({ event, position, colorClass }) {
@@ -325,7 +343,7 @@ function EventCard({ event, position, colorClass }) {
           galleryLabel={event.tag}
           images={galleryImages}
         />
-      )}      
+      )}
 
       <div className={styles.cardFooter}>
         <span className={styles.cardMiniLine} />
