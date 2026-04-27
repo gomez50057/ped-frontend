@@ -6,7 +6,7 @@ import styles from "./TimelinePhotoGallery.module.css";
 
 export default function TimelinePhotoGallery({
   title,
-  galleryLabel = "Memoria fotografica",
+  galleryLabel = "Memoria fotográfica",
   images = [],
 }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -111,7 +111,7 @@ export default function TimelinePhotoGallery({
     <>
       <div className={styles.galleryLauncher}>
         <div className={styles.galleryMeta}>
-          <span className={styles.galleryKicker}>Memoria fotografica</span>
+          <span className={styles.galleryKicker}>Memoria fotográfica</span>
         </div>
 
         <button
