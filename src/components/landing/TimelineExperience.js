@@ -86,6 +86,7 @@ const timelineData = [
         text: "Consulta dirigida a ninas y ninos para conocer sus propuestas e inquietudes.",
         stat: "175 propuestas · 1,100 expresiones graficas",
         icon: "infantil",
+        galleryKey: "infantiles",
       },
     ],
     bottomEvents: [],
@@ -310,7 +311,14 @@ const eventGalleries = {
       src: "/img/page_links/podcast/3.jpg",
       alt: "Foto de podcast 3",
       label: "Foto de podcast 3",
-    },    
+    },
+  ],
+  "infantiles": [
+    {
+      src: "/img/page_links/infantil/1.jpg",
+      alt: "Foto de consulta infantil 1",
+      label: "Foto de consulta infantil 1",
+    },
   ],
 };
 
