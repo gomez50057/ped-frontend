@@ -105,6 +105,7 @@ const timelineData = [
         text: "Consulta dirigida a jovenes en bachillerato y educacion superior para conocer sus propuestas e inquietudes.",
         stat: "2,483 propuestas EMS · 2,025 propuestas UAEH",
         icon: "juventudes",
+        galleryKey: "consulta-juventudes",
       },
     ],
     bottomEvents: [
@@ -357,6 +358,48 @@ const eventGalleries = {
       alt: "Foto de consulta con pueblos originarios 7",
       label: "Foto de consulta con pueblos originarios 7",
     }
+  ],
+  "consulta-juventudes": [
+    {
+      src: "/img/page_links/consulta_juventudes/1.jpg",
+      alt: "Foto de consulta con juventudes 1",
+      label: "Foto de consulta con juventudes 1",
+    },
+    {
+      src: "/img/page_links/consulta_juventudes/2.jpg",
+      alt: "Foto de consulta con juventudes 2",
+      label: "Foto de consulta con juventudes 2",
+    },
+    {
+      src: "/img/page_links/consulta_juventudes/3.jpg",
+      alt: "Foto de consulta con juventudes 3",
+      label: "Foto de consulta con juventudes 3",
+    },
+    {
+      src: "/img/page_links/consulta_juventudes/4.jpg",
+      alt: "Foto de consulta con juventudes 4",
+      label: "Foto de consulta con juventudes 4",
+    },
+    {
+      src: "/img/page_links/consulta_juventudes/5.jpg",
+      alt: "Foto de consulta con juventudes 5",
+      label: "Foto de consulta con juventudes 5",
+    },
+    {
+      src: "/img/page_links/consulta_juventudes/6.jpg",
+      alt: "Foto de consulta con juventudes 6",
+      label: "Foto de consulta con juventudes 6",
+    },
+    {
+      src: "/img/page_links/consulta_juventudes/7.jpg",
+      alt: "Foto de consulta con juventudes 7",
+      label: "Foto de consulta con juventudes 7",
+    },
+    {
+      src: "/img/page_links/consulta_juventudes/8.jpg",
+      alt: "Foto de consulta con juventudes 8",
+      label: "Foto de consulta con juventudes 8",
+    },
   ],
 };
 
