@@ -70,6 +70,7 @@ const timelineData = [
         text: "Espacio para conocer las propuestas e inquietudes de pueblos originarios y comunidades indigenas de Hidalgo.",
         stat: "7,319 propuestas ciudadanas",
         icon: "indigenas",
+        galleryKey: "indigenas",
       },
     ],
   },
@@ -319,6 +320,43 @@ const eventGalleries = {
       alt: "Foto de consulta infantil 1",
       label: "Foto de consulta infantil 1",
     },
+  ],
+  "indigenas": [
+    {
+      src: "/img/page_links/indigenas/1.jpg",
+      alt: "Foto de consulta con pueblos originarios 1",
+      label: "Foto de consulta con pueblos originarios 1",
+    },
+    {
+      src: "/img/page_links/indigenas/2.jpg",
+      alt: "Foto de consulta con pueblos originarios 2",
+      label: "Foto de consulta con pueblos originarios 2",
+    },
+    {
+      src: "/img/page_links/indigenas/3.jpg",
+      alt: "Foto de consulta con pueblos originarios 3",
+      label: "Foto de consulta con pueblos originarios 3",
+    },
+    {
+      src: "/img/page_links/indigenas/4.jpg",
+      alt: "Foto de consulta con pueblos originarios 4",
+      label: "Foto de consulta con pueblos originarios 4",
+    },
+    {
+      src: "/img/page_links/indigenas/5.jpg",
+      alt: "Foto de consulta con pueblos originarios 5",
+      label: "Foto de consulta con pueblos originarios 5",
+    },
+    {
+      src: "/img/page_links/indigenas/6.jpg",
+      alt: "Foto de consulta con pueblos originarios 6",
+      label: "Foto de consulta con pueblos originarios 6",
+    },
+    {
+      src: "/img/page_links/indigenas/7.jpg",
+      alt: "Foto de consulta con pueblos originarios 7",
+      label: "Foto de consulta con pueblos originarios 7",
+    }
   ],
 };
 
