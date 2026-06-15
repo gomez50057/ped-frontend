@@ -1,31 +1,26 @@
 /** @type {import('next').NextConfig} */
-module.exports = {
-  trailingSlash: true,
-  async rewrites() {
-    return [
-      {
-        // Ruta con slash final
-        source: '/api/:path*/',
-        destination: `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/:path*/`,
-      },
-    ];
-  },
-};
 
-// // frontend/next.config.js
-// module.exports = {
-//   async rewrites() {
-//     return [
-//       {
-//         source: '/api/:path*',
-//         destination: 'http://backend:8000/api/:path*/', // nombre del servicio docker y puerto
-//       },
-//     ]
-//   },
-// }
+function getBackendOrigin() {
+  const apiBase = process.env.NEXT_PUBLIC_API_BASE_URL || "http://127.0.0.1:8000";
+  return apiBase.replace(/\/api(?:\/.*)?\/?$/, "").replace(/\/$/, "");
+}
 
 const nextConfig = {
   output: "standalone",
+  trailingSlash: true,
+  async rewrites() {
+    const backendOrigin = getBackendOrigin();
+    return [
+      {
+        source: "/api/:path*/",
+        destination: `${backendOrigin}/api/:path*/`,
+      },
+      {
+        source: "/api/:path*",
+        destination: `${backendOrigin}/api/:path*`,
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;
