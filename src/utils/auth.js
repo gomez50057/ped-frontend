@@ -86,6 +86,9 @@ export function logout() {
   localStorage.removeItem('access');
   // Si guardas refresh en localStorage:
   localStorage.removeItem('refresh');
+  localStorage.removeItem('groups');
+  document.cookie = 'access_token=; Path=/; Max-Age=0; SameSite=Lax';
+  document.cookie = 'refresh_token=; Path=/; Max-Age=0; SameSite=Lax';
   // Si lo guardas en cookie HttpOnly, simplemente redirige sin tocar cookie:
   window.location.href = '/login';
   throw new Error('Sesión expirada');

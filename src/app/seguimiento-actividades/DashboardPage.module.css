@@ -1,0 +1,15 @@
+.recent {
+  display: grid;
+  gap: 14px;
+  margin-top: 24px;
+}
+
+.recent h2 {
+  margin: 0;
+  color: var(--VinoNegro);
+  font-size: 20px;
+}
+
+.userFilter {
+  width: min(100%, 340px);
+}

@@ -1,0 +1,28 @@
+.field {
+  display: grid;
+  gap: 7px;
+  color: var(--VinoNegro);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.input {
+  min-height: 42px;
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text);
+  padding: 0 12px;
+  outline: none;
+}
+
+.input:focus {
+  border-color: var(--doradoOsc);
+  box-shadow: 0 0 0 3px rgba(188, 149, 91, 0.18);
+}
+
+.field small {
+  color: var(--danger);
+  font-weight: 600;
+}

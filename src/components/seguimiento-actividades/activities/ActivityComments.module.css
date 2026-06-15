@@ -1,0 +1,44 @@
+.section {
+  display: grid;
+  gap: 16px;
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+}
+
+.header h2 {
+  margin: 0;
+  color: var(--VinoNegro);
+  font-size: 18px;
+}
+
+.list {
+  display: grid;
+  gap: 10px;
+}
+
+.item {
+  padding: 14px;
+  border-left: 4px solid var(--doradoOsc);
+  border-radius: 8px;
+  background: var(--surfaceAlt);
+}
+
+.item p {
+  margin: 0 0 8px;
+  line-height: 1.5;
+}
+
+.item span,
+.empty {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.form {
+  display: grid;
+  justify-items: end;
+  gap: 12px;
+}

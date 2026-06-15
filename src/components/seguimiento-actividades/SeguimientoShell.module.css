@@ -1,0 +1,143 @@
+.shell {
+  min-height: 100vh;
+  padding: 24px clamp(16px, 3vw, 42px) 42px;
+  background:
+    linear-gradient(180deg, rgba(105, 27, 50, 0.06), transparent 260px),
+    var(--background, #f7f7f7);
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  max-width: 1480px;
+  margin: 0 auto 18px;
+}
+
+.header p,
+.header h1,
+.header span {
+  margin: 0;
+}
+
+.header p {
+  color: var(--doradoOsc);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.header h1 {
+  margin-top: 4px;
+  color: var(--VinoNegro);
+  font-size: clamp(26px, 3vw, 40px);
+  line-height: 1.1;
+}
+
+.header span {
+  display: block;
+  margin-top: 8px;
+  color: var(--muted, #6d6f6f);
+  font-weight: 600;
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 0 16px;
+  border: 1px solid rgba(105, 27, 50, 0.18);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--vinoOsc);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  max-width: 1480px;
+  margin: 0 auto 22px;
+}
+
+.tabs a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 0 14px;
+  border: 1px solid var(--border, #e7e1da);
+  border-radius: 8px;
+  background: var(--surface, #fff);
+  color: var(--VinoNegro);
+  font-size: 14px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.tabs a:hover,
+.tabs .active {
+  border-color: rgba(105, 27, 50, 0.24);
+  background: var(--vinoGradient);
+  color: #fff;
+}
+
+.main {
+  max-width: 1480px;
+  margin: 0 auto;
+}
+
+.loading,
+.denied {
+  display: grid;
+  place-items: center;
+  min-height: 58vh;
+  padding: 32px;
+  color: var(--VinoNegro);
+  text-align: center;
+}
+
+.denied {
+  gap: 10px;
+  border: 1px solid var(--border, #e7e1da);
+  border-radius: 8px;
+  background: var(--surface, #fff);
+}
+
+.denied h2,
+.denied p {
+  margin: 0;
+}
+
+.denied p {
+  color: var(--muted, #6d6f6f);
+}
+
+.denied a {
+  color: var(--vinoClr);
+  font-weight: 800;
+}
+
+@media (max-width: 760px) {
+  .shell {
+    padding: 18px 12px 28px;
+  }
+
+  .header {
+    flex-direction: column;
+  }
+
+  .tabs {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .tabs a {
+    justify-content: center;
+  }
+}

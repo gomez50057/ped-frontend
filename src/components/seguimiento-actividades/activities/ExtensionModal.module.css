@@ -1,0 +1,24 @@
+.form {
+  display: grid;
+  gap: 16px;
+}
+
+.current {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 4px 10px;
+  padding: 14px;
+  border-radius: 8px;
+  background: #f7f1e8;
+  color: var(--VinoNegro);
+}
+
+.current strong {
+  grid-column: 2;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}

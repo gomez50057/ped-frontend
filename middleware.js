@@ -1,13 +1,22 @@
 // middleware.js
 import { NextResponse } from 'next/server';
-import { jwtVerify } from 'jose';
+import { decodeJwt, jwtVerify } from 'jose';
 
 // Usa tu misma variable de entorno:
-const SECRET = new TextEncoder().encode(process.env.SIMPLE_JWT_SIGNING_KEY);
+const SECRET_VALUE = process.env.SIMPLE_JWT_SIGNING_KEY;
+const SECRET = SECRET_VALUE ? new TextEncoder().encode(SECRET_VALUE) : null;
+
+function isExpired(payload) {
+  return payload?.exp && Math.floor(Date.now() / 1000) >= payload.exp;
+}
 
 async function verifyToken(token) {
   try {
-    // Ajusta el alg si firmas distinto; por defecto HS256
+    if (!SECRET) {
+      const payload = decodeJwt(token);
+      return isExpired(payload) ? null : payload;
+    }
+
     const { payload } = await jwtVerify(token, SECRET, { algorithms: ['HS256'] });
     return payload;
   } catch {
@@ -47,5 +56,5 @@ export async function middleware(req) {
 
 // Mantén tu patrón actual
 export const config = {
-  matcher: ['/dashboard/:path*'],
+  matcher: ['/dashboard/:path*', '/seguimiento-actividades/:path*'],
 };

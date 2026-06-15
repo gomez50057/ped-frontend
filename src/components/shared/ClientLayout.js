@@ -16,6 +16,7 @@ export default function ClientLayout({ children }) {
   const [themePreference, setThemePreference] = useState("light");
   const hideNavbar =
     pathname.startsWith("/dashboard") ||
+    pathname.startsWith("/seguimiento-actividades") ||
     pathname.startsWith("/revision") ||
     pathname.startsWith("/reconocimiento-uaeh") ||
     pathname.startsWith("/certificate-batch-preview");

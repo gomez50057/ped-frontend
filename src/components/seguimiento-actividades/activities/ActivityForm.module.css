@@ -1,0 +1,109 @@
+.form {
+  display: grid;
+  gap: 18px;
+  padding: 22px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.grid:has(label:nth-child(3)) {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.labelText {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  width: fit-content;
+}
+
+.fieldMarker {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+  border-radius: 4px;
+  cursor: help;
+  outline: none;
+}
+
+.requiredIcon,
+.optionalIcon {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+}
+
+.requiredIcon {
+  fill: var(--danger);
+}
+
+.optionalIcon {
+  fill: var(--muted);
+}
+
+.fieldMarker:focus {
+  box-shadow: 0 0 0 3px rgba(188, 149, 91, 0.22);
+}
+
+.tooltip {
+  position: absolute;
+  left: 0;
+  top: calc(100% + 8px);
+  z-index: 2;
+  width: max-content;
+  max-width: 220px;
+  padding: 7px 9px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--VinoNegro);
+  color: var(--blanco);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.25;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-3px);
+  transition: opacity 0.12s ease, transform 0.12s ease;
+}
+
+.tooltip::before {
+  position: absolute;
+  left: 8px;
+  top: -5px;
+  width: 8px;
+  height: 8px;
+  background: var(--VinoNegro);
+  content: "";
+  transform: rotate(45deg);
+}
+
+.fieldMarker:hover .tooltip,
+.fieldMarker:focus .tooltip {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 860px) {
+  .grid,
+  .grid:has(label:nth-child(3)) {
+    grid-template-columns: 1fr;
+  }
+}

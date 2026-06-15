@@ -1,0 +1,47 @@
+.section {
+  display: grid;
+  gap: 16px;
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+}
+
+.section h2 {
+  margin: 0;
+  color: var(--VinoNegro);
+  font-size: 18px;
+}
+
+.tableWrap {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  min-width: 820px;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 12px;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+  vertical-align: top;
+  font-size: 13px;
+}
+
+.table th {
+  background: var(--surfaceAlt);
+  color: var(--VinoNegro);
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.empty {
+  height: 90px;
+  text-align: center;
+  color: var(--muted);
+  font-weight: 700;
+}
